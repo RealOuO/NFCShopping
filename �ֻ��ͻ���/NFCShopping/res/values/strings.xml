@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, NFCShoppingActivity!</string>
+    <string name="app_name">NFCShopping</string>
+    <string name="userName">用户名：</string>
+    <string name="rating">评分：</string>
+    <string name="comment">评论内容：</string>
+    <string name="productName">商品名：</string>
+    <string name="productCost">商品价格：</string>
+    <string name="averageRating">平均得分：</string>
+    <string name="btcomment">评论</string>
+    <string name="btshare">分享</string>
+</resources>
