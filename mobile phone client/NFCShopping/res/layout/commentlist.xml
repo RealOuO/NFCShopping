@@ -130,14 +130,14 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/button_weather"
+                android:id="@+id/btComment"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btcomment" />
 
             <Button
-                android:id="@+id/button_mail"
+                android:id="@+id/btShare"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

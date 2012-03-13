@@ -337,26 +337,29 @@ public final class R {
         public static final int widgetmessage=0x7f020128;
     }
     public static final class id {
-        public static final int button_mail=0x7f080011;
-        public static final int button_weather=0x7f080010;
-        public static final int comment_listview=0x7f080012;
-        public static final int indicator_ratingbar=0x7f080004;
-        public static final int ivProduct=0x7f080007;
-        public static final int linearLayout1=0x7f080001;
-        public static final int linearLayout2=0x7f080005;
-        public static final int linearLayout3=0x7f080008;
-        public static final int linearLayout4=0x7f080009;
-        public static final int linearLayout5=0x7f08000b;
-        public static final int lybuttonBar=0x7f08000f;
-        public static final int relativeLayout1=0x7f08000c;
-        public static final int relativeLayout2=0x7f08000e;
-        public static final int star=0x7f08000d;
-        public static final int tvComment=0x7f080006;
-        public static final int tvCreatedDate=0x7f080003;
-        public static final int tvItemContent=0x7f080013;
-        public static final int tvProductname=0x7f080000;
-        public static final int tvUsername=0x7f080002;
-        public static final int tvproductCost=0x7f08000a;
+        public static final int btComment=0x7f080013;
+        public static final int btCommit=0x7f080006;
+        public static final int btShare=0x7f080014;
+        public static final int btShareAndCommit=0x7f080007;
+        public static final int comment_listview=0x7f080015;
+        public static final int etComment=0x7f080008;
+        public static final int indicator_ratingbar=0x7f080003;
+        public static final int ivProduct=0x7f08000c;
+        public static final int linearLayout1=0x7f080000;
+        public static final int linearLayout2=0x7f080002;
+        public static final int linearLayout3=0x7f08000d;
+        public static final int linearLayout4=0x7f08000e;
+        public static final int linearLayout5=0x7f080010;
+        public static final int lybuttonBar=0x7f080005;
+        public static final int relativeLayout1=0x7f080004;
+        public static final int relativeLayout2=0x7f080012;
+        public static final int star=0x7f080011;
+        public static final int tvComment=0x7f08000b;
+        public static final int tvCreatedDate=0x7f08000a;
+        public static final int tvItemContent=0x7f080016;
+        public static final int tvProductname=0x7f080001;
+        public static final int tvUsername=0x7f080009;
+        public static final int tvproductCost=0x7f08000f;
     }
     public static final class layout {
         public static final int comment=0x7f030000;
@@ -369,9 +372,12 @@ public final class R {
         public static final int app_name=0x7f060001;
         public static final int averageRating=0x7f060007;
         public static final int btcomment=0x7f060008;
+        public static final int btcommit=0x7f06000b;
         public static final int btshare=0x7f060009;
+        public static final int btshareandcommit=0x7f06000a;
         public static final int comment=0x7f060004;
         public static final int hello=0x7f060000;
+        public static final int hint=0x7f06000c;
         public static final int productCost=0x7f060006;
         public static final int productName=0x7f060005;
         public static final int rating=0x7f060003;

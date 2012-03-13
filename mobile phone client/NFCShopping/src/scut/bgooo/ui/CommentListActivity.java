@@ -6,21 +6,26 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class NFCShoppingActivity extends Activity {
+public class CommentListActivity extends Activity {
 
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
-	private ListView myListView;
-
+	private ListView mListView;
+	private Button mCommentButton;
+	private Button mShareButton;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,20 @@ public class NFCShoppingActivity extends Activity {
 			map.put("Rating", 4.0);
 			mTempitems.add(map);
 		}
-		myListView=(ListView)findViewById(R.id.comment_listview);
+		mListView=(ListView)findViewById(R.id.comment_listview);
+		mCommentButton=(Button)findViewById(R.id.btComment);
+		mCommentButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(CommentListActivity.this,CommentActivity.class);
+				startActivity(intent);
+			}
+		});
+		mShareButton=(Button)findViewById(R.id.btShare);
 		CommentAdapter ma = new CommentAdapter(this, mTempitems);
-		myListView.setAdapter(ma);// 更新列表
+		mListView.setAdapter(ma);// 更新列表
 
 	}
 }

@@ -5,12 +5,101 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvProductname"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/productName"
-        android:textColor="#ff333333"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/productName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ff333333" />
+
+        <TextView
+            android:id="@+id/tvProductname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lee"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ff333333" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ff333333" />
+
+        <RatingBar
+            android:id="@+id/indicator_ratingbar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dip"
+            android:numStars="5"
+            android:isIndicator="false"
+            android:rating="3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ff333333" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:id="@+id/lybuttonBar"
+                style="@android:style/ButtonBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btCommit"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btcommit" />
+
+                <Button
+                    android:id="@+id/btShareAndCommit"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btshareandcommit" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etComment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@id/lybuttonBar"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/profile_description_bg"
+                android:bufferType="spannable"
+                android:gravity="left"
+                android:hint="@string/hint"
+                android:lineSpacingMultiplier="1.1"
+                android:padding="5dip"
+                android:singleLine="false" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

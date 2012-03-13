@@ -11,4 +11,7 @@
     <string name="averageRating">平均得分：</string>
     <string name="btcomment">评论</string>
     <string name="btshare">分享</string>
+    <string name="btshareandcommit">提交并分享</string>
+    <string name="btcommit">提交</string>
+    <string name="hint">请在此填写评论的详细内容……</string>
 </resources>
