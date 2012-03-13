@@ -3,77 +3,53 @@ package scut.bgooo.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class CommentListActivity extends Activity {
-
-	private ArrayList<HashMap<String, Object>> mTempitems = null;
-	private ListView mListView;
-	private Button mCommentButton;
-	private Button mShareButton;
+public class PrivilegeListActivity extends Activity {
 	
-	/** Called when the activity is first created. */
+	private ArrayList<HashMap<String, Object>> mTempitems = null;
+
+	private ListView mListView;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.commentlist);
+		setContentView(R.layout.privilegelist);
+
+		mListView=(ListView)findViewById(R.id.privilege_listview);
 
 		mTempitems = new ArrayList<HashMap<String, Object>>();
 
 		for (int i = 0; i < 10; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Name", "第" + i + "个某用户");
-			map.put("Comment", "第" + i + "个用户的评论");
-			map.put("Rating", 4.0);
+			map.put("PrivilegeCost", "第" + i + "特价");
+			map.put("Discount", "第" + i + "折扣");
+			map.put("ProductName", "第" + i + "商品");
+			map.put("Duration", "第" + i + "日期");
 			mTempitems.add(map);
 		}
-		mCommentButton=(Button)findViewById(R.id.btComment);
-		mCommentButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent=new Intent(CommentListActivity.this,CommentActivity.class);
-				startActivity(intent);
-			}
-		});
-		mShareButton=(Button)findViewById(R.id.btShare);
-		mShareButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		CommentAdapter ma = new CommentAdapter(this, mTempitems);
-		mListView=(ListView)findViewById(R.id.comment_listview);
+		PrivilegeAdapter ma = new PrivilegeAdapter(this, mTempitems);
 		mListView.setAdapter(ma);// 更新列表
-
 	}
+
 }
 
-class CommentAdapter extends BaseAdapter {
+class PrivilegeAdapter extends BaseAdapter {
 
 	ArrayList<HashMap<String, Object>> items;
 	Context context;
 
-	public CommentAdapter(Context context,
+	public PrivilegeAdapter(Context context,
 			ArrayList<HashMap<String, Object>> items) {
 		this.context = context;
 		this.items = items;
@@ -111,39 +87,50 @@ class CommentAdapter extends BaseAdapter {
 			tv.setText("更多");
 			return moreitem;
 		} else {
-			View commentitem = null;
+			View privilegeitem = null;
 
 			if (convertView != null
 					&& convertView.findViewById(R.id.tvUsername) != null) {
 				Log.d("getview", "doGetView-------get TextView-----------"
 						+ position);
-				commentitem = convertView;
+				privilegeitem = convertView;
 			} else {
 				Log.d("getview", "doGetView-------new TextView-----------"
 						+ position);
 				// 把xml布局文件变成View对象
-				commentitem = LayoutInflater.from(context).inflate(
-						R.layout.commentitem, null);
+				privilegeitem = LayoutInflater.from(context).inflate(
+						R.layout.privilegeitem, null);
 			}
-			vh.rbRating=(RatingBar)commentitem.findViewById(R.id.indicator_ratingbar);
-			vh.tvComment=(TextView)commentitem.findViewById(R.id.tvComment);
-			vh.tvUserName=(TextView)commentitem.findViewById(R.id.tvUsername);
-			
-			vh.tvUserName.setText(items.get(position).get("Name").toString());
-			vh.tvComment.setText(items.get(position).get("Comment").toString());
-			vh.rbRating.setRating(Float.valueOf(items.get(position).get("Rating").toString()));
-			
-			return commentitem;
-			
+
+			vh.tvPrivilegeCost = (TextView) privilegeitem
+					.findViewById(R.id.tvPrivilegeCost);
+			vh.tvProductName = (TextView) privilegeitem
+					.findViewById(R.id.tvProductname);
+			vh.tvDiscount = (TextView) privilegeitem
+					.findViewById(R.id.tvDiscount);
+			vh.tvDuration = (TextView) privilegeitem
+					.findViewById(R.id.tvDuration);
+
+			vh.tvPrivilegeCost.setText(items.get(position).get("PrivilegeCost")
+					.toString());
+			vh.tvProductName.setText(items.get(position).get("ProductName")
+					.toString());
+			vh.tvDiscount.setText(items.get(position).get("Discount")
+					.toString());
+			vh.tvDuration.setText(items.get(position).get("Duration")
+					.toString());
+
+			return privilegeitem;
+
 		}
 	}
 
 	private static class ViewHolder {
-		TextView tvUserName;
-		TextView tvComment;
-		RatingBar rbRating;
+		TextView tvProductName;
+		TextView tvPrivilegeCost;
+		TextView tvDiscount;
+		TextView tvDuration;
 	}
 
 	private ViewHolder vh = new ViewHolder();
-
 }

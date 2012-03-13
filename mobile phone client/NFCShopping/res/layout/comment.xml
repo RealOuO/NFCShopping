@@ -33,6 +33,11 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider_horizontal_timeline" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,9 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:numStars="5"
             android:isIndicator="false"
+            android:numStars="5"
             android:rating="3" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider_horizontal_timeline" />
 
         <TextView
             android:layout_width="wrap_content"

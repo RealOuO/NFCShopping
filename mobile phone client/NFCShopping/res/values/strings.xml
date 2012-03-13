@@ -8,10 +8,13 @@
     <string name="comment">评论内容：</string>
     <string name="productName">商品名：</string>
     <string name="productCost">商品价格：</string>
+    <string name="privilegeCost">优惠价格：</string>
+    <string name="discount">折扣：</string>
     <string name="averageRating">平均得分：</string>
     <string name="btcomment">评论</string>
     <string name="btshare">分享</string>
     <string name="btshareandcommit">提交并分享</string>
     <string name="btcommit">提交</string>
     <string name="hint">请在此填写评论的详细内容……</string>
+    <string name="duration">优惠时间：</string>
 </resources>

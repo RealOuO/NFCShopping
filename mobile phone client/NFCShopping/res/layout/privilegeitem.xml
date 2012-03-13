@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_bg"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search_bg"
-        android:orientation="horizontal" >
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/ivProduct"
-            android:layout_width="50.0dip"
-            android:layout_height="50.0dip"
-            android:layout_gravity="center_vertical"
-            android:saveEnabled="true"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:id="@+id/ivProductImage"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
+            android:padding="5dip"
+            android:src="@drawable/weiqun" />
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="5dip" >
+            android:paddingLeft="10dip" >
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
@@ -59,12 +57,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/productCost"
+                    android:text="@string/privilegeCost"
                     android:textColor="#ff333333"
                     android:textSize="15.0sp" />
 
                 <TextView
-                    android:id="@+id/tvproductCost"
+                    android:id="@+id/tvPrivilegeCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dip"
@@ -77,81 +75,62 @@
                 android:id="@+id/linearLayout5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="2dip"
                 android:paddingTop="5dip" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/averageRating"
+                    android:text="@string/discount"
                     android:textColor="#ff333333"
                     android:textSize="15.0sp" />
 
-                <RatingBar
-                    android:id="@+id/indicator_ratingbar"
-                    style="?android:attr/ratingBarStyleSmall"
+                <TextView
+                    android:id="@+id/tvDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dip"
-                    android:numStars="5"
-                    android:rating="3" />
+                    android:paddingLeft="10dip"
+                    android:text="70%"
+                    android:textColor="#ff333333"
+                    android:textSize="15.0sp" />
             </LinearLayout>
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="right" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" >
 
-            <CheckBox
-                android:id="@+id/star"
-                style="?android:attr/starStyle"
+            <ImageView
+                android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingRight="10dip" />
+                android:layout_height="30dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/triangle" />
         </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent" >
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/lybuttonBar"
-            style="@android:style/ButtonBar"
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal" >
+            android:text="@string/duration"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ff333333" />
 
-            <Button
-                android:id="@+id/btComment"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/btcomment" />
-
-            <Button
-                android:id="@+id/btShare"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/btshare" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/comment_listview"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/lybuttonBar"
-            android:fadingEdge="none" 
-            android:divider="@drawable/divider_horizontal_timeline"
-            android:dividerHeight="1.0dip" />
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"
+            android:text="活动时间"
+            android:textColor="#ff333333" />
+    </LinearLayout>
 
 </LinearLayout>
