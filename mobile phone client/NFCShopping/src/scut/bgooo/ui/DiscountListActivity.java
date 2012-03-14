@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PrivilegeListActivity extends Activity {
+public class DiscountListActivity extends Activity {
 	
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
 
@@ -24,7 +24,7 @@ public class PrivilegeListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.privilegelist);
+		setContentView(R.layout.discountlist);
 
 		mListView=(ListView)findViewById(R.id.privilege_listview);
 
@@ -99,7 +99,7 @@ class PrivilegeAdapter extends BaseAdapter {
 						+ position);
 				// 把xml布局文件变成View对象
 				privilegeitem = LayoutInflater.from(context).inflate(
-						R.layout.privilegeitem, null);
+						R.layout.discountitem, null);
 			}
 
 			vh.tvPrivilegeCost = (TextView) privilegeitem
