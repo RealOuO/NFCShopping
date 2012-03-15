@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +37,8 @@ public class CommentListActivity extends Activity {
 
 		for (int i = 0; i < 10; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Name", "µÚ" + i + "¸öÄ³ÓÃ»§");
-			map.put("Comment", "µÚ" + i + "¸öÓÃ»§µÄÆÀÂÛ");
+			map.put("Name", "ï¿½ï¿½" + i + "ï¿½ï¿½Ä³ï¿½Ã»ï¿½");
+			map.put("Comment", "ï¿½ï¿½" + i + "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			map.put("Rating", 4.0);
 			mTempitems.add(map);
 		}
@@ -63,7 +64,7 @@ public class CommentListActivity extends Activity {
 		
 		CommentAdapter ma = new CommentAdapter(this, mTempitems);
 		mListView=(ListView)findViewById(R.id.comment_listview);
-		mListView.setAdapter(ma);// ¸üÐÂÁÐ±í
+		mListView.setAdapter(ma);// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 
 	}
 }
@@ -108,7 +109,7 @@ class CommentAdapter extends BaseAdapter {
 			View moreitem = LayoutInflater.from(context).inflate(
 					R.layout.moreitemsview, null);
 			TextView tv = (TextView) moreitem.findViewById(R.id.tvItemContent);
-			tv.setText("¸ü¶à");
+			tv.setText("ï¿½ï¿½ï¿");
 			return moreitem;
 		} else {
 			View commentitem = null;
@@ -121,7 +122,7 @@ class CommentAdapter extends BaseAdapter {
 			} else {
 				Log.d("getview", "doGetView-------new TextView-----------"
 						+ position);
-				// °Ñxml²¼¾ÖÎÄ¼þ±ä³ÉView¶ÔÏó
+				// ï¿½ï¿½xmlï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Viewï¿½ï¿½ï¿½ï¿½
 				commentitem = LayoutInflater.from(context).inflate(
 						R.layout.commentitem, null);
 			}
