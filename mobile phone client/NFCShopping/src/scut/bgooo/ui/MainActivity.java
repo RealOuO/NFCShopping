@@ -25,8 +25,7 @@ public class MainActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maintabs);
 		_InitTabs();
-		
-		
+
 	}
 
 	/**
@@ -35,19 +34,20 @@ public class MainActivity extends TabActivity {
 	private void _InitTabs() {
 
 		mTabHost = getTabHost();
-		//LayoutInflater.from(this).inflate(R.layout.maintabs, mTabHost.getTabContentView(), true);
+		// LayoutInflater.from(this).inflate(R.layout.maintabs,
+		// mTabHost.getTabContentView(), true);
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_CONCERNS").setIndicator("关注")
-				.setContent(new Intent(this, ConcernsActivity.class)));
-		
+				.setContent(new Intent(this, ConcernListActivity.class)));
+
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_COMPARE").setIndicator("对比")
 				.setContent(new Intent(this, CompareActivity.class)));
-		
+
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_COLLECT").setIndicator("收藏")
-				.setContent(new Intent(this, CollectActivity.class)));
-		
+				.setContent(new Intent(this, CollectListActivity.class)));
+
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_DISCOUNT").setIndicator("优惠")
 				.setContent(new Intent(this, DiscountListActivity.class)));
-		
+
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_MORE").setIndicator("更多")
 				.setContent(new Intent(this, MoreActivity.class)));
 	}

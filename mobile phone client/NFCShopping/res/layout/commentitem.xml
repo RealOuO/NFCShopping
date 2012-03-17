@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_item_bg"
     android:orientation="vertical"
     android:padding="5dip" >
 
@@ -15,7 +14,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/userName"
-            android:textColor="#ff333333"
             android:textSize="15.0sp" />
 
         <TextView
@@ -24,7 +22,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dip"
             android:text="Lee"
-            android:textColor="#ff333333"
             android:textSize="15.0sp" />
 
         <RelativeLayout
@@ -41,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="时间时间时间"
-                android:textColor="#ff333333"
                 android:textSize="12.0sp" />
         </RelativeLayout>
     </LinearLayout>
@@ -68,7 +64,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvComment"
             android:text="评论评论评论评论评论评论评论评论评论评论"
-            android:textColor="#ff333333"
             android:textSize="15.0sp" />
     </LinearLayout>
 

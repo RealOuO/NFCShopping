@@ -1,26 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="scut.bgooo.ui" android:versionCode="1" android:versionName="1.0">
+    package="scut.bgooo.ui"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-	<uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="10" />
 
-	<application android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name">
-		<activity android:name=".MainActivity" android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConcernListActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".CollectListActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".CompareActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MoreActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".CommentListActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
 
-		<activity android:name=".ConcernsActivity" android:label="@string/app_name" />
-		<activity android:name=".CollectActivity" android:label="@string/app_name" />
-		<activity android:name=".CompareActivity" android:label="@string/app_name" />
-		<activity android:name=".MoreActivity" android:label="@string/app_name" />
-		<activity android:name=".CommentListActivity" android:label="@string/app_name" />
-		<activity android:name=".CommentActivity" android:label="@string/app_name" />
-		<activity android:name=".DiscountListActivity" android:label="@string/app_name" />
-	</application>
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--
+ Android treats all implicit intents passed to startActivity() as if they contained at 
+ least one category: "android.intent.category.DEFAULT" (the CATEGORY_DEFAULT constant). 
+ Therefore, activities that are willing to receive implicit intents must 
+ include "android.intent.category.DEFAULT" in their intent filters
+ 
+ 
+意思是说，每一个通过 startActivity() 方法发出的隐式 Intent 都至少有一个 category，就是 "android.intent.category.DEFAULT"，所以只要是想接收一个隐式 Intent 的 Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致 Intent 匹配失败。
+
+从上面的论述还可以获得以下信息：
+1、一个 Intent 可以有多个 category，但至少会有一个，也是默认的一个 category。
+2、只有 Intent 的所有 category 都匹配上，Activity 才会接收这个 Intent。
+                -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CommentActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".DiscountListActivity"
+            android:label="@string/app_name" />
+    </application>
 
 </manifest>
