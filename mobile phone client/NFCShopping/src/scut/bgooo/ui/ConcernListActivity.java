@@ -32,6 +32,7 @@ public class ConcernListActivity extends ListActivity {
 	
 	private ConcernItemAdapter mConcernAdapter = null;  //适配器对象
 	private ConcernManager mConcernManager = null;  //数据访问对象
+	private List<ConcernItem> mItems =null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,10 @@ public class ConcernListActivity extends ListActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(ConcernListActivity.this,
 						CommentListActivity.class);
+				intent.putExtra("ConcernItem", mItems.get(arg2));
 				startActivity(intent);
 			}
 		});
-
 	}
 
 	@Override
@@ -58,8 +59,8 @@ public class ConcernListActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		Log.d(TAG, "onResume");
-		List<ConcernItem> items = mConcernManager.buildConcernItems();
-		mConcernAdapter = new ConcernItemAdapter(this, items);
+		mItems= mConcernManager.buildConcernItems();
+		mConcernAdapter = new ConcernItemAdapter(this, mItems);
 		setListAdapter(mConcernAdapter);
 	}
 

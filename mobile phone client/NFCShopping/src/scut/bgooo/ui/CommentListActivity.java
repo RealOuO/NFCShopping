@@ -19,6 +19,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -34,6 +38,12 @@ public class CommentListActivity extends Activity {
 	private Button mFinishButton;
 	private Button mCommentButton;
 	private Button mShareButton;
+	private TextView mNameTextView;
+	private TextView mPriceTextView;
+	private RatingBar mRatingBar;
+	private CheckBox mCheckBox;
+
+	private ConcernItem item;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -50,16 +60,16 @@ public class CommentListActivity extends Activity {
 			map.put("Rating", 4.0);
 			mTempitems.add(map);
 		}
-		mFinishButton=(Button)findViewById(R.id.btFinish);
+		mFinishButton = (Button) findViewById(R.id.btFinish);
 		mFinishButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
 			}
 		});
-		
+
 		mCommentButton = (Button) findViewById(R.id.btComment);
 		mCommentButton.setOnClickListener(new OnClickListener() {
 
@@ -85,21 +95,52 @@ public class CommentListActivity extends Activity {
 		mListView = (ListView) findViewById(R.id.comment_listview);
 		mListView.setAdapter(ma);// ÃÌº”  ≈‰∆˜
 
+		mPriceTextView = (TextView) findViewById(R.id.tvproductCost);
+		mNameTextView = (TextView) findViewById(R.id.tvProductname);
+		mRatingBar = (RatingBar) findViewById(R.id.indicator_ratingbar);
+		mCheckBox = (CheckBox) findViewById(R.id.cbStar);
+
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
 
+		mCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked) {
+					item.setIsCollected((short) 1);
+				} else {
+					item.setIsCollected((short) 0);
+				}
+				mConcernManager.addConcernItem(item);
+				Log.d(TAG, "checked changed");
+			}
+		});
 	}
 
 	void resolveIntent(Intent intent) {
 		// Parse the intent
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-			ConcernItem item = new ConcernItem(0, Math.abs(new Random()
-					.nextInt()), String.valueOf(new Random().nextInt()), 3,
+			item = new ConcernItem(0, Math.abs(new Random().nextInt()),
+					String.valueOf(new Random().nextInt()), 3,
 					Math.abs(new Random().nextFloat()), 4,
 					System.currentTimeMillis(), (short) 1);
 			mConcernManager.addConcernItem(item);
 			Log.d(TAG, "discover a tag");
+		} else {
+			item = (ConcernItem) intent.getSerializableExtra("ConcernItem");
+			mPriceTextView.setText(String.valueOf(item.getPrice()));
+			mNameTextView.setText(item.getName());
+			mRatingBar.setRating((float) item.getRating());
+			if (item.getIsCollected() == 0) {
+				Log.d(TAG, "is collected" + item.getIsCollected());
+				mCheckBox.setChecked(false);
+			} else {
+				mCheckBox.setChecked(true);
+			}
 		}
 	}
 }

@@ -3,11 +3,16 @@ package scut.bgooo.ui;
 import java.util.List;
 import java.util.Map;
 
+import scut.bgooo.concern.ConcernItem;
+import scut.bgooo.concern.ConcernItemAdapter;
+import scut.bgooo.concern.ConcernManager;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,19 +27,18 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class CollectListActivity extends ListActivity {
 
-	private List<Map<String, Object>> mList = null;// 获得的数据集
-	private MyAdapter mMyAdapter = null;// 对应的适配器
+	private static final String TAG = CollectListActivity.class.getSimpleName();
+
+	private ConcernItemAdapter mConcernAdapter = null; // 适配器对象
+	private ConcernManager mConcernManager = null; // 数据访问对象
+	private List<ConcernItem> mItems = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		mMyAdapter = new MyAdapter(this, mList);
-
-		setListAdapter(mMyAdapter);
-		
-		
-		
+		Log.d(TAG, "onCreate");
+		this.mConcernManager = new ConcernManager(this); // 创建数据访问对象
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -43,9 +47,20 @@ public class CollectListActivity extends ListActivity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CollectListActivity.this,
 						CommentListActivity.class);
+				intent.putExtra("ConcernItem", mItems.get(arg2));
 				startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Log.d(TAG, "onResume");
+		mItems = mConcernManager.buildCollectedConcernItems();
+		mConcernAdapter = new ConcernItemAdapter(this, mItems);
+		setListAdapter(mConcernAdapter);
 	}
 
 	private class MyAdapter extends BaseAdapter {

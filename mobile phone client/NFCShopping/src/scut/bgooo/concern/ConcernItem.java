@@ -1,7 +1,11 @@
 package scut.bgooo.concern;
 
-public class ConcernItem {
+public class ConcernItem  implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 存放在数据库的ID号
 	 * */
@@ -80,5 +84,9 @@ public class ConcernItem {
 
 	public short getIsCollected() {
 		return IsCollected;
+	}
+	
+	public void setIsCollected(short collected){
+		IsCollected=collected;
 	}
 }

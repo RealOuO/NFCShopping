@@ -18,6 +18,8 @@ public final class ConcernManager {
 
 	private static final int MAX_ITEMS = 100;
 
+	private static final short COLLECTED = 1;
+
 	private static final String[] COLUMNS = { DBHelper.ID_COL,
 			DBHelper.PRODUCT_ID_COL, DBHelper.NAME_COL, DBHelper.TYPE_COL,
 			DBHelper.PRICE_COL, DBHelper.RATING_COL, DBHelper.TIMESTAMP_COL,
@@ -71,6 +73,37 @@ public final class ConcernManager {
 			db = helper.getReadableDatabase();
 			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS, null, null, null,
 					null, DBHelper.TIMESTAMP_COL + " DESC");
+			while (cursor.moveToNext()) {
+				int id = cursor.getInt(0);
+				int pid = cursor.getInt(1);
+				String name = cursor.getString(2);
+				int type = cursor.getInt(3);
+				float price = cursor.getFloat(4);
+				int rating = cursor.getInt(5);
+				long timestamp = cursor.getLong(6);
+				short iscollected = cursor.getShort(7);
+				// 这里还需要补充ConcernItem对象的具体属性才能确定
+				items.add(new ConcernItem(id, pid, name, type, price, rating,
+						timestamp, iscollected));
+			}
+			return items;
+		} finally {
+			close(cursor, db);
+		}
+	}
+
+	public List<ConcernItem> buildCollectedConcernItems() {
+		Log.d(TAG, "buildCollectedConcernItems()");
+		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteDatabase db = null;
+		Cursor cursor = null;
+		List<ConcernItem> items = new ArrayList<ConcernItem>();
+		try {
+			db = helper.getReadableDatabase();
+			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS,
+					DBHelper.ISCOLLECTED_COL + "=?",
+					new String[] { String.valueOf(COLLECTED) }, null, null,
+					DBHelper.TIMESTAMP_COL + " DESC");
 			while (cursor.moveToNext()) {
 				int id = cursor.getInt(0);
 				int pid = cursor.getInt(1);
@@ -243,6 +276,7 @@ public final class ConcernManager {
 		values.put(DBHelper.PRICE_COL, item.getPrice());
 		values.put(DBHelper.RATING_COL, item.getRating());
 		values.put(DBHelper.TIMESTAMP_COL, item.getTimestamp());
+		values.put(DBHelper.ISCOLLECTED_COL, item.getIsCollected());
 
 		try {
 			db = helper.getWritableDatabase();
@@ -251,7 +285,6 @@ public final class ConcernManager {
 					new String[] { String.valueOf(item.getProductId()) }, null,
 					null, null);
 			if (cursor.getCount() == 0) {
-				values.put(DBHelper.ISCOLLECTED_COL,0);//0代表默认未收藏
 				// 插入新的关注记录
 				db.insert(DBHelper.TABLE_NAME, DBHelper.TIMESTAMP_COL, values);
 			} else {
@@ -289,20 +322,20 @@ public final class ConcernManager {
 			close(cursor, db);
 		}
 	}
-	
+
 	/**
 	 * <P>
 	 * 清空关注列表的数据
 	 * </P>
 	 * */
-	public void clearConcern(){
+	public void clearConcern() {
 		Log.d(TAG, "clearConcern()");
 		SQLiteOpenHelper helper = new DBHelper(activity);
 		SQLiteDatabase db = null;
-		try{
-			db=helper.getWritableDatabase();
+		try {
+			db = helper.getWritableDatabase();
 			db.delete(DBHelper.TABLE_NAME, null, null);
-		}finally{
+		} finally {
 			close(null, db);
 		}
 	}

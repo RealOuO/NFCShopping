@@ -345,6 +345,7 @@ public final class R {
         public static final int btFinish=0x7f06001b;
         public static final int btShare=0x7f06001d;
         public static final int btShareAndCommit=0x7f06000f;
+        public static final int cbStar=0x7f060019;
         public static final int comment_listview=0x7f06001e;
         public static final int etComment=0x7f060010;
         public static final int goods_image=0x7f060006;
@@ -370,7 +371,6 @@ public final class R {
         public static final int relativeLayout1=0x7f06000c;
         public static final int relativeLayout2=0x7f06001a;
         public static final int score=0x7f060005;
-        public static final int star=0x7f060019;
         public static final int tab1=0x7f060027;
         public static final int tab2=0x7f060028;
         public static final int tab3=0x7f060029;
