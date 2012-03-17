@@ -83,7 +83,7 @@ public class CommentListActivity extends Activity {
 
 		CommentAdapter ma = new CommentAdapter(this, mTempitems);
 		mListView = (ListView) findViewById(R.id.comment_listview);
-		mListView.setAdapter(ma);// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
+		mListView.setAdapter(ma);// Ìí¼ÓÊÊÅäÆ÷
 
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
@@ -157,7 +157,6 @@ class CommentAdapter extends BaseAdapter {
 			} else {
 				Log.d("getview", "doGetView-------new TextView-----------"
 						+ position);
-				// ï¿½ï¿½xmlï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Viewï¿½ï¿½ï¿½ï¿½
 				commentitem = LayoutInflater.from(context).inflate(
 						R.layout.commentitem, null);
 			}
