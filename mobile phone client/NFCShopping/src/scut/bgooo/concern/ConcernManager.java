@@ -1,9 +1,12 @@
 package scut.bgooo.concern;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import scut.bgooo.DiscountManager;
+import scut.bgooo.discount.DiscountManager;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -63,16 +66,26 @@ public final class ConcernManager {
 		}
 	}
 
+	/**
+	 * 查询所有浏览记录的函数
+	 * 
+	 * @since 2012年3月18日
+	 * 
+	 * @author Leeforall
+	 * */
 	public List<ConcernItem> buildConcernItems() {
 		Log.d(TAG, "buildConcernItems()");
 		SQLiteOpenHelper helper = new DBHelper(activity);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
+		List<String> dateItems = new ArrayList<String>();
 		try {
 			db = helper.getReadableDatabase();
 			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS, null, null, null,
 					null, DBHelper.TIMESTAMP_COL + " DESC");
+			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+			Date scanDate;
 			while (cursor.moveToNext()) {
 				int id = cursor.getInt(0);
 				int pid = cursor.getInt(1);
@@ -82,10 +95,23 @@ public final class ConcernManager {
 				int rating = cursor.getInt(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
+				// 添加时间标签的代码段
+				// 用来根据刷卡的日期进行日期归类
+				scanDate = new Date(timestamp);
+				String date = formater.format(scanDate);
+				if (!dateItems.contains(date)) {
+					dateItems.add(date);
+					Date tag = formater.parse(date);
+					items.add(new ConcernItem(tag.getTime()));
+				}
 				// 这里还需要补充ConcernItem对象的具体属性才能确定
 				items.add(new ConcernItem(id, pid, name, type, price, rating,
 						timestamp, iscollected));
 			}
+			return items;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return items;
 		} finally {
 			close(cursor, db);
@@ -98,12 +124,15 @@ public final class ConcernManager {
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
+		List<String> dateItems = new ArrayList<String>();
 		try {
 			db = helper.getReadableDatabase();
 			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS,
 					DBHelper.ISCOLLECTED_COL + "=?",
 					new String[] { String.valueOf(COLLECTED) }, null, null,
 					DBHelper.TIMESTAMP_COL + " DESC");
+			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+			Date scanDate;
 			while (cursor.moveToNext()) {
 				int id = cursor.getInt(0);
 				int pid = cursor.getInt(1);
@@ -113,10 +142,22 @@ public final class ConcernManager {
 				int rating = cursor.getInt(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
-				// 这里还需要补充ConcernItem对象的具体属性才能确定
+				// 添加时间标签的代码段
+				// 用来根据刷卡的日期进行日期归类
+				scanDate = new Date(timestamp);
+				String date = formater.format(scanDate);
+				if (!dateItems.contains(date)) {
+					dateItems.add(date);
+					Date tag = formater.parse(date);
+					items.add(new ConcernItem(tag.getTime()));
+				}
 				items.add(new ConcernItem(id, pid, name, type, price, rating,
 						timestamp, iscollected));
 			}
+			return items;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return items;
 		} finally {
 			close(cursor, db);
@@ -288,6 +329,7 @@ public final class ConcernManager {
 				// 插入新的关注记录
 				db.insert(DBHelper.TABLE_NAME, DBHelper.TIMESTAMP_COL, values);
 			} else {
+				// 记录存在则更新数据
 				db.update(DBHelper.TABLE_NAME, values, DBHelper.PRODUCT_ID_COL
 						+ "=?",
 						new String[] { String.valueOf(item.getProductId()) });

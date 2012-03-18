@@ -53,6 +53,11 @@ public class ConcernItem  implements java.io.Serializable {
 		Timestamp = timestamp;
 		IsCollected = iscollected;
 	}
+	
+	public ConcernItem(long timestamp){
+		Id = 0;
+		Timestamp = timestamp;
+	}
 
 	public int getId() {
 		return Id;

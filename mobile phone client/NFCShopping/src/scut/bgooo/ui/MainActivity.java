@@ -43,7 +43,7 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, CompareActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_COLLECT").setIndicator(" ’≤ÿ")
-				.setContent(new Intent(this, CollectListActivity.class)));
+				.setContent(new Intent(this, CollectionListActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_DISCOUNT").setIndicator("”≈ª›")
 				.setContent(new Intent(this, DiscountListActivity.class)));

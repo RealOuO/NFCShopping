@@ -28,18 +28,21 @@ public class MoreActivity extends ListActivity {
 	private static final String TAG = MoreActivity.class.getSimpleName();
 
 	private ConcernManager mConcernManager = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		mConcernManager = new ConcernManager(this);
-		
-		String[] strs = { "注册", "绑定微博账号", "清空关注列表", "应用设置", "帮助","反馈" };
+
+		String[] strs = { "注册", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, strs);
 		setListAdapter(adapter);
+
+		// 提示对话框
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
@@ -47,22 +50,29 @@ public class MoreActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				switch(arg2){
+				switch (arg2) {
 				case 0:
-					mConcernManager.clearConcern();
-					Log.d(TAG, "清空关注列表");
 					break;
 				case 1:
-					mConcernManager.clearConcern();
-					Log.d(TAG, "清空关注列表");
 					break;
 				case 2:
-					mConcernManager.clearConcern();
-					Log.d(TAG, "清空关注列表");
+					builder.setMessage(R.string.msg_sure);
+					builder.setCancelable(true);
+					builder.setPositiveButton(R.string.btOK,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int i2) {
+									mConcernManager.clearConcern();
+									Log.d(TAG, "清空关注列表");
+									dialog.dismiss();
+								}
+							});
+					builder.setNegativeButton(R.string.btCancel, null);
+					builder.show();
 					break;
 				case 3:
-					mConcernManager.clearConcern();
-					Log.d(TAG, "清空关注列表");
+
 					break;
 				}
 			}

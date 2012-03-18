@@ -1,4 +1,4 @@
-package scut.bgooo;
+package scut.bgooo.discount;
 
 /**
  * 商品信息实体类

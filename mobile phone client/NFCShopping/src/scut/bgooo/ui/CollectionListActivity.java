@@ -7,27 +7,27 @@ import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
 import scut.bgooo.concern.ConcernManager;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CollectListActivity extends ListActivity {
+public class CollectionListActivity extends ListActivity {
 
-	private static final String TAG = CollectListActivity.class.getSimpleName();
+	private static final String TAG = CollectionListActivity.class.getSimpleName();
 
 	private ConcernItemAdapter mConcernAdapter = null; // 适配器对象
 	private ConcernManager mConcernManager = null; // 数据访问对象
@@ -39,18 +39,24 @@ public class CollectListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
 		this.mConcernManager = new ConcernManager(this); // 创建数据访问对象
+		mItems = mConcernManager.buildCollectedConcernItems();
+		mConcernAdapter = new ConcernItemAdapter(this, mItems);
+		setListAdapter(mConcernAdapter);
+
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(CollectListActivity.this,
+				Intent intent = new Intent(CollectionListActivity.this,
 						CommentListActivity.class);
 				intent.putExtra("ConcernItem", mItems.get(arg2));
 				startActivity(intent);
 			}
 		});
+		// 注册上下文菜单
+		this.registerForContextMenu(getListView());
 	}
 
 	@Override
@@ -59,8 +65,24 @@ public class CollectListActivity extends ListActivity {
 		super.onResume();
 		Log.d(TAG, "onResume");
 		mItems = mConcernManager.buildCollectedConcernItems();
-		mConcernAdapter = new ConcernItemAdapter(this, mItems);
-		setListAdapter(mConcernAdapter);
+		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
+		((ConcernItemAdapter) this.getListAdapter()).dataSetChanged(mItems);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+		menu.add(Menu.NONE, position, Menu.NONE, R.string.clear_one_concern);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		int position = item.getItemId();
+		mConcernManager.deleteConcernItemById(mItems.get(position).getId());
+		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
+		((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+		return true;
 	}
 
 	private class MyAdapter extends BaseAdapter {
@@ -96,7 +118,6 @@ public class CollectListActivity extends ListActivity {
 		@Override
 		public View getView(int arg0, View arg1, ViewGroup arg2) {
 			// TODO Auto-generated method stub
-			final int selectID = arg0; // 表示已经设置到第几个了
 			ViewHolder viewHolder = null;
 			if (arg1 == null) {
 				viewHolder = new ViewHolder();

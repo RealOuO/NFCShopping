@@ -127,7 +127,7 @@ public class CommentListActivity extends Activity {
 			item = new ConcernItem(0, Math.abs(new Random().nextInt()),
 					String.valueOf(new Random().nextInt()), 3,
 					Math.abs(new Random().nextFloat()), 4,
-					System.currentTimeMillis(), (short) 1);
+					System.currentTimeMillis(), (short) 0);
 			mConcernManager.addConcernItem(item);
 			Log.d(TAG, "discover a tag");
 		} else {

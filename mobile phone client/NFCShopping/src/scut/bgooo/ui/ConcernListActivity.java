@@ -7,18 +7,20 @@ import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
 import scut.bgooo.concern.ConcernManager;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,17 +31,22 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ConcernListActivity extends ListActivity {
 
 	private static final String TAG = ConcernListActivity.class.getSimpleName();
-	
-	private ConcernItemAdapter mConcernAdapter = null;  //适配器对象
-	private ConcernManager mConcernManager = null;  //数据访问对象
-	private List<ConcernItem> mItems =null;
+
+	private ConcernItemAdapter mConcernAdapter = null; // 适配器对象
+	private ConcernManager mConcernManager = null; // 数据访问对象
+	private List<ConcernItem> mItems = null;
+
+	// private TextView mEmptyTextView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
-		this.mConcernManager = new ConcernManager(this);  //创建数据访问对象
+		this.mConcernManager = new ConcernManager(this); // 创建数据访问对象
+		mItems = mConcernManager.buildConcernItems();
+		mConcernAdapter = new ConcernItemAdapter(this, mItems);
+		setListAdapter(mConcernAdapter);
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -52,6 +59,8 @@ public class ConcernListActivity extends ListActivity {
 				startActivity(intent);
 			}
 		});
+		// 注册上下文菜单
+		this.registerForContextMenu(getListView());
 	}
 
 	@Override
@@ -59,9 +68,25 @@ public class ConcernListActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		Log.d(TAG, "onResume");
-		mItems= mConcernManager.buildConcernItems();
-		mConcernAdapter = new ConcernItemAdapter(this, mItems);
-		setListAdapter(mConcernAdapter);
+		mItems = mConcernManager.buildConcernItems();
+		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
+		((ConcernItemAdapter) this.getListAdapter()).dataSetChanged(mItems);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+		menu.add(Menu.NONE, position, Menu.NONE, R.string.clear_one_concern);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		int position = item.getItemId();
+		mConcernManager.deleteConcernItemById(mItems.get(position).getId());
+		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
+		((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+		return true;
 	}
 
 	private class MyAdapter extends BaseAdapter {
