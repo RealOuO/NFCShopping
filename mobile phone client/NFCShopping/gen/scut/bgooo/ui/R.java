@@ -399,11 +399,12 @@ public final class R {
         public static final int datetagitemview=0x7f030006;
         public static final int discountitem=0x7f030007;
         public static final int discountlist=0x7f030008;
-        public static final int main=0x7f030009;
-        public static final int maintabs=0x7f03000a;
-        public static final int more=0x7f03000b;
-        public static final int moreitemsview=0x7f03000c;
-        public static final int productitem=0x7f03000d;
+        public static final int list_position=0x7f030009;
+        public static final int main=0x7f03000a;
+        public static final int maintabs=0x7f03000b;
+        public static final int more=0x7f03000c;
+        public static final int moreitemsview=0x7f03000d;
+        public static final int productitem=0x7f03000e;
     }
     public static final class string {
         public static final int app_name=0x7f070001;
