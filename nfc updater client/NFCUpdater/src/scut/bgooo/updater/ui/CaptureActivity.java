@@ -14,6 +14,7 @@ import com.google.zxing.Result;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CaptureActivity extends Activity implements Callback {
 
@@ -48,7 +50,7 @@ public class CaptureActivity extends Activity implements Callback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.decoder);
 		// 初始化 CameraManager
 		CameraManager.init(getApplication());
 
@@ -199,6 +201,10 @@ public class CaptureActivity extends Activity implements Callback {
 		playBeepSoundAndVibrate();
 		txtResult.setText(obj.getBarcodeFormat().toString() + ":"
 				+ obj.getText());
+		Intent intent = new Intent(CaptureActivity.this,
+				NFCWriterActivity.class);
+		Toast.makeText(getApplication(), "开始写标签", 3000).show();
+		startActivity(intent);
 	}
 
 	private void initBeepSound() {

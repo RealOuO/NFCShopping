@@ -33,11 +33,16 @@ public class FunctionListActivity extends ListActivity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// TODO Auto-generated method stub
+			Intent intent=null;
 			switch (arg2) {
 			case 0:
+				intent= new Intent(FunctionListActivity.this,
+						MainActivity.class);
+				Toast.makeText(getApplication(), "请讲读写芯片贴近标签", 3000).show();
+				startActivity(intent);
 				break;
 			case 1:
-				Intent intent = new Intent(FunctionListActivity.this,
+				intent = new Intent(FunctionListActivity.this,
 						CaptureActivity.class);
 				Toast.makeText(getApplication(), "请拍摄商品的条形码", 3000).show();
 				startActivity(intent);
