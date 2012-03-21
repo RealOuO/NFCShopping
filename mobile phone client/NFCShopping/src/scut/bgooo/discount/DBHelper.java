@@ -1,22 +1,23 @@
-package scut.bgooo.concern;
+package scut.bgooo.discount;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public final class DBHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
 	private static final int DB_VERSION = 5;
 	private static final String DB_NAME = "nfc_scanner_product.db";
-	static final String TABLE_NAME = "concern";
+	static final String TABLE_NAME = "discount";
 	static final String ID_COL = "id";
 	static final String PRODUCT_ID_COL = "pid";
 	static final String NAME_COL = "name";
 	static final String TYPE_COL = "type";
+	static final String DISCOUNT_COL = "discount";
 	static final String PRICE_COL = "price";
 	static final String RATING_COL = "rating";
-	static final String TIMESTAMP_COL = "timestamp";
-	static final String ISCOLLECTED_COL = "collected";
+	static final String START_TIMESTAMP_COL = "starttimestamp";
+	static final String END_TIMESTAMP_COL = "endtimestamp";
 
 	public DBHelper(Context context) {
 		// TODO Auto-generated constructor stub
@@ -26,11 +27,7 @@ public final class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + ID_COL
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + PRODUCT_ID_COL
-				+ " INTEGER, " + NAME_COL + " TEXT, " + TYPE_COL + " INTEGER, "
-				+ PRICE_COL + " REAL, " + RATING_COL + " INTEGER, "
-				+ TIMESTAMP_COL + " INTEGER, " + ISCOLLECTED_COL + " INTEGER);");
+
 	}
 
 	@Override

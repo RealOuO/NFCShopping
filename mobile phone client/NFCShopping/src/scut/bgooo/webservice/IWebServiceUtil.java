@@ -9,6 +9,7 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.User;
 
 public interface IWebServiceUtil {
+	
 	/**
 	 * <p>
 	 * 登录判断接口
@@ -61,12 +62,12 @@ public interface IWebServiceUtil {
 	 * 通过商品id获取商品对象
 	 * 
 	 * @param id
-	 *            商品的id号
+	 *            商品的barcode 条形码编号
 	 * 
 	 * @return 返回商品的对象
 	 * 
 	 * */
-	public Product getProductById(int id);
+	public Product getProductById(String barcode);
 
 	/**
 	 * <p>
@@ -94,7 +95,7 @@ public interface IWebServiceUtil {
 	 * 通过商品id获取商品的最新20条评论
 	 * 
 	 * @param id
-	 *            商品的id
+	 *            商品的barcode 条形码编号
 	 * @return 评论列表
 	 */
 	public List<Comment> getComments(int id);
@@ -105,12 +106,12 @@ public interface IWebServiceUtil {
 	 * 通过商品id和Paging对象获取商品的评论
 	 * 
 	 * @param id
-	 *            商品的id
+	 *            商品的barcode 条形码编号
 	 * @param page
 	 *            Paging 分页对象
 	 * @return 评论列表
 	 */
-	public List<Comment> getComments(int id, Paging page);
+	public List<Comment> getComments(String barcode, Paging page);
 
 	/**
 	 * 
@@ -118,11 +119,11 @@ public interface IWebServiceUtil {
 	 * 通过商品的id获取商品的属性
 	 * 
 	 * @param id
-	 *            商品的id
+	 *            商品的barcode 条形码编号
 	 * @param page
 	 *            Paging 分页对象
 	 * @return 评论列表
 	 */
-	public List<String> getAttributes(int id);
+	public List<String> getAttributes(String barcode);
 
 }
