@@ -64,6 +64,7 @@ public class CaptureActivity extends Activity implements Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		txtResult.setText(null);
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {
@@ -203,6 +204,8 @@ public class CaptureActivity extends Activity implements Callback {
 				+ obj.getText());
 		Intent intent = new Intent(CaptureActivity.this,
 				NFCWriterActivity.class);
+		intent.putExtra("Barcode", obj.getText());
+		intent.putExtra("Type",obj.getBarcodeFormat().toString());
 		Toast.makeText(getApplication(), "¿ªÊ¼Ð´±êÇ©", 3000).show();
 		startActivity(intent);
 	}

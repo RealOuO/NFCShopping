@@ -4,25 +4,32 @@ import java.io.IOException;
 
 import scut.bgooo.dataobject.mifare.MifareSector;
 
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class NFCWriterActivity extends Activity {
+
+	private final static String TAG = NFCWriterActivity.class.getName();
 
 	// NFC parts
 	private static NfcAdapter mAdapter;
@@ -30,21 +37,33 @@ public class NFCWriterActivity extends Activity {
 	private IntentFilter[] mFilters;
 	private String[][] mTechLists;
 
-	private EditText et;
-	private Button bt;
-	private TextView tv;
+	private Button btCommit;
+	private Button btCancel;
+	private TextView tvTitle;
+	private TextView tvType;
+	private TextView tvBarcode;
+	private CheckBox cbIsConnecting;
+	// private Thread checking;
 
-	MifareClassic mfc;
-
+	private MifareClassic mfc = null;
+	private String barCode = "";
+	private String barCodeType = "";
 	private int mCount = 0;
+	
+	private MediaPlayer mediaPlayer;
+	private boolean playBeep;
+	private static final float BEEP_VOLUME = 0.10f;
+	private boolean vibrate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.writer);
-
 		mAdapter = NfcAdapter.getDefaultAdapter(this);
+		Intent intent = getIntent();
+		barCode = intent.getStringExtra("Barcode");
+		barCodeType = intent.getStringExtra("Type");
 		// Create a generic PendingIntent that will be deliver to this activity.
 		// The NFC stack
 		// will fill in the intent with the details of the discovered tag before
@@ -66,21 +85,36 @@ public class NFCWriterActivity extends Activity {
 		mTechLists = new String[][] { new String[] { MifareClassic.class
 				.getName() } };
 
-		et = (EditText) findViewById(R.id.etContent);
-		bt = (Button) findViewById(R.id.btOk);
-		tv = (TextView) findViewById(R.id.tvTitle);
-		bt.setOnClickListener(new OnClickListener() {
+		btCommit = (Button) findViewById(R.id.btCommit);
+		btCancel = (Button) findViewById(R.id.btCancel);
+		tvTitle = (TextView) findViewById(R.id.tvTitle);
+		tvBarcode = (TextView) findViewById(R.id.tvBarcode);
+		tvBarcode.setText(barCode);
+		tvType = (TextView) findViewById(R.id.tvType);
+		tvType.setText(barCodeType);
+		cbIsConnecting = (CheckBox) findViewById(R.id.cbIsConnecting);
+		cbIsConnecting.setClickable(false);
+
+		btCommit.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(et.getText().toString().length()!=0){
-					if(writeContentToCard(et.getText().toString())){
-						Toast.makeText(NFCWriterActivity.this, "写入成功", 1000).show();
-					}else{
-						Toast.makeText(NFCWriterActivity.this, "写入失败", 1000).show();
+				boolean isChecked = cbIsConnecting.isChecked();
+				if (isChecked) {
+					if (writeContentToCard(tvBarcode.getText().toString())) {
+						finish();
+						Toast.makeText(NFCWriterActivity.this, "写入成功", 1000)
+								.show();
+					} else {
+						Toast.makeText(NFCWriterActivity.this, "写入失败", 1000)
+								.show();
+						cbIsConnecting.setChecked(false);
+						cbIsConnecting.setText("失去连接");
 					}
-				}else{
+				} else {
 					Toast.makeText(NFCWriterActivity.this, "写入失败", 1000).show();
+					cbIsConnecting.setChecked(false);
+					cbIsConnecting.setText("失去连接");
 				}
 
 			}
@@ -97,18 +131,78 @@ public class NFCWriterActivity extends Activity {
 			// 4) Get an instance of the Mifare classic card from this TAG
 			// intent
 			mfc = MifareClassic.get(tagFromIntent);
-			Log.d("ISNULL", mfc.toString());
-
+			
+			try {
+				mfc.connect();
+				Log.d("fuck", "连接标签");
+				cbIsConnecting.setChecked(true);
+				cbIsConnecting.setText("取得连接");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.d("fuck", "连接出错");
+				cbIsConnecting.setChecked(false);
+				cbIsConnecting.setText("失去连接");
+				e.printStackTrace();
+			}
+			playBeepSoundAndVibrate();
 		}
 	}
 
+
+	private void initBeepSound() {
+		// TODO Auto-generated method stub
+		if (playBeep && mediaPlayer == null) {
+			// The volume on STREAM_SYSTEM is not adjustable, and users found it
+			// too loud,
+			// so we now play on the music stream.
+			setVolumeControlStream(AudioManager.STREAM_MUSIC);
+			mediaPlayer = new MediaPlayer();
+			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+			mediaPlayer.setOnCompletionListener(beepListener);
+
+			AssetFileDescriptor file = getResources().openRawResourceFd(
+					R.raw.beep);
+			try {
+				mediaPlayer.setDataSource(file.getFileDescriptor(),
+						file.getStartOffset(), file.getLength());
+				file.close();
+				mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+				mediaPlayer.prepare();
+			} catch (IOException e) {
+				mediaPlayer = null;
+			}
+		}
+	}
+
+	private static final long VIBRATE_DURATION = 200L;
+
+	private void playBeepSoundAndVibrate() {
+		if (playBeep && mediaPlayer != null) {
+			mediaPlayer.start();
+		}
+		if (vibrate) {
+			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+			vibrator.vibrate(VIBRATE_DURATION);
+		}
+	}
+	
+	/**
+	 * When the beep has finished playing, rewind to queue up another one.
+	 */
+	private final OnCompletionListener beepListener = new OnCompletionListener() {
+		public void onCompletion(MediaPlayer mediaPlayer) {
+			mediaPlayer.seekTo(0);
+		}
+	};
 	private boolean writeContentToCard(String content) {
 
-		try { // 5.1) Connect to card
-			if(mfc.equals(null)){
+		try {
+			if (mfc.equals(null)) {
+				Log.d(TAG, "没有mfc的实例");
 				return false;
+			} else {
+				// 5.1) Connect to card
 			}
-			mfc.connect();
 			boolean auth = false;
 			// 5.2) and get the number of sectors this card has..and loop
 			// thru these sectors
@@ -129,19 +223,21 @@ public class NFCWriterActivity extends Activity {
 				toBeWrited[0] = length;
 				if (contentToBytes.length <= toBeWrited.length - 1) {
 					for (int i = 1; i < toBeWrited.length; i++) {
-						if (i  > contentToBytes.length) {
+						if (i > contentToBytes.length) {
 							toBeWrited[i] = (byte) '\0';
 						} else {
 							toBeWrited[i] = contentToBytes[i - 1];
 						}
 					}
 				}
-				mfc.writeBlock(bIndex+1, toBeWrited);
+				mfc.writeBlock(bIndex + 1, toBeWrited);
+				mfc.close();
 				return true;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-			
+			Log.d("fuck", "读写出错，抛出异常");
+			cbIsConnecting.setChecked(false);
+			cbIsConnecting.setText("失去连接");
 		}
 		return false;
 	}
@@ -151,12 +247,19 @@ public class NFCWriterActivity extends Activity {
 		super.onResume();
 		mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters,
 				mTechLists);
+		playBeep = true;
+		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+			playBeep = false;
+		}
+		initBeepSound();
+		vibrate = true;
 	}
 
 	@Override
 	public void onNewIntent(Intent intent) {
-		Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
-		tv.setText("Discovered tag " + ++mCount + " with intent: " + intent);
+		Log.d(TAG, "Discovered tag with intent: " + intent);
+		tvTitle.setText("扫描到第" + ++mCount + "标签");
 		resolveIntent(intent);
 	}
 

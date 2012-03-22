@@ -122,6 +122,12 @@ public class CommentListActivity extends Activity {
 		});
 	}
 
+	@Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+	
 	void resolveIntent(Intent intent) {
 		// Parse the intent
 		String action = intent.getAction();
