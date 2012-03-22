@@ -247,6 +247,7 @@ public class NFCWriterActivity extends Activity {
 		super.onResume();
 		mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters,
 				mTechLists);
+		//œÏ¡Â∫Õ’∂Øµƒ≈‰÷√
 		playBeep = true;
 		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
 		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
