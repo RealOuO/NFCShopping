@@ -58,30 +58,41 @@ public class NFCWriterActivity extends Activity {
 	/**
 	 * 监听是否跟卡片取得连接的线程对象
 	 * */
-	private RunCheck checkRunnable;
+	private Runnable checkRunnable;
 
 	class RunCheck implements Runnable {
 
-		// 获取卡片对象
-		MifareClassic mfc;
+		// 获取Activity对象
+		NFCWriterActivity activity;
 
-		public RunCheck(MifareClassic mfc) {
-			this.mfc = mfc;
+		public RunCheck(NFCWriterActivity activity) {
+			this.activity = activity;
 		}
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			if (mfc.isConnected()) {
-				Log.d("fuck", "连接标签");
-				cbIsConnecting.setChecked(true);
-				cbIsConnecting.setText("取得连接");
-			} else {
-				Log.d("fuck", "失去连接");
-				cbIsConnecting.setChecked(false);
-				cbIsConnecting.setText("失去连接");
-			}
-			handler.postDelayed(this, 2000);// 相当于线程的循环，如果线程不停止则每2秒执行一次
+			activity.handleCheck();
+		}
+	}
+
+	/**
+	 * 
+	 * UI处理标签连接的方法
+	 * 
+	 * */
+	protected void handleCheck() {
+		if (mfc.isConnected()) {
+			Log.d("fuck", "连接标签");
+			cbIsConnecting.setChecked(true);
+			cbIsConnecting.setText("取得连接");
+			handler.postDelayed(checkRunnable, 2000);// 相当于线程的循环，如果线程不停止则每2秒执行一次
+		} else {
+			// 失去连接就停止线程
+			Log.d("fuck", "失去连接");
+			cbIsConnecting.setChecked(false);
+			cbIsConnecting.setText("失去连接");
+			handler.removeCallbacks(checkRunnable);// 停止线程
 		}
 	}
 
@@ -131,17 +142,19 @@ public class NFCWriterActivity extends Activity {
 		cbIsConnecting.setClickable(false);
 
 		btCommit.setOnClickListener(onclickListener);
+
+		Log.d(TAG, "Create");
+		checkRunnable = new RunCheck(this);
 	}
-	
-	private OnClickListener onclickListener=new OnClickListener() {
+
+	private OnClickListener onclickListener = new OnClickListener() {
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if (cbIsConnecting.isChecked()) {
 				if (writeContentToCard(tvBarcode.getText().toString())) {
 					finish();
-					Toast.makeText(NFCWriterActivity.this, "写入成功", 1000)
-							.show();
+					Toast.makeText(NFCWriterActivity.this, "写入成功", 1000).show();
 				} else {
 					Toast.makeText(NFCWriterActivity.this, "写卡过程出错，\n写入失败",
 							1000).show();
@@ -153,7 +166,7 @@ public class NFCWriterActivity extends Activity {
 
 		}
 	};
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -174,6 +187,8 @@ public class NFCWriterActivity extends Activity {
 		Log.d(TAG, "Discovered tag with intent: " + intent);
 		tvTitle.setText("扫描到第" + ++mCount + "标签");
 		resolveIntent(intent);
+		// 执行监听线程
+		handler.post(checkRunnable);
 	}
 
 	@Override
@@ -183,9 +198,9 @@ public class NFCWriterActivity extends Activity {
 	}
 
 	@Override
-	protected void onDestroy() {		
+	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		handler.removeCallbacks(checkRunnable);//停止线程
+		handler.removeCallbacks(checkRunnable);// 停止线程
 		super.onDestroy();
 	}
 
@@ -214,9 +229,6 @@ public class NFCWriterActivity extends Activity {
 			}
 			// 响铃和震动
 			playBeepSoundAndVibrate();
-			checkRunnable = new RunCheck(mfc);
-			// 执行监听线程
-			handler.post(checkRunnable);
 		}
 	}
 
