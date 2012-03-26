@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_item_bg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -35,7 +34,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/productName"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
 
                 <TextView
@@ -44,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dip"
                     android:text="Lee"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
             </LinearLayout>
 
@@ -58,7 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/privilegeCost"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
 
                 <TextView
@@ -67,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dip"
                     android:text="1000"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
             </LinearLayout>
 
@@ -81,7 +76,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/discount"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
 
                 <TextView
@@ -90,7 +84,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dip"
                     android:text="70%"
-                    android:textColor="#ff333333"
                     android:textSize="15.0sp" />
             </LinearLayout>
         </LinearLayout>
@@ -121,16 +114,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/duration"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ff333333" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/tvDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="活动时间"
-            android:textColor="#ff333333" />
+            android:text="活动时间" />
     </LinearLayout>
 
 </LinearLayout>

@@ -7,4 +7,8 @@
     <item type="id" name="goods_score">false</item>
     <item type="id" name="score">false</item>
     <item type="id" name="goods_image">false</item>
+    <item type="id" name="reuser">false</item>
+    <item type="id" name="repassword">false</item>
+    <item type="id" name="reconfirm">false</item>
+    <item type="id" name="recancle">false</item>
 </resources>
