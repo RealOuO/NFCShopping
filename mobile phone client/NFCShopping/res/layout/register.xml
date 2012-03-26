@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true" android:id="@+id/linearLayout1"
+		android:layout_width="fill_parent" android:layout_centerVertical="true"
+		android:orientation="vertical">
+		<LinearLayout android:id="@+id/linearLayout2"
+			android:layout_width="fill_parent" android:layout_height="match_parent">
+			<TextView android:text="@string/reuser1" android:id="@+id/textView1"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical" ></TextView>
+			<EditText android:id="@id/reuser" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:hint="@string/reuser2"></EditText>
+		</LinearLayout>
+		<LinearLayout android:id="@+id/linearLayout3"
+			android:layout_width="fill_parent" android:layout_height="match_parent">
+			<TextView  android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/repassword1"></TextView>
+			<EditText android:id="@id/repassword" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:hint="@string/repassword2"></EditText>
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/lybuttonBar" style="@android:style/ButtonBar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:orientation="horizontal">
+
+		<Button android:id="@id/reconfirm" android:layout_width="0dip"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:text="@string/reconfirm" />
+
+		<Button android:id="@id/recancle"
+			android:layout_width="0dip" android:layout_height="wrap_content"
+			android:layout_weight="1" android:text="@string/recancle" />
+	</LinearLayout>
+
+
+</RelativeLayout>

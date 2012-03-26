@@ -3,7 +3,9 @@
     package="scut.bgooo.ui"
     android:versionCode="1"
     android:versionName="1.0" >
-
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-sdk android:minSdkVersion="10" />
 
     <application
@@ -58,6 +60,15 @@
         <activity
             android:name=".DiscountListActivity"
             android:label="@string/app_name" />
-    </application>
-
+            
+            <activity android:name="scut.bgooo.weibo.AuthorizeActivity"
+			android:label="@string/app_name" />
+		<activity android:name="scut.bgooo.weibo.VerifierWebViewActivity"
+			android:label="@string/app_name" />
+		<activity android:name="scut.bgooo.weibo.WeiboUserListActivity"
+			android:launchMode="singleTask" android:label="@string/app_name">
+		</activity>
+		<activity android:name=".RegisterActivity" android:label="@string/app_name" />
+		<activity android:name=".FeedBackActivity" android:label="@string/app_name" />
+	</application>
 </manifest>

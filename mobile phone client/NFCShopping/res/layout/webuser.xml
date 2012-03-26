@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+	<ListView android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/user"
+		android:layout_alignParentTop="true"></ListView>
+	<RelativeLayout android:id="@+id/relativeLayout1"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:layout_alignParentBottom="true" >
+		<LinearLayout
+            android:id="@+id/lybuttonBar"
+            style="@android:style/ButtonBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="清空列表" />
+            
+            <Button
+                android:id="@+id/del"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="删除用户" />
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="添加用户" />
+        </LinearLayout>
+	</RelativeLayout>
+
+</RelativeLayout>
