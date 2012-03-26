@@ -85,6 +85,7 @@
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Access_Data\ICategoryRepository.cs" />
     <Compile Include="Access_Data\IDiscountItemRepository.cs" />
     <Compile Include="Access_Data\IDiscountRepository.cs" />
     <Compile Include="Access_Data\IProductRepository.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="BLL\SecCategoryBL.cs" />
     <Compile Include="BLL\SuggestionBL.cs" />
     <Compile Include="BLL\UserBL.cs" />
+    <Compile Include="DAL\CategoryRepository.cs" />
     <Compile Include="DAL\DiscountItemRepository.cs" />
     <Compile Include="DAL\DiscountRepository.cs" />
     <Compile Include="DAL\ProductRepository.cs" />

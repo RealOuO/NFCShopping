@@ -6,22 +6,22 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class SecCategoryRepository : ISecCategoryRepository, IDisposable
+    public class CategoryRepository : ICategoryRepository, IDisposable
     {
         private bool mIsDisposed = false;
 
         private Sys_DBEntities mContext = new Sys_DBEntities();
 
-        public IEnumerable<SecCategory> GetSecCategories()
+        public IEnumerable<Category> GetCategories()
         {
-            return mContext.SecCategories.Include("Category").ToList();
+            return mContext.Categories.ToList();
         }
 
-        public void InsertSecCategory(SecCategory secondCategory)
+        public void InsertCategory(Category category)
         {
             try
             {
-                mContext.SecCategories.AddObject(secondCategory);
+                mContext.Categories.AddObject(category);
             }
             catch (Exception ex)
             {
@@ -29,12 +29,12 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void UpdateSecCategory(SecCategory newSecondCategory, SecCategory origSecondCategory)
+        public void UpdateCategory(Category newCategory, Category origCategory)
         {
             try
             {
-                mContext.SecCategories.Attach(origSecondCategory);
-                mContext.ApplyCurrentValues("SecCategories", newSecondCategory);
+                mContext.Categories.Attach(origCategory);
+                mContext.ApplyCurrentValues("Categories", newCategory);
             }
             catch (Exception ex)
             {
@@ -42,12 +42,13 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteSecCategory(SecCategory secondCategory)
+        public void DeleteCategory(Category category)
         {
             try
             {
-                mContext.SecCategories.Attach(secondCategory);
-                mContext.SecCategories.DeleteObject(secondCategory);
+                mContext.Categories.Attach(category);
+                mContext.Categories.DeleteObject(category);
+
             }
             catch (Exception ex)
             {
@@ -57,13 +58,13 @@ namespace NFCShoppingWebSite.DAL
 
         protected void Dispose(bool isDisposing)
         {
-            if (!mIsDisposed)
+            if(!mIsDisposed)
             {
                 mContext.SaveChanges();
 
-                if (isDisposing)
+                if(isDisposing)
                 {
-                    mContext.Dispose();
+                    mContext.Dispose()
                 }
             }
 
