@@ -17,6 +17,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -43,13 +44,47 @@ public class NFCWriterActivity extends Activity {
 	private TextView tvType;
 	private TextView tvBarcode;
 	private CheckBox cbIsConnecting;
-	// private Thread checking;
 
 	private MifareClassic mfc = null;
 	private String barCode = "";
 	private String barCodeType = "";
 	private int mCount = 0;
-	
+
+	/**
+	 * android.os.Handler是Android SDK中处理定时操作的核心类。
+	 * 通过Handler类，可以提交和处理一个Runnable对象。 这个对象的run 方法可以立刻执行，也可以在指定时间之后执行（可以称为预约执行
+	 * */
+	Handler handler = new Handler();
+	/**
+	 * 监听是否跟卡片取得连接的线程对象
+	 * */
+	private RunCheck checkRunnable;
+
+	class RunCheck implements Runnable {
+
+		// 获取卡片对象
+		MifareClassic mfc;
+
+		public RunCheck(MifareClassic mfc) {
+			this.mfc = mfc;
+		}
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if (mfc.isConnected()) {
+				Log.d("fuck", "连接标签");
+				cbIsConnecting.setChecked(true);
+				cbIsConnecting.setText("取得连接");
+			} else {
+				Log.d("fuck", "失去连接");
+				cbIsConnecting.setChecked(false);
+				cbIsConnecting.setText("失去连接");
+			}
+			handler.postDelayed(this, 2000);// 相当于线程的循环，如果线程不停止则每2秒执行一次
+		}
+	}
+
 	private MediaPlayer mediaPlayer;
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
@@ -95,30 +130,63 @@ public class NFCWriterActivity extends Activity {
 		cbIsConnecting = (CheckBox) findViewById(R.id.cbIsConnecting);
 		cbIsConnecting.setClickable(false);
 
-		btCommit.setOnClickListener(new OnClickListener() {
+		btCommit.setOnClickListener(onclickListener);
+	}
+	
+	private OnClickListener onclickListener=new OnClickListener() {
 
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				boolean isChecked = cbIsConnecting.isChecked();
-				if (isChecked) {
-					if (writeContentToCard(tvBarcode.getText().toString())) {
-						finish();
-						Toast.makeText(NFCWriterActivity.this, "写入成功", 1000)
-								.show();
-					} else {
-						Toast.makeText(NFCWriterActivity.this, "写入失败", 1000)
-								.show();
-						cbIsConnecting.setChecked(false);
-						cbIsConnecting.setText("失去连接");
-					}
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if (cbIsConnecting.isChecked()) {
+				if (writeContentToCard(tvBarcode.getText().toString())) {
+					finish();
+					Toast.makeText(NFCWriterActivity.this, "写入成功", 1000)
+							.show();
 				} else {
-					Toast.makeText(NFCWriterActivity.this, "写入失败", 1000).show();
-					cbIsConnecting.setChecked(false);
-					cbIsConnecting.setText("失去连接");
+					Toast.makeText(NFCWriterActivity.this, "写卡过程出错，\n写入失败",
+							1000).show();
 				}
-
+			} else {
+				Toast.makeText(NFCWriterActivity.this, "失去连接，\n写入失败", 1000)
+						.show();
 			}
-		});
+
+		}
+	};
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters,
+				mTechLists);
+		// 响铃和震动的配置
+		playBeep = true;
+		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+			playBeep = false;
+		}
+		initBeepSound();
+		vibrate = true;
+	}
+
+	@Override
+	public void onNewIntent(Intent intent) {
+		Log.d(TAG, "Discovered tag with intent: " + intent);
+		tvTitle.setText("扫描到第" + ++mCount + "标签");
+		resolveIntent(intent);
+	}
+
+	@Override
+	public void onPause() {
+		mAdapter.disableForegroundDispatch(this);
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {		
+		// TODO Auto-generated method stub
+		handler.removeCallbacks(checkRunnable);//停止线程
+		super.onDestroy();
 	}
 
 	void resolveIntent(Intent intent) {
@@ -131,7 +199,7 @@ public class NFCWriterActivity extends Activity {
 			// 4) Get an instance of the Mifare classic card from this TAG
 			// intent
 			mfc = MifareClassic.get(tagFromIntent);
-			
+
 			try {
 				mfc.connect();
 				Log.d("fuck", "连接标签");
@@ -144,10 +212,13 @@ public class NFCWriterActivity extends Activity {
 				cbIsConnecting.setText("失去连接");
 				e.printStackTrace();
 			}
+			// 响铃和震动
 			playBeepSoundAndVibrate();
+			checkRunnable = new RunCheck(mfc);
+			// 执行监听线程
+			handler.post(checkRunnable);
 		}
 	}
-
 
 	private void initBeepSound() {
 		// TODO Auto-generated method stub
@@ -185,7 +256,7 @@ public class NFCWriterActivity extends Activity {
 			vibrator.vibrate(VIBRATE_DURATION);
 		}
 	}
-	
+
 	/**
 	 * When the beep has finished playing, rewind to queue up another one.
 	 */
@@ -194,6 +265,7 @@ public class NFCWriterActivity extends Activity {
 			mediaPlayer.seekTo(0);
 		}
 	};
+
 	private boolean writeContentToCard(String content) {
 
 		try {
@@ -240,34 +312,6 @@ public class NFCWriterActivity extends Activity {
 			cbIsConnecting.setText("失去连接");
 		}
 		return false;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters,
-				mTechLists);
-		//响铃和震动的配置
-		playBeep = true;
-		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
-		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
-			playBeep = false;
-		}
-		initBeepSound();
-		vibrate = true;
-	}
-
-	@Override
-	public void onNewIntent(Intent intent) {
-		Log.d(TAG, "Discovered tag with intent: " + intent);
-		tvTitle.setText("扫描到第" + ++mCount + "标签");
-		resolveIntent(intent);
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		mAdapter.disableForegroundDispatch(this);
 	}
 
 }
