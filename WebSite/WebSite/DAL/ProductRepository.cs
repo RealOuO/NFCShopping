@@ -10,7 +10,7 @@ namespace NFCShoppingWebSite.DAL
     {
         private bool mIsDisposed = false;
 
-        private Sys_DBEntities mContext = new Sys_DBEntities();
+        private ShopEntities mContext = new ShopEntities();
 
         public IEnumerable<Product> GetProducts()
         {

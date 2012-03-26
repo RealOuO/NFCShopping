@@ -216,6 +216,7 @@ public class NFCWriterActivity extends Activity {
 			mfc = MifareClassic.get(tagFromIntent);
 
 			try {
+				// 5.1) Connect to card
 				mfc.connect();
 				Log.d("fuck", "连接标签");
 				cbIsConnecting.setChecked(true);
@@ -284,8 +285,6 @@ public class NFCWriterActivity extends Activity {
 			if (mfc.equals(null)) {
 				Log.d(TAG, "没有mfc的实例");
 				return false;
-			} else {
-				// 5.1) Connect to card
 			}
 			boolean auth = false;
 			// 5.2) and get the number of sectors this card has..and loop
@@ -320,8 +319,6 @@ public class NFCWriterActivity extends Activity {
 			}
 		} catch (IOException e) {
 			Log.d("fuck", "读写出错，抛出异常");
-			cbIsConnecting.setChecked(false);
-			cbIsConnecting.setText("失去连接");
 		}
 		return false;
 	}
