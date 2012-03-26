@@ -9,14 +9,10 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<Product> GetProducts();
 
-        Product GetProductByID(Int32 id);
-        /*通过条形码编号获取商品信息*/
-        Product GetProductByBarcode(String barcode);
-
         void InsertProduct(Product product);
         /*删除商品信息*/
         void DeleteProduct(Product product);
 
-        void UpdateProduct(Product product);
+        void UpdateProduct(Product newProduct, Product origProduct);
     }
 }

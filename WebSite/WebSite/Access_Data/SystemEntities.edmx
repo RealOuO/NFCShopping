@@ -290,7 +290,7 @@
           <Property Name="location" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="impageURL" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="SecCategorie" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Products" ToRole="SecCategories" />
+          <NavigationProperty Name="SecCategory" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Products" ToRole="SecCategories" />
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
           <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="Product" ToRole="DiscountItem" />
         </EntityType>
@@ -313,7 +313,7 @@
           <Property Name="SecCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="SecCategoryName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Categorie" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="SecCategories" ToRole="Categories" />
+          <NavigationProperty Name="Category" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="SecCategories" ToRole="Categories" />
           <NavigationProperty Name="Products" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="SecCategories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Suggestion">

@@ -6,41 +6,75 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class ProductRepository:IProductRepository,IDisposable
+    public class ProductRepository : IProductRepository, IDisposable
     {
+        private bool mIsDisposed = false;
+
+        private Sys_DBEntities mContext = new Sys_DBEntities();
+
         public IEnumerable<Product> GetProducts()
         {
-            throw new NotImplementedException();
-        }
-
-        public Product GetProductByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Product GetProductByBarcode(string barcode)
-        {
-            throw new NotImplementedException();
+            return mContext.Products.Include("SecCategory").ToList();
         }
 
         public void InsertProduct(Product product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Products.AddObject(product);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
         public void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Products.Attach(product);
+                mContext.Products.DeleteObject(product);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void UpdateProduct(Product product)
+        public void UpdateProduct(Product newProduct, Product origProduct)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Products.Attach(origProduct);
+                mContext.ApplyCurrentValues("Products", newProduct);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+        }
+
+        protected void Dispose(bool isDisposing)
+        {
+            if (!mIsDisposed)
+            {
+                // Save the changes before disposing the object.
+                mContext.SaveChanges();
+
+                if (isDisposing)
+                {
+                    mContext.Dispose();
+                }
+            }
+
+            mIsDisposed = true;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
