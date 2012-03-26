@@ -105,7 +105,7 @@ public interface IWebServiceUtil {
 	 * <p>
 	 * 通过商品id和Paging对象获取商品的评论
 	 * 
-	 * @param id
+	 * @param barcode
 	 *            商品的barcode 条形码编号
 	 * @param page
 	 *            Paging 分页对象

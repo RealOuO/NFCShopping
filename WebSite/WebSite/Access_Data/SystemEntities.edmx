@@ -266,7 +266,7 @@
           <Property Name="startDate" Type="DateTime" Nullable="false" />
           <Property Name="endDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Discount" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="DiscountInformation" ToRole="Discounts" />
-          <NavigationProperty Name="Products" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="DiscountItem" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="DiscountItem" ToRole="Product" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -275,7 +275,7 @@
           <Property Name="discountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="DiscountInformations" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Discounts" ToRole="DiscountInformation" />
+          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Discounts" ToRole="DiscountInformation" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -292,7 +292,7 @@
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="SecCategorie" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Products" ToRole="SecCategories" />
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
-          <NavigationProperty Name="DiscountInformation" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="Product" ToRole="DiscountItem" />
+          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="Product" ToRole="DiscountItem" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -506,18 +506,18 @@
       <Diagram Name="SystemEntities">
         <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.5" PointY="11.625" Height="1.5879931640624996" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="3.25" PointX="6" PointY="4.125" Height="2.5430916341145831" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="2.375" PointX="5.75" PointY="1.375" Height="1.7790128580729165" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="2.375" PointX="5.75" PointY="1.375" Height="1.779012858072917" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="3.875" PointY="7.25" Height="3.1161507161458344" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="3.625" PointY="2.625" Height="2.3520719401041656" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="3.5" PointY="1.5" Height="2.3520719401041656" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="1.5" PointY="8.875" Height="1.9700325520833317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="0.5" PointY="6.375" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="0.625" PointY="5.875" Height="1.9700325520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="0.75" PointY="2.375" Height="2.5430916341145817" IsExpanded="true" />
         <AssociationConnector Association="Sys_DBModel.FK_SecCategories_Categories" ManuallyRouted="false">
           <ConnectorPoint PointX="1.75" PointY="11.625" />
           <ConnectorPoint PointX="1.75" PointY="10.845032552083332" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.0625" PointY="3.1540128580729165" />
+          <ConnectorPoint PointX="7.0625" PointY="3.154012858072917" />
           <ConnectorPoint PointX="7.0625" PointY="4.125" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Products_SecCategories" ManuallyRouted="false">
@@ -525,18 +525,18 @@
           <ConnectorPoint PointX="3.875" PointY="9.7160852050781248" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="7.25" />
-          <ConnectorPoint PointX="4.5" PointY="4.9770719401041656" />
+          <ConnectorPoint PointX="4.4375" PointY="7.25" />
+          <ConnectorPoint PointX="4.4375" PointY="3.8520719401041656" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="3.7715458170572909" />
-          <ConnectorPoint PointX="3.625" PointY="3.7715458170572909" />
+          <ConnectorPoint PointX="2.25" PointY="3.1135359700520828" />
+          <ConnectorPoint PointX="3.5" PointY="3.1135359700520828" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Suggestions_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.375" PointY="4.9180916341145817" />
-          <ConnectorPoint PointX="1.375" PointY="6.375" />
+          <ConnectorPoint PointX="1.4375" PointY="4.9180916341145817" />
+          <ConnectorPoint PointX="1.4375" PointY="5.875" />
         </AssociationConnector>
-        <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products1" >
+        <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products1" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.375" PointY="8.9035852050781248" />
           <ConnectorPoint PointX="7.625" PointY="8.9035852050781248" />
           <ConnectorPoint PointX="7.625" PointY="6.6680916341145835" />
