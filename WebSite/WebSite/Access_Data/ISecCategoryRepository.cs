@@ -7,5 +7,12 @@ namespace NFCShoppingWebSite.Access_Data
 {
     interface ISecCategoryRepository:IDisposable
     {
+        IEnumerable<SecCategory> GetSecCategories();
+
+        void InsertSecCategory(SecCategory secondCategory);
+
+        void UpdateSecCategory(SecCategory newSecondCategory, SecCategory origSecondCategory);
+
+        void DeleteSecCategory(SecCategory secondCategory);
     }
 }
