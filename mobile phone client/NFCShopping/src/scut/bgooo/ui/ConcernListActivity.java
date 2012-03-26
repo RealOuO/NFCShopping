@@ -96,6 +96,7 @@ public class ConcernListActivity extends ListActivity {
 		mConcernAdapter = new ConcernItemAdapter(this, mItems);
 		setListAdapter(mConcernAdapter);
 
+
 		getListView().setOnScrollListener(onScrollerListener);
 		getListView().setOnItemClickListener(onItemClickListener);
 

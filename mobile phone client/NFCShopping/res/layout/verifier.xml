@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:orientation="vertical">
+	<Button android:text="Button" android:id="@+id/b1"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	<TextView android:text="TextView" android:id="@+id/t1"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	<TextView android:text="TextView" android:id="@+id/t2"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	<TextView android:text="TextView" android:id="@+id/t3"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	<ImageView android:id="@+id/imageView1"
+		android:layout_height="wrap_content" android:src="@drawable/icon"
+		android:layout_width="wrap_content" android:adjustViewBounds="true"></ImageView>
+	<TextView android:text="TextView" android:id="@+id/t4"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+</LinearLayout>

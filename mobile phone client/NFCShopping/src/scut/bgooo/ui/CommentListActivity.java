@@ -7,6 +7,7 @@ import java.util.Random;
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -197,6 +198,7 @@ class CommentAdapter extends BaseAdapter {
 					R.layout.moreitemsview, null);
 			TextView tv = (TextView) moreitem.findViewById(R.id.tvItemContent);
 			tv.setText("¸üÐÂ");
+
 			return moreitem;
 		} else {
 			View commentitem = null;
@@ -209,6 +211,7 @@ class CommentAdapter extends BaseAdapter {
 			} else {
 				Log.d("getview", "doGetView-------new TextView-----------"
 						+ position);
+
 				commentitem = LayoutInflater.from(context).inflate(
 						R.layout.commentitem, null);
 			}
