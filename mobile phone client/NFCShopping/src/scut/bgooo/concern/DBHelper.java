@@ -19,8 +19,8 @@ public final class DBHelper extends SQLiteOpenHelper {
 	static final String ISCOLLECTED_COL = "collected";
 
 	public DBHelper(Context context) {
-		super(context, DB_NAME, null, DB_VERSION);
 		// TODO Auto-generated constructor stub
+		super(context, DB_NAME, null, DB_VERSION);
 	}
 
 	@Override

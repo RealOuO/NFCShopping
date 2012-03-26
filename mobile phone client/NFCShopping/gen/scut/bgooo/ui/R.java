@@ -424,16 +424,17 @@ public final class R {
         public static final int discountlist=0x7f030009;
         public static final int feedback=0x7f03000a;
         public static final int itemview=0x7f03000b;
-        public static final int main=0x7f03000c;
-        public static final int maintabs=0x7f03000d;
-        public static final int more=0x7f03000e;
-        public static final int moreitemsview=0x7f03000f;
-        public static final int productitem=0x7f030010;
-        public static final int register=0x7f030011;
-        public static final int verifier=0x7f030012;
-        public static final int webuser=0x7f030013;
-        public static final int webview=0x7f030014;
-        public static final int weibouseritem=0x7f030015;
+        public static final int list_position=0x7f03000c;
+        public static final int main=0x7f03000d;
+        public static final int maintabs=0x7f03000e;
+        public static final int more=0x7f03000f;
+        public static final int moreitemsview=0x7f030010;
+        public static final int productitem=0x7f030011;
+        public static final int register=0x7f030012;
+        public static final int verifier=0x7f030013;
+        public static final int webuser=0x7f030014;
+        public static final int webview=0x7f030015;
+        public static final int weibouseritem=0x7f030016;
     }
     public static final class string {
         public static final int app_name=0x7f070001;

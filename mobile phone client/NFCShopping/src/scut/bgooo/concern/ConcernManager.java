@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import scut.bgooo.discount.DiscountManager;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -15,9 +14,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * 关注列表数据管理类，负责数据库的插删改查
+ * 
+ * @since 2012年3月16日
+ * 
+ * */
 public final class ConcernManager {
 
-	private static final String TAG = DiscountManager.class.getSimpleName();
+	private static final String TAG = ConcernManager.class.getSimpleName();
 
 	private static final int MAX_ITEMS = 100;
 
@@ -369,6 +374,10 @@ public final class ConcernManager {
 	 * <P>
 	 * 清空关注列表的数据
 	 * </P>
+	 * 
+	 * @since 2012年3月17日
+	 * 
+	 * @author Leeforall
 	 * */
 	public void clearConcern() {
 		Log.d(TAG, "clearConcern()");

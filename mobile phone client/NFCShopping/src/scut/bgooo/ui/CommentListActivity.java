@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
@@ -111,16 +110,25 @@ public class CommentListActivity extends Activity {
 					boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked) {
+					// 收藏该记录
 					item.setIsCollected((short) 1);
 				} else {
+					// 取消收藏该记录
 					item.setIsCollected((short) 0);
 				}
+				// 更新数据库的数据
 				mConcernManager.addConcernItem(item);
 				Log.d(TAG, "checked changed");
 			}
 		});
 	}
 
+	@Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+	
 	void resolveIntent(Intent intent) {
 		// Parse the intent
 		String action = intent.getAction();
@@ -132,12 +140,15 @@ public class CommentListActivity extends Activity {
 			mConcernManager.addConcernItem(item);
 			Log.d(TAG, "discover a tag");
 		} else {
+
 			item = (ConcernItem) intent.getSerializableExtra("ConcernItem");
+
 			mPriceTextView.setText(String.valueOf(item.getPrice()));
 			mNameTextView.setText(item.getName());
 			mRatingBar.setRating((float) item.getRating());
+
+			Log.d(TAG, "is collected" + item.getIsCollected());
 			if (item.getIsCollected() == 0) {
-				Log.d(TAG, "is collected" + item.getIsCollected());
 				mCheckBox.setChecked(false);
 			} else {
 				mCheckBox.setChecked(true);
@@ -216,7 +227,6 @@ class CommentAdapter extends BaseAdapter {
 					.get("Rating").toString()));
 
 			return commentitem;
-
 		}
 	}
 

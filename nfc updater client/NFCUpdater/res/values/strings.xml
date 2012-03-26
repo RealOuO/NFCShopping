@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, CaptureActivity!</string>
+    <string name="app_name">NFC—RW客户端</string>
+    <string name="msg_sure">确认退出？</string>
+    <string name="btOK">确定</string>
+    <string name="btCancel">取消</string>
+    <string name="btClear">清除标签信息</string>
+</resources>
