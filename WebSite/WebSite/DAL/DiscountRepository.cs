@@ -8,6 +8,7 @@ namespace NFCShoppingWebSite.DAL
 {
     public class DiscountRepository:IDiscountRepository,IDisposable
     {
+
         private bool mIsDisposed = false;
 
         private ShopEntities mContext = new ShopEntities();
@@ -22,7 +23,7 @@ namespace NFCShoppingWebSite.DAL
             return mContext.CompiledDepartmentsByIdQuery(id);
         }
 
-        public void InsertDiscountItem(Discount discount)
+        public void InsertDiscount(Discount discount)
         {
             try
             {
@@ -34,7 +35,8 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteDiscountItem(Discount discount)
+
+        public void DeleteDiscount(Discount discount)
         {
             try
             {
@@ -60,6 +62,7 @@ namespace NFCShoppingWebSite.DAL
                 // TODO: Add exception handling code here.
             }
         }
+
 
         protected void Dispose(bool isDisposing)
         {

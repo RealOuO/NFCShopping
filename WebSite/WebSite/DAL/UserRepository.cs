@@ -8,39 +8,83 @@ namespace NFCShoppingWebSite.DAL
 {
     public class UserRepository:IUserRepository,IDisposable
     {
+        private ShopEntities mContext = new ShopEntities();
+        private bool mIsDisposed = false; 
 
         #region  IUserRepository接口具体实现
 
-        IEnumerable<User> IUserRepository.GetUsers()
+        public IEnumerable<User> GetUsers()
+        {
+            return mContext.Users.ToList();
+        }
+
+        public User GetUserByID(int id)
         {
             throw new NotImplementedException();
         }
 
-        User IUserRepository.GetUserByID(int id)
+        public void InsertUser(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Users.AddObject(user);
+                mContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        void IUserRepository.InsertUser(User user)
+        public void DeleteUser(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Users.Attach(user);
+                mContext.Users.DeleteObject(user);
+                mContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
-        void IUserRepository.DeleteUser(User user)
+        public void UpdateUser(User user, User origUser)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                mContext.Users.Attach(origUser);
+                mContext.Users.ApplyCurrentValues( user);
+                mContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
 
-        void IUserRepository.UpdateUser(User user)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
 
+        protected virtual void Dispose(bool disposing) 
+        { 
+            if (!this.mIsDisposed) 
+            { 
+                if (disposing) 
+                {
+                    mContext.SaveChanges();
+                    mContext.Dispose();
+                } 
+            } 
+            this.mIsDisposed = true;
+        } 
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true); 
+            GC.SuppressFinalize(this); 
         }
     }
 }

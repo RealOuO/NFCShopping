@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="wrap_content">
-	<ImageView android:id="@+id/usericon" 
-		android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:layout_gravity="center_vertical"></ImageView>
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:paddingLeft="50dip" android:layout_gravity="center_vertical">
-		<TextView android:text="TextView" android:id="@+id/username"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-		<TextView android:text="TextView" android:id="@+id/userlocation"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-	</LinearLayout>
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<CheckBox android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:id="@+id/checkBox1"
-			android:text="勾选默认" android:layout_alignParentRight="true" ></CheckBox>
-	</RelativeLayout>
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/usericon"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_gravity="center_vertical" >
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="50dip" >
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/userlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" >
+            </TextView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="勾选默认" >
+            </CheckBox>
+        </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>

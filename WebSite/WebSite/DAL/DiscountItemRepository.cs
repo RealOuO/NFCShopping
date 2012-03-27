@@ -33,7 +33,7 @@ namespace NFCShoppingWebSite.DAL
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<DiscountItem> GetDiscounts()
+        public IEnumerable<DiscountItem> GetDiscountItems()
         {
             return mContext.Discounts.Include("Discounts").ToList();
         }
@@ -69,7 +69,9 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
+
         public void UpdateDiscountItem(DiscountItem newDiscountItem, DiscountItem origDiscountItem)
+
         {
             try
             {

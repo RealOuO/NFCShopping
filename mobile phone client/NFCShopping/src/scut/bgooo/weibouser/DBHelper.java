@@ -1,4 +1,4 @@
-package scut.bgooo.userdb;
+package scut.bgooo.weibouser;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
-public class SqliteHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
 	//用来保存	UserID、Access Token、Access Secret	的表名
 	    public static final String TB_NAME="users";
 	
-	public SqliteHelper(Context context, String name, CursorFactory factory,
+	public DBHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
 		// TODO Auto-generated constructor stub
@@ -23,14 +23,14 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE IF NOT EXISTS "+
                 TB_NAME+"("+
-                UserInfo.ID+" integer primary key,"+
-                UserInfo.USERID+" varchar,"+
-                UserInfo.TOKEN+" varchar,"+
-                UserInfo.TOKENSECRET+" varchar,"+
-                UserInfo.USERNAME+" varchar,"+
-                UserInfo.USERLOCATION+" varchar,"+
-                UserInfo.ISDEFAULT+" boolean," +
-                UserInfo.USERICON+" blob"+                  
+                WeiboUserItem.ID+" integer primary key,"+
+                WeiboUserItem.USERID+" varchar,"+
+                WeiboUserItem.TOKEN+" varchar,"+
+                WeiboUserItem.TOKENSECRET+" varchar,"+
+                WeiboUserItem.USERNAME+" varchar,"+
+                WeiboUserItem.USERLOCATION+" varchar,"+
+                WeiboUserItem.ISDEFAULT+" boolean," +
+                WeiboUserItem.USERICON+" blob"+                  
                 ")"
                 );
         Log.e("Database","onCreate");

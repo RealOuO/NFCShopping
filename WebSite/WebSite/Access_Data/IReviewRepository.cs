@@ -9,12 +9,10 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<Review> GetReviews();
 
-        Review GetReviewByID(Int32 id);
-
         void InsertReview(Review review);
 
         void DeleteReview(Review review);
 
-        void UpdateReview(Review review);
+        void UpdateReview(Review review,Review origReview);
     }
 }

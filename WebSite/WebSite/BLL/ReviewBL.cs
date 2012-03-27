@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using NFCShoppingWebSite.Access_Data;
+using NFCShoppingWebSite.DAL;
 
 namespace NFCShoppingWebSite.BLL
 {

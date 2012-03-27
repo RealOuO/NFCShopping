@@ -1,38 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="match_parent">
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true" android:id="@+id/linearLayout1"
-		android:layout_width="fill_parent" android:layout_centerVertical="true"
-		android:orientation="vertical">
-		<LinearLayout android:id="@+id/linearLayout2"
-			android:layout_width="fill_parent" android:layout_height="match_parent">
-			<TextView android:text="@string/reuser1" android:id="@+id/textView1"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical" ></TextView>
-			<EditText android:id="@id/reuser" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:hint="@string/reuser2"></EditText>
-		</LinearLayout>
-		<LinearLayout android:id="@+id/linearLayout3"
-			android:layout_width="fill_parent" android:layout_height="match_parent">
-			<TextView  android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/repassword1"></TextView>
-			<EditText android:id="@id/repassword" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:hint="@string/repassword2"></EditText>
-		</LinearLayout>
-	</LinearLayout>
-	<LinearLayout android:id="@+id/lybuttonBar" style="@android:style/ButtonBar"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true" android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-		<Button android:id="@id/reconfirm" android:layout_width="0dip"
-			android:layout_height="wrap_content" android:layout_weight="1"
-			android:text="@string/reconfirm" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
 
-		<Button android:id="@id/recancle"
-			android:layout_width="0dip" android:layout_height="wrap_content"
-			android:layout_weight="1" android:text="@string/recancle" />
-	</LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" 
+            android:padding="10dip" >
 
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/reuser1" >
+            </TextView>
+
+            <EditText
+                android:id="@id/reuser"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reuser2"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dip"
+            android:padding="10dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repassword1" >
+            </TextView>
+
+            <EditText
+                android:id="@id/repassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repassword2"
+                android:paddingLeft="10dip"
+                android:paddingRight="5dip" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dip"
+            android:padding="10dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repeatpassword1" >
+            </TextView>
+
+            <EditText
+                android:id="@id/repassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repeatpassword2"
+                android:paddingLeft="10dip"
+                android:paddingRight="5dip" >
+            </EditText>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/linearLayout_sex"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            android:paddingTop="5dip" >
+
+            <TextView
+                android:id="@+id/text_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="性别"
+                 >
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/radioGroup_sex"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:checked="true"
+                    android:text="男" >
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:text="女" >
+                </RadioButton>
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lybuttonBar"
+        style="@android:style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@id/reconfirm"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reconfirm" />
+
+        <Button
+            android:id="@id/recancle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recancle" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="欢迎注册成为我们的用户"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

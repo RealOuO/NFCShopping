@@ -7,7 +7,7 @@ namespace NFCShoppingWebSite.Access_Data
 {
     interface IDiscountItemRepository:IDisposable
     {
-        IEnumerable<DiscountItem> GetDiscounts();
+        IEnumerable<DiscountItem> GetDiscountItems();
 
         DiscountItem GetDiscountItemByID(Int32 id);
 
@@ -15,6 +15,6 @@ namespace NFCShoppingWebSite.Access_Data
 
         void DeleteDiscountItem(DiscountItem discountitem);
 
-        void UpdateDiscountItem(DiscountItem discountitem);
+        void UpdateDiscountItem(DiscountItem discountitem, DiscountItem origDiscountitem);
     }
 }
