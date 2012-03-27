@@ -40,7 +40,7 @@ namespace NFCShoppingWebSite.DAL
         {
             try
             {
-                mContext.DiscountItems.Attach(discount);
+                mContext.Discouns.Attach(discount);
                 mContext.Categories.DeleteObject(discount);
 
             }
@@ -54,8 +54,8 @@ namespace NFCShoppingWebSite.DAL
         {
             try
             {
-                mContext.DiscountItems.Attach(origDiscount);
-                mContext.ApplyCurrentValues("DiscountItems", newDiscount);
+                mContext.Discounts.Attach(origDiscount);
+                mContext.ApplyCurrentValues("Discounts", newDiscount);
             }
             catch (Exception ex)
             {
