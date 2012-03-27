@@ -6,36 +6,80 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class DiscountRepository:IDiscountItemRepository,IDisposable
+    public class DiscountRepository:IDiscountRepository,IDisposable
     {
-        public IEnumerable<DiscountItem> GetDiscounts()
+        private bool mIsDisposed = false;
+
+        private ShopEntities mContext = new ShopEntities();
+        
+        public IEnumerable<Discount> GetDiscounts()
         {
-            throw new NotImplementedException();
+            return mContext.Discounts.ToList();
         }
 
-        public DiscountItem GetDiscountItemByID(int id)
+        public Discount GetDiscountByID(int id)
         {
-            throw new NotImplementedException();
+            return mContext.CompiledDepartmentsByIdQuery(id);
         }
 
-        public void InsertDiscountItem(DiscountItem discountitem)
+        public void InsertDiscountItem(Discount discount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Categories.AddObject(discount);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void DeleteDiscountItem(DiscountItem discountitem)
+        public void DeleteDiscountItem(Discount discount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.DiscountItems.Attach(discount);
+                mContext.Categories.DeleteObject(discount);
+
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+        }
+        
+        public void UpdateDiscount(Discount newDiscount,Discount origDiscount)
+        {
+            try
+            {
+                mContext.DiscountItems.Attach(origDiscount);
+                mContext.ApplyCurrentValues("DiscountItems", newDiscount);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void UpdateDiscountItem(DiscountItem discountitem)
+        protected void Dispose(bool isDisposing)
         {
-            throw new NotImplementedException();
+            if (!mIsDisposed)
+            {
+                mContext.SaveChanges();
+
+                if (isDisposing)
+                {
+                    mContext.Dispose();
+                }
+            }
+
+            mIsDisposed = true;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
