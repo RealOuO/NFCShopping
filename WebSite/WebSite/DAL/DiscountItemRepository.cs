@@ -8,35 +8,82 @@ namespace NFCShoppingWebSite.DAL
 {
     public class DiscountItemRepository : IDiscountItemRepository, IDisposable
     {
+        private bool mIsDisposed = false;
 
+        private ShopEntities mContext = new ShopEntities();
+
+        protected void Dispose(bool isDisposing)
+        {
+            if (!mIsDisposed)
+            {
+                mContext.SaveChanges();
+
+                if (isDisposing)
+                {
+                    mContext.Dispose();
+                }
+            }
+
+            mIsDisposed = true;
+        }
+        
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public IEnumerable<DiscountItem> GetDiscountItems()
         {
-            throw new NotImplementedException();
+            return mContext.Discounts.Include("Discounts").ToList();
         }
 
         public DiscountItem GetDiscountItemByID(int id)
         {
-            throw new NotImplementedException();
+            return mContext.CompiledDepartmentsByIdQuery(id);
         }
 
-        public void InsertDiscountItem(DiscountItem discountitem)
+        public void InsertDiscountItem(DiscountItem discountItem)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Categories.AddObject(discountItem);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void DeleteDiscountItem(DiscountItem discountitem)
+        public void DeleteDiscountItem(DiscountItem discountItem)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.DiscountItems.Attach(discountItem);
+                mContext.Categories.DeleteObject(discountItem);
+
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void UpdateDiscountItem(DiscountItem discountitem,DiscountItem origDiscountitem)
+
+        public void UpdateDiscountItem(DiscountItem newDiscountItem, DiscountItem origDiscountItem)
+
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.DiscountItems.Attach(origDiscountItem);
+                mContext.ApplyCurrentValues("DiscountItems", newDiscountItem);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+
+            
         }
     }
 }
