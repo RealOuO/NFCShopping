@@ -29,7 +29,9 @@
      <string name="reuser1">用户名</string>
      <string name="reuser2">请输入您的用户名</string>
      <string name="repassword1">密　码</string>
+     <string name="repeatpassword1">确　认</string>
      <string name="repassword2">请输入您的密码</string>
+     <string name="repeatpassword2">请再次输入您的密码</string>
      <string name="reconfirm">提交</string>
      <string name="recancle">取消</string>
 </resources>

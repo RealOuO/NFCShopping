@@ -9,6 +9,7 @@ import weibo4android.WeiboException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -45,17 +46,23 @@ public class CommentActivity extends Activity {
 							"请确定微博用户", Toast.LENGTH_LONG);
 					toast.show();
 				} else {
+					Log.i("token", WeiboUserListActivity.defaultUserInfo.GetAToken());
+					Log.i("token", WeiboUserListActivity.defaultUserInfo.GetASecret());
 					mWeibo.setToken(WeiboUserListActivity.defaultUserInfo.GetAToken(),
 							WeiboUserListActivity.defaultUserInfo.GetASecret());
 				}
 				
-				String commit = mCommit.getText().toString();
+				String commit = mCommit.getText().toString()+"aaaaaaaaaa";
 				try {
 					mWeibo.updateStatus(commit);
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"微博发送成功", Toast.LENGTH_LONG);
+					toast.show();
 				} catch (WeiboException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				finish();
 			}
 		});
 	}

@@ -35,14 +35,14 @@ namespace NFCShoppingWebSite.Access_Data
     /// <summary>
     /// 没有元数据文档可用。
     /// </summary>
-    public partial class Sys_DBEntities : ObjectContext
+    public partial class ShopEntities : ObjectContext
     {
         #region 构造函数
     
         /// <summary>
         /// 请使用应用程序配置文件的“Sys_DBEntities”部分中的连接字符串初始化新 Sys_DBEntities 对象。
         /// </summary>
-        public Sys_DBEntities() : base("name=Sys_DBEntities", "Sys_DBEntities")
+        public ShopEntities() : base("name=Sys_DBEntities", "Sys_DBEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -51,7 +51,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 初始化新的 Sys_DBEntities 对象。
         /// </summary>
-        public Sys_DBEntities(string connectionString) : base(connectionString, "Sys_DBEntities")
+        public ShopEntities(string connectionString) : base(connectionString, "Sys_DBEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -60,7 +60,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 初始化新的 Sys_DBEntities 对象。
         /// </summary>
-        public Sys_DBEntities(EntityConnection connection) : base(connection, "Sys_DBEntities")
+        public ShopEntities(EntityConnection connection) : base(connection, "Sys_DBEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();

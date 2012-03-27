@@ -64,7 +64,7 @@ namespace NFCShoppingWebSite.DAL
 
                 if(isDisposing)
                 {
-                    mContext.Dispose()
+                    mContext.Dispose();
                 }
             }
 

@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <RelativeLayout
-            android:id="@+id/relativeLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/lybuttonBar"
+            style="@android:style/ButtonBar"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:id="@+id/lybuttonBar"
-                style="@android:style/ButtonBar"
-                android:layout_width="fill_parent"
+            <Button
+                android:id="@+id/fbconfirm"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal" >
+                android:layout_weight="1"
+                android:text="@string/fbconfirm" />
 
-                <Button
-                    android:id="@+id/fbconfirm"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fbconfirm" />
+            <Button
+                android:id="@+id/fbcancle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/fbcancle" />
+        </LinearLayout>
 
-                <Button
-                    android:id="@+id/fbcancle"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fbcancle" />
-            </LinearLayout>
+        <EditText
+            android:id="@+id/fbedit"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/lybuttonBar"
+            android:layout_alignParentTop="true"
+            android:bufferType="spannable"
+            android:gravity="left"
+            android:hint="@string/feedback"
+            android:lineSpacingMultiplier="1.1"
+            android:padding="5dip"
+            android:singleLine="false" />
+    </RelativeLayout>
 
-            <EditText
-                android:id="@+id/fbedit"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@id/lybuttonBar"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/profile_description_bg"
-                android:bufferType="spannable"
-                android:gravity="left"
-                android:hint="@string/feedback"
-                android:lineSpacingMultiplier="1.1"
-                android:padding="5dip"
-                android:singleLine="false" />
-        </RelativeLayout>
 </LinearLayout>

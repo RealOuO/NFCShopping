@@ -14,7 +14,7 @@ namespace NFCShoppingWebSite.DAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DiscountItem> GetDiscounts()
+        public IEnumerable<DiscountItem> GetDiscountItems()
         {
             throw new NotImplementedException();
         }
@@ -34,7 +34,7 @@ namespace NFCShoppingWebSite.DAL
             throw new NotImplementedException();
         }
 
-        public void UpdateDiscountItem(DiscountItem discountitem)
+        public void UpdateDiscountItem(DiscountItem discountitem,DiscountItem origDiscountitem)
         {
             throw new NotImplementedException();
         }

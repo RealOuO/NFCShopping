@@ -6,29 +6,29 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class DiscountRepository:IDiscountItemRepository,IDisposable
+    public class DiscountRepository:IDiscountRepository,IDisposable
     {
-        public IEnumerable<DiscountItem> GetDiscounts()
+        public IEnumerable<Discount> GetDiscounts()
         {
             throw new NotImplementedException();
         }
 
-        public DiscountItem GetDiscountItemByID(int id)
+        public Discount GetDiscountByID(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void InsertDiscountItem(DiscountItem discountitem)
+        public void InsertDiscount(Discount discount)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteDiscountItem(DiscountItem discountitem)
+        public void DeleteDiscount(Discount discount)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateDiscountItem(DiscountItem discountitem)
+        public void UpdateDiscount(Discount discount, Discount origDiscount)
         {
             throw new NotImplementedException();
         }

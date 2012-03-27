@@ -1,10 +1,10 @@
-package scut.bgooo.userdb;
+package scut.bgooo.weibouser;
 
 import android.graphics.drawable.Drawable;
 
-public class UserInfo {
+public class WeiboUserItem {
 	
-	private String mId;
+	private int mId;
 	private String mUserId;
 	private String mAccessToken;
 	private String mAccessSecret;
@@ -21,7 +21,7 @@ public class UserInfo {
 	public static String USERICON = "USERICON";
 	public static String USERLOCATION = "LOCATION";
 	public static String ISDEFAULT = "ISDEFAULT";
-	public void SetId(String id) {
+	public void SetId(int id) {
 		mId = id;
 	}
 	
@@ -52,7 +52,7 @@ public class UserInfo {
 	public void SetDefault(boolean argument) {
 		isDefault = argument;
 	}
-	public String GetId() {
+	public int GetId() {
 		return mId;
 	}
 	

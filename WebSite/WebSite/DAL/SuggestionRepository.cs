@@ -8,29 +8,71 @@ namespace NFCShoppingWebSite.DAL
 {
     public class SuggestionRepository:ISuggestionRepository,IDisposable
     {
+        private ShopEntities mContext = new ShopEntities();
+
         public IEnumerable<Suggestion> GetSuggestions()
         {
-            throw new NotImplementedException();
-        }
-
-        public Suggestion GetSuggestionByID(int id)
-        {
-            throw new NotImplementedException();
+            return mContext.Suggestions.Include("Product").ToList();
         }
 
         public void InsertSuggestion(Suggestion suggestion)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Suggestions.AddObject(suggestion);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
         public void DeleteSuggestion(Suggestion suggestion)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Suggestions.Attach(suggestion);
+                mContext.Suggestions.DeleteObject(suggestion);
+                mContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+        }
+
+        public void UpdateSuggestion(Suggestion suggestion, Suggestion origSuggestion)
+        {
+            try
+            {
+                mContext.Suggestions.Attach(origSuggestion);
+                mContext.Suggestions.ApplyCurrentValues(suggestion);
+                mContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+        }
+
+        private bool mDisposedValue = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.mDisposedValue)
+            {
+                if (disposing)
+                {
+                    mContext.SaveChanges();
+                    mContext.Dispose();
+                }
+            }
+            this.mDisposedValue = true;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

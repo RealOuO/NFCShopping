@@ -2,9 +2,9 @@ package scut.bgooo.ui;
 
 import java.util.List;
 
-import scut.bgooo.userdb.DataHelper;
-import scut.bgooo.userdb.UserInfo;
 import scut.bgooo.weibo.WeiboUserListActivity;
+import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.weibouser.WeiboUserManager;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -58,8 +58,8 @@ public class MainActivity extends TabActivity {
 	}
 	
 	private void initWeiboDefaultUser() {
-		DataHelper datahelp = new DataHelper(this);
-		List<UserInfo> userList = datahelp.GetUserList(true);
+		WeiboUserManager datahelp = new WeiboUserManager(this);
+		List<WeiboUserItem> userList = datahelp.GetUserList(true);
 		for (int i = 0; i < userList.size(); i++) {
 			if (userList.get(i).IsDefault()) {
 				WeiboUserListActivity.defaultUserInfo = userList.get(i);

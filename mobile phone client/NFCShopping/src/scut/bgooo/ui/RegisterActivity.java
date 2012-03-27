@@ -14,35 +14,35 @@ public class RegisterActivity extends Activity {
 	private EditText mUserPassword;
 	private Button mConfirm;
 	private Button mCancle;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
-		mUserName = (EditText)findViewById(R.id.reuser);
-		mUserPassword = (EditText)findViewById(R.id.repassword);
-		mConfirm = (Button)findViewById(R.id.reconfirm);
-		mCancle = (Button)findViewById(R.id.recancle);
-		
+		mUserName = (EditText) findViewById(R.id.reuser);
+		mUserPassword = (EditText) findViewById(R.id.repassword);
+		mConfirm = (Button) findViewById(R.id.reconfirm);
+		mCancle = (Button) findViewById(R.id.recancle);
+
 		mConfirm.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		mCancle.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-			finish();	
+				finish();
 			}
 		});
-		
+
 	}
-	
+
 }

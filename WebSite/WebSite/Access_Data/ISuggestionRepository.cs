@@ -9,11 +9,11 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<Suggestion> GetSuggestions();
 
-        Suggestion GetSuggestionByID(Int32 id);
-
         void InsertSuggestion(Suggestion suggestion);
 
         void DeleteSuggestion(Suggestion suggestion);
+
+        void UpdateSuggestion(Suggestion suggestion, Suggestion origSuggestion);
 
     }
 }

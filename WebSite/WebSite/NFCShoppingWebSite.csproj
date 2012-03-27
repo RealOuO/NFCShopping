@@ -63,6 +63,7 @@
     <Content Include="App_Data\Sys_DB_log.ldf">
       <DependentUpon>Sys_DB.mdf</DependentUpon>
     </Content>
+    <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -152,6 +153,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShopWebService.asmx.cs">
+      <DependentUpon>ShopWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

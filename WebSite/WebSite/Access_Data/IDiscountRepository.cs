@@ -9,12 +9,10 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<Discount> GetDiscounts();
 
-        Discount GetDiscountByID(Int32 id);
-
-        void InsertDiscount(User discount);
+        void InsertDiscount(Discount discount);
 
         void DeleteDiscount(Discount discount);
 
-        void UpdateDiscount(Discount discount);
+        void UpdateDiscount(Discount discount,Discount origDiscount);
     }
 }
