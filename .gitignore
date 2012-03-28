@@ -2,3 +2,4 @@ mobile phone client/NFCShopping/bin
 nfc updater client/NFCUpdater/bin
 WebSite/WebSite/bin
 WebSite/WebSite/obj
+WebSite/*.suo
