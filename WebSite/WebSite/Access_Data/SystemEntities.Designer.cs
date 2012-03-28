@@ -95,18 +95,18 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<DiscountItem> DiscountInformation
+        public ObjectSet<DiscountItem> DiscountItems
         {
             get
             {
-                if ((_DiscountInformation == null))
+                if ((_DiscountItems == null))
                 {
-                    _DiscountInformation = base.CreateObjectSet<DiscountItem>("DiscountInformation");
+                    _DiscountItems = base.CreateObjectSet<DiscountItem>("DiscountItems");
                 }
-                return _DiscountInformation;
+                return _DiscountItems;
             }
         }
-        private ObjectSet<DiscountItem> _DiscountInformation;
+        private ObjectSet<DiscountItem> _DiscountItems;
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -216,11 +216,11 @@ namespace NFCShoppingWebSite.Access_Data
         }
     
         /// <summary>
-        /// 用于向 DiscountInformation EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// 用于向 DiscountItems EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
-        public void AddToDiscountInformation(DiscountItem discountItem)
+        public void AddToDiscountItems(DiscountItem discountItem)
         {
-            base.AddObject("DiscountInformation", discountItem);
+            base.AddObject("DiscountItems", discountItem);
         }
     
         /// <summary>

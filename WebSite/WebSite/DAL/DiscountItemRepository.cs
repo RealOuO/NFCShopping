@@ -35,19 +35,14 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<DiscountItem> GetDiscountItems()
         {
-            return mContext.Discounts.Include("Discounts").ToList();
-        }
-
-        public DiscountItem GetDiscountItemByID(int id)
-        {
-            return mContext.CompiledDepartmentsByIdQuery(id);
+            return mContext.DiscountItems.ToList(); 
         }
 
         public void InsertDiscountItem(DiscountItem discountItem)
         {
             try
             {
-                mContext.Categories.AddObject(discountItem);
+                mContext.DiscountItems.AddObject(discountItem);
             }
             catch (Exception ex)
             {
@@ -60,7 +55,7 @@ namespace NFCShoppingWebSite.DAL
             try
             {
                 mContext.DiscountItems.Attach(discountItem);
-                mContext.Categories.DeleteObject(discountItem);
+                mContext.DiscountItems.DeleteObject(discountItem);
 
             }
             catch (Exception ex)

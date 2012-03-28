@@ -211,7 +211,7 @@
       <Schema Namespace="Sys_DBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="Sys_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Sys_DBModel.Category" />
-          <EntitySet Name="DiscountInformation" EntityType="Sys_DBModel.DiscountItem" />
+          <EntitySet Name="DiscountItems" EntityType="Sys_DBModel.DiscountItem" />
           <EntitySet Name="Discounts" EntityType="Sys_DBModel.Discount" />
           <EntitySet Name="Products" EntityType="Sys_DBModel.Product" />
           <EntitySet Name="Reviews" EntityType="Sys_DBModel.Review" />
@@ -224,7 +224,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DiscountInformation_Products" Association="Sys_DBModel.FK_DiscountInformation_Products">
             <End Role="Discounts" EntitySet="Discounts" />
-            <End Role="DiscountInformation" EntitySet="DiscountInformation" />
+            <End Role="DiscountInformation" EntitySet="DiscountItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_SecCategories" Association="Sys_DBModel.FK_Products_SecCategories">
             <End Role="SecCategories" EntitySet="SecCategories" />
@@ -244,7 +244,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DiscountInformation_Products1" Association="Sys_DBModel.FK_DiscountInformation_Products1">
             <End Role="Product" EntitySet="Products" />
-            <End Role="DiscountItem" EntitySet="DiscountInformation" />
+            <End Role="DiscountItem" EntitySet="DiscountItems" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -433,7 +433,7 @@
             <ScalarProperty Name="categoryID" ColumnName="categoryID" />
             <ScalarProperty Name="categoryName" ColumnName="categoryName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="DiscountInformation"><EntityTypeMapping TypeName="Sys_DBModel.DiscountItem"><MappingFragment StoreEntitySet="DiscountInformation">
+          <EntitySetMapping Name="DiscountItems"><EntityTypeMapping TypeName="Sys_DBModel.DiscountItem"><MappingFragment StoreEntitySet="DiscountInformation">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="discountID" ColumnName="discountID" />
             <ScalarProperty Name="productID" ColumnName="productID" />
