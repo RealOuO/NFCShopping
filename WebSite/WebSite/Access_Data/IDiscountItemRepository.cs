@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    interface IDiscountItemRepository:IDisposable
+    public interface IDiscountItemRepository : IDisposable
     {
         IEnumerable<DiscountItem> GetDiscountItems();
 

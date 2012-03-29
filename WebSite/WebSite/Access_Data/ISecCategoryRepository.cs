@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    interface ISecCategoryRepository:IDisposable
+    public interface ISecCategoryRepository : IDisposable
     {
         IEnumerable<SecCategory> GetSecCategories();
 
