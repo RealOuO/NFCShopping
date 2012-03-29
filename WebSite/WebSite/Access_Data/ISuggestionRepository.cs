@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    public interface ISuggestionRepository:IDisposable
+    public interface ISuggestionRepository : IDisposable
     {
         IEnumerable<Suggestion> GetSuggestions();
 
