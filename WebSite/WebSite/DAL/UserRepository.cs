@@ -6,7 +6,7 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class UserRepository:IUserRepository,IDisposable
+    public class UserRepository : IUserRepository
     {
         private ShopEntities mContext = new ShopEntities();
         private bool mIsDisposed = false; 

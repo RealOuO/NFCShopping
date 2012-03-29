@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    public interface IReviewRepository:IDisposable
+    public interface IReviewRepository : IDisposable
     {
         IEnumerable<Review> GetReviews();
 

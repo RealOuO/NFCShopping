@@ -6,7 +6,7 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class DiscountRepository:IDiscountRepository,IDisposable
+    public class DiscountRepository : IDiscountRepository
     {
 
         private bool mIsDisposed = false;
