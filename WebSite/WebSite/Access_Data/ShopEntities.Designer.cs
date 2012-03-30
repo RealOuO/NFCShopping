@@ -19,12 +19,12 @@ using System.Runtime.Serialization;
 #region EDM 关系源元数据
 
 [assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_SecCategories_Categories", "Categories", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Category), "SecCategories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.SecCategory), true)]
-[assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "Discounts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Discount), "DiscountInformation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.DiscountItem), true)]
+[assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_DiscountInformation_Discounts", "Discounts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Discount), "DiscountInformation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.DiscountItem), true)]
+[assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "Products", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Product), "DiscountInformation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.DiscountItem), true)]
 [assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_Products_SecCategories", "SecCategories", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.SecCategory), "Products", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.Product), true)]
 [assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_Reviews_Products", "Products", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Product), "Reviews", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.Review), true)]
 [assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_Reviews_Users", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.User), "Reviews", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.Review), true)]
 [assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_Suggestions_Users", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(NFCShoppingWebSite.Access_Data.User), "Suggestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.Suggestion), true)]
-[assembly: EdmRelationshipAttribute("Sys_DBModel", "FK_DiscountInformation_Products1", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(NFCShoppingWebSite.Access_Data.Product), "DiscountItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(NFCShoppingWebSite.Access_Data.DiscountItem), true)]
 
 #endregion
 
@@ -40,27 +40,27 @@ namespace NFCShoppingWebSite.Access_Data
         #region 构造函数
     
         /// <summary>
-        /// 请使用应用程序配置文件的“Sys_DBEntities”部分中的连接字符串初始化新 Sys_DBEntities 对象。
+        /// 请使用应用程序配置文件的“ShopEntities”部分中的连接字符串初始化新 ShopEntities 对象。
         /// </summary>
-        public ShopEntities() : base("name=Sys_DBEntities", "Sys_DBEntities")
+        public ShopEntities() : base("name=ShopEntities", "ShopEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// 初始化新的 Sys_DBEntities 对象。
+        /// 初始化新的 ShopEntities 对象。
         /// </summary>
-        public ShopEntities(string connectionString) : base(connectionString, "Sys_DBEntities")
+        public ShopEntities(string connectionString) : base(connectionString, "ShopEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// 初始化新的 Sys_DBEntities 对象。
+        /// 初始化新的 ShopEntities 对象。
         /// </summary>
-        public ShopEntities(EntityConnection connection) : base(connection, "Sys_DBEntities")
+        public ShopEntities(EntityConnection connection) : base(connection, "ShopEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -498,18 +498,18 @@ namespace NFCShoppingWebSite.Access_Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "DiscountInformation")]
+        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Discounts", "DiscountInformation")]
         public EntityCollection<DiscountItem> DiscountItems
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products", "DiscountInformation");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Discounts", "DiscountInformation");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products", "DiscountInformation", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Discounts", "DiscountInformation", value);
                 }
             }
         }
@@ -708,16 +708,16 @@ namespace NFCShoppingWebSite.Access_Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "Discounts")]
+        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Discounts", "Discounts")]
         public Discount Discount
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Products", "Discounts").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Discounts", "Discounts").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Products", "Discounts").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Discounts", "Discounts").Value = value;
             }
         }
         /// <summary>
@@ -729,13 +729,13 @@ namespace NFCShoppingWebSite.Access_Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Products", "Discounts");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Discounts", "Discounts");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Products", "Discounts", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Discount>("Sys_DBModel.FK_DiscountInformation_Discounts", "Discounts", value);
                 }
             }
         }
@@ -746,16 +746,16 @@ namespace NFCShoppingWebSite.Access_Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products1", "Product")]
+        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "Products")]
         public Product Product
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products1", "Product").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products", "Products").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products1", "Product").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products", "Products").Value = value;
             }
         }
         /// <summary>
@@ -767,13 +767,13 @@ namespace NFCShoppingWebSite.Access_Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products1", "Product");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products", "Products");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products1", "Product", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Sys_DBModel.FK_DiscountInformation_Products", "Products", value);
                 }
             }
         }
@@ -1044,6 +1044,28 @@ namespace NFCShoppingWebSite.Access_Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products", "DiscountInformation")]
+        public EntityCollection<DiscountItem> DiscountInformations
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products", "DiscountInformation");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products", "DiscountInformation", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Products_SecCategories", "SecCategories")]
         public SecCategory SecCategory
         {
@@ -1094,28 +1116,6 @@ namespace NFCShoppingWebSite.Access_Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Review>("Sys_DBModel.FK_Reviews_Products", "Reviews", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_DiscountInformation_Products1", "DiscountItem")]
-        public EntityCollection<DiscountItem> DiscountItems
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products1", "DiscountItem");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DiscountItem>("Sys_DBModel.FK_DiscountInformation_Products1", "DiscountItem", value);
                 }
             }
         }
@@ -1815,7 +1815,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> gender
+        public Nullable<global::System.Int32> gender
         {
             get
             {
@@ -1830,8 +1830,8 @@ namespace NFCShoppingWebSite.Access_Data
                 OngenderChanged();
             }
         }
-        private Nullable<global::System.Int16> _gender;
-        partial void OngenderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _gender;
+        partial void OngenderChanging(Nullable<global::System.Int32> value);
         partial void OngenderChanged();
     
         /// <summary>

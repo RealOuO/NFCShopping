@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Sys_DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="Sys_DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="Sys_DBModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Sys_DBModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DiscountInformation" EntityType="Sys_DBModel.Store.DiscountInformation" store:Type="Tables" Schema="dbo" />
@@ -117,7 +117,7 @@
           <Property Name="userID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="userPassword" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="gender" Type="smallint" />
+          <Property Name="gender" Type="int" />
           <Property Name="visitedTimes" Type="int" Nullable="false" />
           <Property Name="lastVisitedDate" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -205,11 +205,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Sys_DBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="Sys_DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Sys_DBModel.Category" />
           <EntitySet Name="DiscountItems" EntityType="Sys_DBModel.DiscountItem" />
           <EntitySet Name="Discounts" EntityType="Sys_DBModel.Discount" />
@@ -222,8 +223,12 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="SecCategories" EntitySet="SecCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK_DiscountInformation_Products" Association="Sys_DBModel.FK_DiscountInformation_Products">
+          <AssociationSet Name="FK_DiscountInformation_Discounts" Association="Sys_DBModel.FK_DiscountInformation_Discounts">
             <End Role="Discounts" EntitySet="Discounts" />
+            <End Role="DiscountInformation" EntitySet="DiscountItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscountInformation_Products" Association="Sys_DBModel.FK_DiscountInformation_Products">
+            <End Role="Products" EntitySet="Products" />
             <End Role="DiscountInformation" EntitySet="DiscountItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_SecCategories" Association="Sys_DBModel.FK_Products_SecCategories">
@@ -241,10 +246,6 @@
           <AssociationSet Name="FK_Suggestions_Users" Association="Sys_DBModel.FK_Suggestions_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Suggestions" EntitySet="Suggestions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DiscountInformation_Products1" Association="Sys_DBModel.FK_DiscountInformation_Products1">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="DiscountItem" EntitySet="DiscountItems" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -265,8 +266,8 @@
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="startDate" Type="DateTime" Nullable="false" />
           <Property Name="endDate" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Discount" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="DiscountInformation" ToRole="Discounts" />
-          <NavigationProperty Name="Product" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="DiscountItem" ToRole="Product" />
+          <NavigationProperty Name="Discount" Relationship="Sys_DBModel.FK_DiscountInformation_Discounts" FromRole="DiscountInformation" ToRole="Discounts" />
+          <NavigationProperty Name="Product" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="DiscountInformation" ToRole="Products" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -275,7 +276,7 @@
           <Property Name="discountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Discounts" ToRole="DiscountInformation" />
+          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Discounts" FromRole="Discounts" ToRole="DiscountInformation" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -290,9 +291,9 @@
           <Property Name="location" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="impageURL" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="DiscountInformations" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Products" ToRole="DiscountInformation" />
           <NavigationProperty Name="SecCategory" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Products" ToRole="SecCategories" />
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
-          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products1" FromRole="Product" ToRole="DiscountItem" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -333,7 +334,7 @@
           <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="userPassword" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="gender" Type="Int16" />
+          <Property Name="gender" Type="Int32" />
           <Property Name="visitedTimes" Type="Int32" Nullable="false" />
           <Property Name="lastVisitedDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
@@ -351,7 +352,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiscountInformation_Products">
+        <Association Name="FK_DiscountInformation_Discounts">
           <End Role="Discounts" Type="Sys_DBModel.Discount" Multiplicity="1" />
           <End Role="DiscountInformation" Type="Sys_DBModel.DiscountItem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -360,6 +361,18 @@
             </Principal>
             <Dependent Role="DiscountInformation">
               <PropertyRef Name="discountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountInformation_Products">
+          <End Role="Products" Type="Sys_DBModel.Product" Multiplicity="1" />
+          <End Role="DiscountInformation" Type="Sys_DBModel.DiscountItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="DiscountInformation">
+              <PropertyRef Name="productID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -411,24 +424,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiscountInformation_Products1">
-          <End Type="Sys_DBModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="Sys_DBModel.DiscountItem" Role="DiscountItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="productID" />
-            </Principal>
-            <Dependent Role="DiscountItem">
-              <PropertyRef Name="productID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Sys_DBModelStoreContainer" CdmEntityContainer="Sys_DBEntities">
+        <EntityContainerMapping StorageEntityContainer="Sys_DBModelStoreContainer" CdmEntityContainer="ShopEntities">
           <EntitySetMapping Name="Categories"><EntityTypeMapping TypeName="Sys_DBModel.Category"><MappingFragment StoreEntitySet="Categories">
             <ScalarProperty Name="categoryID" ColumnName="categoryID" />
             <ScalarProperty Name="categoryName" ColumnName="categoryName" />
@@ -503,43 +504,51 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="SystemEntities">
-        <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.5" PointY="11.625" Height="1.5879931640624996" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="3.25" PointX="6" PointY="4.125" Height="2.5430916341145831" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="2.375" PointX="5.75" PointY="1.375" Height="1.779012858072917" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="3.875" PointY="7.25" Height="3.1161507161458344" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="3.5" PointY="1.5" Height="2.3520719401041656" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="1.5" PointY="8.875" Height="1.9700325520833317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="0.625" PointY="5.875" Height="1.9700325520833317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="0.75" PointY="2.375" Height="2.5430916341145817" IsExpanded="true" />
+      <Diagram Name="ShopEntities">
+        <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.75" PointY="3.125" Height="1.5879931640624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="2.875" PointX="7.5" PointY="2.625" Height="2.5430916341145822" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="2.875" PointX="3.875" PointY="8.25" Height="1.7790128580729174" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="5.25" PointY="2.25" Height="3.3071704101562496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="10.5" PointY="2.75" Height="2.3520719401041656" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="3" PointY="3" Height="1.9700325520833322" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="10.5" PointY="8" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="8.25" PointY="7.625" Height="2.5430916341145817" IsExpanded="true" />
         <AssociationConnector Association="Sys_DBModel.FK_SecCategories_Categories" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.75" PointY="11.625" />
-          <ConnectorPoint PointX="1.75" PointY="10.845032552083332" />
+          <ConnectorPoint PointX="2.25" PointY="3.91899658203125" />
+          <ConnectorPoint PointX="3" PointY="3.91899658203125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Discounts" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="8.25" />
+          <ConnectorPoint PointX="7.125" PointY="7.875" />
+          <ConnectorPoint PointX="7.125" PointY="4.2860932598876946" />
+          <ConnectorPoint PointX="7.5" PointY="4.2860932598876946" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.0625" PointY="3.154012858072917" />
-          <ConnectorPoint PointX="7.0625" PointY="4.125" />
+          <ConnectorPoint PointX="6.75" PointY="3.341590885660807" />
+          <ConnectorPoint PointX="7.5" PointY="3.341590885660807" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Products_SecCategories" ManuallyRouted="false">
-          <ConnectorPoint PointX="3" PointY="9.7160852050781248" />
-          <ConnectorPoint PointX="3.875" PointY="9.7160852050781248" />
+          <ConnectorPoint PointX="4.5" PointY="3.9850162760416659" />
+          <ConnectorPoint PointX="5.25" PointY="3.9850162760416659" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.4375" PointY="7.25" />
-          <ConnectorPoint PointX="4.4375" PointY="3.8520719401041656" />
+          <ConnectorPoint PointX="6.75" PointY="5.3938810221354156" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="5.3938810221354148" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="5.3938810221354156" />
+          <ConnectorPoint PointX="10.760414666666666" PointY="5.3938810221354148" />
+          <ConnectorPoint PointX="10.927081333333334" PointY="5.3938810221354156" />
+          <ConnectorPoint PointX="11.25" PointY="5.3938810221354156" />
+          <ConnectorPoint PointX="11.25" PointY="5.1020719401041656" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="3.1135359700520828" />
-          <ConnectorPoint PointX="3.5" PointY="3.1135359700520828" />
+          <ConnectorPoint PointX="9.75" PointY="7.625" />
+          <ConnectorPoint PointX="10.125" PointY="7.25" />
+          <ConnectorPoint PointX="10.843748" PointY="7.25" />
+          <ConnectorPoint PointX="10.843748" PointY="5.1020719401041656" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Suggestions_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.4375" PointY="4.9180916341145817" />
-          <ConnectorPoint PointX="1.4375" PointY="5.875" />
-        </AssociationConnector>
-        <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products1" ManuallyRouted="true" >
-          <ConnectorPoint PointX="5.375" PointY="8.9035852050781248" />
-          <ConnectorPoint PointX="7.625" PointY="8.9035852050781248" />
-          <ConnectorPoint PointX="7.625" PointY="6.6680916341145835" />
+          <ConnectorPoint PointX="9.75" PointY="8.9850162760416659" />
+          <ConnectorPoint PointX="10.5" PointY="8.9850162760416659" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

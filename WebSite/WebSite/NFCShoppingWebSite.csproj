@@ -94,10 +94,10 @@
     <Compile Include="Access_Data\ISecCategoryRepository.cs" />
     <Compile Include="Access_Data\ISuggestionRepository.cs" />
     <Compile Include="Access_Data\IUserRepository.cs" />
-    <Compile Include="Access_Data\SystemEntities.Designer.cs">
+    <Compile Include="Access_Data\ShopEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SystemEntities.edmx</DependentUpon>
+      <DependentUpon>ShopEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Account\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
@@ -165,16 +165,15 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EntityDeploy Include="Access_Data\ShopEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShopEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Access_Data\SystemEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SystemEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
