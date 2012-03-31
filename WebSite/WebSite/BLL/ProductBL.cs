@@ -30,7 +30,7 @@ namespace NFCShoppingWebSite.BLL
 
         public IEnumerable<Product> GetProductsByCategory(Int32 categoryID)
         {
-            return GetProducts().Where(product => product.SecCategory.CategoryID == categoryID);
+            return GetProducts().Where(product => product.SecCategory.categoryID == categoryID);
         }
 
         public IEnumerable<Product> GetProductsBySecCategory(Int32 secCategoryID)
