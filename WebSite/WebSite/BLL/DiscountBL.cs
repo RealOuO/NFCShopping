@@ -10,15 +10,67 @@ namespace NFCShoppingWebSite.BLL
     public class DiscountBL:IDisposable
     {
         IDiscountRepository mRepository = new DiscountRepository();
+
         /*查询某一期所有的优惠信息*/
-        public IEnumerable<Discount> GetDiscountByDiscountID(Int32 discountID)
+        public Discount GetDiscount(Int32 discountID)
         {
-            return mRepository.GetDiscounts().Where(s => s.discountID == discountID);
+            try
+            {
+                return mRepository.GetDiscounts().Single(s => s.discountID == discountID);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add handling code here.
+
+                return null;
+            }
         }
+
         /*查询所有的优惠信息*/
         public IEnumerable<Discount> GetDiscounts()
         {
             return mRepository.GetDiscounts();
+        }
+
+        public IEnumerable<Discount> GetDiscountsByDate(DateTime date)
+        {
+            return GetDiscounts().Where(discount => discount.createdAt == date);
+        }
+
+        public void InsertDiscount(Discount discount)
+        {
+            try
+            {
+                mRepository.InsertDiscount(discount);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void DeleteDiscount(Discount discount)
+        {
+            try
+            {
+                mRepository.DeleteDiscount(discount);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateDiscount(Discount discount, Discount origDiscount)
+        {
+            try
+            {
+                mRepository.UpdateDiscount(discount, origDiscount);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool mIsDisposed = false;

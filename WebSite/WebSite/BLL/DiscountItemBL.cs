@@ -31,6 +31,56 @@ namespace NFCShoppingWebSite.BLL
             return mRepository.GetDiscountItems();
         }
 
+        public DiscountItem GetDiscountItem(Int32 id)
+        {
+            try
+            {
+                return GetDiscountItems().Single(discountItem => discountItem.id == id);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add handling code here.
+
+                return null;
+            }
+        }
+
+        public void InsertDiscountItem(DiscountItem discountItem)
+        {
+            try
+            {
+                mRepository.InsertDiscountItem(discountItem);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void DeleteDiscountItem(DiscountItem discountItem)
+        {
+            try
+            {
+                mRepository.DeleteDiscountItem(discountItem);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateDiscountItem(DiscountItem discountItem, DiscountItem origDiscountItem)
+        {
+            try
+            {
+                mRepository.UpdateDiscountItem(discountItem, origDiscountItem);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private bool mIsDisposed = false;
 
         protected virtual void Dispose(bool disposing)

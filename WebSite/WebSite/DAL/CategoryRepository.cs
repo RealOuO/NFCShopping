@@ -14,7 +14,7 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Category> GetCategories()
         {
-            return mContext.Categories.ToList();
+            return mContext.Categories.Include("SecCategories").ToList();
         }
 
         public void InsertCategory(Category category)

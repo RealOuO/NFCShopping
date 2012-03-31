@@ -32,7 +32,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                return GetSecCategories().Single(secCategory => secCategory.SecCategoryID == id);
+                return GetSecCategories().Single(secCategory => secCategory.secCategoryID == id);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace NFCShoppingWebSite.BLL
         {
             IEnumerable<SecCategory> totalSecCategories = GetSecCategories();
 
-            return totalSecCategories.Where(secCategory => secCategory.CategoryID == categoryID);
+            return totalSecCategories.Where(secCategory => secCategory.categoryID == categoryID);
         }
 
         public void InsertSecCategory(SecCategory secCategory)
