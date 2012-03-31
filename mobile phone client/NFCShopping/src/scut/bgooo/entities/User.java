@@ -1,6 +1,5 @@
 package scut.bgooo.entities;
 
-import java.util.Date;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
@@ -12,10 +11,11 @@ public class User implements KvmSerializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String EntityKey;
 	private int Id;
 	private String Username;
 	private String Password;
-	private short Gender;
+	private int Gender;
 	private int VisitedTimes;
 	private String LastVisitedDate;
 
@@ -42,6 +42,9 @@ public class User implements KvmSerializable {
 		case 5:
 			res = this.LastVisitedDate;
 			break;
+		case 6:
+			res = this.EntityKey;
+			break;
 		default:
 			break;
 		}
@@ -51,7 +54,7 @@ public class User implements KvmSerializable {
 	@Override
 	public int getPropertyCount() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 7;
 	}
 
 	@Override
@@ -82,6 +85,9 @@ public class User implements KvmSerializable {
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "lastVisitedDate";
 			break;
+		case 6:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "EntityKey";
 		default:
 			break;
 		}
@@ -103,7 +109,7 @@ public class User implements KvmSerializable {
 			this.Password = arg1.toString();
 			break;
 		case 3:
-			this.Gender = Short.valueOf(arg1.toString());
+			this.Gender = Integer.valueOf(arg1.toString());
 			break;
 		case 4:
 			this.VisitedTimes = Integer.valueOf(arg1.toString());
@@ -111,9 +117,23 @@ public class User implements KvmSerializable {
 		case 5:
 			this.LastVisitedDate = arg1.toString();
 			break;
+		case 6:
+			this.EntityKey = arg1.toString();
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.EntityKey + "\n" 
+		+ this.Id + "\n" 
+		+ this.Username + "\n"
+		+ this.Password + "\n" 
+		+ this.Gender + "\n" 
+		+ this.VisitedTimes+ "\n" 
+		+ this.LastVisitedDate+ "\n";
 	}
 
 }

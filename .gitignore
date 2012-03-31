@@ -3,3 +3,4 @@ nfc updater client/NFCUpdater/bin
 WebSite/WebSite/bin
 WebSite/WebSite/obj
 WebSite/*.suo
+*.suo

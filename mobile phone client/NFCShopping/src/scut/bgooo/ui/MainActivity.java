@@ -22,7 +22,7 @@ import android.widget.TabHost;
 public class MainActivity extends TabActivity {
 
 	public View msgTitle;// 信息头部按钮
-	private TabHost mTabHost;// 载体tabhost	
+	private TabHost mTabHost;// 载体tabhost
 
 	/** Called when the activity is first created. */
 	@Override
@@ -56,7 +56,7 @@ public class MainActivity extends TabActivity {
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_MORE").setIndicator("更多")
 				.setContent(new Intent(this, MoreActivity.class)));
 	}
-	
+
 	private void initWeiboDefaultUser() {
 		WeiboUserManager datahelp = new WeiboUserManager(this);
 		List<WeiboUserItem> userList = datahelp.GetUserList(true);

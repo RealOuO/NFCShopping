@@ -17,6 +17,8 @@ public interface IWebServiceUtil {
 	 * @return 返回User对象
 	 * */
 	public User login(String userName, String password);
+	
+	public User regist(String userName,String password,int gencer);
 
 	/**
 	 * <p>
@@ -46,6 +48,8 @@ public interface IWebServiceUtil {
 	 * @return 优惠信息列表
 	 * */
 	public List<Discount> getDiscounts(Paging page);
+	
+	
 
 	/**
 	 * <p>

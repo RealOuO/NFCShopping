@@ -97,7 +97,7 @@
             </TextView>
 
             <RadioGroup
-                android:id="@+id/radioGroup_sex"
+                android:id="@+id/radioGroup_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -117,6 +117,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dip"
                     android:text="女" >
+                </RadioButton>
+                
+                <RadioButton
+                    android:id="@+id/other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:text="秘密" >
                 </RadioButton>
             </RadioGroup>
         </LinearLayout>

@@ -342,17 +342,17 @@ public final class R {
         public static final int widgetmessage=0x7f02012d;
     }
     public static final class id {
-        public static final int add=0x7f060040;
+        public static final int add=0x7f060041;
         public static final int btComment=0x7f060020;
         public static final int btCommit=0x7f060012;
         public static final int btFinish=0x7f06001f;
         public static final int btShare=0x7f060021;
         public static final int btShareAndCommit=0x7f060013;
         public static final int cbStar=0x7f06001d;
-        public static final int checkBox1=0x7f060045;
-        public static final int clear=0x7f06003e;
+        public static final int checkBox1=0x7f060046;
+        public static final int clear=0x7f06003f;
         public static final int comment_listview=0x7f060022;
-        public static final int del=0x7f06003f;
+        public static final int del=0x7f060040;
         public static final int etComment=0x7f060014;
         public static final int fbcancle=0x7f06002e;
         public static final int fbconfirm=0x7f06002d;
@@ -378,9 +378,10 @@ public final class R {
         public static final int lybuttonBar=0x7f060011;
         public static final int male=0x7f06003a;
         public static final int name=0x7f060001;
+        public static final int other=0x7f06003c;
         public static final int price=0x7f060003;
         public static final int privilege_listview=0x7f06002c;
-        public static final int radioGroup_sex=0x7f060039;
+        public static final int radioGroup_gender=0x7f060039;
         public static final int recancle=0x7f06000a;
         public static final int reconfirm=0x7f060009;
         public static final int relativeLayout1=0x7f060010;
@@ -395,7 +396,7 @@ public final class R {
         public static final int tab5=0x7f060034;
         public static final int textView1=0x7f060036;
         public static final int text_sex=0x7f060038;
-        public static final int title=0x7f06003c;
+        public static final int title=0x7f06003d;
         public static final int tvComment=0x7f060017;
         public static final int tvCreatedDate=0x7f060016;
         public static final int tvDatetag=0x7f060025;
@@ -407,11 +408,11 @@ public final class R {
         public static final int tvProductname=0x7f06000d;
         public static final int tvUsername=0x7f060015;
         public static final int tvproductCost=0x7f06001b;
-        public static final int user=0x7f06003d;
-        public static final int usericon=0x7f060042;
-        public static final int userlocation=0x7f060044;
-        public static final int username=0x7f060043;
-        public static final int webView1=0x7f060041;
+        public static final int user=0x7f06003e;
+        public static final int usericon=0x7f060043;
+        public static final int userlocation=0x7f060045;
+        public static final int username=0x7f060044;
+        public static final int webView1=0x7f060042;
     }
     public static final class layout {
         public static final int collect=0x7f030000;
