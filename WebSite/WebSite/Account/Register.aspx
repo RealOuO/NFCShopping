@@ -1,4 +1,4 @@
-﻿<%@ Page Title="注册" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="注册" Language="C#" MasterPageFile="~/Styles/Site.master" AutoEventWireup="true"
     CodeBehind="Register.aspx.cs" Inherits="NFCShoppingWebSite.Account.Register" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
