@@ -78,6 +78,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="WebPages\Categories.aspx" />
+    <Content Include="WebPages\ProductEdit.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.cs">
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="WebPages\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\ProductEdit.aspx.cs">
+      <DependentUpon>ProductEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
+      <DependentUpon>ProductEdit.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
