@@ -18,11 +18,6 @@ namespace NFCShoppingWebSite.DAL
             return mContext.Users.ToList();
         }
 
-        public User GetUserByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void InsertUser(User user)
         {
             try

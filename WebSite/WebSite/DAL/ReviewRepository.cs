@@ -14,7 +14,7 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Review> GetReviews()
         {
-            return mContext.Reviews.Include("Products").ToList();
+            return mContext.Reviews.Include("Product").ToList();
         }
 
         public void InsertReview(Review review)
@@ -25,6 +25,7 @@ namespace NFCShoppingWebSite.DAL
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
 
@@ -39,6 +40,7 @@ namespace NFCShoppingWebSite.DAL
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 
@@ -53,6 +55,7 @@ namespace NFCShoppingWebSite.DAL
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 

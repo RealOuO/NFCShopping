@@ -20,7 +20,7 @@ namespace NFCShoppingWebSite.BLL
             return mRepository.GetUsers().ToList().Find(u => u.userID == id);
         }
 
-        /*注册的时候调用，判断用户是否已经被注册*/
+        /*注册的时候调用，判断用户名是否已经被注册的业务逻辑*/
         public bool IsExisted(String userName)
         {
             IEnumerable<User> users=mRepository.GetUsers().Where(u=>u.userName.Equals(userName));
@@ -34,6 +34,7 @@ namespace NFCShoppingWebSite.BLL
             }
         }
 
+        /*通过用户名查找用户的业务逻辑*/
         public User FindUserByUsername(String userName)
         {
             return mRepository.GetUsers().ToList().Find(u => u.userName.Equals(userName));
@@ -44,8 +45,33 @@ namespace NFCShoppingWebSite.BLL
         {
             user.lastVisitedDate = DateTime.Now;
             user.visitedTimes = 0;
-            mRepository.InsertUser(user);
-            return FindUserByUsername(user.userName);
+            try
+            {
+                mRepository.InsertUser(user);
+                return FindUserByUsername(user.userName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /*用户登录的业务逻辑*/
+        public User Login(User user)
+        {
+            User temp = FindUserByUsername(user.userName);
+            if (!temp.Equals(null))
+            {
+                if (temp.userPassword.Equals(user.userPassword))
+                    return temp;
+            }
+            return null;
+        }
+
+        /*查询所有的用户*/
+        public IEnumerable<User> GetUsers()
+        {
+            return mRepository.GetUsers();
         }
 
         /*用户签到函数*/
@@ -54,6 +80,19 @@ namespace NFCShoppingWebSite.BLL
             return true;
         }
 
+        /*删除用户*/
+        public void DeleteUser(User user)
+        {
+            try
+            {
+                mRepository.DeleteUser(user);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         #endregion
 
         private bool mIsDisposed = false; 

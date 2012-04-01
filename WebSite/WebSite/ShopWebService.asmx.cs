@@ -32,6 +32,7 @@ namespace NFCShoppingWebSite
             UserBL bl = new UserBL();
             return bl.GetUserByID(id);
         }
+
         [SoapRpcMethod, WebMethod]
         public bool IsExisted(String userName)
         {
@@ -50,15 +51,80 @@ namespace NFCShoppingWebSite
         public User Regist(User user)
         {
             UserBL bl = new UserBL();
-            return bl.Regist(user);
+            try
+            {
+                return bl.Regist(user);
+            }
+            catch 
+            {
+                return null;
+            }
         }
 
         [SoapRpcMethod, WebMethod]
-        public void AddSuggestion(Suggestion suggestion)
+        public User Login(User user)
+        {
+            UserBL bl = new UserBL();
+            return bl.Login(user);
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool AddReview(Review review)
+        {
+            ReviewBL bl = new ReviewBL();
+            try
+            {
+                bl.InsertReview(review);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public List<Review> GetReviewsByUserID(Int32 uid)
+        {
+            ReviewBL bl = new ReviewBL();
+            return bl.GetReviewsByUserID(uid).ToList();
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public List<Review> GetReviewsByProductID(Int32 pid)
+        {
+            ReviewBL bl = new ReviewBL();
+            return bl.GetReviewsByProductID(pid).ToList();
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool RemoveReview(Review review)
+        {
+            ReviewBL bl = new ReviewBL();
+            try
+            {
+                bl.DeleteReview(review);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool AddSuggestion(Suggestion suggestion)
         {
             SuggestionBL bl = new SuggestionBL();
-            suggestion.date = DateTime.Now;
-            bl.AddSuggestion(suggestion);
+            try
+            {
+                bl.InsertSuggestion(suggestion);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

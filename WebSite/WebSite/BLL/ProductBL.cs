@@ -50,6 +50,7 @@ namespace NFCShoppingWebSite.BLL
 
                 return null;
             }
+
         }
 
         public void InsertProduct(Product product)
