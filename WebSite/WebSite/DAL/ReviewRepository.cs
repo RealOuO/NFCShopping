@@ -14,6 +14,20 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Review> GetReviews()
         {
+            return mContext.Reviews.ToList();
+        }
+
+        /*通过商品ID查询商品的时候可以用，user返回给webservice的时候已经忽略了password，
+         * 不查询出商品的具体信息*/
+        public IEnumerable<Review> GetReviewWithUser()
+        {
+            return mContext.Reviews.Include("User").ToList();
+        }
+
+        /*通过商品ID查询商品的时候可以用，不查询出用户的具体信息，但是所评论的商品的信息
+         *会被连带查询出来*/
+        public IEnumerable<Review> GetReviewWithProduct()
+        {
             return mContext.Reviews.Include("Product").ToList();
         }
 

@@ -2,7 +2,7 @@ package scut.bgooo.webservice;
 
 import java.util.List;
 
-import scut.bgooo.entities.Comment;
+import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
 import scut.bgooo.entities.Product;
@@ -80,7 +80,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Comment> getCommentsByMe();
+	public List<Review> getCommentsByMe();
 
 	/**
 	 * <p>
@@ -91,7 +91,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Comment> getCommentsByMe(Paging page);
+	public List<Review> getCommentsByMe(Paging page);
 
 	/**
 	 * 
@@ -102,7 +102,7 @@ public interface IWebServiceUtil {
 	 *            商品的barcode 条形码编号
 	 * @return 评论列表
 	 */
-	public List<Comment> getComments(int id);
+	public List<Review> getComments(int id);
 
 	/**
 	 * 
@@ -115,7 +115,7 @@ public interface IWebServiceUtil {
 	 *            Paging 分页对象
 	 * @return 评论列表
 	 */
-	public List<Comment> getComments(String barcode, Paging page);
+	public List<Review> getComments(String barcode, Paging page);
 
 	/**
 	 * 

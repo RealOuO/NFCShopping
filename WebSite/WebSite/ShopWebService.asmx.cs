@@ -34,6 +34,13 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
+        public Product FindProductByID(Int32 id)
+        {
+            ProductBL bl = new ProductBL();
+            return bl.GetProduct(id);
+        }
+
+        [SoapRpcMethod, WebMethod]
         public bool IsExisted(String userName)
         {
             UserBL bl = new UserBL();
@@ -48,9 +55,13 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
-        public User Regist(User user)
+        public User Regist(String userName,String password,int gender)
         {
             UserBL bl = new UserBL();
+            User user = new User();
+            user.userName = userName;
+            user.userPassword = password;
+            user.gender = gender;
             try
             {
                 return bl.Regist(user);
@@ -95,6 +106,7 @@ namespace NFCShoppingWebSite
         {
             ReviewBL bl = new ReviewBL();
             return bl.GetReviewsByProductID(pid).ToList();
+            
         }
 
         [SoapRpcMethod, WebMethod]

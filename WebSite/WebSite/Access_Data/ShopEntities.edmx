@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Sys_DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="Sys_DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="Sys_DBModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Sys_DBModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DiscountInformation" EntityType="Sys_DBModel.Store.DiscountInformation" store:Type="Tables" Schema="dbo" />
@@ -80,7 +80,7 @@
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="brand" Type="varchar" MaxLength="50" />
           <Property Name="location" Type="varchar" MaxLength="50" />
-          <Property Name="impageURL" Type="varchar(max)" />
+          <Property Name="imageURL" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
@@ -91,7 +91,8 @@
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="productID" Type="int" Nullable="false" />
           <Property Name="comment" Type="text" Nullable="false" />
-          <Property Name="rating" Type="smallint" Nullable="false" />
+          <Property Name="rating" Type="real" Nullable="false" />
+          <Property Name="createAt" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="SecCategories">
           <Key>
@@ -205,7 +206,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Sys_DBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -215,8 +217,13 @@
           <EntitySet Name="Discounts" EntityType="Sys_DBModel.Discount" />
           <EntitySet Name="Products" EntityType="Sys_DBModel.Product" />
           <EntitySet Name="Reviews" EntityType="Sys_DBModel.Review" />
+          <EntitySet Name="SecCategories" EntityType="Sys_DBModel.SecCategory" />
           <EntitySet Name="Suggestions" EntityType="Sys_DBModel.Suggestion" />
           <EntitySet Name="Users" EntityType="Sys_DBModel.User" />
+          <AssociationSet Name="FK_SecCategories_Categories" Association="Sys_DBModel.FK_SecCategories_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="SecCategories" EntitySet="SecCategories" />
+          </AssociationSet>
           <AssociationSet Name="FK_DiscountInformation_Discounts" Association="Sys_DBModel.FK_DiscountInformation_Discounts">
             <End Role="Discounts" EntitySet="Discounts" />
             <End Role="DiscountInformation" EntitySet="DiscountItems" />
@@ -224,6 +231,10 @@
           <AssociationSet Name="FK_DiscountInformation_Products" Association="Sys_DBModel.FK_DiscountInformation_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="DiscountInformation" EntitySet="DiscountItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_SecCategories" Association="Sys_DBModel.FK_Products_SecCategories">
+            <End Role="SecCategories" EntitySet="SecCategories" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Products" Association="Sys_DBModel.FK_Reviews_Products">
             <End Role="Products" EntitySet="Products" />
@@ -237,15 +248,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Suggestions" EntitySet="Suggestions" />
           </AssociationSet>
-          <EntitySet Name="SecCategories" EntityType="Sys_DBModel.SecCategory" />
-          <AssociationSet Name="FK_SecCategories_Categories" Association="Sys_DBModel.FK_SecCategories_Categories">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="SecCategory" EntitySet="SecCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_SecCategories" Association="Sys_DBModel.FK_Products_SecCategories">
-            <End Role="SecCategory" EntitySet="SecCategories" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -253,8 +255,8 @@
           </Key>
           <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="SecCategories" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="Category" ToRole="SecCategory" />
-          </EntityType>
+          <NavigationProperty Name="SecCategories" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="Categories" ToRole="SecCategories" />
+        </EntityType>
         <EntityType Name="DiscountItem">
           <Key>
             <PropertyRef Name="id" />
@@ -288,11 +290,11 @@
           <Property Name="price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="brand" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="location" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="impageURL" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="imageURL" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="DiscountInformations" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Products" ToRole="DiscountInformation" />
+          <NavigationProperty Name="DiscountItems" Relationship="Sys_DBModel.FK_DiscountInformation_Products" FromRole="Products" ToRole="DiscountInformation" />
+          <NavigationProperty Name="SecCategory" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Products" ToRole="SecCategories" />
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
-          <NavigationProperty Name="SecCategory" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="Product" ToRole="SecCategory" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -302,9 +304,20 @@
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="productID" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="rating" Type="Int16" Nullable="false" />
+          <Property Name="rating" Type="Single" Nullable="false" />
+          <Property Name="createAt" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
           <NavigationProperty Name="User" Relationship="Sys_DBModel.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="SecCategory">
+          <Key>
+            <PropertyRef Name="secCategoryID" />
+          </Key>
+          <Property Name="secCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryID" Type="Int32" Nullable="false" />
+          <Property Name="secCategoryName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Category" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="SecCategories" ToRole="Categories" />
+          <NavigationProperty Name="Products" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="SecCategories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Suggestion">
           <Key>
@@ -329,6 +342,18 @@
           <NavigationProperty Name="Reviews" Relationship="Sys_DBModel.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
           <NavigationProperty Name="Suggestions" Relationship="Sys_DBModel.FK_Suggestions_Users" FromRole="Users" ToRole="Suggestions" />
         </EntityType>
+        <Association Name="FK_SecCategories_Categories">
+          <End Role="Categories" Type="Sys_DBModel.Category" Multiplicity="1" />
+          <End Role="SecCategories" Type="Sys_DBModel.SecCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="SecCategories">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DiscountInformation_Discounts">
           <End Role="Discounts" Type="Sys_DBModel.Discount" Multiplicity="1" />
           <End Role="DiscountInformation" Type="Sys_DBModel.DiscountItem" Multiplicity="*" />
@@ -350,6 +375,18 @@
             </Principal>
             <Dependent Role="DiscountInformation">
               <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_SecCategories">
+          <End Role="SecCategories" Type="Sys_DBModel.SecCategory" Multiplicity="1" />
+          <End Role="Products" Type="Sys_DBModel.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecCategories">
+              <PropertyRef Name="secCategoryID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="secCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -389,40 +426,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SecCategory">
-          <Key>
-            <PropertyRef Name="secCategoryID" />
-          </Key>
-          <Property Type="Int32" Name="secCategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="categoryID" Nullable="false" />
-          <Property Type="String" Name="secCategoryName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Category" Relationship="Sys_DBModel.FK_SecCategories_Categories" FromRole="SecCategory" ToRole="Category" />
-          <NavigationProperty Name="Products" Relationship="Sys_DBModel.FK_Products_SecCategories" FromRole="SecCategory" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_SecCategories_Categories">
-          <End Type="Sys_DBModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="Sys_DBModel.SecCategory" Role="SecCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="categoryID" />
-            </Principal>
-            <Dependent Role="SecCategory">
-              <PropertyRef Name="categoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_SecCategories">
-          <End Type="Sys_DBModel.SecCategory" Role="SecCategory" Multiplicity="1" />
-          <End Type="Sys_DBModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SecCategory">
-              <PropertyRef Name="secCategoryID" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="secCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -454,7 +457,7 @@
             <ScalarProperty Name="price" ColumnName="price" />
             <ScalarProperty Name="brand" ColumnName="brand" />
             <ScalarProperty Name="location" ColumnName="location" />
-            <ScalarProperty Name="impageURL" ColumnName="impageURL" />
+            <ScalarProperty Name="imageURL" ColumnName="imageURL" />
             <ScalarProperty Name="description" ColumnName="description" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Reviews"><EntityTypeMapping TypeName="Sys_DBModel.Review"><MappingFragment StoreEntitySet="Reviews">
@@ -463,6 +466,12 @@
             <ScalarProperty Name="productID" ColumnName="productID" />
             <ScalarProperty Name="comment" ColumnName="comment" />
             <ScalarProperty Name="rating" ColumnName="rating" />
+            <ScalarProperty Name="createAt" ColumnName="createAt" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SecCategories"><EntityTypeMapping TypeName="Sys_DBModel.SecCategory"><MappingFragment StoreEntitySet="SecCategories">
+            <ScalarProperty Name="secCategoryID" ColumnName="secCategoryID" />
+            <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+            <ScalarProperty Name="secCategoryName" ColumnName="secCategoryName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Suggestions"><EntityTypeMapping TypeName="Sys_DBModel.Suggestion"><MappingFragment StoreEntitySet="Suggestions">
             <ScalarProperty Name="id" ColumnName="id" />
@@ -478,15 +487,6 @@
             <ScalarProperty Name="visitedTimes" ColumnName="visitedTimes" />
             <ScalarProperty Name="lastVisitedDate" ColumnName="lastVisitedDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="SecCategories">
-            <EntityTypeMapping TypeName="Sys_DBModel.SecCategory">
-              <MappingFragment StoreEntitySet="SecCategories">
-                <ScalarProperty Name="secCategoryName" ColumnName="secCategoryName" />
-                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
-                <ScalarProperty Name="secCategoryID" ColumnName="secCategoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -501,57 +501,53 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="ShopEntities">
-        <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.75" PointY="3.125" Height="1.5879931640624996" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="2.875" PointX="7.5" PointY="2.625" Height="2.5430916341145822" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="2.875" PointX="3.875" PointY="8.25" Height="1.7790128580729174" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="5.25" PointY="2.25" Height="3.3071704101562496" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="10.5" PointY="2.75" Height="2.3520719401041656" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="10.5" PointY="8" Height="1.9700325520833317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="8.25" PointY="7.625" Height="2.5430916341145817" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.75" PointY="5.25" Height="1.5879931640624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="1.5" PointX="7.375" PointY="4.625" Height="2.5430916341145817" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="1.5" PointX="5.25" PointY="1.125" Height="1.7790128580729165" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="4.875" PointY="4" Height="3.3071704101562496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="10.5" PointY="4.75" Height="2.5430916341145835" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="2.875" PointY="4.5" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="10.5" PointY="1.75" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="8.25" PointY="0.75" Height="2.5430916341145817" IsExpanded="true" />
+        <AssociationConnector Association="Sys_DBModel.FK_SecCategories_Categories" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="5.8600162760416659" />
+          <ConnectorPoint PointX="2.875" PointY="5.8600162760416659" />
+        </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Discounts" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="8.25" />
-          <ConnectorPoint PointX="7.125" PointY="7.875" />
-          <ConnectorPoint PointX="7.125" PointY="4.3118211320292144" />
-          <ConnectorPoint PointX="7.5" PointY="4.3118211320292144" />
+          <ConnectorPoint PointX="6.75" PointY="2.9040128580729165" />
+          <ConnectorPoint PointX="7.125" PointY="3.2790128580729165" />
+          <ConnectorPoint PointX="7.125" PointY="4.25" />
+          <ConnectorPoint PointX="7" PointY="4.25" />
+          <ConnectorPoint PointX="7.375" PointY="4.625" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="3.4059105660146072" />
-          <ConnectorPoint PointX="7.5" PointY="3.4059105660146072" />
+          <ConnectorPoint PointX="6.375" PointY="5.9277983170572908" />
+          <ConnectorPoint PointX="7.375" PointY="5.9277983170572908" />
+        </AssociationConnector>
+        <AssociationConnector Association="Sys_DBModel.FK_Products_SecCategories" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.375" PointY="5.4850162760416659" />
+          <ConnectorPoint PointX="4.875" PointY="5.4850162760416659" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="5.3938810221354156" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="5.3938810221354148" />
-          <ConnectorPoint PointX="7.208333333333333" PointY="5.3938810221354156" />
-          <ConnectorPoint PointX="10.760414666666666" PointY="5.3938810221354148" />
-          <ConnectorPoint PointX="10.927081333333334" PointY="5.3938810221354156" />
-          <ConnectorPoint PointX="11.4531265" PointY="5.3938810221354156" />
-          <ConnectorPoint PointX="11.4531265" PointY="5.1020719401041656" />
+          <ConnectorPoint PointX="6.375" PointY="7.2618416341145826" />
+          <ConnectorPoint PointX="10.5" PointY="7.2618416341145826" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="7.625" />
-          <ConnectorPoint PointX="10.125" PointY="7.25" />
-          <ConnectorPoint PointX="10.843748" PointY="7.25" />
-          <ConnectorPoint PointX="10.843748" PointY="5.1020719401041656" />
+          <ConnectorPoint PointX="9.75" PointY="3.2919367879607355" />
+          <ConnectorPoint PointX="10.125" PointY="3.6669367879607355" />
+          <ConnectorPoint PointX="10.125" PointY="5.9902938170572906" />
+          <ConnectorPoint PointX="10.5" PointY="5.9902938170572906" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Suggestions_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="8.9850162760416659" />
-          <ConnectorPoint PointX="10.5" PointY="8.9850162760416659" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="3" PointY="2.875" Height="1.9700325520833317" />
-        <AssociationConnector Association="Sys_DBModel.FK_SecCategories_Categories" >
-          <ConnectorPoint PointX="2.25" PointY="3.91899658203125" />
-          <ConnectorPoint PointX="3" PointY="3.91899658203125" />
-        </AssociationConnector>
-        <AssociationConnector Association="Sys_DBModel.FK_Products_SecCategories" >
-          <ConnectorPoint PointX="4.5" PointY="3.8600162760416659" />
-          <ConnectorPoint PointX="5.25" PointY="3.8600162760416659" />
+          <ConnectorPoint PointX="9.75" PointY="2.489715893980367" />
+          <ConnectorPoint PointX="10.5" PointY="2.489715893980367" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
