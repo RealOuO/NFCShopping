@@ -31,7 +31,7 @@ namespace NFCShoppingWebSite.WebPages
                 try
                 {
                     this.ProductPictureUpload.SaveAs(imageSavePath + ProductPictureUpload.FileName);
-                    product.impageURL = this.ProductPictureUpload.FileName;
+                    product.imageURL = this.ProductPictureUpload.FileName;
                 }
                 catch (Exception ex)
                 {
