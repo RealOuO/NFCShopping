@@ -1,24 +1,27 @@
 package scut.bgooo.entities;
 
+import java.util.Date;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
-/**
- * 2012年4月1日 调试成功的类
- */
-public class User implements KvmSerializable {
+public class Review implements KvmSerializable {
 
-	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+
+	private int Id; // 评论的id
+	private String Text; // 评论的内容
+	private int UserId;
+	private User User;// 评论的用户
+	private int ProductId;
+	private Product Product;// 评论的产品
+	private float Rating;// 用户评分
+	private String CreatedAt;// 评论的日期
 	private String EntityKey;
-	private int Id;
-	private String Username;
-	// private String Password; 注意不要返回用户密码到手机端，因为泄露了用户的信息
-	private int Gender;
-	private int VisitedTimes;
-	private String LastVisitedDate;
 
 	@Override
 	public Object getProperty(int arg0) {
@@ -29,18 +32,27 @@ public class User implements KvmSerializable {
 			res = this.Id;
 			break;
 		case 1:
-			res = this.Username;
+			res = this.UserId;
 			break;
 		case 2:
-			res = this.Gender;
+			res = this.ProductId;
 			break;
 		case 3:
-			res = this.VisitedTimes;
+			res = this.Text;
 			break;
 		case 4:
-			res = this.LastVisitedDate;
+			res = this.Rating;
 			break;
 		case 5:
+			res = this.CreatedAt;
+			break;
+		case 6:
+			res = this.Product;
+			break;
+		case 7:
+			res = this.User;
+			break;
+		case 8:
 			res = this.EntityKey;
 			break;
 		default:
@@ -52,7 +64,7 @@ public class User implements KvmSerializable {
 	@Override
 	public int getPropertyCount() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 9;
 	}
 
 	@Override
@@ -61,25 +73,37 @@ public class User implements KvmSerializable {
 		switch (arg0) {
 		case 0:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "userID";
+			arg2.name = "reviewID";
 			break;
 		case 1:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "userName";
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "userID";
 			break;
 		case 2:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "gender";
+			arg2.name = "productID";
 			break;
 		case 3:
-			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "visitedTimes";
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "comment";
 			break;
 		case 4:
 			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "lastVisitedDate";
+			arg2.name = "rating";
 			break;
 		case 5:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "createAt";
+			break;
+		case 6:
+			arg2.type = PropertyInfo.OBJECT_CLASS;
+			arg2.name = "Product";
+			break;
+		case 7:
+			arg2.type = PropertyInfo.OBJECT_CLASS;
+			arg2.name = "User";
+			break;
+		case 8:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "EntityKey";
 		default:
@@ -97,30 +121,31 @@ public class User implements KvmSerializable {
 			this.Id = Integer.valueOf(arg1.toString());
 			break;
 		case 1:
-			this.Username = arg1.toString();
+			this.UserId = Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.Gender = Integer.valueOf(arg1.toString());
+			this.ProductId = Integer.valueOf(arg1.toString());
 			break;
 		case 3:
-			this.VisitedTimes = Integer.valueOf(arg1.toString());
+			this.Text = arg1.toString();
 			break;
 		case 4:
-			this.LastVisitedDate = arg1.toString();
+			this.Rating = Float.valueOf(arg1.toString());
 			break;
 		case 5:
+			this.CreatedAt = arg1.toString();
+			break;
+		case 6:
+			this.Product = (Product) arg1;
+			break;
+		case 7:
+			this.User = (User) arg1;
+			break;
+		case 8:
 			this.EntityKey = arg1.toString();
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return this.EntityKey + "\n" + this.Id + "\n" + this.Username + "\n"
-				+ "\n" + this.Gender + "\n" + this.VisitedTimes + "\n"
-				+ this.LastVisitedDate + "\n";
 	}
 
 }

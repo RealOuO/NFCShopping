@@ -32,6 +32,14 @@ namespace NFCShoppingWebSite
             UserBL bl = new UserBL();
             return bl.GetUserByID(id);
         }
+
+        [SoapRpcMethod, WebMethod]
+        public Product FindProductByID(Int32 id)
+        {
+            ProductBL bl = new ProductBL();
+            return bl.GetProduct(id);
+        }
+
         [SoapRpcMethod, WebMethod]
         public bool IsExisted(String userName)
         {
@@ -47,18 +55,88 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
-        public User Regist(User user)
+        public User Regist(String userName,String password,int gender)
         {
             UserBL bl = new UserBL();
-            return bl.Regist(user);
+            User user = new User();
+            user.userName = userName;
+            user.userPassword = password;
+            user.gender = gender;
+            try
+            {
+                return bl.Regist(user);
+            }
+            catch 
+            {
+                return null;
+            }
         }
 
         [SoapRpcMethod, WebMethod]
-        public void AddSuggestion(Suggestion suggestion)
+        public User Login(User user)
+        {
+            UserBL bl = new UserBL();
+            return bl.Login(user);
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool AddReview(Review review)
+        {
+            ReviewBL bl = new ReviewBL();
+            try
+            {
+                bl.InsertReview(review);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public List<Review> GetReviewsByUserID(Int32 uid)
+        {
+            ReviewBL bl = new ReviewBL();
+            return bl.GetReviewsByUserID(uid).ToList();
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public List<Review> GetReviewsByProductID(Int32 pid)
+        {
+            ReviewBL bl = new ReviewBL();
+            return bl.GetReviewsByProductID(pid).ToList();
+            
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool RemoveReview(Review review)
+        {
+            ReviewBL bl = new ReviewBL();
+            try
+            {
+                bl.DeleteReview(review);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool AddSuggestion(Suggestion suggestion)
         {
             SuggestionBL bl = new SuggestionBL();
-            suggestion.date = DateTime.Now;
-            bl.AddSuggestion(suggestion);
+            try
+            {
+                bl.InsertSuggestion(suggestion);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

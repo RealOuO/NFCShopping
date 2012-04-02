@@ -10,7 +10,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
-import scut.bgooo.entities.Comment;
+import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
 import scut.bgooo.entities.Product;
@@ -96,25 +96,25 @@ public class WebServiceUtil implements IWebServiceUtil {
 	}
 
 	@Override
-	public List<Comment> getCommentsByMe() {
+	public List<Review> getCommentsByMe() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Comment> getCommentsByMe(Paging page) {
+	public List<Review> getCommentsByMe(Paging page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Comment> getComments(int id) {
+	public List<Review> getComments(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Comment> getComments(String barcode, Paging page) {
+	public List<Review> getComments(String barcode, Paging page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
