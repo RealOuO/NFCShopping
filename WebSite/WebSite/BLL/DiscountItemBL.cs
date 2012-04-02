@@ -49,7 +49,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.InsertDiscountItem(discountItem);
+                mRepository.InsertDiscountItem(discountItem, true);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.DeleteDiscountItem(discountItem);
+                mRepository.DeleteDiscountItem(discountItem, true);
             }
             catch (Exception ex)
             {
@@ -73,7 +73,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.UpdateDiscountItem(discountItem, origDiscountItem);
+                mRepository.UpdateDiscountItem(discountItem, origDiscountItem, true);
             }
             catch (Exception ex)
             {

@@ -46,7 +46,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mCategoryRepository.InsertCategory(category);
+                mCategoryRepository.InsertCategory(category, true);
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mCategoryRepository.DeleteCategory(category);
+                mCategoryRepository.DeleteCategory(category, true);
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mCategoryRepository.UpdateCategory(category, origCategory);
+                mCategoryRepository.UpdateCategory(category, origCategory, true);
             }
             catch (Exception ex)
             {

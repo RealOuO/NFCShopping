@@ -1063,6 +1063,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Products_SecCategories", "SecCategories")]
         public SecCategory SecCategory
@@ -1081,8 +1083,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<SecCategory> SecCategoryReference
         {
             get
@@ -1311,6 +1311,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Reviews_Products", "Products")]
         public Product Product
@@ -1329,8 +1331,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<Product> ProductReference
         {
             get
@@ -1349,6 +1349,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Reviews_Users", "Users")]
         public User User
@@ -1367,8 +1369,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<User> UserReference
         {
             get
@@ -1517,8 +1517,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<Category> CategoryReference
         {
             get
@@ -1713,8 +1711,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<User> UserReference
         {
             get
@@ -1821,8 +1817,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public global::System.String userPassword
         {
             get

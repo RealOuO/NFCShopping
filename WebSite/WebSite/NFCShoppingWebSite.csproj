@@ -80,6 +80,7 @@
     <Content Include="WebPages\Categories.aspx" />
     <Content Include="WebPages\ProductEdit.aspx" />
     <Content Include="WebPages\Users.aspx" />
+    <Content Include="WebPages\Products.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.cs">
@@ -182,12 +183,21 @@
     <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
     </Compile>
+
     <Compile Include="WebPages\Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebPages\Users.aspx.designer.cs">
       <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace NFCShoppingWebSite.BLL
             review.createAt = DateTime.Now;
             try
             {
-                mRepository.InsertReview(review);
+                mRepository.InsertReview(review,true);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.DeleteReview(review);
+                mRepository.DeleteReview(review,true);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.UpdateReview(review, origReview);
+                mRepository.UpdateReview(review, origReview,true);
             }
             catch (Exception ex)
             {

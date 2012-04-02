@@ -19,11 +19,16 @@ namespace NFCShoppingWebSite.DAL
         }
 
 
-        public void InsertDiscount(Discount discount)
+        public void InsertDiscount(Discount discount, bool isImmediateSave)
         {
             try
             {
                 mContext.Discounts.AddObject(discount);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -32,26 +37,35 @@ namespace NFCShoppingWebSite.DAL
         }
 
 
-        public void DeleteDiscount(Discount discount)
+        public void DeleteDiscount(Discount discount, bool isImmediateSave)
         {
             try
             {
                 mContext.Discounts.Attach(discount);
                 mContext.Discounts.DeleteObject(discount);
 
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
             }
         }
-        
-        public void UpdateDiscount(Discount newDiscount,Discount origDiscount)
+
+        public void UpdateDiscount(Discount newDiscount, Discount origDiscount, bool isImmediateSave)
         {
             try
             {
                 mContext.Discounts.Attach(origDiscount);
                 mContext.ApplyCurrentValues("Discounts", newDiscount);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

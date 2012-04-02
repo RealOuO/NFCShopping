@@ -55,9 +55,10 @@ namespace NFCShoppingWebSite.BLL
         {
             user.lastVisitedDate = DateTime.Now;
             user.visitedTimes = 0;
+
             try
             {
-                mRepository.InsertUser(user);
+                mRepository.InsertUser(user, true);
                 return FindUserByUsername(user.userName);
             }
             catch (Exception ex)
@@ -95,7 +96,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.DeleteUser(user);
+                mRepository.DeleteUser(user, true);
             }
             catch (Exception ex)
             {

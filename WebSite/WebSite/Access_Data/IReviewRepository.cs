@@ -9,10 +9,10 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<Review> GetReviews();
 
-        void InsertReview(Review review);
+        void InsertReview(Review review, bool isImmediateSave);
 
-        void DeleteReview(Review review);
+        void DeleteReview(Review review, bool isImmediateSave);
 
-        void UpdateReview(Review review,Review origReview);
+        void UpdateReview(Review review, Review origReview, bool isImmediateSave);
     }
 }
