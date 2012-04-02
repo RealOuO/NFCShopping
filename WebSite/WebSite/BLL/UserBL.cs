@@ -10,7 +10,17 @@ namespace NFCShoppingWebSite.BLL
     public class UserBL:IDisposable
     {
 
-        IUserRepository mRepository = new UserRepository();
+        IUserRepository mRepository;
+
+        public UserBL()
+        {
+            mRepository = new UserRepository();
+        }
+
+        public UserBL(IUserRepository repository)
+        {
+            mRepository = repository;
+        }
 
         #region 需求必要的业务逻辑处理实现定义
 

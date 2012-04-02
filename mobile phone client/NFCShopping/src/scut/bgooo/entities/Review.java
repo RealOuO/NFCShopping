@@ -19,7 +19,9 @@ public class Review implements KvmSerializable {
 	private User User;// 评论的用户
 	private int ProductId;
 	private Product Product;// 评论的产品
-	private float Rating;// 用户评分
+	// 用户评分 ，注意这里是实际评分的10倍传入
+	private int Rating;// 用户评分 ，注意这里是实际评分的10倍传入
+	// 用户评分 ，注意这里是实际评分的10倍传入，显示在手机上时要除以10
 	private String CreatedAt;// 评论的日期
 	private String EntityKey;
 
@@ -88,7 +90,7 @@ public class Review implements KvmSerializable {
 			arg2.name = "comment";
 			break;
 		case 4:
-			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "rating";
 			break;
 		case 5:
@@ -130,7 +132,7 @@ public class Review implements KvmSerializable {
 			this.Text = arg1.toString();
 			break;
 		case 4:
-			this.Rating = Float.valueOf(arg1.toString());
+			this.Rating = Integer.valueOf(arg1.toString());
 			break;
 		case 5:
 			this.CreatedAt = arg1.toString();
@@ -147,5 +149,4 @@ public class Review implements KvmSerializable {
 			break;
 		}
 	}
-
 }

@@ -41,6 +41,13 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
+        public Product FindProductByBarcode(String barcode)
+        {
+            ProductBL bl = new ProductBL();
+            return bl.GetProductByBarcode(barcode);
+        }
+
+        [SoapRpcMethod, WebMethod]
         public bool IsExisted(String userName)
         {
             UserBL bl = new UserBL();
@@ -73,36 +80,24 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
-        public User Login(User user)
+        public User Login(String userName, String password)
         {
             UserBL bl = new UserBL();
+            User user = new User();
+            user.userName = userName;
+            user.userPassword = password;
             return bl.Login(user);
         }
 
         [SoapRpcMethod, WebMethod]
-        public bool AddReview(Review review)
-        {
-            ReviewBL bl = new ReviewBL();
-            try
-            {
-                bl.InsertReview(review);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        [SoapRpcMethod, WebMethod]
-        public List<Review> GetReviewsByUserID(Int32 uid)
+        public List<Review> FindReviewsByUserID(Int32 uid)
         {
             ReviewBL bl = new ReviewBL();
             return bl.GetReviewsByUserID(uid).ToList();
         }
 
         [SoapRpcMethod, WebMethod]
-        public List<Review> GetReviewsByProductID(Int32 pid)
+        public List<Review> FindReviewsByProductID(Int32 pid)
         {
             ReviewBL bl = new ReviewBL();
             return bl.GetReviewsByProductID(pid).ToList();
@@ -125,6 +120,21 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
+        public bool AddReview(Review review)
+        {
+            ReviewBL bl = new ReviewBL();
+            try
+            {
+                bl.InsertReview(review);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        [SoapRpcMethod, WebMethod]
         public bool AddSuggestion(Suggestion suggestion)
         {
             SuggestionBL bl = new SuggestionBL();
@@ -138,5 +148,7 @@ namespace NFCShoppingWebSite
                 return false;
             }
         }
+
+        
     }
 }

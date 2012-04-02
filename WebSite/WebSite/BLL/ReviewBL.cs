@@ -32,6 +32,7 @@ namespace NFCShoppingWebSite.BLL
 
         public void InsertReview(Review review)
         {
+            review.createAt = DateTime.Now;
             try
             {
                 mRepository.InsertReview(review);

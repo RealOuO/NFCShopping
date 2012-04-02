@@ -91,7 +91,7 @@
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="productID" Type="int" Nullable="false" />
           <Property Name="comment" Type="text" Nullable="false" />
-          <Property Name="rating" Type="real" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
           <Property Name="createAt" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="SecCategories">
@@ -171,7 +171,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Users">
-          <End Role="Users" Type="Sys_DBModel.Store.Users" Multiplicity="1" />
+          <End Role="Users" Type="Sys_DBModel.Store.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Reviews" Type="Sys_DBModel.Store.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -304,7 +306,7 @@
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="productID" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="rating" Type="Single" Nullable="false" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="createAt" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Sys_DBModel.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
           <NavigationProperty Name="User" Relationship="Sys_DBModel.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
@@ -403,7 +405,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_Users">
-          <End Role="Users" Type="Sys_DBModel.User" Multiplicity="1" />
+          <End Role="Users" Type="Sys_DBModel.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Reviews" Type="Sys_DBModel.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -509,35 +513,39 @@
     <Diagrams>
       <Diagram Name="ShopEntities">
         <EntityTypeShape EntityType="Sys_DBModel.Category" Width="1.5" PointX="0.75" PointY="5.25" Height="1.5879931640624996" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="1.5" PointX="7.375" PointY="4.625" Height="2.5430916341145817" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.DiscountItem" Width="1.5" PointX="7.5" PointY="4.75" Height="2.5430916341145817" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.Discount" Width="1.5" PointX="5.25" PointY="1.125" Height="1.7790128580729165" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="4.875" PointY="4" Height="3.3071704101562496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.Product" Width="1.5" PointX="5.25" PointY="4.375" Height="3.3071704101562496" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.Review" Width="1.5" PointX="10.5" PointY="4.75" Height="2.5430916341145835" IsExpanded="true" />
-        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="2.875" PointY="4.5" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sys_DBModel.SecCategory" Width="1.5" PointX="3" PointY="5" Height="1.9700325520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.Suggestion" Width="1.5" PointX="10.5" PointY="1.75" Height="1.9700325520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="Sys_DBModel.User" Width="1.5" PointX="8.25" PointY="0.75" Height="2.5430916341145817" IsExpanded="true" />
         <AssociationConnector Association="Sys_DBModel.FK_SecCategories_Categories" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="5.8600162760416659" />
-          <ConnectorPoint PointX="2.875" PointY="5.8600162760416659" />
+          <ConnectorPoint PointX="2.25" PointY="6.04399658203125" />
+          <ConnectorPoint PointX="3" PointY="6.04399658203125" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Discounts" ManuallyRouted="false">
           <ConnectorPoint PointX="6.75" PointY="2.9040128580729165" />
           <ConnectorPoint PointX="7.125" PointY="3.2790128580729165" />
-          <ConnectorPoint PointX="7.125" PointY="4.25" />
-          <ConnectorPoint PointX="7" PointY="4.25" />
-          <ConnectorPoint PointX="7.375" PointY="4.625" />
+          <ConnectorPoint PointX="7.125" PointY="6.0215458170572909" />
+          <ConnectorPoint PointX="7.5" PointY="6.0215458170572909" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_DiscountInformation_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.375" PointY="5.9277983170572908" />
-          <ConnectorPoint PointX="7.375" PointY="5.9277983170572908" />
+          <ConnectorPoint PointX="6.75" PointY="5.3232729085286454" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="5.3232729085286445" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="5.3232729085286454" />
+          <ConnectorPoint PointX="7.5" PointY="5.3232729085286454" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Products_SecCategories" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.375" PointY="5.4850162760416659" />
-          <ConnectorPoint PointX="4.875" PointY="5.4850162760416659" />
+          <ConnectorPoint PointX="4.5" PointY="5.9850162760416659" />
+          <ConnectorPoint PointX="5.25" PointY="5.9850162760416659" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Products" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.375" PointY="7.2618416341145826" />
-          <ConnectorPoint PointX="10.5" PointY="7.2618416341145826" />
+          <ConnectorPoint PointX="6.75" PointY="7.68217041015625" />
+          <ConnectorPoint PointX="7.125" PointY="8.05717041015625" />
+          <ConnectorPoint PointX="7.125" PointY="7.6680916341145835" />
+          <ConnectorPoint PointX="10.124999999999998" PointY="7.6680916341145835" />
+          <ConnectorPoint PointX="10.5" PointY="7.2930916341145835" />
         </AssociationConnector>
         <AssociationConnector Association="Sys_DBModel.FK_Reviews_Users" ManuallyRouted="false">
           <ConnectorPoint PointX="9.75" PointY="3.2919367879607355" />

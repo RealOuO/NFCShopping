@@ -1,14 +1,21 @@
 package scut.bgooo.webservice;
 
 import java.util.List;
+import java.util.Vector;
 
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
 import scut.bgooo.entities.Product;
+import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
 
 public interface IWebServiceUtil {
+	
+	
+	public boolean AddReview(Review review);
+	
+	public boolean AddSuggestion(Suggestion suggestion);
 	
 	/**
 	 * <p>
@@ -71,7 +78,7 @@ public interface IWebServiceUtil {
 	 * @return 返回商品的对象
 	 * 
 	 * */
-	public Product getProductById(String barcode);
+	public Product getProductByBarcode(String barcode);
 
 	/**
 	 * <p>
@@ -80,7 +87,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Review> getCommentsByMe();
+	public Vector<Review> getReviewsByMe();
 
 	/**
 	 * <p>
@@ -91,7 +98,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Review> getCommentsByMe(Paging page);
+	public Vector<Review> getReviewsByMe(Paging page);
 
 	/**
 	 * 
@@ -102,7 +109,7 @@ public interface IWebServiceUtil {
 	 *            商品的barcode 条形码编号
 	 * @return 评论列表
 	 */
-	public List<Review> getComments(int id);
+	public Vector<Review> getReviewsByProductId(int id);
 
 	/**
 	 * 
@@ -115,7 +122,7 @@ public interface IWebServiceUtil {
 	 *            Paging 分页对象
 	 * @return 评论列表
 	 */
-	public List<Review> getComments(String barcode, Paging page);
+	public Vector<Review> getReviewsByProductId(int id, Paging page);
 
 	/**
 	 * 

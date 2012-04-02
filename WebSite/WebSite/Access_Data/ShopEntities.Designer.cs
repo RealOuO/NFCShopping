@@ -1142,7 +1142,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// <param name="comment">comment 属性的初始值。</param>
         /// <param name="rating">rating 属性的初始值。</param>
         /// <param name="createAt">createAt 属性的初始值。</param>
-        public static Review CreateReview(global::System.Int32 reviewID, global::System.Int32 userID, global::System.Int32 productID, global::System.String comment, global::System.Single rating, global::System.DateTime createAt)
+        public static Review CreateReview(global::System.Int32 reviewID, global::System.Int32 userID, global::System.Int32 productID, global::System.String comment, global::System.Int32 rating, global::System.DateTime createAt)
         {
             Review review = new Review();
             review.reviewID = reviewID;
@@ -1261,7 +1261,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Single rating
+        public global::System.Int32 rating
         {
             get
             {
@@ -1276,8 +1276,8 @@ namespace NFCShoppingWebSite.Access_Data
                 OnratingChanged();
             }
         }
-        private global::System.Single _rating;
-        partial void OnratingChanging(global::System.Single value);
+        private global::System.Int32 _rating;
+        partial void OnratingChanging(global::System.Int32 value);
         partial void OnratingChanged();
     
         /// <summary>
@@ -1311,8 +1311,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Reviews_Products", "Products")]
         public Product Product
@@ -1331,6 +1329,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         public EntityReference<Product> ProductReference
         {
             get
@@ -1349,8 +1349,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Sys_DBModel", "FK_Reviews_Users", "Users")]
         public User User
@@ -1369,6 +1367,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         public EntityReference<User> UserReference
         {
             get
@@ -1517,7 +1517,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         public EntityReference<Category> CategoryReference
@@ -1714,6 +1713,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         public EntityReference<User> UserReference
         {
             get
@@ -1820,6 +1821,8 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         public global::System.String userPassword
         {
             get

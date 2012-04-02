@@ -36,6 +36,7 @@ namespace NFCShoppingWebSite.DAL
             try
             {
                 mContext.Reviews.AddObject(review);
+                mContext.SaveChanges();
             }
             catch (Exception ex)
             {

@@ -20,6 +20,7 @@ namespace NFCShoppingWebSite.DAL
             try
             {
                 mContext.Suggestions.AddObject(suggestion);
+                mContext.SaveChanges();
             }
             catch (Exception ex)
             {
