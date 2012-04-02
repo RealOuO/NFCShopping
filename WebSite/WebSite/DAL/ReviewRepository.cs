@@ -14,27 +14,19 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Review> GetReviews()
         {
-            return mContext.Reviews.Include("Products").ToList();
+            return mContext.Reviews.ToList();
         }
 
-        public void InsertReview(Review review)
+        public void InsertReview(Review review, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.AddObject(review);
-            }
-            catch (Exception ex)
-            {
-            }
-        }
 
-        public void DeleteReview(Review review)
-        {
-            try
-            {
-                mContext.Reviews.Attach(review);
-                mContext.Reviews.DeleteObject(review);
-                mContext.SaveChanges();
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -42,13 +34,35 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void UpdateReview(Review review,Review origReview)
+        public void DeleteReview(Review review, bool isImmediateSave)
+        {
+            try
+            {
+                mContext.Reviews.Attach(review);
+                mContext.Reviews.DeleteObject(review);
+
+                if(isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
+        }
+
+        public void UpdateReview(Review review, Review origReview, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.Attach(origReview);
                 mContext.Reviews.ApplyCurrentValues(review);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

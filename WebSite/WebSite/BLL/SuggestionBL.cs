@@ -18,7 +18,7 @@ namespace NFCShoppingWebSite.BLL
         /*用户给超市发布反馈信息的业务逻辑*/
         public void AddSuggestion(Suggestion suggestion)
         {
-            mRepository.InsertSuggestion(suggestion);
+            mRepository.InsertSuggestion(suggestion, true);
         }
         /*查询用户所有的反馈信息*/
         public IEnumerable<Suggestion> GetSuggestionsByUserID(Int32 userID)

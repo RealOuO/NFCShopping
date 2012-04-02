@@ -44,7 +44,7 @@ namespace NFCShoppingWebSite.BLL
         {
             user.lastVisitedDate = DateTime.Now;
             user.visitedTimes = 0;
-            mRepository.InsertUser(user);
+            mRepository.InsertUser(user, true);
             return FindUserByUsername(user.userName);
         }
 

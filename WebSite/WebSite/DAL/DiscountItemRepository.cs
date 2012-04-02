@@ -38,11 +38,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.DiscountItems.ToList(); 
         }
 
-        public void InsertDiscountItem(DiscountItem discountItem)
+        public void InsertDiscountItem(DiscountItem discountItem, bool isImmediateSave)
         {
             try
             {
                 mContext.DiscountItems.AddObject(discountItem);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -50,13 +55,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteDiscountItem(DiscountItem discountItem)
+        public void DeleteDiscountItem(DiscountItem discountItem, bool isImmediateSave)
         {
             try
             {
                 mContext.DiscountItems.Attach(discountItem);
                 mContext.DiscountItems.DeleteObject(discountItem);
 
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -65,13 +74,18 @@ namespace NFCShoppingWebSite.DAL
         }
 
 
-        public void UpdateDiscountItem(DiscountItem newDiscountItem, DiscountItem origDiscountItem)
+        public void UpdateDiscountItem(DiscountItem newDiscountItem, DiscountItem origDiscountItem, bool isImmediateSave)
 
         {
             try
             {
                 mContext.DiscountItems.Attach(origDiscountItem);
                 mContext.ApplyCurrentValues("DiscountItems", newDiscountItem);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

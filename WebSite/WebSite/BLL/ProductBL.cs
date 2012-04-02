@@ -56,7 +56,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mProductRepository.InsertProduct(product);
+                mProductRepository.InsertProduct(product, true);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mProductRepository.DeleteProduct(product);
+                mProductRepository.DeleteProduct(product, true);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mProductRepository.UpdateProduct(product, origProduct);
+                mProductRepository.UpdateProduct(product, origProduct, true);
             }
             catch (Exception ex)
             {
