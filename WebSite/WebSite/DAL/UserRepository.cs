@@ -18,12 +18,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.Users.ToList();
         }
 
-        public void InsertUser(User user)
+        public void InsertUser(User user, bool isImmediateSave)
         {
             try
             {
                 mContext.Users.AddObject(user);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
@@ -31,13 +35,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(User user, bool isImmediateSave)
         {
             try
             {
                 mContext.Users.Attach(user);
                 mContext.Users.DeleteObject(user);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
@@ -46,13 +54,17 @@ namespace NFCShoppingWebSite.DAL
 
         }
 
-        public void UpdateUser(User user, User origUser)
+        public void UpdateUser(User user, User origUser, bool isImmediateSave)
         {
             try
             {
                 mContext.Users.Attach(origUser);
                 mContext.Users.ApplyCurrentValues( user);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch(Exception e)
             {

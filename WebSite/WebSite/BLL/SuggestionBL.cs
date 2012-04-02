@@ -23,7 +23,7 @@ namespace NFCShoppingWebSite.BLL
             suggestion.date = DateTime.Now;
             try
             {
-                mRepository.InsertSuggestion(suggestion);
+                mRepository.InsertSuggestion(suggestion, true);
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mRepository.DeleteSuggestion(suggestion);
+                mRepository.DeleteSuggestion(suggestion, true);
             }
             catch(Exception ex)
             {
