@@ -53,7 +53,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mSecCategoryRepository.InsertSecCategory(secCategory);
+                mSecCategoryRepository.InsertSecCategory(secCategory, true);
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mSecCategoryRepository.DeleteSecCategory(secCategory);
+                mSecCategoryRepository.DeleteSecCategory(secCategory, true);
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                mSecCategoryRepository.UpdateSecCategory(secCategory, origSecCategory);
+                mSecCategoryRepository.UpdateSecCategory(secCategory, origSecCategory, true);
             }
             catch (Exception ex)
             {

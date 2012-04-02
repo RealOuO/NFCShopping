@@ -17,11 +17,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.Categories.Include("SecCategories").ToList();
         }
 
-        public void InsertCategory(Category category)
+        public void InsertCategory(Category category, bool isImmediateSave)
         {
             try
             {
                 mContext.Categories.AddObject(category);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -29,12 +34,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void UpdateCategory(Category newCategory, Category origCategory)
+        public void UpdateCategory(Category newCategory, Category origCategory, bool isImmediateSave)
         {
             try
             {
                 mContext.Categories.Attach(origCategory);
                 mContext.ApplyCurrentValues("Categories", newCategory);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -42,13 +52,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteCategory(Category category)
+        public void DeleteCategory(Category category, bool isImmediateSave)
         {
             try
             {
                 mContext.Categories.Attach(category);
                 mContext.Categories.DeleteObject(category);
 
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

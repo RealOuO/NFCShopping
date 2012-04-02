@@ -9,10 +9,10 @@ namespace NFCShoppingWebSite.Access_Data
     {
         IEnumerable<DiscountItem> GetDiscountItems();
 
-        void InsertDiscountItem(DiscountItem discountitem);
+        void InsertDiscountItem(DiscountItem discountitem, bool isImmediateSave);
 
-        void DeleteDiscountItem(DiscountItem discountitem);
+        void DeleteDiscountItem(DiscountItem discountitem, bool isImmediateSave);
 
-        void UpdateDiscountItem(DiscountItem discountitem, DiscountItem origDiscountitem);
+        void UpdateDiscountItem(DiscountItem discountitem, DiscountItem origDiscountitem, bool isImmediateSave);
     }
 }

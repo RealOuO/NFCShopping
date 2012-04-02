@@ -17,11 +17,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.Products.Include("SecCategory").ToList();
         }
 
-        public void InsertProduct(Product product)
+        public void InsertProduct(Product product, bool isImmediateSave)
         {
             try
             {
                 mContext.Products.AddObject(product);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -30,26 +35,59 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteProduct(Product product)
+        public void DeleteProduct(Product product, bool isImmediateSave)
         {
             try
             {
+                // Cascade deletion for reviews.
+                IReviewRepository reviewRepository = new ReviewRepository();
+                var reviews = reviewRepository.GetReviews().Where(review => review.productID == product.productID);
+
+                foreach (Review review in reviews)
+                {
+                    reviewRepository.DeleteReview(review, false);
+                }
+
+                reviewRepository.Dispose();
+
+                // Cascade deletion for discount items.
+                IDiscountItemRepository discountItemRepository = new DiscountItemRepository();
+                var discountItems = discountItemRepository.GetDiscountItems().Where(discountItem => discountItem.productID == product.productID);
+
+                foreach (DiscountItem discountItem in discountItems)
+                {
+                    discountItemRepository.DeleteDiscountItem(discountItem, false);
+                }
+
+                discountItemRepository.Dispose();
+
                 mContext.Products.Attach(product);
                 mContext.Products.DeleteObject(product);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
+                var message = ex.Message;
                 // TODO: Add exception handling code here.
                 throw ex;
             }
         }
 
-        public void UpdateProduct(Product newProduct, Product origProduct)
+        public void UpdateProduct(Product newProduct, Product origProduct, bool isImmediateSave)
         {
             try
             {
                 mContext.Products.Attach(origProduct);
                 mContext.ApplyCurrentValues("Products", newProduct);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

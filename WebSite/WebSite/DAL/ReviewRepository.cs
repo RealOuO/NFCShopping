@@ -31,11 +31,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.Reviews.Include("Product").ToList();
         }
 
-        public void InsertReview(Review review)
+        public void InsertReview(Review review, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.AddObject(review);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -43,13 +48,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteReview(Review review)
+        public void DeleteReview(Review review, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.Attach(review);
                 mContext.Reviews.DeleteObject(review);
-                mContext.SaveChanges();
+
+                if(isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -58,13 +67,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void UpdateReview(Review review,Review origReview)
+        public void UpdateReview(Review review, Review origReview, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.Attach(origReview);
                 mContext.Reviews.ApplyCurrentValues(review);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
