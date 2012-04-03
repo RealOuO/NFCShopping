@@ -6,7 +6,7 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class ReviewRepository:IReviewRepository,IDisposable
+    public class ReviewRepository : IReviewRepository
     {
         private bool mIsDisposed = false;
 
@@ -14,45 +14,76 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Review> GetReviews()
         {
-            return mContext.Reviews.Include("Products").ToList();
+            return mContext.Reviews.Include("Product").Include("User").ToList();
         }
 
-        public void InsertReview(Review review)
+        /*通过商品ID查询商品的时候可以用，user返回给webservice的时候已经忽略了password，
+         * 不查询出商品的具体信息*/
+        public IEnumerable<Review> GetReviewWithUser()
+        {
+            return mContext.Reviews.Include("User").ToList();
+        }
+
+        /*通过商品ID查询商品的时候可以用，不查询出用户的具体信息，但是所评论的商品的信息
+         *会被连带查询出来*/
+        public IEnumerable<Review> GetReviewWithProduct()
+        {
+            return mContext.Reviews.Include("Product").ToList();
+        }
+
+        public void InsertReview(Review review, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.AddObject(review);
+
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
+                throw ex;
             }
         }
 
-        public void DeleteReview(Review review)
+        public void DeleteReview(Review review, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.Attach(review);
                 mContext.Reviews.DeleteObject(review);
-                mContext.SaveChanges();
+
+                if(isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 
-        public void UpdateReview(Review review,Review origReview)
+        public void UpdateReview(Review review, Review origReview, bool isImmediateSave)
         {
             try
             {
                 mContext.Reviews.Attach(origReview);
                 mContext.Reviews.ApplyCurrentValues(review);
-                mContext.SaveChanges();
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 

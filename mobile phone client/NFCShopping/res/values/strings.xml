@@ -22,16 +22,18 @@
     <string name="btcommit">提交</string>
     <string name="hint">请在此填写评论的详细内容……</string>
     <string name="duration">优惠时间：</string>
-     <string name="empty">对不起，您没浏览过任何商品！</string>
-     <string name="feedback">请填写您的反馈信息</string>
-     <string name="fbconfirm">提交</string>
-     <string name="fbcancle">取消</string>
-     <string name="reuser1">用户名</string>
-     <string name="reuser2">请输入您的用户名</string>
-     <string name="repassword1">密　码</string>
-     <string name="repeatpassword1">确　认</string>
-     <string name="repassword2">请输入您的密码</string>
-     <string name="repeatpassword2">请再次输入您的密码</string>
-     <string name="reconfirm">提交</string>
-     <string name="recancle">取消</string>
+    <string name="empty">对不起，您没浏览过任何商品！</string>
+    <string name="feedback">请填写您的反馈信息</string>
+    <string name="fbconfirm">提交</string>
+    <string name="fbcancle">取消</string>
+    <string name="reuser1">用户名</string>
+    <string name="reuser2">请输入您的用户名</string>
+    <string name="repassword1">密　码</string>
+    <string name="repeatpassword1">确　认</string>
+    <string name="repassword2">请输入您的密码</string>
+    <string name="repeatpassword2">请再次输入您的密码</string>
+    <string name="reconfirm">提交</string>
+    <string name="recancle">取消</string>
+    <string name="login">登录</string>
+
 </resources>

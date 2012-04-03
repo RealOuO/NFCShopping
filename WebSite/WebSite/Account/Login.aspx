@@ -1,4 +1,4 @@
-﻿<%@ Page Title="登录" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="登录" Language="C#" MasterPageFile="~/Styles/Site.master" AutoEventWireup="true"
     CodeBehind="Login.aspx.cs" Inherits="NFCShoppingWebSite.Account.Login" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">

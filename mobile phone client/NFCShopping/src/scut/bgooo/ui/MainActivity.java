@@ -59,7 +59,7 @@ public class MainActivity extends TabActivity {
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_MORE").setIndicator("¸ü¶à")
 				.setContent(new Intent(this, MoreActivity.class)));
 	}
-	
+
 	private void initWeiboDefaultUser() {
 		WeiboUserManager datahelp = new WeiboUserManager(this);
 		List<WeiboUserItem> userList = datahelp.GetUserList(true);

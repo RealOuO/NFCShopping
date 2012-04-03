@@ -59,9 +59,9 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
-    <Content Include="App_Data\Sys_DB.mdf" />
-    <Content Include="App_Data\Sys_DB_log.ldf">
-      <DependentUpon>Sys_DB.mdf</DependentUpon>
+    <Content Include="App_Data\ShopDB.mdf" />
+    <Content Include="App_Data\ShopDB_log.ldf">
+      <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
     <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
@@ -77,6 +77,11 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="WebPages\Categories.aspx" />
+    <Content Include="WebPages\ProductDetails.aspx" />
+    <Content Include="WebPages\ProductEdit.aspx" />
+    <Content Include="WebPages\Users.aspx" />
+    <Content Include="WebPages\Products.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.cs">
@@ -94,10 +99,10 @@
     <Compile Include="Access_Data\ISecCategoryRepository.cs" />
     <Compile Include="Access_Data\ISuggestionRepository.cs" />
     <Compile Include="Access_Data\IUserRepository.cs" />
-    <Compile Include="Access_Data\SystemEntities.Designer.cs">
+    <Compile Include="Access_Data\ShopEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SystemEntities.edmx</DependentUpon>
+      <DependentUpon>ShopEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Account\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
@@ -127,6 +132,7 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BLL\CategoryBL.cs" />
     <Compile Include="BLL\DiscountBL.cs" />
     <Compile Include="BLL\DiscountItemBL.cs" />
     <Compile Include="BLL\ProductBL.cs" />
@@ -157,23 +163,58 @@
       <DependentUpon>ShopWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Site.Master.cs">
+    <Compile Include="Styles\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Site.Master.designer.cs">
+    <Compile Include="Styles\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Utils\QueryStringDecoder.cs" />
+    <Compile Include="WebPages\Categories.aspx.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Categories.aspx.designer.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\ProductDetails.aspx.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\ProductDetails.aspx.designer.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\ProductEdit.aspx.cs">
+      <DependentUpon>ProductEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
+      <DependentUpon>ProductEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Account\Web.config" />
-    <Content Include="Site.Master" />
+    <Content Include="Styles\Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Access_Data\SystemEntities.edmx">
+    <EntityDeploy Include="Access_Data\ShopEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SystemEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>ShopEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

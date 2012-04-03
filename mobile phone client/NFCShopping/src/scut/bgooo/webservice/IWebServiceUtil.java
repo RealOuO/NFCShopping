@@ -1,15 +1,34 @@
 package scut.bgooo.webservice;
 
 import java.util.List;
+import java.util.Vector;
 
-import scut.bgooo.entities.Comment;
+import scut.bgooo.entities.DiscountItem;
+import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
 import scut.bgooo.entities.Product;
+import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
 
 public interface IWebServiceUtil {
-	
+
+	/**
+	 * 添加商品评论
+	 * 
+	 * @return 成功 true 失败 false
+	 * @author Administrator
+	 */
+	public boolean AddReview(Review review);
+
+	/**
+	 * 添加反馈信息
+	 * 
+	 * 
+	 * @return 成功true 失败false
+	 * */
+	public boolean AddSuggestion(Suggestion suggestion);
+
 	/**
 	 * <p>
 	 * 登录判断接口
@@ -17,6 +36,18 @@ public interface IWebServiceUtil {
 	 * @return 返回User对象
 	 * */
 	public User login(String userName, String password);
+
+	/**
+	 * 注册接口
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @param gender
+	 *            性别
+	 * */
+	public User regist(String userName, String password, int gender);
 
 	/**
 	 * <p>
@@ -37,7 +68,7 @@ public interface IWebServiceUtil {
 	 * @return 优惠信息列表
 	 * 
 	 * */
-	public List<Discount> getDiscounts();
+	public Vector<Discount> getDiscounts();
 
 	/**
 	 * <p>
@@ -45,7 +76,7 @@ public interface IWebServiceUtil {
 	 * 
 	 * @return 优惠信息列表
 	 * */
-	public List<Discount> getDiscounts(Paging page);
+	public Vector<Discount> getDiscounts(Paging page);
 
 	/**
 	 * <p>
@@ -55,7 +86,7 @@ public interface IWebServiceUtil {
 	 *            优惠id
 	 * @return 优惠信息
 	 * */
-	public Discount getDiscount(int id);
+	public Vector<DiscountItem> getDiscountItems(int id);
 
 	/**
 	 * <p>
@@ -67,7 +98,7 @@ public interface IWebServiceUtil {
 	 * @return 返回商品的对象
 	 * 
 	 * */
-	public Product getProductById(String barcode);
+	public Product getProductByBarcode(String barcode);
 
 	/**
 	 * <p>
@@ -76,7 +107,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Comment> getCommentsByMe();
+	public Vector<Review> getReviewsByMe();
 
 	/**
 	 * <p>
@@ -87,7 +118,7 @@ public interface IWebServiceUtil {
 	 * @return 返回评论列表
 	 * 
 	 * */
-	public List<Comment> getCommentsByMe(Paging page);
+	public Vector<Review> getReviewsByMe(Paging page);
 
 	/**
 	 * 
@@ -98,7 +129,7 @@ public interface IWebServiceUtil {
 	 *            商品的barcode 条形码编号
 	 * @return 评论列表
 	 */
-	public List<Comment> getComments(int id);
+	public Vector<Review> getReviewsByProductId(int id);
 
 	/**
 	 * 
@@ -111,7 +142,7 @@ public interface IWebServiceUtil {
 	 *            Paging 分页对象
 	 * @return 评论列表
 	 */
-	public List<Comment> getComments(String barcode, Paging page);
+	public Vector<Review> getReviewsByProductId(int id, Paging page);
 
 	/**
 	 * 

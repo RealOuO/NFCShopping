@@ -1,4 +1,4 @@
-﻿<%@ Page Title="主页" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="主页" Language="C#" MasterPageFile="~/Styles/Site.master" AutoEventWireup="true"
     CodeBehind="Default.aspx.cs" Inherits="NFCShoppingWebSite._Default" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">

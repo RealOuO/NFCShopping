@@ -5,15 +5,15 @@ using System.Web;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    public interface ISuggestionRepository:IDisposable
+    public interface ISuggestionRepository : IDisposable
     {
         IEnumerable<Suggestion> GetSuggestions();
 
-        void InsertSuggestion(Suggestion suggestion);
+        void InsertSuggestion(Suggestion suggestion, bool isImmediateSave);
 
-        void DeleteSuggestion(Suggestion suggestion);
+        void DeleteSuggestion(Suggestion suggestion, bool isImmediateSave);
 
-        void UpdateSuggestion(Suggestion suggestion, Suggestion origSuggestion);
+        void UpdateSuggestion(Suggestion suggestion, Suggestion origSuggestion, bool isImmediateSave);
 
     }
 }

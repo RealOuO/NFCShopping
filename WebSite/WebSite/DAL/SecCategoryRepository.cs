@@ -6,7 +6,7 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class SecCategoryRepository : ISecCategoryRepository, IDisposable
+    public class SecCategoryRepository : ISecCategoryRepository
     {
         private bool mIsDisposed = false;
 
@@ -17,11 +17,16 @@ namespace NFCShoppingWebSite.DAL
             return mContext.SecCategories.Include("Category").ToList();
         }
 
-        public void InsertSecCategory(SecCategory secondCategory)
+        public void InsertSecCategory(SecCategory secondCategory, bool isImmediateSave)
         {
             try
             {
                 mContext.SecCategories.AddObject(secondCategory);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -29,12 +34,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void UpdateSecCategory(SecCategory newSecondCategory, SecCategory origSecondCategory)
+        public void UpdateSecCategory(SecCategory newSecondCategory, SecCategory origSecondCategory, bool isImmediateSave)
         {
             try
             {
                 mContext.SecCategories.Attach(origSecondCategory);
                 mContext.ApplyCurrentValues("SecCategories", newSecondCategory);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -42,12 +52,17 @@ namespace NFCShoppingWebSite.DAL
             }
         }
 
-        public void DeleteSecCategory(SecCategory secondCategory)
+        public void DeleteSecCategory(SecCategory secondCategory, bool isImmediateSave)
         {
             try
             {
                 mContext.SecCategories.Attach(secondCategory);
                 mContext.SecCategories.DeleteObject(secondCategory);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

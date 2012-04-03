@@ -5,16 +5,14 @@ using System.Text;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    interface IDiscountItemRepository:IDisposable
+    public interface IDiscountItemRepository : IDisposable
     {
         IEnumerable<DiscountItem> GetDiscountItems();
 
-        DiscountItem GetDiscountItemByID(Int32 id);
+        void InsertDiscountItem(DiscountItem discountitem, bool isImmediateSave);
 
-        void InsertDiscountItem(DiscountItem discountitem);
+        void DeleteDiscountItem(DiscountItem discountitem, bool isImmediateSave);
 
-        void DeleteDiscountItem(DiscountItem discountitem);
-
-        void UpdateDiscountItem(DiscountItem discountitem, DiscountItem origDiscountitem);
+        void UpdateDiscountItem(DiscountItem discountitem, DiscountItem origDiscountitem, bool isImmediateSave);
     }
 }

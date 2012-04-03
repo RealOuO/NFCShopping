@@ -5,14 +5,14 @@ using System.Text;
 
 namespace NFCShoppingWebSite.Access_Data
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository : IDisposable
     {
         IEnumerable<Category> GetCategories();
 
-        void InsertCategory(Category category);
+        void InsertCategory(Category category, bool isImmediateSave);
 
-        void UpdateCategory(Category newCategory, Category origCategory);
+        void UpdateCategory(Category newCategory, Category origCategory, bool isImmediateSave);
 
-        void DeleteCategory(Category category);
+        void DeleteCategory(Category category, bool isImmediateSave);
     }
 }

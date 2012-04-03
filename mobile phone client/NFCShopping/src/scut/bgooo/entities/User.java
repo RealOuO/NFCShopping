@@ -1,64 +1,130 @@
 package scut.bgooo.entities;
 
-public class User implements java.io.Serializable {
+import java.util.Hashtable;
 
-	/**
-	 * 
-	 */
+import org.ksoap2.serialization.KvmSerializable;
+import org.ksoap2.serialization.PropertyInfo;
+
+/**
+ * 2012年4月1日 调试成功的类
+ */
+public class User implements KvmSerializable {
+
+	
 	private static final long serialVersionUID = 1L;
+	private String EntityKey;
 	private int Id;
 	private String Username;
-	private String Password;
-	private short Gender;
+	// private String Password; 注意不要返回用户密码到手机端，因为泄露了用户的信息
+	private int Gender;
 	private int VisitedTimes;
+	private String LastVisitedDate;
 
-	public User(int id, String username, String password, short gender,
-			int visitedtimes) {
-		Id = id;
-		Username = username;
-		Password = password;
-		Gender = gender;
-		VisitedTimes = visitedtimes;
+	@Override
+	public Object getProperty(int arg0) {
+		// TODO Auto-generated method stub
+		Object res = null;
+		switch (arg0) {
+		case 0:
+			res = this.EntityKey;
+			break;
+		case 1:
+			res = this.Id;
+			break;
+		case 2:
+			res = this.Username;
+			break;
+		case 3:
+			res = this.Gender;
+			break;
+		case 4:
+			res = this.VisitedTimes;
+			break;
+		case 5:
+			res = this.LastVisitedDate;
+			break;
+		
+		default:
+			break;
+		}
+		return res;
 	}
 
-	public int getId() {
-		return Id;
+	@Override
+	public int getPropertyCount() {
+		// TODO Auto-generated method stub
+		return 6;
 	}
 
-	public void setId(int id) {
-		Id = id;
+	@Override
+	public void getPropertyInfo(int arg0, Hashtable arg1, PropertyInfo arg2) {
+		// TODO Auto-generated method stub
+		switch (arg0) {
+		case 0:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "EntityKey";
+			break;
+		case 1:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "userID";
+			break;
+		case 2:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "userName";
+			break;
+		case 3:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "gender";
+			break;
+		case 4:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "visitedTimes";
+			break;
+		case 5:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "lastVisitedDate";
+			break;
+		
+		default:
+			break;
+		}
 	}
 
-	public String getUsername() {
-		return Username;
+	@Override
+	public void setProperty(int arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		if (arg1 == null)
+			return;
+		switch (arg0) {
+		case 0:
+			this.EntityKey = arg1.toString();
+			break;
+		case 1:
+			this.Id = Integer.valueOf(arg1.toString());
+			break;
+		case 2:
+			this.Username = arg1.toString();
+			break;
+		case 3:
+			this.Gender = Integer.valueOf(arg1.toString());
+			break;
+		case 4:
+			this.VisitedTimes = Integer.valueOf(arg1.toString());
+			break;
+		case 5:
+			this.LastVisitedDate = arg1.toString();
+			break;		
+		default:
+			break;
+		}
 	}
 
-	public void setUsername(String username) {
-		Username = username;
-	}
-
-	public String getPassword() {
-		return Password;
-	}
-
-	public void setPassword(String password) {
-		Password = password;
-	}
-
-	public short getGender() {
-		return Gender;
-	}
-
-	public void setGender(short gender) {
-		Gender = gender;
-	}
-
-	public int getVisitedTimes() {
-		return VisitedTimes;
-	}
-
-	public void setVisitedTimes(int visitedTimes) {
-		VisitedTimes = visitedTimes;
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.EntityKey + "\n" + this.Id + "\n" + this.Username + "\n"
+				+ "\n" + this.Gender + "\n" + this.VisitedTimes + "\n"
+				+ this.LastVisitedDate + "\n";
 	}
 
 }

@@ -6,36 +6,93 @@ using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.DAL
 {
-    public class DiscountRepository:IDiscountRepository,IDisposable
+    public class DiscountRepository : IDiscountRepository
     {
+
+        private bool mIsDisposed = false;
+
+        private ShopEntities mContext = new ShopEntities();
+        
         public IEnumerable<Discount> GetDiscounts()
         {
-            throw new NotImplementedException();
+            return mContext.Discounts.ToList();
         }
 
-        public Discount GetDiscountByID(int id)
+
+        public void InsertDiscount(Discount discount, bool isImmediateSave)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Discounts.AddObject(discount);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void InsertDiscount(Discount discount)
+
+        public void DeleteDiscount(Discount discount, bool isImmediateSave)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Discounts.Attach(discount);
+                mContext.Discounts.DeleteObject(discount);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void DeleteDiscount(Discount discount)
+        public void UpdateDiscount(Discount newDiscount, Discount origDiscount, bool isImmediateSave)
         {
-            throw new NotImplementedException();
+            try
+            {
+                mContext.Discounts.Attach(origDiscount);
+                mContext.ApplyCurrentValues("Discounts", newDiscount);
+
+                if (isImmediateSave)
+                {
+                    mContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Add exception handling code here.
+            }
         }
 
-        public void UpdateDiscount(Discount discount, Discount origDiscount)
+
+        protected void Dispose(bool isDisposing)
         {
-            throw new NotImplementedException();
+            if (!mIsDisposed)
+            {
+                mContext.SaveChanges();
+
+                if (isDisposing)
+                {
+                    mContext.Dispose();
+                }
+            }
+
+            mIsDisposed = true;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
