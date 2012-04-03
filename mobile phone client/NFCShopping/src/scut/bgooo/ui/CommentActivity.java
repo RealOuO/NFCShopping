@@ -1,7 +1,12 @@
 package scut.bgooo.ui;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
+import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibo.WeiboUserListActivity;
 
 import weibo4android.Weibo;
@@ -17,7 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CommentActivity extends Activity {
+public class CommentActivity extends Activity implements IWeiboActivity{
 
 	private EditText mCommit;
 	private Button mShareCommitButton;
@@ -27,10 +32,10 @@ public class CommentActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.comment);
-		// setContentView(R.layout.verifier);
+	
 		mCommit = (EditText) findViewById(R.id.etComment);
 		mShareCommitButton = (Button) findViewById(R.id.btShareAndCommit);
-		// mWeibo = (Weibo)bundle.get("WEIBO");
+
 		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
 		System.setProperty("weibo4j.oauth.consumerSecret",
 				Weibo.CONSUMER_SECRET);
@@ -45,26 +50,41 @@ public class CommentActivity extends Activity {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"请确定微博用户", Toast.LENGTH_LONG);
 					toast.show();
+					return;
 				} else {
 					Log.i("token", WeiboUserListActivity.defaultUserInfo.GetAToken());
 					Log.i("token", WeiboUserListActivity.defaultUserInfo.GetASecret());
-					mWeibo.setToken(WeiboUserListActivity.defaultUserInfo.GetAToken(),
-							WeiboUserListActivity.defaultUserInfo.GetASecret());
+					String commit = mCommit.getText().toString()+"aaaaaaaaaa";
+					
+					HashMap<String, String> m = new HashMap<String, String>();
+					m.put("COMMIT", commit);
+					Task task = new Task(Task.SEND_COMMENT_WEIBO, m);
+					TaskHandler.addTask(task);					
+					finish();
 				}
 				
-				String commit = mCommit.getText().toString()+"aaaaaaaaaa";
-				try {
-					mWeibo.updateStatus(commit);
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"微博发送成功", Toast.LENGTH_LONG);
-					toast.show();
-				} catch (WeiboException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				finish();
 			}
 		});
+		
+		TaskHandler.allActivity.put(CommentActivity.class.getSimpleName(), CommentActivity.this);
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		String result  = (String)param[0];
+		if (result.equals("OK")){
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"微博发送成功", Toast.LENGTH_LONG);
+			toast.show();
+		}
+		
 	}
 
 }
