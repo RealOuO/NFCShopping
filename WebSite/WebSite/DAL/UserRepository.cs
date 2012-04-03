@@ -59,7 +59,7 @@ namespace NFCShoppingWebSite.DAL
             try
             {
                 mContext.Users.Attach(origUser);
-                mContext.Users.ApplyCurrentValues( user);
+                mContext.Users.ApplyCurrentValues(user);
 
                 if (isImmediateSave)
                 {
@@ -81,7 +81,7 @@ namespace NFCShoppingWebSite.DAL
             { 
                 if (disposing) 
                 {
-                    //mContext.SaveChanges();
+                    mContext.SaveChanges();
                     mContext.Dispose();
                 } 
             } 

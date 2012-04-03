@@ -1,7 +1,11 @@
 package scut.bgooo.ui;
 
 import java.io.File;
+import java.util.Vector;
 
+import scut.bgooo.entities.Discount;
+import scut.bgooo.entities.DiscountItem;
+import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.webservice.WebServiceUtil;
 import scut.bgooo.weibo.WeiboUserListActivity;
@@ -78,17 +82,30 @@ public class CommentActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Review review = new Review();
-				review.setProperty(1, 2);
-				review.setProperty(2, 5);
-				review.setProperty(3, "safsfafsasfaf");
-				review.setProperty(4, 3*10);  //注意要将浮点数转换为String才能传到后台
-				if (WebServiceUtil.getInstance().AddReview(review)) {
-					Toast.makeText(getApplicationContext(), "提交成功", 2000)
-							.show();
-				} else {
-					Toast.makeText(getApplicationContext(), "提交失败", 2000)
-							.show();
+				// Review review = new Review();
+				// review.setProperty(1, 2);
+				// review.setProperty(2, 5);
+				// review.setProperty(3, "safsfafsasfaf");
+				// review.setProperty(4, 3*10); //注意要将浮点数转换为String才能传到后台
+				// if (WebServiceUtil.getInstance().AddReview(review)) {
+				// Toast.makeText(getApplicationContext(), "提交成功", 2000)
+				// .show();
+				// } else {
+				// Toast.makeText(getApplicationContext(), "提交失败", 2000)
+				// .show();
+				// }
+
+				Vector<Discount> vector = WebServiceUtil.getInstance()
+						.getDiscounts();
+				Log.d("dfdf", vector.size() + "");
+				for (int i = 0; i < vector.size(); i++) {
+					Log.d("fff", vector.get(i) + "");
+				}
+				Vector<DiscountItem> vector1 = WebServiceUtil.getInstance()
+						.getDiscountItems(1);
+				Log.d("dfdf", vector1.size() + "");
+				for (int i = 0; i < vector1.size(); i++) {
+					Log.d("fff", (Product)(vector1.get(i).getProperty(8)) + "");
 				}
 			}
 		});

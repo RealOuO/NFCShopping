@@ -10,4 +10,6 @@ public class Method {
 	public final static int GETPRODUCTBYBARCODE=7;
 	public final static int GETUSERBYID=8;
 	public final static int ADDREVIEW=9;
+	public final static int GETDISCOUNTS=10;
+	public final static int GETDISCOUNTITEMSBYDISCOUNTID=11;
 }

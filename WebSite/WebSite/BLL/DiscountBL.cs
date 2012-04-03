@@ -12,7 +12,7 @@ namespace NFCShoppingWebSite.BLL
         IDiscountRepository mRepository = new DiscountRepository();
 
         /*查询某一期所有的优惠信息*/
-        public Discount GetDiscount(Int32 discountID)
+        public Discount GetDiscountByID(Int32 discountID)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace NFCShoppingWebSite.BLL
             {
                 // TODO: Add handling code here.
 
-                return null;
+                throw ex;
             }
         }
 

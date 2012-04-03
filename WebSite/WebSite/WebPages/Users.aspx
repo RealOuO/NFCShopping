@@ -5,17 +5,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ObjectDataSource ID="UsersDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.User"
-        DeleteMethod="DeleteUser" SelectMethod="GetUsers" TypeName="NFCShoppingWebSite.BLL.UserBL" OnDeleted="DepartmentsObjectDataSource_Deleted">
+        DeleteMethod="DeleteUser" SelectMethod="GetUsers" TypeName="NFCShoppingWebSite.BLL.UserBL" >
     </asp:ObjectDataSource>
      <asp:ValidationSummary ID="DepartmentsValidationSummary" runat="server" ShowSummary="true"
         DisplayMode="BulletList" Style="color: Red; width: 40em;" />
     <asp:GridView ID="GridView" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-        DataSourceID="UsersDataSource" CellPadding="4" ForeColor="#333333" GridLines="None">
+        DataSourceID="UsersDataSource" DataKeyNames="userID" CellPadding="4" ForeColor="#333333" GridLines="None">
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
         <Columns>
-            <asp:CommandField ShowDeleteButton="True" />
             <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" 
-                Visible="False" />
+                Visible="False"  />
             <asp:BoundField DataField="userName" HeaderText="userName" 
                 SortExpression="userName" />
             <asp:BoundField DataField="gender" HeaderText="gender" 
@@ -24,6 +23,7 @@
                 SortExpression="visitedTimes" />
             <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" 
                 SortExpression="lastVisitedDate" />
+            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" />
         </Columns>
         <EditRowStyle BackColor="#999999" />
         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />

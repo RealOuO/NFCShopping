@@ -48,6 +48,20 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
+        public List<DiscountItem> FindDiscountItemsByDiscountID(Int32 discountID)
+        {
+            DiscountItemBL bl = new DiscountItemBL();
+            return bl.GetDiscountItemsByDiscountID(discountID).ToList();
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public List<Discount> GetDiscounts()
+        {
+            DiscountBL bl = new DiscountBL();
+            return bl.GetDiscounts().ToList();
+        }
+
+        [SoapRpcMethod, WebMethod]
         public bool IsExisted(String userName)
         {
             UserBL bl = new UserBL();

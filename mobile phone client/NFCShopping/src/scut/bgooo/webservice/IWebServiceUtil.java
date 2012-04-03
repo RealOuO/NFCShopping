@@ -3,6 +3,7 @@ package scut.bgooo.webservice;
 import java.util.List;
 import java.util.Vector;
 
+import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
@@ -46,7 +47,7 @@ public interface IWebServiceUtil {
 	 * @return 优惠信息列表
 	 * 
 	 * */
-	public List<Discount> getDiscounts();
+	public Vector<Discount> getDiscounts();
 
 	/**
 	 * <p>
@@ -54,7 +55,7 @@ public interface IWebServiceUtil {
 	 * 
 	 * @return 优惠信息列表
 	 * */
-	public List<Discount> getDiscounts(Paging page);
+	public Vector<Discount> getDiscounts(Paging page);
 	
 	
 
@@ -66,7 +67,9 @@ public interface IWebServiceUtil {
 	 *            优惠id
 	 * @return 优惠信息
 	 * */
-	public Discount getDiscount(int id);
+	public Vector<DiscountItem> getDiscountItems(int id);
+	
+
 
 	/**
 	 * <p>

@@ -59,9 +59,9 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
-    <Content Include="App_Data\Sys_DB.mdf" />
-    <Content Include="App_Data\Sys_DB_log.ldf">
-      <DependentUpon>Sys_DB.mdf</DependentUpon>
+    <Content Include="App_Data\ShopDB.mdf" />
+    <Content Include="App_Data\ShopDB_log.ldf">
+      <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
     <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
@@ -183,7 +183,6 @@
     <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="WebPages\Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -197,7 +196,6 @@
     </Compile>
     <Compile Include="WebPages\Products.aspx.designer.cs">
       <DependentUpon>Products.aspx</DependentUpon>
-
     </Compile>
   </ItemGroup>
   <ItemGroup>

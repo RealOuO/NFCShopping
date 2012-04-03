@@ -11,6 +11,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
+import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
@@ -33,15 +34,18 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static final String GETREVIEWSBYUSERID = "FindReviewsByUserID";
 	private static final String GETREVIEWSBYPRODUCTID = "FindReviewsByProductID";
 	private static final String GETPRODUCTBYBARCODE = "FindProductByBarcode";
-//	private static final String GETUSERBYID = "FindUserByID";  //暂时可以不用到
+	private static final String GETDISCOUNTS = "GetDiscounts";
+	private static final String GETDISCOUNTITEMSBYDISCOUNTID = "FindDiscountItemsByDiscountID";
+
+	// private static final String GETUSERBYID = "FindUserByID"; //暂时可以不用到
 	public static User nowUser = null;
-	private static WebServiceUtil Webservice=new WebServiceUtil();
+	private static WebServiceUtil Webservice = new WebServiceUtil();
+
 	/**
 	 * 装逼的用了一下单例模式
 	 * 
 	 * */
-	public static WebServiceUtil getInstance()
-	{
+	public static WebServiceUtil getInstance() {
 		return Webservice;
 	}
 
@@ -148,7 +152,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 	@Override
 	public Vector<Review> getReviewsByProductId(int id, Paging page) {
 		// TODO Auto-generated method stub
-		
+
 		return null;
 	}
 
@@ -159,21 +163,60 @@ public class WebServiceUtil implements IWebServiceUtil {
 	}
 
 	@Override
-	public List<Discount> getDiscounts() {
+	public Vector<Discount> getDiscounts() {
+		// TODO Auto-generated method stub
+		SoapObject rpc = getSoapObject(Method.GETDISCOUNTS);
+		HttpTransportSE ht = new HttpTransportSE(URL);
+		ht.debug = true;
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.bodyOut = rpc;
+		envelope.dotNet = false;
+		envelope.setOutputSoapObject(rpc);
+		Vector<Discount> result = null;
+		try {
+			ht.call(NAMESPACE + GETDISCOUNTS, envelope);
+			result = (Vector<Discount>) envelope.getResponse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Vector<Discount> getDiscounts(Paging page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Discount> getDiscounts(Paging page) {
+	public Vector<DiscountItem> getDiscountItems(int id) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Discount getDiscount(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		SoapObject rpc = getSoapObject(Method.GETDISCOUNTITEMSBYDISCOUNTID);
+		rpc.addProperty("discountID", id);
+		HttpTransportSE ht = new HttpTransportSE(URL);
+		ht.debug = true;
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.bodyOut = rpc;
+		envelope.dotNet = false;
+		envelope.setOutputSoapObject(rpc);
+		Vector<DiscountItem> result = null;
+		try {
+			ht.call(NAMESPACE + GETDISCOUNTITEMSBYDISCOUNTID, envelope);
+			result = (Vector<DiscountItem>) envelope.getResponse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -249,8 +292,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 	@Override
 	public boolean AddReview(Review review) {
 		// TODO Auto-generated method stub
-		SoapObject rpc=getSoapObject(Method.ADDREVIEW);
-		PropertyInfo pi=getPropertyInfo(review);
+		SoapObject rpc = getSoapObject(Method.ADDREVIEW);
+		PropertyInfo pi = getPropertyInfo(review);
 		rpc.addProperty(pi);
 		HttpTransportSE ht = new HttpTransportSE(URL);
 		ht.debug = true;
@@ -261,9 +304,9 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.setOutputSoapObject(rpc);
 		envelope.addMapping(NAMESPACE, "Review", review.getClass());
 		try {
-			ht.call(NAMESPACE+ADDREVIEW, envelope);
-			if(!envelope.getResponse().equals(null)){
-				return (Boolean)envelope.getResponse();
+			ht.call(NAMESPACE + ADDREVIEW, envelope);
+			if (!envelope.getResponse().equals(null)) {
+				return (Boolean) envelope.getResponse();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -278,8 +321,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 	@Override
 	public boolean AddSuggestion(Suggestion suggestion) {
 		// TODO Auto-generated method stub
-		SoapObject rpc=getSoapObject(Method.ADDSUGGESTION);
-		PropertyInfo pi=getPropertyInfo(suggestion);
+		SoapObject rpc = getSoapObject(Method.ADDSUGGESTION);
+		PropertyInfo pi = getPropertyInfo(suggestion);
 		rpc.addProperty(pi);
 		HttpTransportSE ht = new HttpTransportSE(URL);
 		ht.debug = true;
@@ -290,9 +333,9 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.setOutputSoapObject(rpc);
 		envelope.addMapping(NAMESPACE, "Suggestion", suggestion.getClass());
 		try {
-			ht.call(NAMESPACE+ADDSUGGESTION, envelope);
-			if(!envelope.getResponse().equals(null)){
-				return (Boolean)envelope.getResponse();
+			ht.call(NAMESPACE + ADDSUGGESTION, envelope);
+			if (!envelope.getResponse().equals(null)) {
+				return (Boolean) envelope.getResponse();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -335,6 +378,14 @@ public class WebServiceUtil implements IWebServiceUtil {
 			break;
 		case Method.GETUSER:
 			rpc = new SoapObject(NAMESPACE, GETUSER);
+			break;
+		case Method.GETDISCOUNTITEMSBYDISCOUNTID:
+			rpc = new SoapObject(NAMESPACE, GETDISCOUNTITEMSBYDISCOUNTID);
+			break;
+		case Method.GETDISCOUNTS:
+			rpc = new SoapObject(NAMESPACE, GETDISCOUNTS);
+			break;
+		default:
 			break;
 		}
 
