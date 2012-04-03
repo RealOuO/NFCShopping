@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import scut.bgooo.db.WeiboUserManager;
 import scut.bgooo.ui.R;
+import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibouser.WeiboUserItem;
-import scut.bgooo.weibouser.WeiboUserManager;
 import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
@@ -39,7 +43,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WeiboUserListActivity extends Activity {
+public class WeiboUserListActivity extends Activity implements IWeiboActivity {
 
 	CommonsHttpOAuthConsumer httpOauthConsumer;
 	OAuthProvider httpOauthprovider;
@@ -50,7 +54,7 @@ public class WeiboUserListActivity extends Activity {
 	private ListView mUserList;
 	private WeiboUserManager dataHelper;
 	private List<WeiboUserItem> mList;
-	public Weibo mWeibo;
+	// public Weibo mWeibo;
 	private RequestToken mRequestToken;
 	private AccessToken mAccessToken;
 	private int defaultUser = -1;// 默认用户
@@ -62,7 +66,9 @@ public class WeiboUserListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webuser);
 		
-		
+		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
+		System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
+
 		mClearList = (Button) findViewById(R.id.clear);
 		mDelUser = (Button) findViewById(R.id.del);
 		mAddUser = (Button) findViewById(R.id.add);
@@ -90,29 +96,23 @@ public class WeiboUserListActivity extends Activity {
 				ConnectivityManager conn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo netMobile = conn
 						.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-				NetworkInfo netWifi = conn
-						.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-				if (false == netMobile.isConnectedOrConnecting()
-						&& false == netWifi.isConnected()) {
+
+				if (false == netMobile.isConnectedOrConnecting()) {
 					Toast.makeText(getApplicationContext(), "请检查网络配置",
 							Toast.LENGTH_SHORT).show();
 				} else {
-					
-					String callBackUrl = "leeforall://WeiboUserListActivity";
 					try {
-						System.setProperty("weibo4j.oauth.consumerKey",
-								Weibo.CONSUMER_KEY);
-						System.setProperty("weibo4j.oauth.consumerSecret",
-								Weibo.CONSUMER_SECRET);
-						mWeibo = new Weibo();
-						mRequestToken = mWeibo
-								.getOAuthRequestToken(callBackUrl);
-						String authUrl = mRequestToken.getAuthenticationURL();
-						startActivity(new Intent(Intent.ACTION_VIEW, Uri
-								.parse(authUrl)));
-						Log.e("authUrl", "error");
+						Weibo weibo = new Weibo();
+						mRequestToken = weibo.getOAuthRequestToken();
+						String url = mRequestToken.getAuthorizationURL();
+						Bundle bundle = new Bundle();
+						bundle.putString("URL", url);
+						Intent intent = new Intent(WeiboUserListActivity.this,
+								VerifierWebViewActivity.class);
+						intent.putExtra("URL", bundle);
+						startActivity(intent);
 					} catch (WeiboException e) {
-						Log.e("error", "error");
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -168,24 +168,22 @@ public class WeiboUserListActivity extends Activity {
 			}
 		});
 
+		TaskHandler.allActivity.put(this.getClass().getSimpleName(), this);
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		super.onNewIntent(intent);
-
-		Uri uri = intent.getData();
-		String verifier = uri
-				.getQueryParameter(oauth.signpost.OAuth.OAUTH_VERIFIER);
+		Log.d("NFC", "onNewIntent");
+		Bundle bundle = intent.getExtras();
+		String pin = bundle.getString("PIN");
 		try {
-			mAccessToken = mRequestToken.getAccessToken(verifier);
-		} catch (WeiboException e) {
-			e.printStackTrace();
+			mAccessToken = mRequestToken.getAccessToken(pin);
+		} catch (WeiboException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-
-		mWeibo = new Weibo();
-		mWeibo.setToken(mAccessToken);
 
 		// DataHelper dataHelper = new DataHelper(this);
 		// 判断是否在数据库中已经存在这个用户　
@@ -195,50 +193,55 @@ public class WeiboUserListActivity extends Activity {
 			toast.show();
 			return;
 		}
+
 		// 如果不存在，则生成一个USERINFO对象再存入数据库中
 		WeiboUserItem userInfo = new WeiboUserItem();
 		userInfo.SetAccessSecret(mAccessToken.getTokenSecret());
 		userInfo.SetAccessToken(mAccessToken.getToken());
 		userInfo.SetUserId(Long.toString(mAccessToken.getUserId()));
 
-		try {
-			User weiboUser = mWeibo.verifyCredentials();
-			userInfo.SetLocation(weiboUser.getLocation());
-			userInfo.SetUserName(weiboUser.getScreenName());
-			URL url = weiboUser.getProfileImageURL();// 用记头像的URL地址
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setConnectTimeout(5000);
-			InputStream inPutStream = conn.getInputStream();
-			// 获取到图片的二进制数据
-			byte[] data = readInputStream(inPutStream);
-			userInfo.SetIcon(data);
-			userInfo.SetDefault(true);// 把最新验证的用户设为默认
-			if (mList.size() != 0) {
-				dataHelper.UpdateDefault(mList.get(defaultUser));
-			}
-			// dataHelper.SaveUserInfo(userInfo);//把更新的userinfo对象存入数据库
-			if (dataHelper.SaveUserInfo(userInfo) == -1) {
-				Toast toast = Toast.makeText(getApplicationContext(), "写入数据失败",
-						Toast.LENGTH_SHORT);
-				toast.show();
-			}
-			// 再更新适配器
-			mList = dataHelper.GetUserList(false);
-			MyAdapter myAdapter = new MyAdapter(this, mList);
-			mUserList.setAdapter(myAdapter);
-
-		} catch (WeiboException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Log.d("NFC", "成功绑定");
+		HashMap<String, WeiboUserItem> hm = new HashMap<String, WeiboUserItem>();
+		hm.put("weiuser", userInfo);
+		Task task = new Task(Task.GET_USER_INFORMATION, hm);
+		TaskHandler.addTask(task);
+		// try {
+		// User weiboUser = mWeibo.verifyCredentials();
+		// userInfo.SetLocation(weiboUser.getLocation());
+		// userInfo.SetUserName(weiboUser.getScreenName());
+		// URL url = weiboUser.getProfileImageURL();// 用记头像的URL地址
+		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		// conn.setRequestMethod("GET");
+		// conn.setConnectTimeout(5000);
+		// InputStream inPutStream = conn.getInputStream();
+		// // 获取到图片的二进制数据
+		// byte[] data = readInputStream(inPutStream);
+		// userInfo.SetIcon(data);
+		// userInfo.SetDefault(true);// 把最新验证的用户设为默认
+		// if (mList.size() != 0) {
+		// dataHelper.UpdateDefault(mList.get(defaultUser));
+		// }
+		// // dataHelper.SaveUserInfo(userInfo);//把更新的userinfo对象存入数据库
+		// if (dataHelper.SaveUserInfo(userInfo) == -1) {
+		// Toast toast = Toast.makeText(getApplicationContext(), "写入数据失败",
+		// Toast.LENGTH_SHORT);
+		// toast.show();
+		// }
+		// // 再更新适配器
+		// mList = dataHelper.GetUserList(false);
+		// MyAdapter myAdapter = new MyAdapter(this, mList);
+		// mUserList.setAdapter(myAdapter);
+		//
+		// } catch (WeiboException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// Log.d("NFC", "成功绑定");
 
 	}
 
@@ -266,13 +269,13 @@ public class WeiboUserListActivity extends Activity {
 			if (defaultUser != -1) {
 				defaultUserInfo = mList.get(defaultUser);
 			} else {
-				//没有defaultUser的情况下，将第一条记录设置为默认
-				defaultUser=0;
-				defaultUserInfo =mList.get(0);
+				// 没有defaultUser的情况下，将第一条记录设置为默认
+				defaultUser = 0;
+				defaultUserInfo = mList.get(0);
 				defaultUserInfo.SetDefault(true);
 				dataHelper.UpdateUserInfo(defaultUserInfo);
-				Toast.makeText(getApplicationContext(), "已默认设置"+defaultUserInfo.GetUserName(),
-						2000).show();
+				Toast.makeText(getApplicationContext(),
+						"已默认设置" + defaultUserInfo.GetUserName(), 2000).show();
 			}
 		} else {
 			defaultUserInfo = null;
@@ -283,12 +286,7 @@ public class WeiboUserListActivity extends Activity {
 
 	@Override
 	protected void onRestart() {
-		// TODO Auto-generated method stub
-		if (0 == mList.size()) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
-			toast.show();
-		}
+		// TODO Auto-generated method stub		
 		super.onRestart();
 
 	}
@@ -356,20 +354,20 @@ public class WeiboUserListActivity extends Activity {
 				viewHolder.mUserLocaton.setText(user.GetLocationg());
 				if (user.IsDefault()) {
 					defaultUser = selectID;
-					Log.e("default",defaultUser+"" );
+					Log.e("default", defaultUser + "");
 					viewHolder.mCheckBox.setChecked(true);
 				} else {
 					viewHolder.mCheckBox.setChecked(false);
 				}
 				viewHolder.mCheckBox.setOnClickListener(new OnClickListener() {
-					
+
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						if(user.IsDefault()){
+						if (user.IsDefault()) {
 							user.SetDefault(false);
 							dataHelper.UpdateDefault(user);
-						}else{
+						} else {
 							for (WeiboUserItem item : mListItems) {
 								if (item.equals(user)) {
 									// 将该用户设置为默认账户
@@ -384,18 +382,17 @@ public class WeiboUserListActivity extends Activity {
 								notifyDataSetChanged();
 								Toast toast = Toast.makeText(
 										getApplicationContext(), "您选择"
-												+ user.GetUserName()
-												+ "为默认用户",
+												+ user.GetUserName() + "为默认用户",
 										Toast.LENGTH_SHORT);
 								toast.show();
 							}
 						}
 					}
 				});
-					
+
 			}
 			return arg1;
-			
+
 		}
 
 		private class ViewHolder {
@@ -404,6 +401,26 @@ public class WeiboUserListActivity extends Activity {
 			public TextView mUserLocaton;// 用户注册地址
 			public CheckBox mCheckBox;// 复选框用
 		}
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		WeiboUserItem weiuser = (WeiboUserItem) param[0];
+		if (mList.size() != 0) {
+			dataHelper.UpdateDefault(mList.get(defaultUser));
+		}
+		dataHelper.SaveUserInfo(weiuser);// 把更新的userinfo对象存入数据库
+		mList = dataHelper.GetUserList(false);
+		MyAdapter myAdapter = new MyAdapter(this, mList);
+		mUserList.setAdapter(myAdapter);
+		Log.d("NFC", "更新注册后UI");
 	}
 
 }

@@ -1,10 +1,12 @@
-package scut.bgooo.concern;
+package scut.bgooo.db;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import scut.bgooo.concern.ConcernItem;
 
 
 import android.app.Activity;
@@ -55,12 +57,12 @@ public final class ConcernManager {
 	 * */
 	public boolean hasConcernItems() {
 		Log.d(TAG, "hasConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, COUNT_COLUMN, null, null,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COUNT_COLUMN, null, null,
 					null, null, null);
 			cursor.moveToFirst();
 			return cursor.getInt(0) > 0;
@@ -80,14 +82,14 @@ public final class ConcernManager {
 	 * */
 	public List<ConcernItem> buildConcernItems() {
 		Log.d(TAG, "buildConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
 		List<String> dateItems = new ArrayList<String>();
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS, null, null, null,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null, null,
 					null, DBHelper.TIMESTAMP_COL + " DESC");
 			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 			Date scanDate;
@@ -125,14 +127,14 @@ public final class ConcernManager {
 
 	public List<ConcernItem> buildCollectedConcernItems() {
 		Log.d(TAG, "buildCollectedConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
 		List<String> dateItems = new ArrayList<String>();
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS,
 					DBHelper.ISCOLLECTED_COL + "=?",
 					new String[] { String.valueOf(COLLECTED) }, null, null,
 					DBHelper.TIMESTAMP_COL + " DESC");
@@ -171,12 +173,12 @@ public final class ConcernManager {
 
 	public ConcernItem buildConcernItem(int number) {
 		Log.d(TAG, "buildConcernItem()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS, null, null, null,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null, null,
 					null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(number + 1);
 			int id = cursor.getInt(0);
@@ -207,12 +209,12 @@ public final class ConcernManager {
 	 * */
 	public ConcernItem buildConcernItemById(int id) {
 		Log.d(TAG, "buildConcernItemById()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, COLUMNS, DBHelper.ID_COL
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, DBHelper.ID_COL
 					+ "=?", new String[] { String.valueOf(id) }, null, null,
 					null);
 			int pid = cursor.getInt(1);
@@ -236,15 +238,15 @@ public final class ConcernManager {
 	 * </p>
 	 * */
 	public void deleteConcernItem(int number) {
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, ID_COL_PROJECTION, null,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION, null,
 					null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(number + 1);
-			db.delete(DBHelper.TABLE_NAME,
+			db.delete(DBHelper.CONCERN_TABLE_NAME,
 					DBHelper.ID_COL + '=' + cursor.getString(0), null);
 		} finally {
 			close(cursor, db);
@@ -258,11 +260,11 @@ public final class ConcernManager {
 	 * */
 	public void deleteConcernItemById(int id) {
 		Log.d(TAG, "deleteConcernItemById()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();
-			db.delete(DBHelper.TABLE_NAME, DBHelper.ID_COL + "=?",
+			db.delete(DBHelper.CONCERN_TABLE_NAME, DBHelper.ID_COL + "=?",
 					new String[] { String.valueOf(id) });
 		} finally {
 			close(null, db);
@@ -281,11 +283,11 @@ public final class ConcernManager {
 	@SuppressWarnings("unused")
 	private void deletePrevious(String name) {
 		Log.d(TAG, "deletePrevious()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();
-			db.delete(DBHelper.TABLE_NAME, DBHelper.NAME_COL + "=?",
+			db.delete(DBHelper.CONCERN_TABLE_NAME, DBHelper.NAME_COL + "=?",
 					new String[] { String.valueOf(name) });
 		} finally {
 			close(null, db);
@@ -310,7 +312,7 @@ public final class ConcernManager {
 	 */
 	public void addConcernItem(ConcernItem item) {
 		Log.d(TAG, "addConcernItem()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 
@@ -326,16 +328,16 @@ public final class ConcernManager {
 
 		try {
 			db = helper.getWritableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, PRODUCT_ID_COL_PROJECTION,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, PRODUCT_ID_COL_PROJECTION,
 					DBHelper.PRODUCT_ID_COL + "=?",
 					new String[] { String.valueOf(item.getProductId()) }, null,
 					null, null);
 			if (cursor.getCount() == 0) {
 				// 插入新的关注记录
-				db.insert(DBHelper.TABLE_NAME, DBHelper.TIMESTAMP_COL, values);
+				db.insert(DBHelper.CONCERN_TABLE_NAME, DBHelper.TIMESTAMP_COL, values);
 			} else {
 				// 记录存在则更新数据
-				db.update(DBHelper.TABLE_NAME, values, DBHelper.PRODUCT_ID_COL
+				db.update(DBHelper.CONCERN_TABLE_NAME, values, DBHelper.PRODUCT_ID_COL
 						+ "=?",
 						new String[] { String.valueOf(item.getProductId()) });
 			}
@@ -353,16 +355,16 @@ public final class ConcernManager {
 	 * */
 	public void trimHistory() {
 		Log.d(TAG, "trimHistory()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getWritableDatabase();
-			cursor = db.query(DBHelper.TABLE_NAME, ID_COL_PROJECTION, null,
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION, null,
 					null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(MAX_ITEMS);
 			while (cursor.moveToNext()) {
-				db.delete(DBHelper.TABLE_NAME,
+				db.delete(DBHelper.CONCERN_TABLE_NAME,
 						DBHelper.ID_COL + '=' + cursor.getString(0), null);
 			}
 		} finally {
@@ -381,11 +383,11 @@ public final class ConcernManager {
 	 * */
 	public void clearConcern() {
 		Log.d(TAG, "clearConcern()");
-		SQLiteOpenHelper helper = new DBHelper(activity);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();
-			db.delete(DBHelper.TABLE_NAME, null, null);
+			db.delete(DBHelper.CONCERN_TABLE_NAME, null, null);
 		} finally {
 			close(null, db);
 		}

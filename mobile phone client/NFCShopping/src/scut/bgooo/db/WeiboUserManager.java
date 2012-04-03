@@ -1,8 +1,10 @@
-package scut.bgooo.weibouser;
+package scut.bgooo.db;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import scut.bgooo.weibouser.WeiboUserItem;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,15 +14,12 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 public class WeiboUserManager {
-	// 数据库名称
-	private static String DB_NAME = "mysinaweibo.db";
-	// 数据库版本
-	private static int DB_VERSION = 2;
+	
 	private SQLiteDatabase db;
 	private DBHelper dbHelper;
 
 	public WeiboUserManager(Context context) {
-		dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+		dbHelper = new DBHelper(context, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
 		db = dbHelper.getWritableDatabase();
 	}
 
@@ -32,7 +31,7 @@ public class WeiboUserManager {
 	// 获取users表中的UserID、Access Token、Access Secret的记录
 	public List<WeiboUserItem> GetUserList(Boolean isSimple) {
 		List<WeiboUserItem> userList = new ArrayList<WeiboUserItem>();
-		Cursor cursor = db.query(DBHelper.TB_NAME, null, null, null, null,
+		Cursor cursor = db.query(DBHelper.WIBO_TB_NAME, null, null, null, null,
 				null, WeiboUserItem.ID + " DESC");
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast() && (cursor.getString(1) != null)) {
@@ -61,7 +60,7 @@ public class WeiboUserManager {
 	// 判断users表中的是否包含某个UserID的记录
 	public Boolean HaveUserInfo(String UserId) {
 		Boolean b = false;
-		Cursor cursor = db.query(DBHelper.TB_NAME, null, WeiboUserItem.USERID
+		Cursor cursor = db.query(DBHelper.WIBO_TB_NAME, null, WeiboUserItem.USERID
 				+ "=" + UserId, null, null, null, null);
 		b = cursor.moveToFirst();
 		Log.e("HaveUserInfo", b.toString());
@@ -81,7 +80,7 @@ public class WeiboUserManager {
 		// 构造SQLite的Content对象，这里也可以使用raw
 		values.put(WeiboUserItem.USERICON, os.toByteArray());
 		values.put(WeiboUserItem.USERLOCATION, Loaction);
-		int id = db.update(DBHelper.TB_NAME, values, WeiboUserItem.USERID + "="
+		int id = db.update(DBHelper.WIBO_TB_NAME, values, WeiboUserItem.USERID + "="
 				+ UserId, null);
 		Log.e("UpdateUserInfo2", id + "");
 		return id;
@@ -94,7 +93,7 @@ public class WeiboUserManager {
 		values.put(WeiboUserItem.TOKEN, user.GetAToken());
 		values.put(WeiboUserItem.TOKENSECRET, user.GetASecret());
 		values.put(WeiboUserItem.ISDEFAULT, user.IsDefault());
-		int id = db.update(DBHelper.TB_NAME, values, WeiboUserItem.ID + "="
+		int id = db.update(DBHelper.WIBO_TB_NAME, values, WeiboUserItem.ID + "="
 				+ user.GetId(), null);
 		Log.e("UpdateUserInfo", id + "");
 		return id;
@@ -112,7 +111,7 @@ public class WeiboUserManager {
 			values.put(WeiboUserItem.USERICON, user.GetIcon());
 			values.put(WeiboUserItem.USERLOCATION, user.GetLocationg());
 			values.put(WeiboUserItem.ISDEFAULT, user.IsDefault());
-			uid = db.insert(DBHelper.TB_NAME, WeiboUserItem.ID, values);
+			uid = db.insert(DBHelper.WIBO_TB_NAME, WeiboUserItem.ID, values);
 			Log.e("SaveUserInfo", uid + "");
 		}
 		return uid;
@@ -120,7 +119,7 @@ public class WeiboUserManager {
 
 	// 删除users表的记录
 	public int DelUserInfo(String UserId) {
-		int id = db.delete(DBHelper.TB_NAME,
+		int id = db.delete(DBHelper.WIBO_TB_NAME,
 				WeiboUserItem.USERID + "=" + UserId, null);
 		Log.e("DelUserInfo", id + "");
 		return id;
@@ -137,7 +136,7 @@ public class WeiboUserManager {
 	public void UpdateDefault(WeiboUserItem user) {
 		ContentValues values = new ContentValues();
 		values.put(WeiboUserItem.ISDEFAULT, false);
-		db.update(DBHelper.TB_NAME, values,
+		db.update(DBHelper.WIBO_TB_NAME, values,
 				WeiboUserItem.ID + "=" + user.GetId(), null);
 	}
 }

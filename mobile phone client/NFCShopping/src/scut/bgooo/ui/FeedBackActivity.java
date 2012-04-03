@@ -4,7 +4,7 @@ import scut.bgooo.entities.Suggestion;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.storage.OnObbStateChangeListener;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
