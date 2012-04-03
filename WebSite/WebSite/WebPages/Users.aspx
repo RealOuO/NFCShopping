@@ -10,7 +10,7 @@
      <asp:ValidationSummary ID="DepartmentsValidationSummary" runat="server" ShowSummary="true"
         DisplayMode="BulletList" Style="color: Red; width: 40em;" />
     <asp:GridView ID="GridView" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-        DataSourceID="UsersDataSource" DataKeyNames="userID" CellPadding="4" ForeColor="#333333" GridLines="None">
+        DataSourceID="UsersDataSource" DataKeyNames="userID" CellPadding="4" ForeColor="#333333" GridLines="None" >
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
         <Columns>
             <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" 
