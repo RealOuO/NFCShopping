@@ -34,10 +34,16 @@
                 </asp:LoginView>
             </div>
             <div class="clear hideSkiplink">
-                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
-                    IncludeStyleBlock="false" Orientation="Horizontal">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="False"
+                    IncludeStyleBlock="False" Orientation="Horizontal">
                     <Items>
                         <asp:MenuItem NavigateUrl="~/Default.aspx" Text="主页" />
+                        <asp:MenuItem Text="商品" Value="商品">
+                            <asp:MenuItem NavigateUrl="~/WebPages/Categories.aspx" Text="商品分类" Value="商品分类">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebPages/ProductEdit.aspx?isNew=true" Text="增加商品" 
+                                Value="增加商品"></asp:MenuItem>
+                        </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
                     </Items>
                 </asp:Menu>

@@ -4,7 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
+    <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" 
+    Font-Size="X-Large" ForeColor="Black"
         Text="Label"></asp:Label>
     <div style="height: 22px">
     </div>

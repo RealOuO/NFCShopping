@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NFCShoppingWebSite.BLL;
+using NFCShoppingWebSite.Utils;
 using NFCShoppingWebSite.Access_Data;
 
 namespace NFCShoppingWebSite.WebPages
@@ -41,6 +42,25 @@ namespace NFCShoppingWebSite.WebPages
 
             mProducts.InsertProduct(product);
             mProducts.Dispose();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            String queryStr = Server.UrlDecode(this.ClientQueryString);
+            var keyAndValuePairs = QueryStringDecoder.Decode(queryStr, new string[] { "&" });
+            string result;
+
+            if (keyAndValuePairs.TryGetValue("isNew", out result))
+            {
+                if (Convert.ToBoolean(result))
+                {
+                    this.TitleLabel.Text = "增加新商品";
+                }
+                else
+                {
+                    this.TitleLabel.Text = "编辑商品";
+                }
+            }
         }
     }
 }

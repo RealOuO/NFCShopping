@@ -29,7 +29,7 @@
                 <ItemSeparatorTemplate>
                 </ItemSeparatorTemplate>
                 <ItemTemplate>
-                    <a href='Products.aspx?secCategoryID=<%# Eval("secCategoryID") %>'>
+                    <a href='<%# VirtualPathUtility.ToAbsolute("~/WebPages/Products.aspx?secCategoryID=" + Eval("secCategoryID")) %>'>
                         <asp:Label ID="SecCategoryLabel" runat="server" Text='<%# Eval("secCategoryName") %>'
                             Font-Size="Medium" ForeColor="Black"></asp:Label>
                     </a>
