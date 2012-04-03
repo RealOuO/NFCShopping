@@ -188,10 +188,10 @@ public class ConcernListActivity extends ListActivity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// TODO Auto-generated method stub
-//			Intent intent = new Intent(ConcernListActivity.this,
-//					CommentListActivity.class);
-//			intent.putExtra("ConcernItem", mItems.get(arg2));
-//			startActivity(intent);
+			Intent intent = new Intent(ConcernListActivity.this,
+					CommentListActivity.class);
+			intent.putExtra("ConcernItem", mItems.get(arg2));
+			startActivity(intent);
 		}
 	};
 
