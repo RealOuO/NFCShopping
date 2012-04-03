@@ -286,12 +286,7 @@ public class WeiboUserListActivity extends Activity implements IWeiboActivity {
 
 	@Override
 	protected void onRestart() {
-		// TODO Auto-generated method stub
-		if (0 == mList.size()) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
-			toast.show();
-		}
+		// TODO Auto-generated method stub		
 		super.onRestart();
 
 	}
