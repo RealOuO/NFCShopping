@@ -10,7 +10,7 @@
 namespace NFCShoppingWebSite.WebPages {
     
     
-    public partial class ProductEdit {
+    public partial class ProductDetails {
         
         /// <summary>
         /// TitleLabel control.
@@ -20,6 +20,24 @@ namespace NFCShoppingWebSite.WebPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TitleLabel;
+        
+        /// <summary>
+        /// Label9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label9;
+        
+        /// <summary>
+        /// ProductImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ProductImage;
         
         /// <summary>
         /// Label1 control.
@@ -67,13 +85,13 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// CategoriesDropDownList control.
+        /// CategoryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CategoriesDropDownList;
+        protected global::System.Web.UI.WebControls.Label CategoryLabel;
         
         /// <summary>
         /// Label4 control.
@@ -85,13 +103,13 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// SecCategoriesDropDownList control.
+        /// SecCategoryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SecCategoriesDropDownList;
+        protected global::System.Web.UI.WebControls.Label SecCategoryLabel;
         
         /// <summary>
         /// Label5 control.
@@ -157,6 +175,15 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label Label8;
         
         /// <summary>
+        /// DeleteButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteButton;
+        
+        /// <summary>
         /// LocationTextBox control.
         /// </summary>
         /// <remarks>
@@ -166,33 +193,6 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.TextBox LocationTextBox;
         
         /// <summary>
-        /// Label9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
-        
-        /// <summary>
-        /// ProductPictureUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload ProductPictureUpload;
-        
-        /// <summary>
-        /// SubmitButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitButton;
-        
-        /// <summary>
         /// ProductsDataSource control.
         /// </summary>
         /// <remarks>
@@ -200,23 +200,5 @@ namespace NFCShoppingWebSite.WebPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource ProductsDataSource;
-        
-        /// <summary>
-        /// CategoriesDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource CategoriesDataSource;
-        
-        /// <summary>
-        /// SecCategoriesDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource SecCategoriesDataSource;
     }
 }

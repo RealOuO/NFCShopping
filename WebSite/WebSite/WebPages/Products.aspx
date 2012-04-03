@@ -6,36 +6,50 @@
         ForeColor="Black" Text="商品"></asp:Label>
     <div>
     </div>
-    <asp:GridView ID="ProductsGridView" runat="server" AutoGenerateColumns="False" 
-        DataSourceID="ProductsDataSource" DataKeyNames="productID">
-        <Columns>
-            <asp:CommandField ShowDeleteButton="True" />
-            <asp:BoundField DataField="productID" HeaderText="productID" 
-                SortExpression="productID" />
-            <asp:BoundField DataField="secCategoryID" HeaderText="secCategoryID" 
-                SortExpression="secCategoryID" />
-            <asp:BoundField DataField="barCode" HeaderText="barCode" 
-                SortExpression="barCode" />
-            <asp:BoundField DataField="productName" HeaderText="productName" 
-                SortExpression="productName" />
-            <asp:BoundField DataField="price" HeaderText="price" SortExpression="price" />
-            <asp:BoundField DataField="brand" HeaderText="brand" SortExpression="brand" />
-            <asp:BoundField DataField="location" HeaderText="location" 
-                SortExpression="location" />
-            <asp:BoundField DataField="imageURL" HeaderText="imageURL" 
-                SortExpression="imageURL" />
-            <asp:BoundField DataField="description" HeaderText="description" 
-                SortExpression="description" />
-        </Columns>
-    </asp:GridView>
+    <asp:ListView ID="ProductsListView" runat="server" DataKeyNames="productID" DataSourceID="ProductsDataSource" GroupItemCount="2">
+    <EmptyDataTemplate>
+    <table runat="server">
+    <tr>
+    <td>该类中没有任何商品。</td>
+    </tr>
+    </table>
+    </EmptyDataTemplate>
+    <EmptyItemTemplate>
+    <td runat="server" />
+    </EmptyItemTemplate>
+    <GroupTemplate>
+    <tr id="itemPlaceholderContainer" runat="server">
+    <td id="itemPlaceholder" runat="server"></td>
+    </tr>
+    </GroupTemplate>
+    <ItemTemplate>
+    <td runat="server">
+    <table border="0" width="300">
+    <tr>
+    <td style="width: 25px;">&nbsp</td>
+    <td style="vertical-align: middle; text-align: right;">
+    <a href='ProductDetails.aspx?productID=<%# Eval("productID") %>'>
+    <image src='../Images/Products/<%# Eval("imageURL") %>' width="100" height="75" border="0">
+    </a>&nbsp;&nbsp
+    </td>
+    <td style="width: 250px; vertical-align: middle;">
+    <a href='ProductDetails.aspx?productID=<%# Eval("productID") %>'>
+    <%# Eval("productName") %><br /></a>
+    <%# Eval("price", "{0:c}") %>元
+    </td>
+    </tr>
+    </table>
+    </td>
+    </ItemTemplate>
+    </asp:ListView>
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" 
         DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product" 
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" 
         SelectMethod="GetProductsBySecCategory" 
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">
         <SelectParameters>
-            <asp:SessionParameter DefaultValue="4" Name="secCategoryID" 
-                SessionField="secCategoryID" Type="Int32" />
+            <asp:QueryStringParameter DefaultValue="4" Name="secCategoryID" 
+                QueryStringField="secCategoryID" Type="Int32" />
         </SelectParameters>
         <UpdateParameters>
             <asp:Parameter Name="product" Type="Object" />
