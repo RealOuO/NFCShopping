@@ -11,11 +11,14 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.util.Log;
+
 import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.Paging;
 import scut.bgooo.entities.Product;
+import scut.bgooo.entities.SecCategory;
 import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
 
@@ -63,6 +66,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.dotNet = false;// 注意：这个属性是对dotnetwebservice协议的支持,如果dotnet的webservice
 								// 不指定rpc方式则用true否则要用false
 		envelope.setOutputSoapObject(rpc);
+		envelope.addMapping(NAMESPACE, "User", User.class);
 		/**
 		 * 对象的返回值
 		 * 
@@ -101,6 +105,10 @@ public class WebServiceUtil implements IWebServiceUtil {
 			envelope.bodyOut = rpc;
 			envelope.dotNet = false;
 			envelope.setOutputSoapObject(rpc);
+			envelope.addMapping(NAMESPACE, "Review", Review.class);
+			envelope.addMapping(NAMESPACE, "User", User.class);
+			envelope.addMapping(NAMESPACE, "Product", Product.class);
+			envelope.addMapping(NAMESPACE, "SecCategory", SecCategory.class);
 			Vector<Review> result = null;
 			try {
 				ht.call(NAMESPACE + GETREVIEWSBYUSERID, envelope);
@@ -135,6 +143,10 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.bodyOut = rpc;
 		envelope.dotNet = false;
 		envelope.setOutputSoapObject(rpc);
+		envelope.addMapping(NAMESPACE, "Review", Review.class);
+		envelope.addMapping(NAMESPACE, "User", User.class);
+		envelope.addMapping(NAMESPACE, "Product", Product.class);
+		envelope.addMapping(NAMESPACE, "SecCategory", SecCategory.class);
 		Vector<Review> result = null;
 		try {
 			ht.call(NAMESPACE + GETREVIEWSBYPRODUCTID, envelope);
@@ -173,6 +185,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.bodyOut = rpc;
 		envelope.dotNet = false;
 		envelope.setOutputSoapObject(rpc);
+		envelope.addMapping(NAMESPACE, "Discount", Discount.class);
 		Vector<Discount> result = null;
 		try {
 			ht.call(NAMESPACE + GETDISCOUNTS, envelope);
@@ -205,9 +218,13 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.bodyOut = rpc;
 		envelope.dotNet = false;
 		envelope.setOutputSoapObject(rpc);
+		envelope.addMapping(NAMESPACE, "DiscountItem", DiscountItem.class);
+		envelope.addMapping(NAMESPACE, "Product", Product.class);
+		envelope.addMapping(NAMESPACE, "SecCategory", SecCategory.class);
 		Vector<DiscountItem> result = null;
 		try {
 			ht.call(NAMESPACE + GETDISCOUNTITEMSBYDISCOUNTID, envelope);
+			Log.d(TAG, envelope.getResponse().toString());
 			result = (Vector<DiscountItem>) envelope.getResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -231,6 +248,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.bodyOut = rpc;
 		envelope.dotNet = false;
 		envelope.setOutputSoapObject(rpc);
+		envelope.addMapping(NAMESPACE, "Product", Product.class);
+		envelope.addMapping(NAMESPACE, "SecCategory", SecCategory.class);
 		Product result = null;
 		try {
 			ht.call(NAMESPACE + GETPRODUCTBYBARCODE, envelope);
@@ -268,7 +287,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.dotNet = false;// 注意：这个属性是对dotnetwebservice协议的支持,如果dotnet的webservice
 								// 不指定rpc方式则用true否则要用false
 		envelope.setOutputSoapObject(rpc);
-		// envelope.addMapping(NAMESPACE, "User", User.class);//
+		envelope.addMapping(NAMESPACE, "User", User.class);//
 		// 传对象时必须，参数namespace是webservice中指定的，
 		// name是服务器类型的名称，
 		// claszz是自定义类的类型
@@ -278,6 +297,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		nowUser = null; // 完成注册返回的对象
 		try {
 			ht.call(NAMESPACE + REGIST, envelope);
+			Log.d(TAG, envelope.getResponse().toString());
 			nowUser = (User) envelope.getResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -331,7 +351,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.bodyOut = rpc;
 		envelope.dotNet = false;
 		envelope.setOutputSoapObject(rpc);
-		envelope.addMapping(NAMESPACE, "Suggestion", suggestion.getClass());
+		envelope.addMapping(NAMESPACE, "Suggestion", suggestion.getClass());// 注意这句话很重要
 		try {
 			ht.call(NAMESPACE + ADDSUGGESTION, envelope);
 			if (!envelope.getResponse().equals(null)) {
@@ -384,6 +404,9 @@ public class WebServiceUtil implements IWebServiceUtil {
 			break;
 		case Method.GETDISCOUNTS:
 			rpc = new SoapObject(NAMESPACE, GETDISCOUNTS);
+			break;
+		case Method.GETREVIEWSBYPRODUCTID:
+			rpc = new SoapObject(NAMESPACE, GETREVIEWSBYPRODUCTID);
 			break;
 		default:
 			break;

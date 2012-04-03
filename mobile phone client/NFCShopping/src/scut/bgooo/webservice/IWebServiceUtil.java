@@ -12,12 +12,23 @@ import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
 
 public interface IWebServiceUtil {
-	
-	
+
+	/**
+	 * 添加商品评论
+	 * 
+	 * @return 成功 true 失败 false
+	 * @author Administrator
+	 */
 	public boolean AddReview(Review review);
-	
+
+	/**
+	 * 添加反馈信息
+	 * 
+	 * 
+	 * @return 成功true 失败false
+	 * */
 	public boolean AddSuggestion(Suggestion suggestion);
-	
+
 	/**
 	 * <p>
 	 * 登录判断接口
@@ -25,8 +36,18 @@ public interface IWebServiceUtil {
 	 * @return 返回User对象
 	 * */
 	public User login(String userName, String password);
-	
-	public User regist(String userName,String password,int gencer);
+
+	/**
+	 * 注册接口
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @param gender
+	 *            性别
+	 * */
+	public User regist(String userName, String password, int gender);
 
 	/**
 	 * <p>
@@ -56,8 +77,6 @@ public interface IWebServiceUtil {
 	 * @return 优惠信息列表
 	 * */
 	public Vector<Discount> getDiscounts(Paging page);
-	
-	
 
 	/**
 	 * <p>
@@ -68,8 +87,6 @@ public interface IWebServiceUtil {
 	 * @return 优惠信息
 	 * */
 	public Vector<DiscountItem> getDiscountItems(int id);
-	
-
 
 	/**
 	 * <p>

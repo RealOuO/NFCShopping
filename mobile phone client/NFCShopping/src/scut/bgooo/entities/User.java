@@ -26,23 +26,24 @@ public class User implements KvmSerializable {
 		Object res = null;
 		switch (arg0) {
 		case 0:
-			res = this.Id;
-			break;
-		case 1:
-			res = this.Username;
-			break;
-		case 2:
-			res = this.Gender;
-			break;
-		case 3:
-			res = this.VisitedTimes;
-			break;
-		case 4:
-			res = this.LastVisitedDate;
-			break;
-		case 5:
 			res = this.EntityKey;
 			break;
+		case 1:
+			res = this.Id;
+			break;
+		case 2:
+			res = this.Username;
+			break;
+		case 3:
+			res = this.Gender;
+			break;
+		case 4:
+			res = this.VisitedTimes;
+			break;
+		case 5:
+			res = this.LastVisitedDate;
+			break;
+		
 		default:
 			break;
 		}
@@ -60,28 +61,30 @@ public class User implements KvmSerializable {
 		// TODO Auto-generated method stub
 		switch (arg0) {
 		case 0:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "EntityKey";
+			break;
+		case 1:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "userID";
 			break;
-		case 1:
+		case 2:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "userName";
 			break;
-		case 2:
+		case 3:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "gender";
 			break;
-		case 3:
+		case 4:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "visitedTimes";
 			break;
-		case 4:
+		case 5:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "lastVisitedDate";
 			break;
-		case 5:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "EntityKey";
+		
 		default:
 			break;
 		}
@@ -94,22 +97,23 @@ public class User implements KvmSerializable {
 			return;
 		switch (arg0) {
 		case 0:
-			this.Id = Integer.valueOf(arg1.toString());
+			this.EntityKey = arg1.toString();
 			break;
 		case 1:
-			this.Username = arg1.toString();
+			this.Id = Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.Gender = Integer.valueOf(arg1.toString());
+			this.Username = arg1.toString();
 			break;
 		case 3:
-			this.VisitedTimes = Integer.valueOf(arg1.toString());
+			this.Gender = Integer.valueOf(arg1.toString());
 			break;
 		case 4:
-			this.LastVisitedDate = arg1.toString();
+			this.VisitedTimes = Integer.valueOf(arg1.toString());
 			break;
 		case 5:
-			this.EntityKey = arg1.toString();
+			this.LastVisitedDate = arg1.toString();
+			break;		
 		default:
 			break;
 		}

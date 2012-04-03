@@ -30,16 +30,16 @@ public class Discount implements KvmSerializable {
 		Object res = null;
 		switch (arg0) {
 		case 0:
-			res = this.Id;
+			res = this.EntityKey;
 			break;
 		case 1:
-			res = this.Description;
+			res = this.Id;
 			break;
 		case 2:
-			res = this.CreatedAt;
+			res = this.Description;
 			break;
 		case 3:
-			res = this.EntityKey;
+			res = this.CreatedAt;
 			break;
 		default:
 			break;
@@ -58,20 +58,20 @@ public class Discount implements KvmSerializable {
 		// TODO Auto-generated method stub
 		switch (arg0) {
 		case 0:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "EntityKey";
+			break;
+		case 1:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "discountID";
 			break;
-		case 1:
+		case 2:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "description";
 			break;
-		case 2:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "createdAt";
-			break;
 		case 3:
 			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "EntityKey";
+			arg2.name = "createdAt";
 			break;
 		default:
 			break;
@@ -81,18 +81,20 @@ public class Discount implements KvmSerializable {
 	@Override
 	public void setProperty(int arg0, Object arg1) {
 		// TODO Auto-generated method stub
+		if (arg1 == null)
+			return;
 		switch (arg0) {
 		case 0:
-			this.Id=Integer.valueOf(arg1.toString());
+			this.EntityKey=arg1.toString();
 			break;
 		case 1:
-			this.Description=arg1.toString();
+			this.Id=Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.CreatedAt=arg1.toString();
+			this.Description=arg1.toString();
 			break;
 		case 3:
-			this.EntityKey=arg1.toString();
+			this.CreatedAt=arg1.toString();
 			break;
 		default:
 			break;

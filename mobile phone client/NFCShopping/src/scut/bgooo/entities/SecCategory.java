@@ -24,17 +24,17 @@ public class SecCategory implements KvmSerializable {
 		Object res = null;
 		switch (arg0) {
 		case 0:
-			res = this.SecCategoryID;
-			break;
-		case 1:
-			res = this.CategoryID;
-			break;
-		case 2:
-			res = this.SecCategoryName;
-			break;
-		case 3:
 			res = this.EntityKey;
 			break;
+		case 1:
+			res = this.SecCategoryID;
+			break;
+		case 2:
+			res = this.CategoryID;
+			break;
+		case 3:
+			res = this.SecCategoryName;
+			break;	
 		default:
 			break;
 		}
@@ -52,21 +52,21 @@ public class SecCategory implements KvmSerializable {
 		// TODO Auto-generated method stub
 		switch (arg0) {
 		case 0:
-			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "secCategoryID";
-			break;
-		case 1:
-			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "categoryID";
-			break;
-		case 2:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "secCategoryName";
-			break;
-		case 3:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "EntityKey";
 			break;
+		case 1:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "secCategoryID";
+			break;
+		case 2:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "categoryID";
+			break;
+		case 3:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "secCategoryName";
+			break;		
 		default:
 			break;
 		}
@@ -79,16 +79,16 @@ public class SecCategory implements KvmSerializable {
 			return;
 		switch (arg0) {
 		case 0:
-			this.SecCategoryID = Integer.valueOf(arg1.toString());
+			this.EntityKey=arg1.toString();
 			break;
 		case 1:
-			this.CategoryID = Integer.valueOf(arg1.toString());
+			this.SecCategoryID = Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.SecCategoryName = arg1.toString();
+			this.CategoryID = Integer.valueOf(arg1.toString());
 			break;
 		case 3:
-			this.EntityKey=arg1.toString();
+			this.SecCategoryName = arg1.toString();
 			break;
 		default:
 			break;

@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
 
 public class Review implements KvmSerializable {
 
@@ -31,31 +32,31 @@ public class Review implements KvmSerializable {
 		Object res = null;
 		switch (arg0) {
 		case 0:
-			res = this.Id;
+			res = this.EntityKey;
 			break;
 		case 1:
-			res = this.UserId;
+			res = this.Id;
 			break;
 		case 2:
-			res = this.ProductId;
+			res = this.UserId;
 			break;
 		case 3:
-			res = this.Text;
+			res = this.ProductId;
 			break;
 		case 4:
-			res = this.Rating;
+			res = this.Text;
 			break;
 		case 5:
-			res = this.CreatedAt;
+			res = this.Rating;
 			break;
 		case 6:
-			res = this.Product;
+			res = this.CreatedAt;
 			break;
 		case 7:
-			res = this.User;
+			res = this.Product;
 			break;
 		case 8:
-			res = this.EntityKey;
+			res = this.User;
 			break;
 		default:
 			break;
@@ -74,40 +75,41 @@ public class Review implements KvmSerializable {
 		// TODO Auto-generated method stub
 		switch (arg0) {
 		case 0:
-			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "reviewID";
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "EntityKey";
 			break;
 		case 1:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "userID";
+			arg2.name = "reviewID";
 			break;
 		case 2:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
-			arg2.name = "productID";
+			arg2.name = "userID";
 			break;
 		case 3:
+			arg2.type = PropertyInfo.INTEGER_CLASS;
+			arg2.name = "productID";
+			break;
+		case 4:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "comment";
 			break;
-		case 4:
+		case 5:
 			arg2.type = PropertyInfo.INTEGER_CLASS;
 			arg2.name = "rating";
 			break;
-		case 5:
+		case 6:
 			arg2.type = PropertyInfo.STRING_CLASS;
 			arg2.name = "createAt";
 			break;
-		case 6:
+		case 7:
 			arg2.type = PropertyInfo.OBJECT_CLASS;
 			arg2.name = "Product";
 			break;
-		case 7:
+		case 8:
 			arg2.type = PropertyInfo.OBJECT_CLASS;
 			arg2.name = "User";
 			break;
-		case 8:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "EntityKey";
 		default:
 			break;
 		}
@@ -120,31 +122,32 @@ public class Review implements KvmSerializable {
 			return;
 		switch (arg0) {
 		case 0:
-			this.Id = Integer.valueOf(arg1.toString());
+			this.EntityKey = arg1.toString();
 			break;
 		case 1:
-			this.UserId = Integer.valueOf(arg1.toString());
+			this.Id = Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.ProductId = Integer.valueOf(arg1.toString());
+			this.UserId = Integer.valueOf(arg1.toString());
 			break;
 		case 3:
-			this.Text = arg1.toString();
+			this.ProductId = Integer.valueOf(arg1.toString());
 			break;
 		case 4:
-			this.Rating = Integer.valueOf(arg1.toString());
+			this.Text = arg1.toString();
 			break;
 		case 5:
-			this.CreatedAt = arg1.toString();
+			this.Rating = Integer.valueOf(arg1.toString());
 			break;
 		case 6:
-			this.Product = (Product) arg1;
+			this.CreatedAt = arg1.toString();
 			break;
 		case 7:
-			this.User = (User) arg1;
+			this.Product =(Product)arg1 ;
 			break;
 		case 8:
-			this.EntityKey = arg1.toString();
+			this.User = (User)arg1;
+			break;
 		default:
 			break;
 		}

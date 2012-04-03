@@ -95,17 +95,32 @@ public class CommentActivity extends Activity {
 				// .show();
 				// }
 
-				Vector<Discount> vector = WebServiceUtil.getInstance()
-						.getDiscounts();
-				Log.d("dfdf", vector.size() + "");
-				for (int i = 0; i < vector.size(); i++) {
-					Log.d("fff", vector.get(i) + "");
+				Vector<Review> reviews =WebServiceUtil.getInstance().getReviewsByProductId(2);
+				Log.d("dfdf", reviews.size() + "");
+				for (int i = 0; i < reviews.size(); i++) {
+					Log.d("fff", reviews.get(i) + "");
+					for(int j=0;j<reviews.get(i).getPropertyCount();j++){
+						Log.d("abc", reviews.get(i).getProperty(j).toString());
+					}
 				}
+//				Log.d("dfadfafdasdfafd", WebServiceUtil.getInstance().regist("Lee", "dfafsda", 4).toString());
+//				Vector<Discount> vector = WebServiceUtil.getInstance()
+//						.getDiscounts();
+//				Log.d("dfdf", vector.size() + "");
+//				for (int i = 0; i < vector.size(); i++) {
+//					Log.d("fff", vector.get(i) + "");
+//					for(int j=0;j<vector.get(i).getPropertyCount();j++){
+//						Log.d("abc", vector.get(i).getProperty(j).toString());
+//					}
+//				}
 				Vector<DiscountItem> vector1 = WebServiceUtil.getInstance()
 						.getDiscountItems(1);
 				Log.d("dfdf", vector1.size() + "");
 				for (int i = 0; i < vector1.size(); i++) {
-					Log.d("fff", (Product)(vector1.get(i).getProperty(8)) + "");
+					Log.d("fff", vector1.get(i) + "");
+					for(int j=0;j<vector1.get(i).getPropertyCount();j++){
+						Log.d("abc", vector1.get(i).getProperty(j).toString());
+					}
 				}
 			}
 		});
