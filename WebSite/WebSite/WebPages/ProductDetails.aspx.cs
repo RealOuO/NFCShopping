@@ -13,10 +13,7 @@ namespace NFCShoppingWebSite.WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var enumerator = ProductsDataSource.Select().GetEnumerator();
-            enumerator.MoveNext();
-
-            Product product = (Product)enumerator.Current;
+            Product product = GetProduct();
             CategoryBL categoryBL = new CategoryBL();
             Category category = categoryBL.GetCategory(product.SecCategory.categoryID);
 
@@ -32,6 +29,32 @@ namespace NFCShoppingWebSite.WebPages
             ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
 
             categoryBL.Dispose();
+        }
+
+        protected void DeleteButton_Click(object sender, EventArgs e)
+        {
+            Product product = GetProduct();
+            ProductBL productBL = new ProductBL();
+
+            productBL.DeleteProduct(product);
+            Response.Redirect("Products.aspx?secCategoryID=" + product.secCategoryID.ToString());
+
+            productBL.Dispose();
+        }
+
+        protected void EditButton_Click(object sender, EventArgs e)
+        {
+            Product product = GetProduct();
+
+            Response.Redirect("ProductEdit.aspx?isNew=false&productID=" + product.productID.ToString());
+        }
+
+        protected Product GetProduct()
+        {
+            var enumerator = ProductsDataSource.Select().GetEnumerator();
+            enumerator.MoveNext();
+
+            return (Product)enumerator.Current;
         }
     }
 }
