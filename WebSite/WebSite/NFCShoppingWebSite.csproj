@@ -78,6 +78,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="WebPages\Categories.aspx" />
+    <Content Include="WebPages\ProductDetails.aspx" />
     <Content Include="WebPages\ProductEdit.aspx" />
     <Content Include="WebPages\Users.aspx" />
     <Content Include="WebPages\Products.aspx" />
@@ -169,12 +170,20 @@
     <Compile Include="Styles\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Utils\QueryStringDecoder.cs" />
     <Compile Include="WebPages\Categories.aspx.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebPages\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\ProductDetails.aspx.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\ProductDetails.aspx.designer.cs">
+      <DependentUpon>ProductDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\ProductEdit.aspx.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
