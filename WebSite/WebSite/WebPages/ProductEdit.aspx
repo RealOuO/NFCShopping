@@ -9,6 +9,16 @@
         Text="Label"></asp:Label>
     <div style="height: 22px">
     </div>
+    <div>
+        <asp:Label ID="Label10" runat="server" Text="商品图片"></asp:Label>
+        <div>
+        </div>
+    </div>
+    <div>
+        <asp:Image ID="ProductImage" runat="server" />
+        <div>
+        </div>
+    </div>
     <asp:Label ID="Label1" runat="server" Text="商品名称"></asp:Label>
     <div>
     </div>
@@ -26,7 +36,8 @@
     <div>
     </div>
     <asp:DropDownList ID="CategoriesDropDownList" runat="server" AutoPostBack="True"
-        DataSourceID="CategoriesDataSource" DataTextField="categoryName" DataValueField="categoryID">
+        DataSourceID="CategoriesDataSource" DataTextField="categoryName" 
+        DataValueField="categoryID" onprerender="CategoriesDropDownList_PreRender">
     </asp:DropDownList>
     <div>
     </div>
@@ -34,7 +45,8 @@
     <div>
     </div>
     <asp:DropDownList ID="SecCategoriesDropDownList" runat="server" DataSourceID="SecCategoriesDataSource"
-        DataTextField="secCategoryName" DataValueField="secCategoryID">
+        DataTextField="secCategoryName" DataValueField="secCategoryID" 
+        onprerender="SecCategoriesDropDownList_PreRender">
     </asp:DropDownList>
     <div>
     </div>
@@ -74,7 +86,8 @@
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">
         <SelectParameters>
-            <asp:SessionParameter DefaultValue="0" Name="id" SessionField="productID" Type="Int32" />
+            <asp:QueryStringParameter DefaultValue="0" Name="id" 
+                QueryStringField="productID" Type="Int32" />
         </SelectParameters>
         <UpdateParameters>
             <asp:Parameter Name="product" Type="Object" />

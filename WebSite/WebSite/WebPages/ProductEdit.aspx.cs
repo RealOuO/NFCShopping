@@ -40,11 +40,22 @@ namespace NFCShoppingWebSite.WebPages
                 }
             }
 
-            mProducts.InsertProduct(product);
+            if(this.TitleLabel.Text == "增加新商品")
+            {
+                mProducts.InsertProduct(product); 
+            }
+            else
+            {
+                Product origProduct = GetProduct();
+
+                product.imageURL = ProductImage.ImageUrl.Substring(ProductImage.ImageUrl.LastIndexOf("/") + 1);
+
+                mProducts.UpdateProduct(product, origProduct);
+            }
             mProducts.Dispose();
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_PreRender(object sender, EventArgs e)
         {
             String queryStr = Server.UrlDecode(this.ClientQueryString);
             var keyAndValuePairs = QueryStringDecoder.Decode(queryStr, new string[] { "&" });
@@ -58,9 +69,40 @@ namespace NFCShoppingWebSite.WebPages
                 }
                 else
                 {
+                    Product product = GetProduct();
+
                     this.TitleLabel.Text = "编辑商品";
+                    this.ProductNameTextBox.Text = product.productName;
+                    this.ProductDescriptionTextBox.Text = product.description;
+                    this.ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
+                    this.PriceTextBox.Text = product.price.ToString();
+                    this.LocationTextBox.Text = product.location;
+                    this.BrandTextBox.Text = product.brand;
+                    this.BarcodeTextBox.Text = product.barCode;
                 }
             }
+        }
+
+        protected Product GetProduct()
+        {
+            var enumerator = ProductsDataSource.Select().GetEnumerator();
+            enumerator.MoveNext();
+
+            return (Product)enumerator.Current;
+        }
+
+        protected void CategoriesDropDownList_PreRender(object sender, EventArgs e)
+        {
+            Product product = GetProduct();
+
+            this.CategoriesDropDownList.SelectedValue = product.SecCategory.categoryID.ToString();
+        }
+
+        protected void SecCategoriesDropDownList_PreRender(object sender, EventArgs e)
+        {
+            Product product = GetProduct();
+
+            this.SecCategoriesDropDownList.SelectedValue = product.secCategoryID.ToString();
         }
     }
 }
