@@ -78,16 +78,22 @@
     <asp:Label ID="Label8" runat="server" Text="产地"></asp:Label>
     <div>
     </div>
-    <table style="width: 100%;">
+    <div>
+    <asp:TextBox ID="LocationTextBox" runat="server" BorderStyle="None" 
+        ReadOnly="True"></asp:TextBox>
+    </div>
+    <table style="width:100%;">
         <tr>
             <td class="style1">
                 &nbsp;
             </td>
             <td class="style2">
+                <asp:Button ID="EditButton" runat="server" Height="39px" Text="编辑" 
+                    Width="105px" onclick="EditButton_Click" />
             </td>
             <td>
-                <asp:Button ID="DeleteButton" runat="server" Height="39px" PostBackUrl='~/WebPages/Products.aspx?secCategoryID=<%# Eval("secCategoryID") %>'
-                    Text="删除" Width="105px" />
+                <asp:Button ID="DeleteButton" runat="server" Height="39px" Text="删除" 
+                    Width="105px" onclick="DeleteButton_Click" />
             </td>
         </tr>
         <tr>
@@ -113,7 +119,6 @@
             </td>
         </tr>
     </table>
-    <asp:TextBox ID="LocationTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">

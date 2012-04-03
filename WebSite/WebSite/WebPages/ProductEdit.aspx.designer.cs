@@ -22,6 +22,24 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label TitleLabel;
         
         /// <summary>
+        /// Label10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label10;
+        
+        /// <summary>
+        /// ProductImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ProductImage;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
