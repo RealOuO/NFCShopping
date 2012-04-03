@@ -58,8 +58,8 @@ import weibo4android.util.URLEncodeUtils;
  */
 
 public class Weibo extends WeiboSupport implements java.io.Serializable {
-	public static String CONSUMER_KEY = "1493524446";
-	public static String CONSUMER_SECRET = "2fce93f378b24ff0261c8295569be58b";
+	public static String CONSUMER_KEY = "1523774865";
+	public static String CONSUMER_SECRET = "33115aa0c373bf6daecad5b5203be9a5";
     private String baseURL = Configuration.getScheme() + "api.t.sina.com.cn/";
     private String searchBaseURL = Configuration.getScheme() + "api.t.sina.com.cn/";
     private static final long serialVersionUID = -1486360080128882436L;

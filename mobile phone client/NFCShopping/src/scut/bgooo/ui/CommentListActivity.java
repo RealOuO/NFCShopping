@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
-import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.db.ConcernManager;
 
 
 import android.app.Activity;

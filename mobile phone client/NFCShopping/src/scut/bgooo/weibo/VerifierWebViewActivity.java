@@ -24,14 +24,14 @@ public class VerifierWebViewActivity extends Activity {
 		setContentView(R.layout.webview);
 		mWebView = (WebView) findViewById(R.id.webView1);
 		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
+		Bundle bundle = intent.getBundleExtra("URL");
 		String URL = bundle.getString("URL");
 		
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setSupportZoom(true);
 		mWebView.getSettings().setBuiltInZoomControls(true);
 		mWebView.loadUrl(URL);
-		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+		
 		
 		mWebView.addJavascriptInterface(new JavaScriptInterface(), "Methods");
 		WebViewClient wvc = new WebViewClient() {

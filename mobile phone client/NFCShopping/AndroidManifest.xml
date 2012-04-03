@@ -1,98 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="scut.bgooo.ui"
-    android:versionCode="1"
-    android:versionName="1.0" >
+	package="scut.bgooo.ui" android:versionCode="1" android:versionName="1.0">
 
-    <uses-permission android:name="android.permission.INTERNET" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET">
+	</uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-sdk android:minSdkVersion="10" />
 
-    <application
-        android:icon="@drawable/pig"
-        android:label="@string/app_name" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ConcernListActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".CollectionListActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".CompareActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".MoreActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".CommentListActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+	<application android:icon="@drawable/pig" android:label="@string/app_name">
+		<activity android:name=".MainActivity" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <!--
- Android treats all implicit intents passed to startActivity() as if they contained at 
- least one category: "android.intent.category.DEFAULT" (the CATEGORY_DEFAULT constant). 
- Therefore, activities that are willing to receive implicit intents must 
- include "android.intent.category.DEFAULT" in their intent filters
- 
- 
-意思是说，每一个通过 startActivity() 方法发出的隐式 Intent 都至少有一个 category，就是 "android.intent.category.DEFAULT"，所以只要是想接收一个隐式 Intent 的 Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致 Intent 匹配失败。
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".ConcernListActivity" android:label="@string/app_name" />
+		<activity android:name=".CollectionListActivity"
+			android:label="@string/app_name" />
+		<activity android:name=".CompareActivity" android:label="@string/app_name" />
+		<activity android:name=".MoreActivity" android:label="@string/app_name" />
+		<activity android:name=".CommentListActivity" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.nfc.action.TAG_DISCOVERED" />
 
-从上面的论述还可以获得以下信息：
-1、一个 Intent 可以有多个 category，但至少会有一个，也是默认的一个 category。
-2、只有 Intent 的所有 category 都匹配上，Activity 才会接收这个 Intent。
-                -->
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".CommentActivity"
-            android:label="@string/app_name" 
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
-        <activity
-            android:name=".DiscountListActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name="scut.bgooo.weibo.AuthorizeActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name="scut.bgooo.weibo.VerifierWebViewActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name="scut.bgooo.weibo.WeiboUserListActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<!--
+					Android treats all implicit intents passed to startActivity() as if
+					they contained at least one category:
+					"android.intent.category.DEFAULT" (the CATEGORY_DEFAULT constant).
+					Therefore, activities that are willing to receive implicit intents
+					must include "android.intent.category.DEFAULT" in their intent
+					filters 意思是说，每一个通过 startActivity() 方法发出的隐式 Intent 都至少有一个
+					category，就是 "android.intent.category.DEFAULT"，所以只要是想接收一个隐式 Intent 的
+					Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致
+					Intent 匹配失败。 从上面的论述还可以获得以下信息： 1、一个 Intent 可以有多个
+					category，但至少会有一个，也是默认的一个 category。 2、只有 Intent 的所有 category
+					都匹配上，Activity 才会接收这个 Intent。
+				-->
+			</intent-filter>
+		</activity>
+		<activity android:name=".CommentActivity" android:label="@string/app_name"
+			android:windowSoftInputMode="stateVisible|adjustResize" />
+		<activity android:name=".DiscountListActivity" android:label="@string/app_name" />
+		<activity android:name="scut.bgooo.weibo.AuthorizeActivity"
+			android:label="@string/app_name" />
+		<activity android:name="scut.bgooo.weibo.VerifierWebViewActivity"
+			android:label="@string/app_name" />
+		<activity android:name="scut.bgooo.weibo.WeiboUserListActivity"
+			android:label="@string/app_name" android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="WeiboUserListActivity"
-                    android:scheme="leeforall" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name=".FeedBackActivity"
-            android:label="@string/app_name" 
-            android:windowSoftInputMode="stateVisible|adjustResize"/><!-- 自适应输入法 -->
-    </application>
+				<data android:host="WeiboUserListActivity" android:scheme="leeforall" />
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".RegisterActivity" android:label="@string/app_name" />
+		<activity android:name=".DiscountShitListActivity"
+			android:label="@string/app_name" android:windowSoftInputMode="stateVisible|adjustResize" />
+
+		<activity android:name=".FeedBackActivity" android:label="@string/app_name"
+			android:windowSoftInputMode="stateVisible|adjustResize" />
+		<!--
+			自适应输入法
+		-->
+	</application>
 
 </manifest>
