@@ -12,7 +12,7 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<Suggestion> GetSuggestions()
         {
-            return mContext.Suggestions.Include("Product").ToList();
+            return mContext.Suggestions.Include("User").ToList();
         }
 
         public void InsertSuggestion(Suggestion suggestion, bool isImmediateSave)

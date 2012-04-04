@@ -80,6 +80,7 @@
     <Content Include="WebPages\Categories.aspx" />
     <Content Include="WebPages\ProductDetails.aspx" />
     <Content Include="WebPages\ProductEdit.aspx" />
+    <Content Include="WebPages\Suggestions.aspx" />
     <Content Include="WebPages\UserDetails.aspx" />
     <Content Include="WebPages\Users.aspx" />
     <Content Include="WebPages\Products.aspx" />
@@ -192,6 +193,13 @@
     </Compile>
     <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\Suggestions.aspx.cs">
+      <DependentUpon>Suggestions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Suggestions.aspx.designer.cs">
+      <DependentUpon>Suggestions.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\UserDetails.aspx.cs">
       <DependentUpon>UserDetails.aspx</DependentUpon>
