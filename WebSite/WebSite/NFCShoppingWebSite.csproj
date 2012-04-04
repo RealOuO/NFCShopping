@@ -80,6 +80,7 @@
     <Content Include="WebPages\Categories.aspx" />
     <Content Include="WebPages\ProductDetails.aspx" />
     <Content Include="WebPages\ProductEdit.aspx" />
+    <Content Include="WebPages\UserDetails.aspx" />
     <Content Include="WebPages\Users.aspx" />
     <Content Include="WebPages\Products.aspx" />
   </ItemGroup>
@@ -192,6 +193,13 @@
     <Compile Include="WebPages\ProductEdit.aspx.designer.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebPages\UserDetails.aspx.cs">
+      <DependentUpon>UserDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\UserDetails.aspx.designer.cs">
+      <DependentUpon>UserDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebPages\Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -216,6 +224,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShopEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Products\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

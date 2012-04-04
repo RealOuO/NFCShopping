@@ -23,7 +23,8 @@
                 SortExpression="visitedTimes" />
             <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" 
                 SortExpression="lastVisitedDate" />
-            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" />
+            <asp:CommandField ShowDeleteButton="True" 
+              />
         </Columns>
         <EditRowStyle BackColor="#999999" />
         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
