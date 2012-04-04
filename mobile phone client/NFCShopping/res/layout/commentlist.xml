@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btfinish" />
-            
+
             <Button
                 android:id="@+id/btComment"
                 android:layout_width="0dip"
@@ -150,14 +150,18 @@
                 android:text="@string/btshare" />
         </LinearLayout>
 
+        <include
+            android:id="@+id/progress"
+            layout="@layout/progress" />
+
         <ListView
             android:id="@+id/comment_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/lybuttonBar"
-            android:fadingEdge="none" 
             android:divider="@drawable/divider_horizontal_timeline"
-            android:dividerHeight="1.0dip" />
+            android:dividerHeight="1.0dip"
+            android:fadingEdge="none" />
     </RelativeLayout>
 
 </LinearLayout>

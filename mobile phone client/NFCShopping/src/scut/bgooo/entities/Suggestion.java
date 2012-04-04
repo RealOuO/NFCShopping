@@ -1,11 +1,12 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
-public class Suggestion implements KvmSerializable {
+public class Suggestion implements KvmSerializable ,Serializable{
 
 	private int Id; //反馈的id
 	private int UserId; // 反馈的用户id

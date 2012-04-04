@@ -34,8 +34,9 @@
         <activity
             android:name=".MoreActivity"
             android:label="@string/app_name" />
+        
         <activity
-            android:name=".CommentListActivity"
+            android:name=".ProductActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
@@ -52,9 +53,16 @@
 					Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致
 					Intent 匹配失败。 从上面的论述还可以获得以下信息： 1、一个 Intent 可以有多个
 					category，但至少会有一个，也是默认的一个 category。 2、只有 Intent 的所有 category
-					都匹配上，Activity 才会接收这个 Intent。
+					都匹配上，Activity 才会接收这个 Intent。
+
                 -->
             </intent-filter>
+            
+        </activity>
+        <activity
+            android:name=".CommentListActivity"
+            android:label="@string/app_name" >
+            
         </activity>
         <activity
             android:name=".CommentActivity"

@@ -27,7 +27,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static String TAG = WebServiceUtil.class.getName();
 
 	private static final String NAMESPACE = "http://tempuri.org/";
-	private static String URL = "http://10.0.2.2:56989/ShopWebService.asmx";
+	private static String URL = "http://192.168.1.102:8080/NFCShopping/ShopWebService.asmx";
 
 	private static final String REGIST = "Regist";
 	private static final String ADDSUGGESTION = "AddSuggestion";
@@ -74,7 +74,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		nowUser = null;
 		try {
 			ht.call(NAMESPACE + LOGIN, envelope);
-			if (!envelope.getResponse().equals(null))
+			if (envelope.getResponse() != null)
 				nowUser = (User) envelope.getResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -253,7 +253,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		Product result = null;
 		try {
 			ht.call(NAMESPACE + GETPRODUCTBYBARCODE, envelope);
-			if (!envelope.getResponse().equals(null)) // 判断返回的对象是否为空
+			if (envelope.getResponse() != null) // 判断返回的对象是否为空
 				result = (Product) envelope.getResponse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -297,8 +297,10 @@ public class WebServiceUtil implements IWebServiceUtil {
 		nowUser = null; // 完成注册返回的对象
 		try {
 			ht.call(NAMESPACE + REGIST, envelope);
-			Log.d(TAG, envelope.getResponse().toString());
-			nowUser = (User) envelope.getResponse();
+			if (envelope.getResponse() != null) {
+				Log.d(TAG, envelope.getResponse().toString());
+				nowUser = (User) envelope.getResponse();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -325,7 +327,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.addMapping(NAMESPACE, "Review", review.getClass());
 		try {
 			ht.call(NAMESPACE + ADDREVIEW, envelope);
-			if (!envelope.getResponse().equals(null)) {
+			if (envelope.getResponse() != null) {
 				return (Boolean) envelope.getResponse();
 			}
 		} catch (IOException e) {
@@ -354,7 +356,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		envelope.addMapping(NAMESPACE, "Suggestion", suggestion.getClass());// 注意这句话很重要
 		try {
 			ht.call(NAMESPACE + ADDSUGGESTION, envelope);
-			if (!envelope.getResponse().equals(null)) {
+			if (envelope.getResponse() != null) {
 				return (Boolean) envelope.getResponse();
 			}
 		} catch (IOException e) {
@@ -407,6 +409,9 @@ public class WebServiceUtil implements IWebServiceUtil {
 			break;
 		case Method.GETREVIEWSBYPRODUCTID:
 			rpc = new SoapObject(NAMESPACE, GETREVIEWSBYPRODUCTID);
+			break;
+		case Method.GETPRODUCTBYBARCODE:
+			rpc = new SoapObject(NAMESPACE, GETPRODUCTBYBARCODE);
 			break;
 		default:
 			break;

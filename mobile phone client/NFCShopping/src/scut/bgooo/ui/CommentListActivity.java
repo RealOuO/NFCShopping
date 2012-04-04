@@ -3,16 +3,23 @@ package scut.bgooo.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Vector;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.db.ConcernManager;
-
+import scut.bgooo.entities.Product;
+import scut.bgooo.entities.Review;
+import scut.bgooo.entities.SecCategory;
+import scut.bgooo.entities.User;
+import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +38,8 @@ public class CommentListActivity extends Activity {
 
 	private static final String TAG = CommentListActivity.class.getSimpleName();
 
+	protected static final int SUCCESS = 0;
+
 	private ConcernManager mConcernManager = null;
 
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
@@ -42,14 +51,20 @@ public class CommentListActivity extends Activity {
 	private TextView mPriceTextView;
 	private RatingBar mRatingBar;
 	private CheckBox mCheckBox;
-
+	
+	private View mProcess;
+	
 	private ConcernItem item;
+	private Product mProduct = null;
+	private Vector<Review> reviews;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.commentlist);
+
+		mProduct = (Product) getIntent().getSerializableExtra("product");
 
 		mTempitems = new ArrayList<HashMap<String, Object>>();
 
@@ -60,6 +75,9 @@ public class CommentListActivity extends Activity {
 			map.put("Rating", 4.0);
 			mTempitems.add(map);
 		}
+		
+		mProcess = this.findViewById(R.id.progress);
+		
 		mFinishButton = (Button) findViewById(R.id.btFinish);
 		mFinishButton.setOnClickListener(new OnClickListener() {
 
@@ -81,6 +99,7 @@ public class CommentListActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+
 		mShareButton = (Button) findViewById(R.id.btShare);
 		mShareButton.setOnClickListener(new OnClickListener() {
 
@@ -91,9 +110,7 @@ public class CommentListActivity extends Activity {
 			}
 		});
 
-		CommentAdapter ma = new CommentAdapter(this, mTempitems);
 		mListView = (ListView) findViewById(R.id.comment_listview);
-		mListView.setAdapter(ma);// ÃÌº”  ≈‰∆˜
 
 		mPriceTextView = (TextView) findViewById(R.id.tvproductCost);
 		mNameTextView = (TextView) findViewById(R.id.tvProductname);
@@ -121,49 +138,84 @@ public class CommentListActivity extends Activity {
 				Log.d(TAG, "checked changed");
 			}
 		});
+		
+		DownloadInfo();
 	}
 
 	@Override
-    public void onNewIntent(Intent intent) {
-        setIntent(intent);
-        resolveIntent(intent);
-    }
-	
+	public void onNewIntent(Intent intent) {
+		setIntent(intent);
+		resolveIntent(intent);
+	}
+
 	void resolveIntent(Intent intent) {
 		// Parse the intent
 		String action = intent.getAction();
-		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-			item = new ConcernItem(0, Math.abs(new Random().nextInt()),
-					String.valueOf(new Random().nextInt()), 3,
-					Math.abs(new Random().nextFloat()), 4,
-					System.currentTimeMillis(), (short) 0);
-			mConcernManager.addConcernItem(item);
-			Log.d(TAG, "discover a tag");
-		} else {
 
-			item = (ConcernItem) intent.getSerializableExtra("ConcernItem");
-
-			mPriceTextView.setText(String.valueOf(item.getPrice()));
-			mNameTextView.setText(item.getName());
-			mRatingBar.setRating((float) item.getRating());
-
-			Log.d(TAG, "is collected" + item.getIsCollected());
-			if (item.getIsCollected() == 0) {
-				mCheckBox.setChecked(false);
-			} else {
-				mCheckBox.setChecked(true);
-			}
-		}
+//		item = (ConcernItem) intent.getSerializableExtra("ConcernItem");
+//
+//		mPriceTextView.setText(String.valueOf(item.getPrice()));
+//		mNameTextView.setText(item.getName());
+//		mRatingBar.setRating((float) item.getRating());
+//
+//		Log.d(TAG, "is collected" + item.getIsCollected());
+//		if (item.getIsCollected() == 0) {
+//			mCheckBox.setChecked(false);
+//		} else {
+//			mCheckBox.setChecked(true);
+//		}
 	}
+
+	private void DownloadInfo() {
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				reviews = WebServiceUtil.getInstance().getReviewsByProductId(5);
+
+				Message message = new Message();
+				// if (reviews) {
+				// message.arg1 = FAILE;
+				// } else {
+				// message.arg1 = SUCCESS;
+				// message.obj = mProduct;
+				// }
+				message.arg1 = SUCCESS;
+				message.obj = reviews;
+				handler.sendMessage(message);
+			}
+		});
+
+		thread.start();
+		thread = null;
+	}
+
+	final Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.arg1) {
+			case SUCCESS:
+				CommentAdapter ma = new CommentAdapter(
+						CommentListActivity.this, reviews);
+				mListView.setAdapter(ma);// ÃÌº”  ≈‰∆˜
+				mProcess.setVisibility(View.GONE);
+				break;
+			}
+
+		}
+	};
 }
 
 class CommentAdapter extends BaseAdapter {
 
-	ArrayList<HashMap<String, Object>> items;
+	Vector<Review> items;
 	Context context;
 
-	public CommentAdapter(Context context,
-			ArrayList<HashMap<String, Object>> items) {
+	public CommentAdapter(Context context, Vector<Review> items) {
 		this.context = context;
 		this.items = items;
 	}
@@ -215,16 +267,21 @@ class CommentAdapter extends BaseAdapter {
 				commentitem = LayoutInflater.from(context).inflate(
 						R.layout.commentitem, null);
 			}
+			vh.tvCreateAt = (TextView) commentitem
+					.findViewById(R.id.tvCreatedDate);
 			vh.rbRating = (RatingBar) commentitem
 					.findViewById(R.id.indicator_ratingbar);
 			vh.tvComment = (TextView) commentitem.findViewById(R.id.tvComment);
 			vh.tvUserName = (TextView) commentitem
 					.findViewById(R.id.tvUsername);
 
-			vh.tvUserName.setText(items.get(position).get("Name").toString());
-			vh.tvComment.setText(items.get(position).get("Comment").toString());
+			vh.tvCreateAt
+					.setText(items.get(position).getProperty(6).toString());
+			vh.tvUserName.setText(((User) items.get(position).getProperty(8))
+					.getProperty(2).toString());
+			vh.tvComment.setText(items.get(position).getProperty(4).toString());
 			vh.rbRating.setRating(Float.valueOf(items.get(position)
-					.get("Rating").toString()));
+					.getProperty(5).toString()));
 
 			return commentitem;
 		}
@@ -233,6 +290,7 @@ class CommentAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		TextView tvUserName;
 		TextView tvComment;
+		TextView tvCreateAt;
 		RatingBar rbRating;
 	}
 

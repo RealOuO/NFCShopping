@@ -1,5 +1,6 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
@@ -8,7 +9,7 @@ import org.ksoap2.serialization.PropertyInfo;
 /**
  * 2012年4月1日 调试成功的类
  */
-public class User implements KvmSerializable {
+public class User implements KvmSerializable ,Serializable{
 
 	
 	private static final long serialVersionUID = 1L;

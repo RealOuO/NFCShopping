@@ -1,5 +1,6 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
@@ -13,7 +14,7 @@ import org.ksoap2.serialization.SoapObject;
  * 
  * 
  * */
-public class Product implements KvmSerializable {
+public class Product implements KvmSerializable, Serializable {
 
 	/**
 	 * 
