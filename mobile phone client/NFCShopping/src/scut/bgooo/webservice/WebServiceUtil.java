@@ -27,7 +27,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static String TAG = WebServiceUtil.class.getName();
 
 	private static final String NAMESPACE = "http://tempuri.org/";
-	private static String URL = "http://10.0.2.2:56989/ShopWebService.asmx";
+	private static String URL = "http://10.0.2.2:56989/ShopWebService.asmx";//Ä£ÄâÆ÷ÓÃ
 
 	private static final String REGIST = "Regist";
 	private static final String ADDSUGGESTION = "AddSuggestion";
