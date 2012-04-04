@@ -49,10 +49,14 @@ namespace NFCShoppingWebSite.WebPages
                 Product origProduct = GetProduct();
 
                 product.imageURL = ProductImage.ImageUrl.Substring(ProductImage.ImageUrl.LastIndexOf("/") + 1);
+                product.productID = origProduct.productID;
 
                 mProducts.UpdateProduct(product, origProduct);
             }
+
             mProducts.Dispose();
+
+            Response.Redirect("~/WebPages/Products.aspx?secCategoryID=" + product.secCategoryID.ToString());
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -93,16 +97,22 @@ namespace NFCShoppingWebSite.WebPages
 
         protected void CategoriesDropDownList_PreRender(object sender, EventArgs e)
         {
-            Product product = GetProduct();
+            if (this.TitleLabel.Text == "编辑商品")
+            {
+                Product product = GetProduct();
 
-            this.CategoriesDropDownList.SelectedValue = product.SecCategory.categoryID.ToString();
+                this.CategoriesDropDownList.SelectedValue = product.SecCategory.categoryID.ToString();
+            }
         }
 
         protected void SecCategoriesDropDownList_PreRender(object sender, EventArgs e)
         {
-            Product product = GetProduct();
+            if (this.TitleLabel.Text == "编辑商品")
+            {
+                Product product = GetProduct();
 
-            this.SecCategoriesDropDownList.SelectedValue = product.secCategoryID.ToString();
+                this.SecCategoriesDropDownList.SelectedValue = product.secCategoryID.ToString();
+            }
         }
     }
 }
