@@ -34,6 +34,13 @@ namespace NFCShoppingWebSite
         }
 
         [SoapRpcMethod, WebMethod]
+        public double GetAverageRatingByProductID(int id)
+        {
+            ReviewBL bl = new ReviewBL();
+            return bl.GetAverageRatingByProductID(id);
+        }
+
+        [SoapRpcMethod, WebMethod]
         public Product FindProductByID(Int32 id)
         {
             ProductBL bl = new ProductBL();
@@ -68,6 +75,7 @@ namespace NFCShoppingWebSite
             return bl.IsExisted(userName);
         }
 
+
         [SoapRpcMethod, WebMethod]
         public User FindUserByUserName(String userName)
         {
@@ -91,6 +99,14 @@ namespace NFCShoppingWebSite
             {
                 return null;
             }
+        }
+
+        [SoapRpcMethod, WebMethod]
+        public bool AddVisitTimes(Int32 id)
+        {
+            UserBL bl = new UserBL();
+            User user = bl.GetUserByID(id);
+            return bl.AutoAddVisitedTime(user);
         }
 
         [SoapRpcMethod, WebMethod]
@@ -162,7 +178,5 @@ namespace NFCShoppingWebSite
                 return false;
             }
         }
-
-        
     }
 }

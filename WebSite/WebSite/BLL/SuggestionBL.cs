@@ -38,9 +38,9 @@ namespace NFCShoppingWebSite.BLL
         }
 
         /*查询所有的反馈信息*/
-        public IEnumerable<Suggestion> GetSuggestions()
+        public ICollection<Suggestion> GetSuggestions()
         {
-            return mRepository.GetSuggestions();
+            return mRepository.GetSuggestions().ToList();
         }
 
         /*删除用户反馈信息的业务逻辑*/

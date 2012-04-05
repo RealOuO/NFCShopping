@@ -41,6 +41,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -63,6 +64,7 @@
     <Content Include="App_Data\ShopDB_log.ldf">
       <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
+    <Content Include="Images\Products\SampleProductImage.gif" />
     <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
@@ -235,7 +237,7 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\Products\" />
+    <Folder Include="Images\Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

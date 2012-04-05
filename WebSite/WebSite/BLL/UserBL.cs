@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using NFCShoppingWebSite.Access_Data;
 using NFCShoppingWebSite.DAL;
+using System.Threading;
 
 namespace NFCShoppingWebSite.BLL
 {
@@ -27,7 +28,16 @@ namespace NFCShoppingWebSite.BLL
         /*通过获取用户信息调用*/
         public User GetUserByID(Int32 id)
         {
-            return mRepository.GetUsers().ToList().Find(u => u.userID == id);
+            try
+            {
+                List<User> users = mRepository.GetUsers().ToList();
+                return users.Single(u => u.userID == id);
+            }
+            catch (Exception ex)
+            {
+                string exMessage = ex.Message;
+                return null;
+            }
         }
 
         /*注册的时候调用，判断用户名是否已经被注册的业务逻辑*/
@@ -44,18 +54,19 @@ namespace NFCShoppingWebSite.BLL
             }
         }
 
+
         /*通过用户名查找用户的业务逻辑*/
         public User FindUserByUsername(String userName)
         {
             return mRepository.GetUsers().ToList().Find(u => u.userName.Equals(userName));
         }
 
+
         /*用户注册业务逻辑*/
         public User Regist(User user)
         {
             user.lastVisitedDate = DateTime.Now;
             user.visitedTimes = 0;
-
             try
             {
                 mRepository.InsertUser(user, true);
@@ -74,7 +85,9 @@ namespace NFCShoppingWebSite.BLL
             if (!temp.Equals(null))
             {
                 if (temp.userPassword.Equals(user.userPassword))
+                {
                     return temp;
+                }
             }
             return null;
         }
@@ -86,9 +99,28 @@ namespace NFCShoppingWebSite.BLL
         }
 
         /*用户签到函数*/
-        public bool AutoAddVisitedTime(User user)
+        public bool AutoAddVisitedTime(User origuser)
         {
-            return true;
+            if (origuser.lastVisitedDate.Date.Equals(DateTime.Now.Date))
+            {
+                try
+                {
+                    User user = new User();
+                    user.userID = origuser.userID;
+                    user.userPassword = origuser.userPassword;
+                    user.userName = origuser.userName;
+                    user.visitedTimes = origuser.visitedTimes + 1;
+                    user.gender = origuser.gender;
+                    user.lastVisitedDate = origuser.lastVisitedDate;
+                    mRepository.UpdateUser(user, origuser, true);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return false ;
         }
 
         /*删除用户*/
