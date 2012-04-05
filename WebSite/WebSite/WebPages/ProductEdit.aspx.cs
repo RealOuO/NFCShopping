@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NFCShoppingWebSite.BLL;
@@ -14,10 +15,19 @@ namespace NFCShoppingWebSite.WebPages
     {
         private ProductBL mProducts = new ProductBL();
 
+        private String tempPath;
+
+        private String imageSavePath;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            tempPath = Server.MapPath("~/Images/Temp/");
+            imageSavePath = Server.MapPath("~/Images/Products/");
+        }
+
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             Product product = new Product();
-            String imageSavePath = Server.MapPath("~/Images/Products/");
             
             product.productName = this.ProductNameTextBox.Text;
             product.price = Convert.ToDecimal(this.PriceTextBox.Text);
@@ -27,16 +37,33 @@ namespace NFCShoppingWebSite.WebPages
             product.secCategoryID = Convert.ToInt32(this.SecCategoriesDropDownList.SelectedValue);
             product.barCode = this.BarcodeTextBox.Text;
 
-            if (this.ProductPictureUpload.HasFile)
+            if (this.ProductImage.ImageUrl != null && this.ProductImage.ImageUrl != "")
             {
                 try
                 {
-                    this.ProductPictureUpload.SaveAs(imageSavePath + ProductPictureUpload.FileName);
-                    product.imageURL = this.ProductPictureUpload.FileName;
+                    String fileName = ProductImage.ImageUrl.Substring(ProductImage.ImageUrl.LastIndexOf("/") + 1);
+                    String tempFile = tempPath + fileName;
+                    String newFile = imageSavePath + fileName;
+
+                    if (File.Exists(tempFile))
+                    {
+                        int i = 1;
+
+                        while (File.Exists(newFile))
+                        {
+                            fileName = i.ToString() + fileName;
+                            newFile = imageSavePath + fileName;
+                            ++i;
+                        }
+
+                        File.Copy(tempFile, newFile);
+                    }
+
+                    product.imageURL = fileName;
                 }
                 catch (Exception ex)
                 {
-                    // Handling exception.
+                    // TODO: Handling exception.
                 }
             }
 
@@ -48,9 +75,12 @@ namespace NFCShoppingWebSite.WebPages
             {
                 Product origProduct = GetProduct();
 
-                product.imageURL = ProductImage.ImageUrl.Substring(ProductImage.ImageUrl.LastIndexOf("/") + 1);
-                product.productID = origProduct.productID;
+                if (File.Exists(imageSavePath + origProduct.imageURL))
+                {
+                    File.Delete(imageSavePath + origProduct.imageURL);
+                }
 
+                product.productID = origProduct.productID;
                 mProducts.UpdateProduct(product, origProduct);
             }
 
@@ -78,7 +108,10 @@ namespace NFCShoppingWebSite.WebPages
                     this.TitleLabel.Text = "编辑商品";
                     this.ProductNameTextBox.Text = product.productName;
                     this.ProductDescriptionTextBox.Text = product.description;
-                    this.ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
+                    if (ProductImage.ImageUrl == null || ProductImage.ImageUrl == "")
+                    {
+                        this.ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
+                    }
                     this.PriceTextBox.Text = product.price.ToString();
                     this.LocationTextBox.Text = product.location;
                     this.BrandTextBox.Text = product.brand;
@@ -112,6 +145,22 @@ namespace NFCShoppingWebSite.WebPages
                 Product product = GetProduct();
 
                 this.SecCategoriesDropDownList.SelectedValue = product.secCategoryID.ToString();
+            }
+        }
+
+        protected void UploadPictureButton_Click(object sender, EventArgs e)
+        {
+            if (this.ProductPictureUpload.HasFile)
+            {
+                try
+                {
+                    ProductPictureUpload.SaveAs(tempPath + ProductPictureUpload.FileName);
+                    ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Temp/" + ProductPictureUpload.FileName);
+                }
+                catch (Exception ex)
+                {
+                    // TODO: Handle exception here.
+                }
             }
         }
     }

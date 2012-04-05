@@ -172,6 +172,7 @@
     <Compile Include="Styles\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DirectoryCleaner.cs" />
     <Compile Include="Utils\QueryStringDecoder.cs" />
     <Compile Include="WebPages\Categories.aspx.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
