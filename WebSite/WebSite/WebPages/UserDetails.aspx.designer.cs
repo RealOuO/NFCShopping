@@ -7,45 +7,45 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace NFCShoppingWebSite {
+namespace NFCShoppingWebSite.WebPages {
     
     
-    public partial class SiteMaster {
+    public partial class UserDetails {
         
         /// <summary>
-        /// HeadContent 控件。
+        /// UserDataSource 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::System.Web.UI.WebControls.ObjectDataSource UserDataSource;
         
         /// <summary>
-        /// HeadLoginView 控件。
+        /// UserDetailsView 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LoginView HeadLoginView;
+        protected global::System.Web.UI.WebControls.DetailsView UserDetailsView;
         
         /// <summary>
-        /// NavigationMenu 控件。
+        /// ReviewDataSource 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu NavigationMenu;
+        protected global::System.Web.UI.WebControls.ObjectDataSource ReviewDataSource;
         
         /// <summary>
-        /// MainContent 控件。
+        /// ReviewListView 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.ListView ReviewListView;
     }
 }

@@ -60,7 +60,6 @@ public class VerifierWebViewActivity extends Activity {
 		}
 		
 		public boolean getPin(String html) {
-			String ret = "";
 			// 最纠结的正则表达式
 //			String regEx = "[\u4e00-\u9fa5]{6}：[<][s][p][a][n][\\s][c][l][a][s][s][=][\"][f][b][\"][>][0-9]{6}";
 //			Pattern pattern = Pattern.compile(regEx);
@@ -80,7 +79,6 @@ public class VerifierWebViewActivity extends Activity {
 			boolean result = matcher.find();
 			if (result) {
 				mOauthPin = matcher.group(0);
-				Log.d("dfdf",mOauthPin );
 				return true;
 			}
 			return false;

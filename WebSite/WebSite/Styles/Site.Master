@@ -41,8 +41,15 @@
                         <asp:MenuItem Text="商品" Value="商品">
                             <asp:MenuItem NavigateUrl="~/WebPages/Categories.aspx" Text="商品分类" Value="商品分类">
                             </asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/WebPages/ProductEdit.aspx?isNew=true" Text="增加商品" 
-                                Value="增加商品"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebPages/ProductEdit.aspx?isNew=true" Text="增加商品" Value="增加商品">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="用户" Value="用户">
+                            <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="查看用户" Value="查看用户"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="优惠" Value="用户">
+                            <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="查看优惠" Value="查看优惠"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="新增优惠" Value="新增优惠"></asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
                     </Items>

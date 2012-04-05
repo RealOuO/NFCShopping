@@ -15,15 +15,18 @@
         <Columns>
             <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" 
                 Visible="False"  />
-            <asp:BoundField DataField="userName" HeaderText="userName" 
-                SortExpression="userName" />
+            <asp:HyperLinkField DataNavigateUrlFields="userID" 
+                DataNavigateUrlFormatString="UserDetails.aspx?userID={0}" 
+                DataTextField="userName" HeaderText="userName" />
             <asp:BoundField DataField="gender" HeaderText="gender" 
                 SortExpression="gender" />
             <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" 
                 SortExpression="visitedTimes" />
             <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" 
                 SortExpression="lastVisitedDate" />
-            <asp:CommandField ShowDeleteButton="True" ShowSelectButton="True" />
+            <asp:CommandField ShowDeleteButton="True" 
+              />
+            
         </Columns>
         <EditRowStyle BackColor="#999999" />
         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />

@@ -40,7 +40,7 @@ namespace NFCShoppingWebSite.BLL
 
         public Product GetProductByBarcode(String barcode)
         {
-            return GetProducts().Single(p=>barcode.Equals(barcode));
+            return GetProducts().ToList().Find(p=>p.barCode.Equals(barcode));
         }
 
         public Product GetProduct(Int32 id)

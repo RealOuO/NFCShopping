@@ -1,5 +1,6 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -13,7 +14,7 @@ import org.ksoap2.serialization.PropertyInfo;
  * @author Leeforall
  * @since 2012Äê3ÔÂ16ÈÕ
  */
-public class Discount implements KvmSerializable {
+public class Discount implements KvmSerializable,Serializable {
 
 	/**
 	 * 

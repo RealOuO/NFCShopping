@@ -1,12 +1,13 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 
-public class DiscountItem implements KvmSerializable {
+public class DiscountItem implements KvmSerializable ,Serializable{
 
 	private int Id;
 	private int ProductId;

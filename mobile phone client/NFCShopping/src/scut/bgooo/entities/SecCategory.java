@@ -1,5 +1,6 @@
 package scut.bgooo.entities;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
@@ -11,7 +12,7 @@ import org.ksoap2.serialization.PropertyInfo;
  * 
  * 2012年4月1日21:37:21 调试成功
  * */
-public class SecCategory implements KvmSerializable {
+public class SecCategory implements KvmSerializable,Serializable {
 
 	private int SecCategoryID;
 	private int CategoryID;

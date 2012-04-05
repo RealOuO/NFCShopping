@@ -1,50 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-	<LinearLayout android:layout_width="match_parent"
-		android:id="@+id/linearLayout1" android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-		<ImageView android:id="@id/discount_image"
-			android:layout_width="wrap_content" android:src="@drawable/icon"
-			android:layout_height="wrap_content" android:padding="5dip"></ImageView>
+        <ImageView
+            android:id="@id/discount_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:src="@drawable/icon" >
+        </ImageView>
 
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/linearLayout2" android:layout_height="match_parent"
-			android:orientation="vertical">
-			<LinearLayout android:layout_width="match_parent"
-				android:id="@+id/linearLayout3" android:layout_height="wrap_content">
-				<TextView android:text="优惠数目:" android:id="@id/discount_quantity"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-				<TextView android:text="TextView" android:id="@+id/textView2"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-			</LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-			<LinearLayout android:layout_width="match_parent"
-				android:id="@+id/linearLayout4" android:layout_height="wrap_content">
-				<TextView android:text="优惠时间:" android:id="@id/discount_time"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-				<TextView android:text="TextView" android:id="@+id/textView4"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-			</LinearLayout>
-		</LinearLayout>
+                <TextView
+                    android:id="@id/discount_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠数目:" >
+                </TextView>
 
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" >
+                </TextView>
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
+                <TextView
+                    android:id="@id/discount_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠时间:" >
+                </TextView>
 
-		<RelativeLayout android:layout_width="wrap_content"
-			android:id="@+id/relativeLayout1" android:layout_height="match_parent"
-			android:gravity="center_vertical">
-			<ImageView android:id="@+id/imageView2"
-				android:layout_width="wrap_content" android:src="@drawable/triangle"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_alignParentTop="true"></ImageView>
-		</RelativeLayout>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
 
-	</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" >
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/triangle" >
+            </ImageView>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
