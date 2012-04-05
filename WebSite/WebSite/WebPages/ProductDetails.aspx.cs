@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -36,6 +37,20 @@ namespace NFCShoppingWebSite.WebPages
             Product product = GetProduct();
             ProductBL productBL = new ProductBL();
 
+            try
+            {
+                // Delete the image.
+                if (product.imageURL != "" && product.imageURL != null)
+                {
+                    File.Delete(Server.MapPath("~/Images/Products/") + product.imageURL);
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Handle exception here.
+            }
+
+            // Delete the product itself.
             productBL.DeleteProduct(product);
             Response.Redirect("Products.aspx?secCategoryID=" + product.secCategoryID.ToString());
 
