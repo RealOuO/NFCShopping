@@ -100,7 +100,7 @@ namespace NFCShoppingWebSite.WebPages
             if (keyAndValuePairs.TryGetValue("isNew", out result))
             {
                 // Store the status indicating whether it's inserting or updating.
-                ViewState.Add("IsNew", result);
+                ViewState.Add("IsNew", Convert.ToBoolean(result));
 
                 if (Convert.ToBoolean(result))
                 {
