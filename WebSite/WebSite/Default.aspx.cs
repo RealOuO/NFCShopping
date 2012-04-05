@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NFCShoppingWebSite.Utils;
 
 namespace NFCShoppingWebSite
 {
@@ -11,7 +13,7 @@ namespace NFCShoppingWebSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            DirectoryCleaner.CleanDirectory(Server.MapPath("Images/Temp/"));
         }
     }
 }

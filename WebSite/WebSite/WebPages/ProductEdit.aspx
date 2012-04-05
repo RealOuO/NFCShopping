@@ -78,6 +78,8 @@
     <div>
     </div>
     <asp:FileUpload ID="ProductPictureUpload" runat="server" />
+    <asp:Button ID="UploadPictureButton" runat="server" 
+        onclick="UploadPictureButton_Click" Text="上传图片" />
     <div>
     </div>
     <asp:Button ID="SubmitButton" runat="server" Height="48px" OnClick="SubmitButton_Click"
