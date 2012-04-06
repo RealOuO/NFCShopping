@@ -157,4 +157,28 @@ public interface IWebServiceUtil {
 	 */
 	public List<String> getAttributes(String barcode);
 
+	/**
+	 * 用户签到处理接口
+	 * 
+	 * @param userID
+	 *            登录的用户的id；
+	 * 
+	 * @return 成功true 失败false
+	 * 
+	 * */
+	public boolean AddVisitedTimes(int userID);
+
+	/**
+	 * 获取商品的平均得分
+	 * 
+	 * @param productID
+	 *            商品的id编号
+	 * 
+	 * @return 商品的平均得分
+	 * 
+	 * */
+	public double getAverageRating(int productID);
+	
+	
+
 }
