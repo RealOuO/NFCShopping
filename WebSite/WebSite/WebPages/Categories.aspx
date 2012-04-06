@@ -21,11 +21,13 @@
         <ItemTemplate>
             <table border="0" width="300">
                 <asp:Label ID="CategoryLabel" runat="server" Text='<%# Eval("categoryName") %>' Font-Size="Large"
-                    Font-Bold="true" ForeColor="Black"></asp:Label>
+                    Font-Bold="true" ForeColor="Black">
+                </asp:Label>
             </table>
             <asp:ListView ID="SecCategoriesListView" runat="server" DataSource='<%# Eval("secCategories") %>'>
                 <EmptyDataTemplate>
-                    没有任何子分类数据。</EmptyDataTemplate>
+                    没有任何子分类数据。
+                </EmptyDataTemplate>
                 <ItemSeparatorTemplate>
                 </ItemSeparatorTemplate>
                 <ItemTemplate>
