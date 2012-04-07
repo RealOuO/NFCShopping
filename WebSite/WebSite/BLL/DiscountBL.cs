@@ -22,7 +22,7 @@ namespace NFCShoppingWebSite.BLL
             {
                 // TODO: Add handling code here.
 
-                throw ex;
+                return null;
             }
         }
 
