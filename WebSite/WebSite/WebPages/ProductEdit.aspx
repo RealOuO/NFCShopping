@@ -15,7 +15,8 @@
         </div>
     </div>
     <div>
-        <asp:Image ID="ProductImage" runat="server" />
+        <asp:Image ID="ProductImage" runat="server" Height="300px" ImageAlign="Middle" 
+            ImageUrl="~/Images/Products/SampleProductImage.gif" Width="450px" />
         <div>
         </div>
     </div>

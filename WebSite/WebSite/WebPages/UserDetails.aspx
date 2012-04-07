@@ -13,7 +13,7 @@
     <div>
     <asp:DetailsView ID="UserDetailsView" runat="server" AutoGenerateRows="False" BackColor="White"
         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" DataSourceID="UserDataSource"
-        GridLines="Horizontal" Height="50px" Width="125px">
+        GridLines="Horizontal" Height="50px" Width="922px">
         <AlternatingRowStyle BackColor="#F7F7F7" />
         <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
         <Fields>
@@ -30,14 +30,14 @@
         <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
     </asp:DetailsView>
     </div>
-    <asp:ObjectDataSource ID="ReviewDataSource" runat="server" SelectMethod="GetReviewsByUserID"
+    <asp:ObjectDataSource ID="ReviewsDataSource" runat="server" SelectMethod="GetReviewsByUserID"
         TypeName="NFCShoppingWebSite.BLL.ReviewBL">
         <SelectParameters>
             <asp:QueryStringParameter Name="uid" QueryStringField="userID" Type="Int32" />
         </SelectParameters>
     </asp:ObjectDataSource>
     <asp:ListView ID="ReviewListView" runat="server" 
-    DataSourceID="ReviewDataSource">
+    DataSourceID="ReviewsDataSource">
         <AlternatingItemTemplate>
             <li style="">reviewID:
                 <asp:Label ID="reviewIDLabel" runat="server" Text='<%# Eval("reviewID") %>' />

@@ -15,18 +15,25 @@ namespace NFCShoppingWebSite.WebPages
     {
         private ProductBL mProducts = new ProductBL();
 
+        /**
+         *  The directory path to store temporary images.
+         */
         private String tempPath;
 
+        /**
+         *  The directory path to store persistence images.
+         */
         private String imageSavePath;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            tempPath = Server.MapPath("~/Images/Temp/");
-            imageSavePath = Server.MapPath("~/Images/Products/");
+            tempPath = Server.MapPath("~\\Images\\Temp\\");
+            imageSavePath = Server.MapPath("~\\Images\\Products\\");
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
+            // The new product to insert.
             Product product = new Product();
             
             product.productName = this.ProductNameTextBox.Text;
@@ -37,26 +44,19 @@ namespace NFCShoppingWebSite.WebPages
             product.secCategoryID = Convert.ToInt32(this.SecCategoriesDropDownList.SelectedValue);
             product.barCode = this.BarcodeTextBox.Text;
 
+            // Set the image url and copy the cooresponding image from temporary directory to persistence directory
+            // only when the user has uploaded an image.
             if (this.ProductImage.ImageUrl != null && this.ProductImage.ImageUrl != "")
             {
                 try
                 {
+                    // Get the file name for the image.
                     String fileName = ProductImage.ImageUrl.Substring(ProductImage.ImageUrl.LastIndexOf("/") + 1);
                     String tempFile = tempPath + fileName;
-                    String newFile = imageSavePath + fileName;
 
                     if (File.Exists(tempFile))
                     {
-                        int i = 1;
-
-                        while (File.Exists(newFile))
-                        {
-                            fileName = i.ToString() + fileName;
-                            newFile = imageSavePath + fileName;
-                            ++i;
-                        }
-
-                        File.Copy(tempFile, newFile);
+                        File.Copy(tempFile, imageSavePath + fileName);
                     }
 
                     product.imageURL = fileName;
@@ -66,12 +66,13 @@ namespace NFCShoppingWebSite.WebPages
                     // TODO: Handling exception.
                 }
             }
-
-            if(this.TitleLabel.Text == "增加新商品")
+            
+            // For insertion.
+            if((bool)ViewState["IsNew"])
             {
                 mProducts.InsertProduct(product); 
             }
-            else
+            else // For updating.
             {
                 Product origProduct = GetProduct();
 
@@ -86,6 +87,7 @@ namespace NFCShoppingWebSite.WebPages
 
             mProducts.Dispose();
 
+            // Jump to the product list which the edited product is in.
             Response.Redirect("~/WebPages/Products.aspx?secCategoryID=" + product.secCategoryID.ToString());
         }
 
@@ -97,6 +99,9 @@ namespace NFCShoppingWebSite.WebPages
 
             if (keyAndValuePairs.TryGetValue("isNew", out result))
             {
+                // Store the status indicating whether it's inserting or updating.
+                ViewState.Add("IsNew", Convert.ToBoolean(result));
+
                 if (Convert.ToBoolean(result))
                 {
                     this.TitleLabel.Text = "增加新商品";
@@ -108,10 +113,13 @@ namespace NFCShoppingWebSite.WebPages
                     this.TitleLabel.Text = "编辑商品";
                     this.ProductNameTextBox.Text = product.productName;
                     this.ProductDescriptionTextBox.Text = product.description;
+
+                    // Fetch the image only when the image url is valid.
                     if (ProductImage.ImageUrl == null || ProductImage.ImageUrl == "")
                     {
-                        this.ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
+                        this.ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~\\Images\\Products\\" + product.imageURL);
                     }
+
                     this.PriceTextBox.Text = product.price.ToString();
                     this.LocationTextBox.Text = product.location;
                     this.BrandTextBox.Text = product.brand;
@@ -120,6 +128,10 @@ namespace NFCShoppingWebSite.WebPages
             }
         }
 
+        /**
+         *  Get the product from the data source.
+         *  @return The product from the data source.
+         */
         protected Product GetProduct()
         {
             var enumerator = ProductsDataSource.Select().GetEnumerator();
@@ -130,7 +142,8 @@ namespace NFCShoppingWebSite.WebPages
 
         protected void CategoriesDropDownList_PreRender(object sender, EventArgs e)
         {
-            if (this.TitleLabel.Text == "编辑商品")
+            // Only when it's updating a product, set the selected category.
+            if (!(bool)ViewState["IsNew"])
             {
                 Product product = GetProduct();
 
@@ -140,7 +153,8 @@ namespace NFCShoppingWebSite.WebPages
 
         protected void SecCategoriesDropDownList_PreRender(object sender, EventArgs e)
         {
-            if (this.TitleLabel.Text == "编辑商品")
+            // Only when it's updating a product, set the selected secondary category.
+            if (!(bool)ViewState["IsNew"])
             {
                 Product product = GetProduct();
 
@@ -154,8 +168,19 @@ namespace NFCShoppingWebSite.WebPages
             {
                 try
                 {
-                    ProductPictureUpload.SaveAs(tempPath + ProductPictureUpload.FileName);
-                    ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Temp/" + ProductPictureUpload.FileName);
+                    List<string> tempImages = (List<string>)Session["TempImages"];
+
+                    // Get the file extension.
+                    string extension = ProductPictureUpload.FileName.Substring(ProductPictureUpload.FileName.LastIndexOf("."));
+
+                    // Generate an unique id for the file.
+                    string fileName = Guid.NewGuid().ToString() + extension;
+
+                    ProductPictureUpload.SaveAs(tempPath + fileName);
+                    ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~\\Images\\Temp\\" + fileName);
+
+                    // Add the temporary file to a field in the session for future deletion.
+                    tempImages.Add(tempPath + fileName);
                 }
                 catch (Exception ex)
                 {

@@ -14,6 +14,7 @@ namespace NFCShoppingWebSite.WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Fill the page.
             Product product = GetProduct();
             CategoryBL categoryBL = new CategoryBL();
             Category category = categoryBL.GetCategory(product.SecCategory.categoryID);
@@ -61,9 +62,14 @@ namespace NFCShoppingWebSite.WebPages
         {
             Product product = GetProduct();
 
+            // Jump to the editing page.
             Response.Redirect("ProductEdit.aspx?isNew=false&productID=" + product.productID.ToString());
         }
 
+        /**
+         *  Get the product from the data source.
+         *  @return The product from the data source.
+         */
         protected Product GetProduct()
         {
             var enumerator = ProductsDataSource.Select().GetEnumerator();

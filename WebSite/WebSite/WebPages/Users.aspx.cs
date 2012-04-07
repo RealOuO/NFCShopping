@@ -12,10 +12,8 @@ namespace NFCShoppingWebSite.WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
-
-
 
         protected void DepartmentsObjectDataSource_Deleted(object sender, ObjectDataSourceStatusEventArgs e)
         {
@@ -40,5 +38,26 @@ namespace NFCShoppingWebSite.WebPages
                 e.ExceptionHandled = true;
             }
         }
+
+        protected void GridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+             if (e.Row.RowType == DataControlRowType.DataRow)
+             {
+            //将班级类别编号转换为班级类别名称
+                 if (e.Row.Cells[2].Text.Equals( "1"))  //5是要转换的列的序号，从0开始
+                 {
+                     e.Row.Cells[2].Text = "先生";
+                 }
+                 else if (e.Row.Cells[2].Text.Equals("2"))
+                 {
+                     e.Row.Cells[2].Text = "女士";
+                 }
+                 else
+                 {
+                     e.Row.Cells[2].Text = "保密";
+                 }
+             }
+     }
     }
+    
 }

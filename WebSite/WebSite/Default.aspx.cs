@@ -13,7 +13,6 @@ namespace NFCShoppingWebSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DirectoryCleaner.CleanDirectory(Server.MapPath("Images/Temp/"));
         }
     }
 }

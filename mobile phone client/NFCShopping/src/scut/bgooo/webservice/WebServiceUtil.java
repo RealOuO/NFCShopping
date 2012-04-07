@@ -39,6 +39,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static final String GETPRODUCTBYBARCODE = "FindProductByBarcode";
 	private static final String GETDISCOUNTS = "GetDiscounts";
 	private static final String GETDISCOUNTITEMSBYDISCOUNTID = "FindDiscountItemsByDiscountID";
+	private static final String ADDVISITTIEMS = "AddVisitTimes";
+	private static final String GETAVERAGERATING = "GetAverageRatingByProductID";
 
 	// private static final String GETUSERBYID = "FindUserByID"; //暂时可以不用到
 	public static User nowUser = null;
@@ -369,6 +371,59 @@ public class WebServiceUtil implements IWebServiceUtil {
 		return false;
 	}
 
+	@Override
+	public double getAverageRating(int productID) {
+		SoapObject rpc = getSoapObject(Method.GETAVERAGERATING);
+		rpc.addProperty("id", productID);
+		HttpTransportSE ht = new HttpTransportSE(URL);
+		ht.debug = true;
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.bodyOut = rpc;
+		envelope.dotNet = false;
+		envelope.setOutputSoapObject(rpc);
+		try {
+			ht.call(NAMESPACE + GETAVERAGERATING, envelope);
+			if (envelope.getResponse() != null) {
+				return (Double) envelope.getResponse();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0.0;
+	}
+
+	@Override
+	public boolean AddVisitedTimes(int userID) {
+		// TODO Auto-generated method stub
+		SoapObject rpc = getSoapObject(Method.ADDVISITTIEMS);
+		rpc.addProperty("userID", userID);
+		HttpTransportSE ht = new HttpTransportSE(URL);
+		ht.debug = true;
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.bodyOut = rpc;
+		envelope.dotNet = false;
+		envelope.setOutputSoapObject(rpc);
+		try {
+			ht.call(NAMESPACE + ADDVISITTIEMS, envelope);
+			if (envelope.getResponse() != null) {
+				return (Boolean) envelope.getResponse();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	private PropertyInfo getPropertyInfo(Object object) {
 		PropertyInfo pi = new PropertyInfo();
 		if (object instanceof Review) {
@@ -413,10 +468,16 @@ public class WebServiceUtil implements IWebServiceUtil {
 		case Method.GETPRODUCTBYBARCODE:
 			rpc = new SoapObject(NAMESPACE, GETPRODUCTBYBARCODE);
 			break;
+		case Method.ADDVISITTIEMS:
+			rpc = new SoapObject(NAMESPACE, ADDVISITTIEMS);
+			break;
+		case Method.GETAVERAGERATING:
+			rpc = new SoapObject(NAMESPACE, GETAVERAGERATING);
+			break;
 		default:
 			break;
 		}
-
 		return rpc;
 	}
+
 }
