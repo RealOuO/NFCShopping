@@ -10,7 +10,7 @@
 namespace NFCShoppingWebSite.WebPages {
     
     
-    public partial class Products {
+    public partial class Discounts {
         
         /// <summary>
         /// Label1 控件。
@@ -22,21 +22,21 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// ProductsListView 控件。
+        /// DiscountDataSource 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ProductsListView;
+        protected global::System.Web.UI.WebControls.ObjectDataSource DiscountDataSource;
         
         /// <summary>
-        /// ProductsDataSource 控件。
+        /// ListView1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ProductsDataSource;
+        protected global::System.Web.UI.WebControls.ListView ListView1;
     }
 }
