@@ -1,4 +1,4 @@
-package scut.bgooo.weibo;
+package scut.bgooo.ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,12 +10,12 @@ import java.util.List;
 
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import scut.bgooo.db.WeiboUserManager;
 import scut.bgooo.ui.R;
 import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
-import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserManager;
 import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;

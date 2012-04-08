@@ -1,4 +1,4 @@
-package scut.bgooo.db;
+package scut.bgooo.concern;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import scut.bgooo.concern.ConcernItem;
+import scut.bgooo.db.DBHelper;
 
 
 import android.app.Activity;

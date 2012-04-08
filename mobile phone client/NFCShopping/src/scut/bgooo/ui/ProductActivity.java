@@ -3,7 +3,7 @@ package scut.bgooo.ui;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
-import scut.bgooo.db.ConcernManager;
+import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.webservice.WebServiceUtil;

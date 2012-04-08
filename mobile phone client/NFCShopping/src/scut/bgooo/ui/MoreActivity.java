@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import scut.bgooo.db.ConcernManager;
-import scut.bgooo.weibo.WeiboUserListActivity;
+import scut.bgooo.concern.ConcernManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;

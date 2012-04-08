@@ -2,10 +2,9 @@ package scut.bgooo.ui;
 
 import java.util.List;
 
-import scut.bgooo.db.WeiboUserManager;
 import scut.bgooo.utility.TaskHandler;
-import scut.bgooo.weibo.WeiboUserListActivity;
-import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserManager;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;

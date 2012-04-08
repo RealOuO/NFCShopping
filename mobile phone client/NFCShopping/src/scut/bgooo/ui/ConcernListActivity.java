@@ -7,7 +7,7 @@ import java.util.Map;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
-import scut.bgooo.db.ConcernManager;
+import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.ListActivity;

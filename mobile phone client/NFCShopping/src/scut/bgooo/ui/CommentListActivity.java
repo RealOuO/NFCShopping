@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import scut.bgooo.concern.ConcernItem;
-import scut.bgooo.db.ConcernManager;
+import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.SecCategory;

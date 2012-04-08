@@ -17,7 +17,6 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.webservice.WebServiceUtil;
 
-import scut.bgooo.weibo.WeiboUserListActivity;
 
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
