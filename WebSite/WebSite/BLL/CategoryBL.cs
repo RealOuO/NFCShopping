@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using NFCShoppingWebSite.DAL;
 using NFCShoppingWebSite.Access_Data;
 
@@ -25,6 +26,7 @@ namespace NFCShoppingWebSite.BLL
 
         public IEnumerable<Category> GetCategories()
         {
+
             return mCategoryRepository.GetCategories();
         }
 

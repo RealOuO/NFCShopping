@@ -24,7 +24,7 @@
                     Font-Bold="true" ForeColor="Black">
                 </asp:Label>
             </table>
-            <asp:ListView ID="SecCategoriesListView" runat="server" DataSource='<%# Eval("secCategories") %>'>
+            <asp:ListView ID="SecCategoriesListView" runat="server" DataSource='<%# Eval("SecCategories") %>'>
                 <EmptyDataTemplate>
                     没有任何子分类数据。
                 </EmptyDataTemplate>

@@ -47,9 +47,13 @@
                         <asp:MenuItem Text="用户" Value="用户">
                             <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="查看用户" Value="查看用户"></asp:MenuItem>
                         </asp:MenuItem>
-                        <asp:MenuItem Text="优惠" Value="用户">
-                            <asp:MenuItem NavigateUrl="~/WebPages/Discounts.aspx" Text="查看优惠" Value="查看优惠"></asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="新增优惠" Value="新增优惠"></asp:MenuItem>
+                        <asp:MenuItem Text="优惠活动" Value="用户">
+                            <asp:MenuItem NavigateUrl="~/WebPages/Discounts.aspx" Text="查看优惠活动" 
+                                Value="查看优惠"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebPages/DiscountEdit.aspx?isNew=true" 
+                                Text="新增优惠活动" Value="新增优惠"></asp:MenuItem>
+                            <asp:MenuItem Text="添加优惠商品" Value="新增优惠" 
+                                NavigateUrl="~/WebPages/DiscountItemEdit.aspx?isNew=true"></asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/WebPages/Suggestions.aspx" Text="意见反馈" />
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
