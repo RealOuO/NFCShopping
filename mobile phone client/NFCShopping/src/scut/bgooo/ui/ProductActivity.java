@@ -9,7 +9,7 @@ import scut.bgooo.entities.SecCategory;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.NfcAdapter;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -72,9 +72,9 @@ public class ProductActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(ProductActivity.this,CommentListActivity.class);
-				intent.putExtra("product",mProduct);
-				startActivity(intent);
+//				Intent intent=new Intent(ProductActivity.this,CommentListActivity.class);
+//				intent.putExtra("product",mProduct);
+//				startActivity(intent);
 			}
 		});
 		
@@ -94,16 +94,16 @@ public class ProductActivity extends Activity {
 
 	void resolveIntent(Intent intent) {
 		// Parse the intent
-		String action = intent.getAction();
-		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-			mItem = new ConcernItem(0, Math.abs(new Random().nextInt()),
-					String.valueOf(new Random().nextInt()), 3,
-					Math.abs(new Random().nextFloat()), 4,
-					System.currentTimeMillis(), (short) 0);
-			mConcernManager.addConcernItem(mItem);
-			DownloadInfo();
-			Log.d(TAG, "discover a tag");
-		}
+//		String action = intent.getAction();
+//		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+//			mItem = new ConcernItem(0, Math.abs(new Random().nextInt()),
+//					String.valueOf(new Random().nextInt()), 3,
+//					Math.abs(new Random().nextFloat()), 4,
+//					System.currentTimeMillis(), (short) 0);
+//			mConcernManager.addConcernItem(mItem);
+//			DownloadInfo();
+//			Log.d(TAG, "discover a tag");
+//		}
 	}
 
 	private void DownloadInfo() {

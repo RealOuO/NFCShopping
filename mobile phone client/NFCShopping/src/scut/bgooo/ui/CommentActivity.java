@@ -84,27 +84,26 @@ public class CommentActivity extends Activity implements IWeiboActivity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// Review review = new Review();
-				// review.setProperty(1, 2);
-				// review.setProperty(2, 5);
-				// review.setProperty(3, "safsfafsasfaf");
-				// review.setProperty(4, 3*10); //注意要将浮点数转换为String才能传到后台
-				// if (WebServiceUtil.getInstance().AddReview(review)) {
-				// Toast.makeText(getApplicationContext(), "提交成功", 2000)
-				// .show();
-				// } else {
-				// Toast.makeText(getApplicationContext(), "提交失败", 2000)
-				// .show();
-				// }
+				 Review review = new Review();
+				 review.setProperty(2, "2");
+				 review.setProperty(4, "55454");
+				 review.setProperty(5, 3*10); //注意要将浮点数转换为String才能传到后台
+				 if (WebServiceUtil.getInstance().AddReview(review)) {
+				 Toast.makeText(getApplicationContext(), "提交成功", 2000)
+				 .show();
+				 } else {
+				 Toast.makeText(getApplicationContext(), "提交失败", 2000)
+				 .show();
+				 }
 
-				Vector<Review> reviews =WebServiceUtil.getInstance().getReviewsByProductId(2);
-				Log.d("dfdf", reviews.size() + "");
-				for (int i = 0; i < reviews.size(); i++) {
-					Log.d("fff", reviews.get(i) + "");
-					for(int j=0;j<reviews.get(i).getPropertyCount();j++){
-						Log.d("abc", reviews.get(i).getProperty(j).toString());
-					}
-				}
+//				Vector<Review> reviews =WebServiceUtil.getInstance().getReviewsByProductId(2);
+//				Log.d("dfdf", reviews.size() + "");
+//				for (int i = 0; i < reviews.size(); i++) {
+//					Log.d("fff", reviews.get(i) + "");
+//					for(int j=0;j<reviews.get(i).getPropertyCount();j++){
+//						Log.d("abc", reviews.get(i).getProperty(j).toString());
+//					}
+//				}
 //				Log.d("dfadfafdasdfafd", WebServiceUtil.getInstance().regist("Lee", "dfafsda", 4).toString());
 //				Vector<Discount> vector = WebServiceUtil.getInstance()
 //						.getDiscounts();
@@ -115,15 +114,15 @@ public class CommentActivity extends Activity implements IWeiboActivity{
 //						Log.d("abc", vector.get(i).getProperty(j).toString());
 //					}
 //				}
-				Vector<DiscountItem> vector1 = WebServiceUtil.getInstance()
-						.getDiscountItems(1);
-				Log.d("dfdf", vector1.size() + "");
-				for (int i = 0; i < vector1.size(); i++) {
-					Log.d("fff", vector1.get(i) + "");
-					for(int j=0;j<vector1.get(i).getPropertyCount();j++){
-						Log.d("abc", vector1.get(i).getProperty(j).toString());
-					}
-				}
+//				Vector<DiscountItem> vector1 = WebServiceUtil.getInstance()
+//						.getDiscountItems(1);
+//				Log.d("dfdf", vector1.size() + "");
+//				for (int i = 0; i < vector1.size(); i++) {
+//					Log.d("fff", vector1.get(i) + "");
+//					for(int j=0;j<vector1.get(i).getPropertyCount();j++){
+//						Log.d("abc", vector1.get(i).getProperty(j).toString());
+//					}
+//				}
 			}
 		});
 		

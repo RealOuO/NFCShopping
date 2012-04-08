@@ -2,10 +2,20 @@ package scut.bgooo.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
+
+import scut.bgooo.entities.Discount;
+import scut.bgooo.entities.DiscountItem;
+import scut.bgooo.entities.Product;
+import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
+import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,43 +24,59 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DiscountListActivity extends Activity {
-	
+public class DiscountListActivity extends Activity implements IWeiboActivity {
+
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
 
 	private ListView mListView;
+
+	private View mProgress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.discountlist);
+		mProgress = findViewById(R.id.progress2);
+		Bundle bundle = getIntent().getBundleExtra("ID");
+		int id = Integer.valueOf(bundle.getString("ID"));
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("ID", id);
+		Task task = new Task(Task.GET_DISCOUNTITEM, map);
+		TaskHandler.allActivity.put(DiscountListActivity.class.getSimpleName(),
+				this);
+		TaskHandler.addTask(task);
 
-		mListView=(ListView)findViewById(R.id.privilege_listview);
+		mListView = (ListView) findViewById(R.id.privilege_listview);
 
-		mTempitems = new ArrayList<HashMap<String, Object>>();
+	}
 
-		for (int i = 0; i < 10; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("PrivilegeCost", "第" + i + "特价");
-			map.put("Discount", "第" + i + "折扣");
-			map.put("ProductName", "第" + i + "商品");
-			map.put("Duration", "第" + i + "日期");
-			mTempitems.add(map);
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		String result = (String) param[0];
+		if (result.equals("OK")) {
+			Vector<DiscountItem> discountitem = (Vector<DiscountItem>) param[1];
+			PrivilegeAdapter ma = new PrivilegeAdapter(this, discountitem);
+			mListView.setAdapter(ma);
+			mProgress.setVisibility(View.GONE);
 		}
-		PrivilegeAdapter ma = new PrivilegeAdapter(this, mTempitems);
-		mListView.setAdapter(ma);// 更新列表
 	}
 
 }
 
 class PrivilegeAdapter extends BaseAdapter {
 
-	ArrayList<HashMap<String, Object>> items;
+	Vector<DiscountItem> items;
 	Context context;
 
-	public PrivilegeAdapter(Context context,
-			ArrayList<HashMap<String, Object>> items) {
+	public PrivilegeAdapter(Context context, Vector<DiscountItem> items) {
 		this.context = context;
 		this.items = items;
 	}
@@ -111,14 +137,24 @@ class PrivilegeAdapter extends BaseAdapter {
 			vh.tvDuration = (TextView) privilegeitem
 					.findViewById(R.id.tvDuration);
 
-			vh.tvPrivilegeCost.setText(items.get(position).get("PrivilegeCost")
+			double cost = Double.valueOf(((Product) items.get(position)
+					.getProperty(8)).getProperty(5).toString()) * 
+					Double.valueOf(items.get(position).getProperty(4)
 					.toString());
-			vh.tvProductName.setText(items.get(position).get("ProductName")
-					.toString());
-			vh.tvDiscount.setText(items.get(position).get("Discount")
-					.toString());
-			vh.tvDuration.setText(items.get(position).get("Duration")
-					.toString());
+			vh.tvPrivilegeCost.setText(Double.toString(cost));
+			
+
+			vh.tvProductName.setText(((Product) items.get(position)
+					.getProperty(8)).getProperty(4).toString());
+
+			
+			vh.tvDiscount
+					.setText(items.get(position).getProperty(4).toString());
+			
+			String duration = items.get(position).getProperty(6).toString()
+					+ "-" + items.get(position).getProperty(7).toString();
+			vh.tvDuration
+					.setText(duration);
 
 			return privilegeitem;
 

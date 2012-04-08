@@ -7,6 +7,12 @@ import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 
+/**
+ * 对应的是每一期里面，每一项的discount
+ * 
+ * @author 肥哥
+ *
+ */
 public class DiscountItem implements KvmSerializable ,Serializable{
 
 	private int Id;

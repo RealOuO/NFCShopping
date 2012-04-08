@@ -2,9 +2,15 @@ package scut.bgooo.ui;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import scut.bgooo.discount.DiscountShitItem;
-import android.app.ListActivity;
+import scut.bgooo.entities.Discount;
+import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
+import scut.bgooo.webservice.WebServiceUtil;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,48 +20,46 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 这个activity是为了展示不同期的优惠列表的
- *
+ * 
  * @author 肥哥
- *
+ * 
  */
-public class DiscountShitListActivity extends ListActivity {
+public class DiscountShitListActivity extends Activity implements
+		IWeiboActivity {
 
 	private MyAdapter mAdapter;
-	private List<DiscountShitItem> mList = null;
-	
+	private Vector<Discount> mDiscount = null;
+	private View mProgress = null;
+	private ListView mListView = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		mAdapter = new MyAdapter(this, mList);
-		setListAdapter(mAdapter);
-		getListView().setOnItemClickListener(new OnItemClickListener() {
+		setContentView(R.layout.discountshit);
+		mProgress = findViewById(R.id.progress1);
+		mListView = (ListView) findViewById(R.id.discountshit_listview);
+		Task task = new Task(Task.GET_DISCOUNT, null);
+		TaskHandler.allActivity.put(DiscountShitListActivity.class
+				.getSimpleName(), this);
+		TaskHandler.addTask(task);
 
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(DiscountShitListActivity.this, DiscountListActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-		
 	}
-
 
 	private class MyAdapter extends BaseAdapter {
 
 		private Context mContext; // 运行上下文
-		private List<DiscountShitItem> mListItems; // 商品信息集合
+		private Vector<Discount> mListItems; // 商品信息集合
 		private LayoutInflater mListContainer; // 视图容器
 
-		public MyAdapter(Context context, List<DiscountShitItem> listItems) {
+		public MyAdapter(Context context, Vector<Discount> listItems) {
 			mContext = context;
 			mListItems = listItems;
 			mListContainer = LayoutInflater.from(mContext);
@@ -64,7 +68,7 @@ public class DiscountShitListActivity extends ListActivity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 10;
+			return mListItems.size();
 		}
 
 		@Override
@@ -91,15 +95,22 @@ public class DiscountShitListActivity extends ListActivity {
 				// 获取控件对象
 				viewHolder.mImageView = (ImageView) arg1
 						.findViewById(R.id.discount_image);
-				viewHolder.mDiscountQuantity = (TextView)arg1.findViewById(R.id.discount_quantity);
-				viewHolder.mDiscountTime = (TextView)arg1.findViewById(R.id.discount_time);
+				viewHolder.mDiscountDiscription = (TextView) arg1
+						.findViewById(R.id.discount_discription);
+				viewHolder.mDiscountTime = (TextView) arg1
+						.findViewById(R.id.discount_time);
 				// 设置控件集到arg1
 				arg1.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) arg1.getTag();
 			}
 
-		
+			Discount discount = mListItems.get(selectID);
+			viewHolder.mDiscountTime
+					.setText(discount.getProperty(3).toString());
+			viewHolder.mDiscountDiscription.setText(discount.getProperty(2)
+					.toString());
+
 			return arg1;
 		}
 
@@ -111,8 +122,44 @@ public class DiscountShitListActivity extends ListActivity {
 		 */
 		private class ViewHolder {
 			public ImageView mImageView;// 优惠期图片使用
-			public TextView mDiscountQuantity;// 优惠期数量
+			public TextView mDiscountDiscription;// 优惠期数量
 			public TextView mDiscountTime;// 优惠期时间
+		}
+
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		String result = (String) param[0];
+		if (result.equals("OK")) {
+			mProgress.setVisibility(View.GONE);
+			mDiscount = (Vector<Discount>) param[1];
+			mAdapter = new MyAdapter(this, mDiscount);
+			mListView.setAdapter(mAdapter);
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(DiscountShitListActivity.this,
+							DiscountListActivity.class);
+					Discount discount = mDiscount.get(arg2);
+					String id = discount.getProperty(1).toString();
+					Bundle bundle = new Bundle();
+					bundle.putString("ID", id);
+					intent.putExtra("ID", bundle);
+					startActivity(intent);
+				}
+			});
+
 		}
 
 	}
