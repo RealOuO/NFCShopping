@@ -53,6 +53,11 @@ namespace NFCShoppingWebSite.BLL
                 return false;
             }
         }
+        /*获取签到次数排名前10位的用户*/
+        public IEnumerable<User> GetTop10Users()
+        {
+            return mRepository.GetUsers().OrderByDescending(u=>u.visitedTimes).Take(10);
+        }
 
 
         /*通过用户名查找用户的业务逻辑*/

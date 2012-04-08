@@ -29,7 +29,7 @@ public class ConcernItem  implements java.io.Serializable {
 	/**
 	 * 从服务器获取到的商品的评分
 	 * */
-	private int Rating;
+	private float Rating;
 	/**
 	 * 记录添加的时间
 	 * */
@@ -43,7 +43,7 @@ public class ConcernItem  implements java.io.Serializable {
 	 * 这个是从数据库获取item的构造函数，要传入id
 	 * */
 	public ConcernItem(int id, int productId, String name, int type,
-			float price, int rating, long timestamp, short iscollected) {
+			float price, float rating, long timestamp, short iscollected) {
 		Id = id;
 		ProductId = productId;
 		Name = name;
@@ -75,7 +75,7 @@ public class ConcernItem  implements java.io.Serializable {
 		return Type;
 	}
 
-	public int getRating() {
+	public float getRating() {
 		return Rating;
 	}
 

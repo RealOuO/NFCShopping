@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + CONCERN_TABLE_NAME + " (" + ID_COL
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + PRODUCT_ID_COL
 				+ " INTEGER, " + NAME_COL + " TEXT, " + TYPE_COL + " INTEGER, "
-				+ PRICE_COL + " REAL, " + RATING_COL + " INTEGER, "
+				+ PRICE_COL + " REAL, " + RATING_COL + " REAL, "
 				+ TIMESTAMP_COL + " INTEGER, " + ISCOLLECTED_COL + " INTEGER);");
 		
 		Log.e("Database", "onCreate");

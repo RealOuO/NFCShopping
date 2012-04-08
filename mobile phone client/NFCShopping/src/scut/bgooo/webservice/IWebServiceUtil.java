@@ -177,7 +177,7 @@ public interface IWebServiceUtil {
 	 * @return 商品的平均得分
 	 * 
 	 * */
-	public double getAverageRating(int productID);
+	public float getAverageRating(int productID);
 	
 	
 

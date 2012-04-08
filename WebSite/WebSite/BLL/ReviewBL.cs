@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using NFCShoppingWebSite.Access_Data;
 using NFCShoppingWebSite.DAL;
+using System.Collections;
 
 namespace NFCShoppingWebSite.BLL
 {
     public class ReviewBL:IDisposable
     {
         IReviewRepository mRepository = new ReviewRepository();
+
+        ShopEntities entities = new ShopEntities();
 
         #region 需求必要的业务逻辑
 
@@ -69,6 +72,13 @@ namespace NFCShoppingWebSite.BLL
                 return 0.0;
             else
                 return reviews.Average(r => r.rating)/10;
+        }
+
+        public IEnumerable GetTOP10Products()
+        {
+            var a = from r in entities.Reviews group r by r.productID into g select new { g.Key, AverageRating = g.Average(r => r.rating) };
+            return a.ToList();
+
         }
 
 

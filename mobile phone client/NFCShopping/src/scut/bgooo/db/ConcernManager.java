@@ -99,7 +99,7 @@ public final class ConcernManager {
 				String name = cursor.getString(2);
 				int type = cursor.getInt(3);
 				float price = cursor.getFloat(4);
-				int rating = cursor.getInt(5);
+				float rating = cursor.getFloat(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
 				// 添加时间标签的代码段
@@ -146,7 +146,7 @@ public final class ConcernManager {
 				String name = cursor.getString(2);
 				int type = cursor.getInt(3);
 				float price = cursor.getFloat(4);
-				int rating = cursor.getInt(5);
+				float rating = cursor.getFloat(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
 				// 添加时间标签的代码段
@@ -186,7 +186,7 @@ public final class ConcernManager {
 			String name = cursor.getString(2);
 			int type = cursor.getInt(3);
 			float price = cursor.getFloat(4);
-			int rating = cursor.getInt(5);
+			float rating = cursor.getFloat(5);
 			long timestamp = cursor.getLong(6);
 			short iscollected = cursor.getShort(7);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定
@@ -221,7 +221,7 @@ public final class ConcernManager {
 			String name = cursor.getString(2);
 			int type = cursor.getInt(3);
 			float price = cursor.getFloat(4);
-			int rating = cursor.getInt(5);
+			float rating = cursor.getFloat(5);
 			long timestamp = cursor.getLong(6);
 			short iscollected = cursor.getShort(7);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定

@@ -13,7 +13,7 @@
     <div>
     <asp:DetailsView ID="UserDetailsView" runat="server" AutoGenerateRows="False" BackColor="White"
         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" DataSourceID="UserDataSource"
-        GridLines="Horizontal" Height="50px" Width="922px">
+        GridLines="Horizontal" Height="50px" Width="922px" DataKeyNames="userID">
         <AlternatingRowStyle BackColor="#F7F7F7" />
         <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
         <Fields>
