@@ -9,7 +9,7 @@ import org.ksoap2.serialization.PropertyInfo;
 
 /**
  * 
- * 优惠实体类，对应着优惠信息
+ * 优惠实体类，对应着优惠信息,对应的是一期的优惠
  * 
  * @author Leeforall
  * @since 2012年3月16日
@@ -20,10 +20,10 @@ public class Discount implements KvmSerializable,Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int Id; // 优惠ID
+	private int Id; // 优惠ID，就是对应的优惠列表的id
 	private String EntityKey;
-	private String Description;
-	private String CreatedAt;
+	private String Description;//优惠描述
+	private String CreatedAt;//创建时间
 
 	@Override
 	public Object getProperty(int arg0) {

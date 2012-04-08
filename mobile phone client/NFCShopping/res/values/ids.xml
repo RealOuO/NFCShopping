@@ -12,6 +12,6 @@
     <item type="id" name="reconfirm">false</item>
     <item type="id" name="recancle">false</item>
     <item name="discount_image" type="id">false</item>
-    <item name="discount_quantity" type="id">false</item>
+    <item type="id" name="discount_discription">false</item>
     <item name="discount_time" type="id">false</item>
 </resources>
