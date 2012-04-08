@@ -1,6 +1,6 @@
 package scut.bgooo.utility;
 
-public interface IWeiboActivity {
+public interface INFCActivity {
    void init();
    void refresh(Object ...param);
 }

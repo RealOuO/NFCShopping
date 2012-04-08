@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import scut.bgooo.discount.DiscountShitItem;
+import scut.bgooo.discount.DiscountItem;
 import scut.bgooo.entities.Discount;
-import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
@@ -31,8 +31,8 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author ·Ê¸ç
  * 
  */
-public class DiscountShitListActivity extends Activity implements
-		IWeiboActivity {
+public class DiscountItemListActivity extends Activity implements
+		INFCActivity {
 
 	private MyAdapter mAdapter;
 	private Vector<Discount> mDiscount = null;
@@ -47,7 +47,7 @@ public class DiscountShitListActivity extends Activity implements
 		mProgress = findViewById(R.id.progress1);
 		mListView = (ListView) findViewById(R.id.discountshit_listview);
 		Task task = new Task(Task.GET_DISCOUNT, null);
-		TaskHandler.allActivity.put(DiscountShitListActivity.class
+		TaskHandler.allActivity.put(DiscountItemListActivity.class
 				.getSimpleName(), this);
 		TaskHandler.addTask(task);
 
@@ -149,7 +149,7 @@ public class DiscountShitListActivity extends Activity implements
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(DiscountShitListActivity.this,
+					Intent intent = new Intent(DiscountItemListActivity.this,
 							DiscountListActivity.class);
 					Discount discount = mDiscount.get(arg2);
 					String id = discount.getProperty(1).toString();

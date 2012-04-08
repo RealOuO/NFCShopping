@@ -12,7 +12,7 @@ import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import scut.bgooo.db.WeiboUserManager;
 import scut.bgooo.ui.R;
-import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibouser.WeiboUserItem;
@@ -43,7 +43,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WeiboUserListActivity extends Activity implements IWeiboActivity {
+public class WeiboUserListActivity extends Activity implements INFCActivity {
 
 	CommonsHttpOAuthConsumer httpOauthConsumer;
 	OAuthProvider httpOauthprovider;
@@ -96,8 +96,9 @@ public class WeiboUserListActivity extends Activity implements IWeiboActivity {
 				ConnectivityManager conn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo netMobile = conn
 						.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-				if (false == netMobile.isConnectedOrConnecting()) {
+				NetworkInfo wifi = conn
+				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+				if (false == netMobile.isConnectedOrConnecting()&&false==wifi.isConnectedOrConnecting()) {
 					Toast.makeText(getApplicationContext(), "«ÎºÏ≤ÈÕ¯¬Á≈‰÷√",
 							Toast.LENGTH_SHORT).show();
 				} else {

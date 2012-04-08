@@ -54,7 +54,7 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, CollectionListActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_DISCOUNT").setIndicator("ÓÅ»Ý")
-				.setContent(new Intent(this, DiscountShitListActivity.class)));
+				.setContent(new Intent(this, DiscountItemListActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_MORE").setIndicator("¸ü¶à")
 				.setContent(new Intent(this, MoreActivity.class)));
