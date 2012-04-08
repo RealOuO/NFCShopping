@@ -4,29 +4,48 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Label ID="Label1" runat="server" Text="优惠项目"></asp:Label>
+    <div>
+        <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" 
+            ForeColor="Black" Text="Label"></asp:Label>
+    </div>
     <div>
     </div>
-    <asp:TextBox ID="DiscountIDTextBox" runat="server" Width="48px"></asp:TextBox>
+    <asp:Label ID="Label2" runat="server" Text="优惠活动名称"></asp:Label>
     <div>
     </div>
-    <asp:Label ID="Label2" runat="server" Text="优惠信息"></asp:Label>
+    <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px"
+        Width="109px"></asp:TextBox>
     <div>
     </div>
-    <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="140px" TextMode="MultiLine"
-        Width="442px"></asp:TextBox>
+    <asp:Label ID="Label5" runat="server" Text="优惠内容"></asp:Label>
     <div>
     </div>
-    <asp:Label ID="Label5" runat="server" Text="创于"></asp:Label>
+    <div>
+        <div>
+            <asp:GridView ID="DiscountItemsGridView" runat="server" CellPadding="4" 
+                ForeColor="#333333" GridLines="None" Width="367px">
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+            </asp:GridView>
+        </div>
+    </div>
     <div>
     </div>
-    <asp:TextBox ID="CreatedTextBox" runat="server" Width="80px" Height="16px"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Button ID="Button1" runat="server" Height="29px" Text="确定" Width="73px" OnClick="EditButton_Click" />
+    <asp:Button ID="SubmitButton" runat="server" Height="29px" Text="确定" 
+        Width="73px" OnClick="EditButton_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="Button2" runat="server" Height="29px" Text="删除" Width="73px" OnClick="DeleteButton_Click" />
-    &nbsp;<asp:ObjectDataSource ID="DiscountEditDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
+    <asp:Button ID="InsertItemButton" runat="server" Height="29px" Text="增加优惠商品" 
+        Width="103px" OnClick="DeleteButton_Click" />
+    &nbsp;<asp:ObjectDataSource ID="DiscountsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
         DeleteMethod="DeleteDiscount" InsertMethod="InsertDiscount" SelectMethod="GetDiscountByID"
         TypeName="NFCShoppingWebSite.BLL.DiscountBL" UpdateMethod="UpdateDiscount">
         <SelectParameters>
@@ -36,6 +55,21 @@
         <UpdateParameters>
             <asp:Parameter Name="discount" Type="Object" />
             <asp:Parameter Name="origDiscount" Type="Object" />
+        </UpdateParameters>
+    </asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="DiscountItemsDataSource" runat="server" 
+        DataObjectTypeName="NFCShoppingWebSite.Access_Data.DiscountItem" 
+        DeleteMethod="DeleteDiscountItem" InsertMethod="InsertDiscountItem" 
+        SelectMethod="GetDiscountItemsByDiscountID" 
+        TypeName="NFCShoppingWebSite.BLL.DiscountItemBL" 
+        UpdateMethod="UpdateDiscountItem">
+        <SelectParameters>
+            <asp:QueryStringParameter DefaultValue="0" Name="discountID" 
+                QueryStringField="discountID" Type="Int32" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="discountItem" Type="Object" />
+            <asp:Parameter Name="origDiscountItem" Type="Object" />
         </UpdateParameters>
     </asp:ObjectDataSource>
 </asp:Content>
