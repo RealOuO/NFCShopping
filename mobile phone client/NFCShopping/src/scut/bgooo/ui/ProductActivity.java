@@ -105,7 +105,6 @@ public class ProductActivity extends Activity {
 			Log.d(TAG, "discover a tag");
 		}
 
-
 	}
 
 	private void DownloadInfo() {
@@ -115,7 +114,7 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"21");
+						"1324");
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;
@@ -165,8 +164,10 @@ public class ProductActivity extends Activity {
 				mPrice.setText(mProduct.getProperty(5).toString());
 				mBrand.setText(mProduct.getProperty(6).toString());
 				mLocation.setText(mProduct.getProperty(7).toString());
+				mDescription.setText(mProduct.getProperty(9).toString());
 				mCategory.setText(((SecCategory) mProduct.getProperty(10))
 						.getProperty(3).toString());
+				
 				mProcess.setVisibility(View.GONE);
 				break;
 			case FAILE:
@@ -175,14 +176,15 @@ public class ProductActivity extends Activity {
 				mProcess.setVisibility(View.GONE);
 				break;
 			case REFRESHRATING:
-				mItem = new ConcernItem(0, Integer.valueOf(mProduct.getProperty(1)
-						.toString()), mProduct.getProperty(4)
+				mItem = new ConcernItem(0, Integer.valueOf(mProduct
+						.getProperty(1).toString()), mProduct.getProperty(4)
 						.toString(), Integer.valueOf(mProduct.getProperty(2)
-						.toString()), Float.valueOf(mProduct.getProperty(5)
-						.toString()), 
-						mRating, 
-						System.currentTimeMillis(),
-						(short) 0);
+						.toString()), ((SecCategory) mProduct.getProperty(10))
+						.getProperty(3).toString(),Float.valueOf(mProduct.getProperty(5)
+						.toString()), mRating, mProduct.getProperty(6)
+						.toString(), mProduct.getProperty(7).toString(),
+						mProduct.getProperty(3).toString(),mProduct.getProperty(9).toString(),
+						System.currentTimeMillis(), (short) 0);
 				mConcernManager.addConcernItem(mItem);
 				btCheckComment.setClickable(true);
 				break;

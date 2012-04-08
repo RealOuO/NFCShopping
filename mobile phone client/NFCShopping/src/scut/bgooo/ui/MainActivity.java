@@ -1,7 +1,9 @@
 package scut.bgooo.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibo.WeiboUserItem;
 import scut.bgooo.weibo.WeiboUserManager;
@@ -24,6 +26,8 @@ public class MainActivity extends TabActivity {
 	public View msgTitle;// 信息头部按钮
 	private TabHost mTabHost;// 载体tabhost	
 	private TaskHandler mTaskHandler = new TaskHandler();
+	public static ArrayList<ConcernItem> itemArray=new ArrayList<ConcernItem>();
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
