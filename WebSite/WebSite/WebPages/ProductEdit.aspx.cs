@@ -15,6 +15,8 @@ namespace NFCShoppingWebSite.WebPages
     {
         private ProductBL mProducts = new ProductBL();
 
+        private const string DEFAULT_IMAGE = "SampleProductImage.gif";
+
         /**
          *  The directory path to store temporary images.
          */
@@ -64,7 +66,12 @@ namespace NFCShoppingWebSite.WebPages
                 catch (Exception ex)
                 {
                     // TODO: Handling exception.
+                    product.imageURL = DEFAULT_IMAGE;
                 }
+            }
+            else
+            {
+                product.imageURL = DEFAULT_IMAGE;
             }
             
             // For insertion.

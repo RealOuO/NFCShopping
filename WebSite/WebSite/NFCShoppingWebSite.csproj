@@ -81,6 +81,7 @@
     </Content>
     <Content Include="WebPages\Categories.aspx" />
     <Content Include="WebPages\DiscountAdd.aspx" />
+    <Content Include="WebPages\DiscountDetails.aspx" />
     <Content Include="WebPages\DiscountItemAdd.aspx" />
     <Content Include="WebPages\DiscountItemEdit.aspx" />
     <Content Include="WebPages\Discounts.aspx" />
@@ -195,6 +196,13 @@
     </Compile>
     <Compile Include="WebPages\DiscountAdd.aspx.designer.cs">
       <DependentUpon>DiscountAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountDetails.aspx.cs">
+      <DependentUpon>DiscountDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountDetails.aspx.designer.cs">
+      <DependentUpon>DiscountDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\DiscountItemAdd.aspx.cs">
       <DependentUpon>DiscountItemAdd.aspx</DependentUpon>

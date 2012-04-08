@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using NFCShoppingWebSite.Access_Data;
 using NFCShoppingWebSite.BLL;
+using NFCShoppingWebSite.Utils;
 
 namespace NFCShoppingWebSite.WebPages
 {
@@ -15,13 +16,32 @@ namespace NFCShoppingWebSite.WebPages
         private DiscountBL mDiscounts = new DiscountBL();
 
         protected void Page_Load(object sender, EventArgs e)
-        {           
-            Discount discount = GetDiscount();
-                       
-            DiscountIDTextBox.Text = Convert.ToString(discount.discountID);
-            DiscountDescriptionTextBox.Text = discount.description;
-            CreatedTextBox.Text = Convert.ToString(discount.createdAt);
+        {
+            String queryStr = Server.UrlDecode(ClientQueryString);
+            var keyAndValuePairs = QueryStringDecoder.Decode(queryStr, new string[] { "&" });
+            string result;
 
+            if (keyAndValuePairs.TryGetValue("isNew", out result))
+            {
+                // Store the status indicating whether it's inserting or updating.
+                ViewState.Add("IsNew", Convert.ToBoolean(result));
+
+                if (Convert.ToBoolean(result))
+                {
+                    this.TitleLabel.Text = "新增优惠活动";
+                }
+                else
+                {
+                    Discount discount = GetDiscount();
+
+                    this.TitleLabel.Text = "编辑优惠活动";
+                    this.DiscountDescriptionTextBox.Text = discount.description;
+
+                    /*if(Session["DiscountItemCollection"] == null)
+                    {
+                      */  
+                }
+            }
         }
 
         protected void DeleteButton_Click(object sender, EventArgs e)
@@ -37,23 +57,13 @@ namespace NFCShoppingWebSite.WebPages
 
         protected void EditButton_Click(object sender, EventArgs e)
         {
-            Discount discount = new Discount();
-
-            discount.description = this.DiscountDescriptionTextBox.Text;
-            discount.createdAt = Convert.ToDateTime(this.CreatedTextBox.Text);
-
-            Discount origDiscount = GetDiscount();
-            discount.discountID = origDiscount.discountID;
-            mDiscounts.UpdateDiscount(discount, origDiscount);
-            mDiscounts.Dispose();
-
-            Response.Redirect("~/WebPages/Discounts.aspx");
         }
 
         protected Discount GetDiscount()
         {
-            var enumerator = DiscountEditDataSource.Select().GetEnumerator();
+            var enumerator = DiscountsDataSource.Select().GetEnumerator();
             enumerator.MoveNext();
+
             return (Discount)enumerator.Current;
         }
     }

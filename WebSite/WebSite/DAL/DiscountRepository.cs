@@ -15,7 +15,7 @@ namespace NFCShoppingWebSite.DAL
         
         public IEnumerable<Discount> GetDiscounts()
         {
-            return mContext.Discounts.ToList();
+            return mContext.Discounts.Include("DiscountItems").Include("DiscountItems.Product").ToList();
         }
 
 
