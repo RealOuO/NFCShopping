@@ -9,8 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
+import scut.bgooo.entities.Discount;
+import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.ui.CommentActivity;
+import scut.bgooo.ui.DiscountListActivity;
+import scut.bgooo.ui.DiscountShitListActivity;
+import scut.bgooo.webservice.IWebServiceUtil;
+import scut.bgooo.webservice.WebServiceUtil;
 import scut.bgooo.weibo.WeiboUserListActivity;
 import scut.bgooo.weibouser.WeiboUserItem;
 import weibo4android.User;
@@ -116,6 +123,21 @@ public class TaskHandler implements Runnable {
 			}
 		}
 			break;
+		case Task.GET_DISCOUNT:{
+			Vector<Discount> discount = WebServiceUtil.getInstance().getDiscounts();
+			Message msg = new Message();
+			msg.what = Task.GET_DISCOUNT;
+			msg.obj = discount;
+			mHandle.sendMessage(msg);
+		}break;
+		case Task.GET_DISCOUNTITEM:{
+			int id = Integer.valueOf(task.getTaskParam().get("ID").toString());
+			Vector<DiscountItem> discountitem = WebServiceUtil.getInstance().getDiscountItems(id);
+			Message msg = new Message();
+			msg.what = Task.GET_DISCOUNTITEM;
+			msg.obj = discountitem;
+			mHandle.sendMessage(msg);
+		}break;
 		default: {
 
 		}
@@ -144,6 +166,17 @@ public class TaskHandler implements Runnable {
 				iwa.refresh(msg.obj);
 			}
 				break;
+			case Task.GET_DISCOUNT:{
+				IWeiboActivity iwa = allActivity.get(DiscountShitListActivity.class.getSimpleName());
+				iwa.refresh("OK", msg.obj);
+			}break;
+			case Task.GET_DISCOUNTITEM:{
+				IWeiboActivity iwa = allActivity.get(DiscountListActivity.class.getSimpleName());
+				iwa.refresh("OK", msg.obj);
+			}break;
+			default:{
+				
+			}
 			}
 		}
 
