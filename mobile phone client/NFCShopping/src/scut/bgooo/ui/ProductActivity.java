@@ -9,6 +9,7 @@ import scut.bgooo.entities.SecCategory;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
 import android.content.Intent;
+
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,6 +79,7 @@ public class ProductActivity extends Activity {
 						CommentListActivity.class);
 				intent.putExtra("mItem", mItem);
 				startActivity(intent);
+
 			}
 		});
 
@@ -102,6 +104,8 @@ public class ProductActivity extends Activity {
 			DownloadInfo();
 			Log.d(TAG, "discover a tag");
 		}
+
+
 	}
 
 	private void DownloadInfo() {

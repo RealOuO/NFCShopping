@@ -5,9 +5,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="Black"
-        Text="优惠"></asp:Label>
-    <a href='DiscountAdd.aspx'>添加优惠项 </a>
-    <asp:ObjectDataSource ID="DiscountDataSource" runat="server" SelectMethod="GetDiscounts"
+        Text="优惠活动"></asp:Label>
+    <asp:ObjectDataSource ID="DiscountsDataSource" runat="server" SelectMethod="GetDiscounts"
         TypeName="NFCShoppingWebSite.BLL.DiscountBL" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
         DeleteMethod="DeleteDiscount" InsertMethod="InsertDiscount" UpdateMethod="UpdateDiscount">
         <UpdateParameters>
@@ -15,7 +14,7 @@
             <asp:Parameter Name="origDiscount" Type="Object" />
         </UpdateParameters>
     </asp:ObjectDataSource>
-    <asp:ListView ID="ListView1" runat="server" DataKeyNames="discountID" DataSourceID="DiscountDataSource"
+    <asp:ListView ID="DiscountsListView" runat="server" DataKeyNames="discountID" DataSourceID="DiscountsDataSource"
         GroupItemCount="2">
         <EmptyDataTemplate>
             <table id="Table1" runat="server">
@@ -43,10 +42,10 @@
                             &nbsp
                         </td>
                         <td style="width: 250px; vertical-align: middle;">
-                            <%# Eval("discountID") %><br />
-                            <a href='DiscountItems.aspx?discountID=<%# Eval("discountID") %>'>
-                                <%# Eval("description", "{0:c}") %><br />
-                            </a><a href='DiscountEdit.aspx?discountID=<%# Eval("discountID") %>'>编辑优惠<br />
+                            <a href='DiscountDetails.aspx?discountID=<%# Eval("discountID") %>'>
+                                <asp:Label ID="DiscountLabel" runat="server" Text='<%# Eval("description") %>' ForeColor="Black" Font-Size="Large">
+                                </asp:Label> <br />
+                            </a>
                         </td>
                     </tr>
                 </table>

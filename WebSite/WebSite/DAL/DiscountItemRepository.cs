@@ -35,7 +35,7 @@ namespace NFCShoppingWebSite.DAL
 
         public IEnumerable<DiscountItem> GetDiscountItems()
         {
-            return mContext.DiscountItems.ToList(); 
+            return mContext.DiscountItems.Include("Product").ToList(); 
         }
 
         public void InsertDiscountItem(DiscountItem discountItem, bool isImmediateSave)
