@@ -56,11 +56,21 @@ namespace NFCShoppingWebSite.BLL
             }
         }
 
-        /*获取商品的平均得分*/
+        /**
+         * 
+         * 获取商品的平均得分
+         * 返回0表示没数据或者分数就为0
+         * 
+         */
         public double GetAverageRatingByProductID(Int32 id)
         {
-            return mRepository.GetReviews().Where(r=>r.productID==id).Average(r => r.rating)/10;
+            IEnumerable<Review> reviews=mRepository.GetReviews().Where(r=>r.productID==id);
+            if(reviews.ToList().Count==0)
+                return 0.0;
+            else
+                return reviews.Average(r => r.rating)/10;
         }
+
 
         /*用户更新商品的评论信息*/
         public void UpdateReview(Review review, Review origReview)

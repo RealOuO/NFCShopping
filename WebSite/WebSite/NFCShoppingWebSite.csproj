@@ -80,6 +80,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="WebPages\Categories.aspx" />
+    <Content Include="WebPages\DiscountAdd.aspx" />
+    <Content Include="WebPages\DiscountDetails.aspx" />
+    <Content Include="WebPages\DiscountItemAdd.aspx" />
+    <Content Include="WebPages\DiscountItemEdit.aspx" />
+    <Content Include="WebPages\Discounts.aspx" />
+    <Content Include="WebPages\DiscountEdit.aspx" />
+    <Content Include="WebPages\DiscountItems.aspx" />
     <Content Include="WebPages\ProductDetails.aspx" />
     <Content Include="WebPages\ProductEdit.aspx" />
     <Content Include="WebPages\Suggestions.aspx" />
@@ -182,6 +189,55 @@
     </Compile>
     <Compile Include="WebPages\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountAdd.aspx.cs">
+      <DependentUpon>DiscountAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountAdd.aspx.designer.cs">
+      <DependentUpon>DiscountAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountDetails.aspx.cs">
+      <DependentUpon>DiscountDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountDetails.aspx.designer.cs">
+      <DependentUpon>DiscountDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountItemAdd.aspx.cs">
+      <DependentUpon>DiscountItemAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountItemAdd.aspx.designer.cs">
+      <DependentUpon>DiscountItemAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountItemEdit.aspx.cs">
+      <DependentUpon>DiscountItemEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountItemEdit.aspx.designer.cs">
+      <DependentUpon>DiscountItemEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\Discounts.aspx.cs">
+      <DependentUpon>Discounts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\Discounts.aspx.designer.cs">
+      <DependentUpon>Discounts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountEdit.aspx.cs">
+      <DependentUpon>DiscountEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountEdit.aspx.designer.cs">
+      <DependentUpon>DiscountEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\DiscountItems.aspx.cs">
+      <DependentUpon>DiscountItems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\DiscountItems.aspx.designer.cs">
+      <DependentUpon>DiscountItems.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>

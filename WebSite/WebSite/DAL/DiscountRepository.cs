@@ -15,7 +15,7 @@ namespace NFCShoppingWebSite.DAL
         
         public IEnumerable<Discount> GetDiscounts()
         {
-            return mContext.Discounts.ToList();
+            return mContext.Discounts.Include("DiscountItems").Include("DiscountItems.Product").ToList();
         }
 
 
@@ -41,6 +41,16 @@ namespace NFCShoppingWebSite.DAL
         {
             try
             {
+                IDiscountItemRepository discountItemRepository = new DiscountItemRepository();
+                var discountItems = discountItemRepository.GetDiscountItems().Where(discountItem => discountItem.discountID == discount.discountID);
+
+                foreach (DiscountItem discountItem in discountItems)
+                {
+                    discountItemRepository.DeleteDiscountItem(discountItem, false);
+                }
+
+                discountItemRepository.Dispose();
+                
                 mContext.Discounts.Attach(discount);
                 mContext.Discounts.DeleteObject(discount);
 
