@@ -2,7 +2,7 @@ package scut.bgooo.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+//import java.util.Random;
 import java.util.Vector;
 
 import scut.bgooo.concern.ConcernItem;
@@ -11,7 +11,10 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.entities.User;
+import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
+import weibo4android.Weibo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +32,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -38,9 +42,9 @@ public class CommentListActivity extends Activity {
 
 	private static final String TAG = CommentListActivity.class.getSimpleName();
 
-	protected static final int REFRESHREVIEWS = 0;
-
-	protected static final int REFRESHRATING = 1;
+	protected static final int REFRESHREVIEWSSUCCESS = 0;
+	protected static final int REFRESHREVIEWSFAILE = 1;
+	protected static final int REFRESHRATING = 2;
 
 	private ConcernManager mConcernManager = null;
 
@@ -68,16 +72,6 @@ public class CommentListActivity extends Activity {
 
 		mItem = (ConcernItem) getIntent().getSerializableExtra("mItem");
 
-		mTempitems = new ArrayList<HashMap<String, Object>>();
-
-		for (int i = 0; i < 10; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Name", "第" + i + "名字");
-			map.put("Comment", "第" + i + "评论");
-			map.put("Rating", 4.0);
-			mTempitems.add(map);
-		}
-
 		mProcess = this.findViewById(R.id.progress);
 
 		mFinishButton = (Button) findViewById(R.id.btFinish);
@@ -98,6 +92,7 @@ public class CommentListActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CommentListActivity.this,
 						CommentActivity.class);
+				intent.putExtra("mItem", mItem);
 				startActivity(intent);
 			}
 		});
@@ -108,6 +103,27 @@ public class CommentListActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				// Weibo mWeibo = new Weibo();
+				// if (WeiboUserListActivity.defaultUserInfo == null) {
+				// Toast toast = Toast.makeText(getApplicationContext(),
+				// "请确定微博用户", Toast.LENGTH_LONG);
+				// toast.show();
+				// return;
+				// } else {
+				// Log.i("token",
+				// WeiboUserListActivity.defaultUserInfo.GetAToken());
+				// Log.i("token",
+				// WeiboUserListActivity.defaultUserInfo.GetASecret());
+				// String commitStr = "#" + mItem.getName() + "#------#YY超市#"
+				// + "价格:" + mItem.getPrice() + "评分"
+				// + mItem.getRating();
+				//
+				// HashMap<String, String> m = new HashMap<String, String>();
+				// m.put("COMMIT", commitStr);
+				// Task task = new Task(Task.SEND_COMMENT_WEIBO, m);
+				// TaskHandler.addTask(task);
+				// finish();
+				// }
 
 			}
 		});
@@ -176,17 +192,16 @@ public class CommentListActivity extends Activity {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				reviews = WebServiceUtil.getInstance().getReviewsByProductId(productID);
+				reviews = WebServiceUtil.getInstance().getReviewsByProductId(
+						productID);
 
 				Message message = new Message();
-				// if (reviews) {
-				// message.arg1 = FAILE;
-				// } else {
-				// message.arg1 = SUCCESS;
-				// message.obj = mProduct;
-				// }
-				message.arg1 = REFRESHREVIEWS;
-				message.obj = reviews;
+				if (reviews==null) {
+					message.arg1 = REFRESHREVIEWSFAILE;
+				} else {
+					message.arg1 = REFRESHREVIEWSSUCCESS;
+					message.obj = reviews;
+				}
 				handler.sendMessage(message);
 			}
 		});
@@ -202,10 +217,15 @@ public class CommentListActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			switch (msg.arg1) {
-			case REFRESHREVIEWS:
+			case REFRESHREVIEWSSUCCESS:
 				CommentAdapter ma = new CommentAdapter(
 						CommentListActivity.this, reviews);
 				mListView.setAdapter(ma);// 添加适配器
+				mProcess.setVisibility(View.GONE);
+				break;
+			case REFRESHREVIEWSFAILE:
+				Toast.makeText(getApplicationContext(), "网络连接出错",
+						Toast.LENGTH_SHORT).show();
 				mProcess.setVisibility(View.GONE);
 				break;
 

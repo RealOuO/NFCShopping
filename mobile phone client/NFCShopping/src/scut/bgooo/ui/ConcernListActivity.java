@@ -224,7 +224,7 @@ public class ConcernListActivity extends ListActivity {
 			((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
 			break;
 		case 2:
-			MainActivity.itemArray.add(mItems.get(position));
+			MainActivity.mItemArray.add(mItems.get(position));
 			Toast.makeText(getApplicationContext(), "已经加入对比", Toast.LENGTH_SHORT).show();
 			break;
 		}

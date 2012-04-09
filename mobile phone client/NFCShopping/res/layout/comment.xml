@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical" >
     
 
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/productName"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ff333333" />
+            />
 
         <TextView
             android:id="@+id/tvProductname"
@@ -25,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Lee"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ff333333" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -44,10 +43,10 @@
             android:layout_height="wrap_content"
             android:text="@string/rating"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ff333333" />
+             />
 
         <RatingBar
-            android:id="@+id/indicator_ratingbar"
+            android:id="@+id/ratingbar"
             style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text="@string/comment"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ff333333" />
+             />
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
@@ -103,7 +102,6 @@
                 android:layout_height="fill_parent"
                 android:layout_above="@id/lybuttonBar"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/profile_description_bg"
                 android:bufferType="spannable"
                 android:gravity="left"
                 android:hint="@string/hint"

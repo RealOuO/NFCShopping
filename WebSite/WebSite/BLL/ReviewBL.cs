@@ -12,6 +12,8 @@ namespace NFCShoppingWebSite.BLL
     {
         IReviewRepository mRepository = new ReviewRepository();
 
+        IProductRepository mProductRepository = new ProductRepository();
+
         ShopEntities entities = new ShopEntities();
 
         #region 需求必要的业务逻辑
@@ -74,10 +76,11 @@ namespace NFCShoppingWebSite.BLL
                 return reviews.Average(r => r.rating)/10;
         }
 
+        /*返回评分排列前十的商品*/
         public IEnumerable GetTOP10Products()
         {
-            var a = from r in entities.Reviews group r by r.productID into g select new { g.Key, AverageRating = g.Average(r => r.rating) };
-            return a.ToList();
+            var rate = (from r in mRepository.GetReviews()  group r by r.productID into g from p in mProductRepository.GetProducts() where g.Key==p.productID select new { g.Key, AverageRating = g.Average(r => r.rating) } ).ToList().OrderByDescending(a=>a.AverageRating).Take(10) ;
+            return rate;
 
         }
 

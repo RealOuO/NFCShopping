@@ -8,27 +8,19 @@
         签到用户TOP10</h2>
     <p>
         若要了解关于 ASP.NET 的详细信息，请访问 <a href="http://www.asp.net/cn" title="ASP.NET 网站">www.asp.net/cn</a>。
-     
-        <asp:ObjectDataSource ID="Top10UsersDataSource" runat="server" 
-            SelectMethod="GetTop10Users" TypeName="NFCShoppingWebSite.BLL.UserBL">
-        </asp:ObjectDataSource>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
-            CellPadding="4" DataSourceID="Top10UsersDataSource" ForeColor="#333333" 
-            GridLines="None" Width="808px">
+        <asp:ObjectDataSource ID="Top10UsersDataSource" runat="server" SelectMethod="GetTop10Users"
+            TypeName="NFCShoppingWebSite.BLL.UserBL"></asp:ObjectDataSource>
+        <asp:GridView ID="Top10UsersGridView" runat="server" AutoGenerateColumns="False"
+            CellPadding="4" DataSourceID="Top10UsersDataSource" ForeColor="#333333" GridLines="None"
+            Width="808px">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
             <Columns>
-                <asp:BoundField DataField="userID" HeaderText="userID" 
-                    SortExpression="userID" />
-                <asp:BoundField DataField="userName" HeaderText="userName" 
-                    SortExpression="userName" />
-                <asp:BoundField DataField="userPassword" HeaderText="userPassword" 
-                    SortExpression="userPassword" />
-                <asp:BoundField DataField="gender" HeaderText="gender" 
-                    SortExpression="gender" />
-                <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" 
-                    SortExpression="visitedTimes" />
-                <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" 
-                    SortExpression="lastVisitedDate" />
+                <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" />
+                <asp:BoundField DataField="userName" HeaderText="userName" SortExpression="userName" />
+                <asp:BoundField DataField="userPassword" HeaderText="userPassword" SortExpression="userPassword" />
+                <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
+                <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" SortExpression="visitedTimes" />
+                <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" SortExpression="lastVisitedDate" />
             </Columns>
             <EditRowStyle BackColor="#999999" />
             <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -43,11 +35,15 @@
         </asp:GridView>
     </p>
     <p>
-        最受欢迎商品TOP10<asp:ObjectDataSource ID="Top10ProductsDataSource" runat="server" 
-            SelectMethod="GetTOP10Products" TypeName="NFCShoppingWebSite.BLL.ReviewBL">
-        </asp:ObjectDataSource>
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" 
-            DataSourceID="Top10ProductsDataSource">
+        最受欢迎商品TOP10<asp:ObjectDataSource ID="Top10ProductsDataSource" runat="server" SelectMethod="GetTOP10Products"
+            TypeName="NFCShoppingWebSite.BLL.ReviewBL"></asp:ObjectDataSource>
+        <asp:GridView ID="Top10ProductsGridView" runat="server" AutoGenerateColumns="False"
+            DataSourceID="Top10ProductsDataSource" DataKeyNames="Key">
+            <Columns>
+                <asp:BoundField DataField="Key" HeaderText="商品id" />
+                <asp:BoundField DataField="AverageRating" HeaderText="平均分" />
+                
+            </Columns>
         </asp:GridView>
     </p>
 </asp:Content>
