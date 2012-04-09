@@ -94,7 +94,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dip"
                     android:numStars="5"
-                    android:rating="3" />
+                    android:rating="0" />
             </LinearLayout>
         </LinearLayout>
 

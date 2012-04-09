@@ -9,10 +9,10 @@
     </asp:ObjectDataSource>
     <asp:ValidationSummary ID="DepartmentsValidationSummary" runat="server" ShowSummary="true"
         DisplayMode="BulletList" Style="color: Red; width: 40em;" />
-    <asp:GridView ID="GridView" runat="server" AllowPaging="True" AutoGenerateColumns="False"
+    <asp:GridView ID="GridView" runat="server" AllowPaging="True" AutoGenerateColumns="False" 
         DataSourceID="UsersDataSource" DataKeyNames="userID" CellPadding="4" ForeColor="#333333"
         GridLines="None" Width="909px" onrowdatabound="GridView_RowDataBound">
-        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+        <AlternatingRowStyle BackColor="White" ForeColor="#284775"  />
         <Columns>
             <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" Visible="False" />
             <asp:HyperLinkField DataNavigateUrlFields="userID" DataNavigateUrlFormatString="UserDetails.aspx?userID={0}"

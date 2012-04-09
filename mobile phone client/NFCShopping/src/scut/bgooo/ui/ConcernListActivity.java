@@ -7,7 +7,7 @@ import java.util.Map;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
-import scut.bgooo.db.ConcernManager;
+import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.ListActivity;
@@ -32,6 +32,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
@@ -97,7 +98,6 @@ public class ConcernListActivity extends ListActivity {
 		mConcernAdapter = new ConcernItemAdapter(this, mItems);
 		setListAdapter(mConcernAdapter);
 
-
 		getListView().setOnScrollListener(onScrollerListener);
 		getListView().setOnItemClickListener(onItemClickListener);
 
@@ -108,11 +108,10 @@ public class ConcernListActivity extends ListActivity {
 		windorManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		handler.post(runnable);
 
-		
 		// 注册上下文菜单
 		this.registerForContextMenu(getListView());
 	}
-	
+
 	/**
 	 * 移除窗口的方法
 	 * 
@@ -142,7 +141,7 @@ public class ConcernListActivity extends ListActivity {
 			windorManager.addView(dialogText, lp);
 		}
 	};
-	
+
 	/**
 	 * listview 滚动事件监听器
 	 * */
@@ -151,15 +150,15 @@ public class ConcernListActivity extends ListActivity {
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-			
-			if(mItems.size()==0){ 
-				return ;//如果没有数据，则直接跳出滚动事件的处理
+
+			if (mItems.size() == 0) {
+				return;// 如果没有数据，则直接跳出滚动事件的处理
 			}
-			
+
 			int lastItem = firstVisibleItem + visibleItemCount - 1;
 			int middleItem = (lastItem + firstVisibleItem) / 2;
 			if (isReady) {
-				
+
 				SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 				Date scanDate = new Date(mItems.get(middleItem).getTimestamp());
 				String grouping = formater.format(scanDate);
@@ -187,12 +186,12 @@ public class ConcernListActivity extends ListActivity {
 	OnItemClickListener onItemClickListener = new OnItemClickListener() {
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 				long arg3) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(ConcernListActivity.this,
 					CommentListActivity.class);
-			intent.putExtra("ConcernItem", mItems.get(arg2));
+			intent.putExtra("mItem", mItems.get(position));
 			startActivity(intent);
 		}
 	};
@@ -211,18 +210,26 @@ public class ConcernListActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
 		int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-		menu.add(Menu.NONE, position, Menu.NONE, R.string.clear_one_concern);
+		menu.add(Menu.NONE, position, 1, R.string.clear_one_concern);
+		menu.add(Menu.NONE, position, 2, R.string.add_to_compare);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		int position = item.getItemId();
-		mConcernManager.deleteConcernItemById(mItems.get(position).getId());
-		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
-		((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+		switch (item.getOrder()) {
+		case 1:
+			mConcernManager.deleteConcernItemById(mItems.get(position).getId());
+			// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
+			((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+			break;
+		case 2:
+			MainActivity.itemArray.add(mItems.get(position));
+			Toast.makeText(getApplicationContext(), "已经加入对比", Toast.LENGTH_SHORT).show();
+			break;
+		}
 		return true;
+
 	}
 
-
-	
 }

@@ -17,6 +17,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="欢迎注册成为我们的用户"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="fill_parent"
@@ -159,15 +167,5 @@
             android:layout_weight="1"
             android:text="@string/recancle" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:text="欢迎注册成为我们的用户"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

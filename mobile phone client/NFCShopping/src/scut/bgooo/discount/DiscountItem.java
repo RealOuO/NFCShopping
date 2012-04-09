@@ -1,5 +1,5 @@
 package scut.bgooo.discount;
 
-public class DiscountShitItem {
+public class DiscountItem {
 
 }

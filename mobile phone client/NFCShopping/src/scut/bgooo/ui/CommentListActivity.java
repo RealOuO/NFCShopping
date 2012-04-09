@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import scut.bgooo.concern.ConcernItem;
-import scut.bgooo.db.ConcernManager;
+import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.entities.SecCategory;
@@ -38,7 +38,9 @@ public class CommentListActivity extends Activity {
 
 	private static final String TAG = CommentListActivity.class.getSimpleName();
 
-	protected static final int SUCCESS = 0;
+	protected static final int REFRESHREVIEWS = 0;
+
+	protected static final int REFRESHRATING = 1;
 
 	private ConcernManager mConcernManager = null;
 
@@ -51,10 +53,10 @@ public class CommentListActivity extends Activity {
 	private TextView mPriceTextView;
 	private RatingBar mRatingBar;
 	private CheckBox mCheckBox;
-	
+
 	private View mProcess;
-	
-	private ConcernItem item;
+
+	private ConcernItem mItem;
 	private Product mProduct = null;
 	private Vector<Review> reviews;
 
@@ -64,7 +66,7 @@ public class CommentListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.commentlist);
 
-		mProduct = (Product) getIntent().getSerializableExtra("product");
+		mItem = (ConcernItem) getIntent().getSerializableExtra("mItem");
 
 		mTempitems = new ArrayList<HashMap<String, Object>>();
 
@@ -75,9 +77,9 @@ public class CommentListActivity extends Activity {
 			map.put("Rating", 4.0);
 			mTempitems.add(map);
 		}
-		
+
 		mProcess = this.findViewById(R.id.progress);
-		
+
 		mFinishButton = (Button) findViewById(R.id.btFinish);
 		mFinishButton.setOnClickListener(new OnClickListener() {
 
@@ -128,18 +130,29 @@ public class CommentListActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (isChecked) {
 					// 收藏该记录
-					item.setIsCollected((short) 1);
+					mItem.setIsCollected((short) 1);
 				} else {
 					// 取消收藏该记录
-					item.setIsCollected((short) 0);
+					mItem.setIsCollected((short) 0);
 				}
 				// 更新数据库的数据
-				mConcernManager.addConcernItem(item);
+				mConcernManager.addConcernItem(mItem);
 				Log.d(TAG, "checked changed");
 			}
 		});
-		
-		DownloadInfo();
+
+		mPriceTextView.setText(String.valueOf(mItem.getPrice()));
+		mNameTextView.setText(mItem.getName());
+		mRatingBar.setRating(mItem.getRating());
+
+		Log.d(TAG, "is collected" + mItem.getIsCollected());
+		if (mItem.getIsCollected() == 0) {
+			mCheckBox.setChecked(false);
+		} else {
+			mCheckBox.setChecked(true);
+		}
+
+		DownloadRiviews(mItem.getProductId());
 	}
 
 	@Override
@@ -152,27 +165,18 @@ public class CommentListActivity extends Activity {
 		// Parse the intent
 		String action = intent.getAction();
 
-//		item = (ConcernItem) intent.getSerializableExtra("ConcernItem");
-//
-//		mPriceTextView.setText(String.valueOf(item.getPrice()));
-//		mNameTextView.setText(item.getName());
-//		mRatingBar.setRating((float) item.getRating());
-//
-//		Log.d(TAG, "is collected" + item.getIsCollected());
-//		if (item.getIsCollected() == 0) {
-//			mCheckBox.setChecked(false);
-//		} else {
-//			mCheckBox.setChecked(true);
-//		}
+		// mItem = (ConcernItem) intent.getSerializableExtra("ConcernItem");
+		//
+
 	}
 
-	private void DownloadInfo() {
+	private void DownloadRiviews(final int productID) {
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				reviews = WebServiceUtil.getInstance().getReviewsByProductId(5);
+				reviews = WebServiceUtil.getInstance().getReviewsByProductId(productID);
 
 				Message message = new Message();
 				// if (reviews) {
@@ -181,7 +185,7 @@ public class CommentListActivity extends Activity {
 				// message.arg1 = SUCCESS;
 				// message.obj = mProduct;
 				// }
-				message.arg1 = SUCCESS;
+				message.arg1 = REFRESHREVIEWS;
 				message.obj = reviews;
 				handler.sendMessage(message);
 			}
@@ -198,12 +202,13 @@ public class CommentListActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			switch (msg.arg1) {
-			case SUCCESS:
+			case REFRESHREVIEWS:
 				CommentAdapter ma = new CommentAdapter(
 						CommentListActivity.this, reviews);
 				mListView.setAdapter(ma);// 添加适配器
 				mProcess.setVisibility(View.GONE);
 				break;
+
 			}
 
 		}
@@ -281,7 +286,7 @@ class CommentAdapter extends BaseAdapter {
 					.getProperty(2).toString());
 			vh.tvComment.setText(items.get(position).getProperty(4).toString());
 			vh.rbRating.setRating(Float.valueOf(items.get(position)
-					.getProperty(5).toString()));
+					.getProperty(5).toString()) / 10.0f);
 
 			return commentitem;
 		}

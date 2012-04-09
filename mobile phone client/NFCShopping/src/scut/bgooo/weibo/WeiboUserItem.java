@@ -1,4 +1,4 @@
-package scut.bgooo.weibouser;
+package scut.bgooo.weibo;
 
 import android.graphics.drawable.Drawable;
 

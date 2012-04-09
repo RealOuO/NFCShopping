@@ -19,6 +19,7 @@
     <string name="btCancel">取消</string>
     <string name="btshareandcommit">提交并分享</string>
     <string name="clear_one_concern">删除记录</string>
+    <string name="add_to_compare">加入对比</string>
     <string name="btcommit">提交</string>
     <string name="hint">请在此填写评论的详细内容……</string>
     <string name="duration">优惠时间：</string>

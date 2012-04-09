@@ -83,8 +83,8 @@
         onclick="UploadPictureButton_Click" Text="上传图片" />
     <div>
     </div>
-    <asp:Button ID="SubmitButton" runat="server" Height="48px" OnClick="SubmitButton_Click"
-        Text="确定提交" Width="136px" />
+    <asp:Button ID="SubmitButton" runat="server" Height="25px" OnClick="SubmitButton_Click"
+        Text="确定提交" Width="98px" />
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">

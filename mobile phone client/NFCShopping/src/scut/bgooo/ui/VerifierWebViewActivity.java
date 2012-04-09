@@ -1,4 +1,4 @@
-package scut.bgooo.weibo;
+package scut.bgooo.ui;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

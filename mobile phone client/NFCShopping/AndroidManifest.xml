@@ -34,7 +34,6 @@
         <activity
             android:name=".MoreActivity"
             android:label="@string/app_name" />
-        
         <activity
             android:name=".ProductActivity"
             android:label="@string/app_name" >
@@ -53,16 +52,13 @@
 					Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致
 					Intent 匹配失败。 从上面的论述还可以获得以下信息： 1、一个 Intent 可以有多个
 					category，但至少会有一个，也是默认的一个 category。 2、只有 Intent 的所有 category
-					都匹配上，Activity 才会接收这个 Intent。
-
+					都匹配上，Activity 才会接收这个 Intent。
                 -->
             </intent-filter>
-            
         </activity>
         <activity
             android:name=".CommentListActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <activity
             android:name=".CommentActivity"
@@ -72,13 +68,10 @@
             android:name=".DiscountListActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="scut.bgooo.weibo.AuthorizeActivity"
+            android:name=".VerifierWebViewActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="scut.bgooo.weibo.VerifierWebViewActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name="scut.bgooo.weibo.WeiboUserListActivity"
+            android:name=".WeiboUserListActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
             <intent-filter>
@@ -96,7 +89,7 @@
             android:name=".RegisterActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".DiscountShitListActivity"
+            android:name=".DiscountItemListActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity

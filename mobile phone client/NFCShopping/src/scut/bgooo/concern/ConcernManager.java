@@ -1,4 +1,4 @@
-package scut.bgooo.db;
+package scut.bgooo.concern;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import scut.bgooo.concern.ConcernItem;
-
+import scut.bgooo.db.DBHelper;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -33,7 +32,9 @@ public final class ConcernManager {
 	private static final String[] COLUMNS = { DBHelper.ID_COL,
 			DBHelper.PRODUCT_ID_COL, DBHelper.NAME_COL, DBHelper.TYPE_COL,
 			DBHelper.PRICE_COL, DBHelper.RATING_COL, DBHelper.TIMESTAMP_COL,
-			DBHelper.ISCOLLECTED_COL };
+			DBHelper.ISCOLLECTED_COL, DBHelper.BRAND_COL,
+			DBHelper.LOCATION_COL, DBHelper.BARCODE_COL,
+			DBHelper.SECCATEGORY_COL, DBHelper.DESCRIPTION_COL };
 
 	private static final String[] COUNT_COLUMN = { "COUNT(1)" };
 
@@ -57,13 +58,14 @@ public final class ConcernManager {
 	 * */
 	public boolean hasConcernItems() {
 		Log.d(TAG, "hasConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COUNT_COLUMN, null, null,
-					null, null, null);
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COUNT_COLUMN, null,
+					null, null, null, null);
 			cursor.moveToFirst();
 			return cursor.getInt(0) > 0;
 		} catch (Exception e) {
@@ -82,15 +84,16 @@ public final class ConcernManager {
 	 * */
 	public List<ConcernItem> buildConcernItems() {
 		Log.d(TAG, "buildConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
 		List<String> dateItems = new ArrayList<String>();
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null, null,
-					null, DBHelper.TIMESTAMP_COL + " DESC");
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null,
+					null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 			Date scanDate;
 			while (cursor.moveToNext()) {
@@ -99,9 +102,14 @@ public final class ConcernManager {
 				String name = cursor.getString(2);
 				int type = cursor.getInt(3);
 				float price = cursor.getFloat(4);
-				int rating = cursor.getInt(5);
+				float rating = cursor.getFloat(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
+				String brand = cursor.getString(8);
+				String location = cursor.getString(9);
+				String barcode = cursor.getString(10);
+				String category = cursor.getString(11);
+				String description = cursor.getString(12);
 				// 添加时间标签的代码段
 				// 用来根据刷卡的日期进行日期归类
 				scanDate = new Date(timestamp);
@@ -112,7 +120,8 @@ public final class ConcernManager {
 					items.add(new ConcernItem(tag.getTime()));
 				}
 				// 这里还需要补充ConcernItem对象的具体属性才能确定
-				items.add(new ConcernItem(id, pid, name, type, price, rating,
+				items.add(new ConcernItem(id, pid, name, type, category, price,
+						rating, brand, location, barcode, description,
 						timestamp, iscollected));
 			}
 			return items;
@@ -127,7 +136,8 @@ public final class ConcernManager {
 
 	public List<ConcernItem> buildCollectedConcernItems() {
 		Log.d(TAG, "buildCollectedConcernItems()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		List<ConcernItem> items = new ArrayList<ConcernItem>();
@@ -146,9 +156,14 @@ public final class ConcernManager {
 				String name = cursor.getString(2);
 				int type = cursor.getInt(3);
 				float price = cursor.getFloat(4);
-				int rating = cursor.getInt(5);
+				float rating = cursor.getFloat(5);
 				long timestamp = cursor.getLong(6);
 				short iscollected = cursor.getShort(7);
+				String brand = cursor.getString(8);
+				String location = cursor.getString(9);
+				String barcode = cursor.getString(10);
+				String category = cursor.getString(11);
+				String description = cursor.getString(12);
 				// 添加时间标签的代码段
 				// 用来根据刷卡的日期进行日期归类
 				scanDate = new Date(timestamp);
@@ -158,7 +173,8 @@ public final class ConcernManager {
 					Date tag = formater.parse(date);
 					items.add(new ConcernItem(tag.getTime()));
 				}
-				items.add(new ConcernItem(id, pid, name, type, price, rating,
+				items.add(new ConcernItem(id, pid, name, type, category, price,
+						rating, brand, location, barcode, description,
 						timestamp, iscollected));
 			}
 			return items;
@@ -173,25 +189,32 @@ public final class ConcernManager {
 
 	public ConcernItem buildConcernItem(int number) {
 		Log.d(TAG, "buildConcernItem()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null, null,
-					null, DBHelper.TIMESTAMP_COL + " DESC");
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, null, null,
+					null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(number + 1);
 			int id = cursor.getInt(0);
 			int pid = cursor.getInt(1);
 			String name = cursor.getString(2);
 			int type = cursor.getInt(3);
 			float price = cursor.getFloat(4);
-			int rating = cursor.getInt(5);
+			float rating = cursor.getFloat(5);
 			long timestamp = cursor.getLong(6);
 			short iscollected = cursor.getShort(7);
+			String brand = cursor.getString(8);
+			String location = cursor.getString(9);
+			String barcode = cursor.getString(10);
+			String category = cursor.getString(11);
+			String description = cursor.getString(12);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定
-			return new ConcernItem(id, pid, name, type, price, rating,
-					timestamp, iscollected);
+			return new ConcernItem(id, pid, name, type, category, price,
+					rating, brand, location, barcode, description, timestamp,
+					iscollected);
 		} finally {
 			close(cursor, db);
 		}
@@ -209,24 +232,31 @@ public final class ConcernManager {
 	 * */
 	public ConcernItem buildConcernItemById(int id) {
 		Log.d(TAG, "buildConcernItemById()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS, DBHelper.ID_COL
-					+ "=?", new String[] { String.valueOf(id) }, null, null,
-					null);
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, COLUMNS,
+					DBHelper.ID_COL + "=?",
+					new String[] { String.valueOf(id) }, null, null, null);
 			int pid = cursor.getInt(1);
 			String name = cursor.getString(2);
 			int type = cursor.getInt(3);
 			float price = cursor.getFloat(4);
-			int rating = cursor.getInt(5);
+			float rating = cursor.getFloat(5);
 			long timestamp = cursor.getLong(6);
 			short iscollected = cursor.getShort(7);
+			String brand = cursor.getString(8);
+			String location = cursor.getString(9);
+			String barcode = cursor.getString(10);
+			String category = cursor.getString(11);
+			String description = cursor.getString(12);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定
-			return new ConcernItem(id, pid, name, type, price, rating,
-					timestamp, iscollected);
+			return new ConcernItem(id, pid, name, type, category, price,
+					rating, brand, location, barcode, description, timestamp,
+					iscollected);
 		} finally {
 			close(cursor, db);
 		}
@@ -238,16 +268,17 @@ public final class ConcernManager {
 	 * </p>
 	 * */
 	public void deleteConcernItem(int number) {
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getReadableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION, null,
-					null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION,
+					null, null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(number + 1);
-			db.delete(DBHelper.CONCERN_TABLE_NAME,
-					DBHelper.ID_COL + '=' + cursor.getString(0), null);
+			db.delete(DBHelper.CONCERN_TABLE_NAME, DBHelper.ID_COL + '='
+					+ cursor.getString(0), null);
 		} finally {
 			close(cursor, db);
 		}
@@ -260,7 +291,8 @@ public final class ConcernManager {
 	 * */
 	public void deleteConcernItemById(int id) {
 		Log.d(TAG, "deleteConcernItemById()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();
@@ -283,7 +315,8 @@ public final class ConcernManager {
 	@SuppressWarnings("unused")
 	private void deletePrevious(String name) {
 		Log.d(TAG, "deletePrevious()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();
@@ -312,7 +345,8 @@ public final class ConcernManager {
 	 */
 	public void addConcernItem(ConcernItem item) {
 		Log.d(TAG, "addConcernItem()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 
@@ -323,22 +357,28 @@ public final class ConcernManager {
 		values.put(DBHelper.TYPE_COL, item.getType());
 		values.put(DBHelper.PRICE_COL, item.getPrice());
 		values.put(DBHelper.RATING_COL, item.getRating());
+		values.put(DBHelper.BRAND_COL, item.getBrand());
+		values.put(DBHelper.LOCATION_COL, item.getLocation());
+		values.put(DBHelper.BARCODE_COL, item.getBarcode());
 		values.put(DBHelper.TIMESTAMP_COL, item.getTimestamp());
 		values.put(DBHelper.ISCOLLECTED_COL, item.getIsCollected());
+		values.put(DBHelper.SECCATEGORY_COL, item.getSecCategory());
+		values.put(DBHelper.DESCRIPTION_COL, item.getDescription());
 
 		try {
 			db = helper.getWritableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, PRODUCT_ID_COL_PROJECTION,
-					DBHelper.PRODUCT_ID_COL + "=?",
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME,
+					PRODUCT_ID_COL_PROJECTION, DBHelper.PRODUCT_ID_COL + "=?",
 					new String[] { String.valueOf(item.getProductId()) }, null,
 					null, null);
 			if (cursor.getCount() == 0) {
 				// 插入新的关注记录
-				db.insert(DBHelper.CONCERN_TABLE_NAME, DBHelper.TIMESTAMP_COL, values);
+				db.insert(DBHelper.CONCERN_TABLE_NAME, DBHelper.TIMESTAMP_COL,
+						values);
 			} else {
 				// 记录存在则更新数据
-				db.update(DBHelper.CONCERN_TABLE_NAME, values, DBHelper.PRODUCT_ID_COL
-						+ "=?",
+				db.update(DBHelper.CONCERN_TABLE_NAME, values,
+						DBHelper.PRODUCT_ID_COL + "=?",
 						new String[] { String.valueOf(item.getProductId()) });
 			}
 		} finally {
@@ -355,17 +395,18 @@ public final class ConcernManager {
 	 * */
 	public void trimHistory() {
 		Log.d(TAG, "trimHistory()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		Cursor cursor = null;
 		try {
 			db = helper.getWritableDatabase();
-			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION, null,
-					null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
+			cursor = db.query(DBHelper.CONCERN_TABLE_NAME, ID_COL_PROJECTION,
+					null, null, null, null, DBHelper.TIMESTAMP_COL + " DESC");
 			cursor.move(MAX_ITEMS);
 			while (cursor.moveToNext()) {
-				db.delete(DBHelper.CONCERN_TABLE_NAME,
-						DBHelper.ID_COL + '=' + cursor.getString(0), null);
+				db.delete(DBHelper.CONCERN_TABLE_NAME, DBHelper.ID_COL + '='
+						+ cursor.getString(0), null);
 			}
 		} finally {
 			close(cursor, db);
@@ -383,7 +424,8 @@ public final class ConcernManager {
 	 * */
 	public void clearConcern() {
 		Log.d(TAG, "clearConcern()");
-		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME, null, DBHelper.DB_VERSION);
+		SQLiteOpenHelper helper = new DBHelper(activity, DBHelper.DB_NAME,
+				null, DBHelper.DB_VERSION);
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getWritableDatabase();

@@ -1,10 +1,10 @@
-package scut.bgooo.db;
+package scut.bgooo.weibo;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.db.DBHelper;
 
 import android.content.ContentValues;
 import android.content.Context;

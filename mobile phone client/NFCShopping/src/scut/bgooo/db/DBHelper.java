@@ -1,6 +1,6 @@
 package scut.bgooo.db;
 
-import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserItem;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,8 +9,9 @@ import android.util.Log;
 
 /**
  * 统一数据库的名字为nfc.db
+ * 
  * @author 肥哥
- *
+ * 
  */
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -18,21 +19,26 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String WIBO_TB_NAME = "users";
 	public static final int DB_VERSION = 5;
 	public static final String DB_NAME = "nfc.db";
-	static final String DISCOUNT_TABLE_NAME = "discount";
-	static final String CONCERN_TABLE_NAME = "concern";
-	
-	static final String ID_COL = "id";
-	static final String PRODUCT_ID_COL = "pid";
-	static final String NAME_COL = "name";
-	static final String TYPE_COL = "type";
-	static final String DISCOUNT_COL = "discount";
-	static final String PRICE_COL = "price";
-	static final String RATING_COL = "rating";
-	static final String START_TIMESTAMP_COL = "starttimestamp";
-	static final String END_TIMESTAMP_COL = "endtimestamp";	
-	static final String TIMESTAMP_COL = "timestamp";
-	static final String ISCOLLECTED_COL = "collected";
-	
+	public static final String DISCOUNT_TABLE_NAME = "discount";
+	public static final String CONCERN_TABLE_NAME = "concern";
+
+	public static final String ID_COL = "id";
+	public static final String PRODUCT_ID_COL = "pid";
+	public static final String NAME_COL = "name";
+	public static final String TYPE_COL = "type";
+	public static final String DISCOUNT_COL = "discount";
+	public static final String PRICE_COL = "price";
+	public static final String RATING_COL = "rating";
+	public static final String BRAND_COL = "brand";
+	public static final String BARCODE_COL = "barcode";
+	public static final String LOCATION_COL = "location";
+	public static final String SECCATEGORY_COL = "seccategory";
+	public static final String DESCRIPTION_COL = "description";
+	public static final String START_TIMESTAMP_COL = "starttimestamp";
+	public static final String END_TIMESTAMP_COL = "endtimestamp";
+	public static final String TIMESTAMP_COL = "timestamp";
+	public static final String ISCOLLECTED_COL = "collected";
+
 	public DBHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
@@ -51,13 +57,16 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ WeiboUserItem.USERLOCATION + " varchar,"
 				+ WeiboUserItem.ISDEFAULT + " boolean,"
 				+ WeiboUserItem.USERICON + " blob" + ")");
-		
+
 		db.execSQL("CREATE TABLE " + CONCERN_TABLE_NAME + " (" + ID_COL
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + PRODUCT_ID_COL
-				+ " INTEGER, " + NAME_COL + " TEXT, " + TYPE_COL + " INTEGER, "
-				+ PRICE_COL + " REAL, " + RATING_COL + " INTEGER, "
-				+ TIMESTAMP_COL + " INTEGER, " + ISCOLLECTED_COL + " INTEGER);");
-		
+				+ " INTEGER, " + NAME_COL + " varchar, " + TYPE_COL
+				+ " INTEGER, " + SECCATEGORY_COL + " varchar, " + PRICE_COL
+				+ " REAL, " + RATING_COL + " REAL, " + BRAND_COL + " varchar, "
+				+ LOCATION_COL + " varchar, " + BARCODE_COL + " varchar, "
+				+ DESCRIPTION_COL + " varchar, " + TIMESTAMP_COL + " INTEGER, "
+				+ ISCOLLECTED_COL + " INTEGER);");
+
 		Log.e("Database", "onCreate");
 	}
 
@@ -78,11 +87,11 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void updateColumn(SQLiteDatabase db, String oldColumn,
 			String newColumn, String typeColumn) {
 		try {
-			db.execSQL("ALTER TABLE " + WIBO_TB_NAME + " CHANGE " + oldColumn + " "
-					+ newColumn + " " + typeColumn);
-			
+			db.execSQL("ALTER TABLE " + WIBO_TB_NAME + " CHANGE " + oldColumn
+					+ " " + newColumn + " " + typeColumn);
+
 			db.execSQL("DROP TABLE IF EXISTS " + CONCERN_TABLE_NAME);
-			
+
 			onCreate(db);
 		} catch (Exception e) {
 			e.printStackTrace();

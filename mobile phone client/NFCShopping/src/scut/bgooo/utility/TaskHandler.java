@@ -15,11 +15,11 @@ import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.ui.CommentActivity;
 import scut.bgooo.ui.DiscountListActivity;
-import scut.bgooo.ui.DiscountShitListActivity;
+import scut.bgooo.ui.DiscountItemListActivity;
+import scut.bgooo.ui.WeiboUserListActivity;
 import scut.bgooo.webservice.IWebServiceUtil;
 import scut.bgooo.webservice.WebServiceUtil;
-import scut.bgooo.weibo.WeiboUserListActivity;
-import scut.bgooo.weibouser.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserItem;
 import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
@@ -32,7 +32,7 @@ public class TaskHandler implements Runnable {
 
 	private boolean isrun = true;
 	private static List<Task> mTaskList = new ArrayList<Task>();// 任务列表
-	public static HashMap<String, IWeiboActivity> allActivity = new HashMap<String, IWeiboActivity>();
+	public static HashMap<String, INFCActivity> allActivity = new HashMap<String, INFCActivity>();
 	public Weibo mWeibo = null;
 
 	@Override
@@ -156,22 +156,22 @@ public class TaskHandler implements Runnable {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case Task.GET_USER_INFORMATION: {
-				IWeiboActivity iwa = allActivity
+				INFCActivity iwa = allActivity
 						.get(WeiboUserListActivity.class.getSimpleName());
 				iwa.refresh(msg.obj);
 			}
 				break;
 			case Task.SEND_COMMENT_WEIBO: {
-				IWeiboActivity iwa = allActivity.get(CommentActivity.class.getSimpleName());
+				INFCActivity iwa = allActivity.get(CommentActivity.class.getSimpleName());
 				iwa.refresh(msg.obj);
 			}
 				break;
 			case Task.GET_DISCOUNT:{
-				IWeiboActivity iwa = allActivity.get(DiscountShitListActivity.class.getSimpleName());
+				INFCActivity iwa = allActivity.get(DiscountItemListActivity.class.getSimpleName());
 				iwa.refresh("OK", msg.obj);
 			}break;
 			case Task.GET_DISCOUNTITEM:{
-				IWeiboActivity iwa = allActivity.get(DiscountListActivity.class.getSimpleName());
+				INFCActivity iwa = allActivity.get(DiscountListActivity.class.getSimpleName());
 				iwa.refresh("OK", msg.obj);
 			}break;
 			default:{

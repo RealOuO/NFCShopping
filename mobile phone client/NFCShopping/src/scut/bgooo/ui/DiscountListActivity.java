@@ -7,7 +7,7 @@ import java.util.Vector;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.entities.Product;
-import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
@@ -24,7 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DiscountListActivity extends Activity implements IWeiboActivity {
+public class DiscountListActivity extends Activity implements INFCActivity {
 
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
 

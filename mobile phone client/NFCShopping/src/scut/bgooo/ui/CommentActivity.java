@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import scut.bgooo.utility.IWeiboActivity;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 
@@ -17,7 +17,6 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
 import scut.bgooo.webservice.WebServiceUtil;
 
-import scut.bgooo.weibo.WeiboUserListActivity;
 
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
@@ -32,7 +31,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CommentActivity extends Activity implements IWeiboActivity{
+public class CommentActivity extends Activity implements INFCActivity{
 
 	private EditText mCommit;
 	private Button mShareCommitButton;

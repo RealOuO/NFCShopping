@@ -27,7 +27,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static String TAG = WebServiceUtil.class.getName();
 
 	private static final String NAMESPACE = "http://tempuri.org/";
-	private static String URL = "http://192.168.1.100:8080/NFCShopping/ShopWebservice.asmx";
+	private static String URL = "http://192.168.1.103:8080/NFCShopping/ShopWebService.asmx";
 
 
 	private static final String REGIST = "Regist";
@@ -373,7 +373,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 	}
 
 	@Override
-	public double getAverageRating(int productID) {
+	public float getAverageRating(int productID) {
 		SoapObject rpc = getSoapObject(Method.GETAVERAGERATING);
 		rpc.addProperty("id", productID);
 		HttpTransportSE ht = new HttpTransportSE(URL);
@@ -386,7 +386,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		try {
 			ht.call(NAMESPACE + GETAVERAGERATING, envelope);
 			if (envelope.getResponse() != null) {
-				return (Double) envelope.getResponse();
+				return Float.valueOf(envelope.getResponse().toString());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -395,7 +395,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0.0;
+		return 0.0f;
 	}
 
 	@Override
