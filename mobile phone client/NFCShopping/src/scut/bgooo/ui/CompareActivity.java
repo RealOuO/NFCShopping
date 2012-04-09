@@ -47,13 +47,16 @@ public class CompareActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		ArrayList<TableRow> table = new ArrayList<TableRow>();
-		TableCell[] titles = new TableCell[MainActivity.itemArray.size()];// 每行5个单元
+		TableCell[] titles = new TableCell[MainActivity.itemArray.size()+1];// 每行根据对比数目创建单元
 
 		int width = this.getWindowManager().getDefaultDisplay().getWidth()
-				/ titles.length;
+				/2;
+		//第一列
+		titles[0] = new TableCell("属性" , width + 8 * 0,
+				LayoutParams.FILL_PARENT, TableCell.STRING);
 		// 定义标题
-		for (int i = 0; i < titles.length; i++) {
-			titles[i] = new TableCell("商品" + String.valueOf(i), width + 8 * i,
+		for (int i = 1; i < titles.length; i++) {
+			titles[i] = new TableCell("商品" + String.valueOf(i), width,
 					LayoutParams.FILL_PARENT, TableCell.STRING);
 		}
 		table.add(new TableRow(titles));
@@ -61,9 +64,43 @@ public class CompareActivity extends Activity {
 		if (MainActivity.itemArray.size() > 0) {
 
 			for (int i = 0; i < ConcernItem.getCount(); i++) {
-				TableCell[] cells = new TableCell[MainActivity.itemArray.size()];// 每行5个单元
-				for (int j = 0; j < cells.length; j++) {
-					cells[j] = new TableCell(MainActivity.itemArray.get(j)
+				TableCell[] cells = new TableCell[MainActivity.itemArray.size()+1];// 每行5个单元
+				switch(i){
+				case 0:
+					cells[0] = new TableCell("商品名", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 1:
+					cells[0] = new TableCell("品牌", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 2:
+					cells[0] = new TableCell("价格", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 3:
+					cells[0] = new TableCell("类别", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 4:
+					cells[0] = new TableCell("产地", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 5:
+					cells[0] = new TableCell("详细描述", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 6:
+					cells[0] = new TableCell("评分", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				default:
+					cells[0] = new TableCell("其他", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;			
+				}
+				for (int j = 1; j < cells.length; j++) {
+					cells[j] = new TableCell(MainActivity.itemArray.get(j-1)//注意要减去1
 							.getAttribute(i).toString(), titles[j].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 				}

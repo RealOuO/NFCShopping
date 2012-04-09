@@ -57,11 +57,11 @@ public class TableAdapter extends BaseAdapter {
 				TableCell tableCell = tableRow.getCellValue(i);
 				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 						tableCell.width, tableCell.height);//按照格单元指定的大小设置空间
-				layoutParams.setMargins(0, 0, 1, 1);//预留空隙制造边框
+				layoutParams.setMargins(1, 1, 1, 1);//预留空隙制造边框
 				if (tableCell.type == TableCell.STRING) {//如果格单元是文本内容
 					TextView textCell = new TextView(context);
-					textCell.setLines(1);
 					textCell.setGravity(Gravity.CENTER);
+					textCell.setTextSize(25);
 					textCell.setBackgroundColor(Color.BLACK);//背景黑色
 					textCell.setText(String.valueOf(tableCell.value));
 					addView(textCell, layoutParams);
@@ -73,8 +73,7 @@ public class TableAdapter extends BaseAdapter {
 				}
 			}
 			this.setBackgroundColor(Color.WHITE);//背景白色，利用空隙来实现边框
-			
-			
+
 		}
 		
 	}
