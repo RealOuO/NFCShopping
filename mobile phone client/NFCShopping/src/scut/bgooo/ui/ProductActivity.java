@@ -100,7 +100,6 @@ public class ProductActivity extends Activity {
 		// Parse the intent
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-
 			DownloadInfo();
 			Log.d(TAG, "discover a tag");
 		}
@@ -167,7 +166,7 @@ public class ProductActivity extends Activity {
 				mDescription.setText(mProduct.getProperty(9).toString());
 				mCategory.setText(((SecCategory) mProduct.getProperty(10))
 						.getProperty(3).toString());
-				
+
 				mProcess.setVisibility(View.GONE);
 				break;
 			case FAILE:
@@ -180,16 +179,16 @@ public class ProductActivity extends Activity {
 						.getProperty(1).toString()), mProduct.getProperty(4)
 						.toString(), Integer.valueOf(mProduct.getProperty(2)
 						.toString()), ((SecCategory) mProduct.getProperty(10))
-						.getProperty(3).toString(),Float.valueOf(mProduct.getProperty(5)
-						.toString()), mRating, mProduct.getProperty(6)
-						.toString(), mProduct.getProperty(7).toString(),
-						mProduct.getProperty(3).toString(),mProduct.getProperty(9).toString(),
+						.getProperty(3).toString(), Float.valueOf(mProduct
+						.getProperty(5).toString()), mRating, mProduct
+						.getProperty(6).toString(), mProduct.getProperty(7)
+						.toString(), mProduct.getProperty(3).toString(),
+						mProduct.getProperty(9).toString(),
 						System.currentTimeMillis(), (short) 0);
 				mConcernManager.addConcernItem(mItem);
 				btCheckComment.setClickable(true);
 				break;
 			}
-
 		}
 
 	};

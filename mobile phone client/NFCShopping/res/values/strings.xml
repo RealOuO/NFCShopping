@@ -17,6 +17,7 @@
     <string name="msg_sure">确认删除全部记录？</string>
     <string name="btOK">确认</string>
     <string name="btCancel">取消</string>
+    <string name="btBack">返回</string>
     <string name="btshareandcommit">提交并分享</string>
     <string name="clear_one_concern">删除记录</string>
     <string name="add_to_compare">加入对比</string>
@@ -38,7 +39,8 @@
     <string name="regist">注册</string>
     <string name="login">登录</string>
     <string name="nodata">暂无数据</string>
-     <string name="addtocompare">加入对比</string>
-      <string name="checkcomment">查看评论</string>
+    <string name="addtocompare">加入对比</string>
+    <string name="checkcomment">查看评论</string>
+    <string name="haslogin">已经登录，\n是否重新登录？</string>
 
 </resources>
