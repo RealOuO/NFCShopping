@@ -28,6 +28,7 @@ public class ProductActivity extends Activity {
 	protected static final int SUCCESS = 0;
 	protected static final int FAILE = 1;
 	protected static final int REFRESHRATING = 2;
+	private float mRating;
 
 	private ConcernManager mConcernManager = null;
 
@@ -48,7 +49,6 @@ public class ProductActivity extends Activity {
 
 	private ImageView mPicture;
 
-	private float mRating;
 	private Button btCheckComment;
 	private Button btAddToCompare;
 
@@ -114,7 +114,7 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"1324");
+						"1234");
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;

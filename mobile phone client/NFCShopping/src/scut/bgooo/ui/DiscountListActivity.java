@@ -154,13 +154,15 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		String result = (String) param[0];
 		if (result.equals("OK")) {
-			mProgress.setVisibility(View.GONE);
+			mDiscount = (Vector<Discount>) param[1];
 			if (mDiscount != null) {
-				mDiscount = (Vector<Discount>) param[1];
 				mAdapter = new MyAdapter(this, mDiscount);
 				mListView.setAdapter(mAdapter);
 			}
+
+			mProgress.setVisibility(View.GONE);
 		}
+		
 
 	}
 }

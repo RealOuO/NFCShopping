@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/llProduct"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/search_bg"
@@ -157,7 +157,8 @@
         <ListView
             android:id="@+id/comment_listview"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/llProduct"
             android:layout_above="@+id/lybuttonBar"
             android:divider="@drawable/divider_horizontal_timeline"
             android:dividerHeight="1.0dip"

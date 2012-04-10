@@ -35,6 +35,7 @@
     <string name="repeatpassword2">请再次输入您的密码</string>
     <string name="reconfirm">提交</string>
     <string name="recancle">取消</string>
+    <string name="regist">注册</string>
     <string name="login">登录</string>
     <string name="nodata">暂无数据</string>
      <string name="addtocompare">加入对比</string>

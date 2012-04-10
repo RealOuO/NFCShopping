@@ -6,49 +6,53 @@ public class ConcernItem implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static int getCount() {
+		return 7;
+	}
+	private String Barcode;
+	private String Brand;
+	private String Description;
 	/**
 	 * 存放在数据库的ID号
 	 * */
 	private int Id;
 	/**
-	 * 从服务器获取到的商品ID号
+	 * 标记改记录是否被收藏
 	 * */
-	private int ProductId;
+	private short IsCollected;
+
+	private String Location;
+
 	/**
 	 * 从服务器获取到的商品名Name
 	 * */
 	private String Name;
-	/**
-	 * 从服务器获取到的商品类型Type
-	 * */
-	private int Type;
+
 	/**
 	 * 从服务器获取到的商品价格
 	 * */
 	private float Price;
+
+	/**
+	 * 从服务器获取到的商品ID号
+	 * */
+	private int ProductId;
+
 	/**
 	 * 从服务器获取到的商品的评分
 	 * */
 	private float Rating;
 
-	private String Location;
-
-	private String Brand;
-
 	private String SecCategory; // 暂时还没存数据库
 
-	private String Barcode;
-
-	private String Description;
 	/**
 	 * 记录添加的时间
 	 * */
 	private long Timestamp;
 	/**
-	 * 标记改记录是否被收藏
+	 * 从服务器获取到的商品类型Type
 	 * */
-	private short IsCollected;
-
+	private int Type;
 	/**
 	 * 这个是从数据库获取item的构造函数，要传入id
 	 * */
@@ -74,78 +78,6 @@ public class ConcernItem implements java.io.Serializable {
 	public ConcernItem(long timestamp) {
 		Id = 0;
 		Timestamp = timestamp;
-	}
-
-	public int getId() {
-		return Id;
-	}
-
-	public int getProductId() {
-		return ProductId;
-	}
-
-	public String getName() {
-		return Name;
-	}
-
-	public int getType() {
-		return Type;
-	}
-
-	public float getRating() {
-		return Rating;
-	}
-
-	public void setBrand(String brand) {
-		Brand = brand;
-	}
-
-	public String getBrand() {
-		return Brand;
-	}
-
-	public void setLocation(String location) {
-		Location = location;
-	}
-
-	public String getLocation() {
-		return Location;
-	}
-
-	public void setBarcode(String barcode) {
-		Barcode = barcode;
-	}
-
-	public String getBarcode() {
-		return Barcode;
-	}
-
-	public void setSecCategory(String secCategory) {
-		SecCategory = secCategory;
-	}
-
-	public String getSecCategory() {
-		return SecCategory;
-	}
-
-	public float getPrice() {
-		return Price;
-	}
-
-	public long getTimestamp() {
-		return Timestamp;
-	}
-
-	public short getIsCollected() {
-		return IsCollected;
-	}
-
-	public void setIsCollected(short collected) {
-		IsCollected = collected;
-	}
-
-	public static int getCount() {
-		return 7;
 	}
 
 	public Object getAttribute(int index) {
@@ -178,11 +110,87 @@ public class ConcernItem implements java.io.Serializable {
 		return temp;
 	}
 
-	public void setDescription(String description) {
-		Description = description;
+	public String getBarcode() {
+		return Barcode;
+	}
+
+	public String getBrand() {
+		return Brand;
 	}
 
 	public String getDescription() {
 		return Description;
+	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public short getIsCollected() {
+		return IsCollected;
+	}
+
+	public String getLocation() {
+		return Location;
+	}
+
+	public String getName() {
+		return Name;
+	}
+
+	public float getPrice() {
+		return Price;
+	}
+
+	public int getProductId() {
+		return ProductId;
+	}
+
+	public float getRating() {
+		return Rating;
+	}
+
+	public String getSecCategory() {
+		return SecCategory;
+	}
+
+	public long getTimestamp() {
+		return Timestamp;
+	}
+
+	public int getType() {
+		return Type;
+	}
+
+	public void setBarcode(String barcode) {
+		Barcode = barcode;
+	}
+
+	public void setBrand(String brand) {
+		Brand = brand;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public void setIsCollected(short collected) {
+		IsCollected = collected;
+	}
+
+	public void setLocation(String location) {
+		Location = location;
+	}
+
+	public void setProductId(int productId) {
+		ProductId = productId;
+	}
+
+	public void setRating(float rating) {
+		Rating = rating;
+	}
+
+	public void setSecCategory(String secCategory) {
+		SecCategory = secCategory;
 	}
 }
