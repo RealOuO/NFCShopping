@@ -400,13 +400,15 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         /// <param name="discountID">discountID 属性的初始值。</param>
         /// <param name="description">description 属性的初始值。</param>
-        /// <param name="createdAt">createdAt 属性的初始值。</param>
-        public static Discount CreateDiscount(global::System.Int32 discountID, global::System.String description, global::System.DateTime createdAt)
+        /// <param name="startDate">startDate 属性的初始值。</param>
+        /// <param name="endDate">endDate 属性的初始值。</param>
+        public static Discount CreateDiscount(global::System.Int32 discountID, global::System.String description, global::System.DateTime startDate, global::System.DateTime endDate)
         {
             Discount discount = new Discount();
             discount.discountID = discountID;
             discount.description = description;
-            discount.createdAt = createdAt;
+            discount.startDate = startDate;
+            discount.endDate = endDate;
             return discount;
         }
 
@@ -469,24 +471,48 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime createdAt
+        public global::System.DateTime startDate
         {
             get
             {
-                return _createdAt;
+                return _startDate;
             }
             set
             {
-                OncreatedAtChanging(value);
-                ReportPropertyChanging("createdAt");
-                _createdAt = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdAt");
-                OncreatedAtChanged();
+                OnstartDateChanging(value);
+                ReportPropertyChanging("startDate");
+                _startDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("startDate");
+                OnstartDateChanged();
             }
         }
-        private global::System.DateTime _createdAt;
-        partial void OncreatedAtChanging(global::System.DateTime value);
-        partial void OncreatedAtChanged();
+        private global::System.DateTime _startDate;
+        partial void OnstartDateChanging(global::System.DateTime value);
+        partial void OnstartDateChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime endDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                OnendDateChanging(value);
+                ReportPropertyChanging("endDate");
+                _endDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("endDate");
+                OnendDateChanged();
+            }
+        }
+        private global::System.DateTime _endDate;
+        partial void OnendDateChanging(global::System.DateTime value);
+        partial void OnendDateChanged();
 
         #endregion
     
@@ -535,9 +561,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// <param name="productID">productID 属性的初始值。</param>
         /// <param name="discountPercent">discountPercent 属性的初始值。</param>
         /// <param name="description">description 属性的初始值。</param>
-        /// <param name="startDate">startDate 属性的初始值。</param>
-        /// <param name="endDate">endDate 属性的初始值。</param>
-        public static DiscountItem CreateDiscountItem(global::System.Int32 id, global::System.Int32 discountID, global::System.Int32 productID, global::System.Single discountPercent, global::System.String description, global::System.DateTime startDate, global::System.DateTime endDate)
+        public static DiscountItem CreateDiscountItem(global::System.Int32 id, global::System.Int32 discountID, global::System.Int32 productID, global::System.Single discountPercent, global::System.String description)
         {
             DiscountItem discountItem = new DiscountItem();
             discountItem.id = id;
@@ -545,8 +569,6 @@ namespace NFCShoppingWebSite.Access_Data
             discountItem.productID = productID;
             discountItem.discountPercent = discountPercent;
             discountItem.description = description;
-            discountItem.startDate = startDate;
-            discountItem.endDate = endDate;
             return discountItem;
         }
 
@@ -675,54 +697,6 @@ namespace NFCShoppingWebSite.Access_Data
         private global::System.String _description;
         partial void OndescriptionChanging(global::System.String value);
         partial void OndescriptionChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime startDate
-        {
-            get
-            {
-                return _startDate;
-            }
-            set
-            {
-                OnstartDateChanging(value);
-                ReportPropertyChanging("startDate");
-                _startDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("startDate");
-                OnstartDateChanged();
-            }
-        }
-        private global::System.DateTime _startDate;
-        partial void OnstartDateChanging(global::System.DateTime value);
-        partial void OnstartDateChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime endDate
-        {
-            get
-            {
-                return _endDate;
-            }
-            set
-            {
-                OnendDateChanging(value);
-                ReportPropertyChanging("endDate");
-                _endDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("endDate");
-                OnendDateChanged();
-            }
-        }
-        private global::System.DateTime _endDate;
-        partial void OnendDateChanging(global::System.DateTime value);
-        partial void OnendDateChanged();
 
         #endregion
     
@@ -1741,8 +1715,6 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
         public EntityReference<User> UserReference
         {
             get
@@ -1849,6 +1821,7 @@ namespace NFCShoppingWebSite.Access_Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         public global::System.String userPassword

@@ -27,8 +27,6 @@ namespace NFCShoppingWebSite.WebPages
           
             discountItem.discountPercent = Convert.ToSingle(this.DiscountPercentTextBox.Text);
             discountItem.description = this.DescriptionTextBox.Text;
-            discountItem.startDate = Convert.ToDateTime(this.StartDateTextBox.Text);
-            discountItem.endDate = Convert.ToDateTime(this.EndDateTextBox.Text);
             discountItem.discountID = Convert.ToInt32(this.DiscountDropDownList.SelectedValue);
 
             mDiscountItems.InsertDiscountItem(discountItem);

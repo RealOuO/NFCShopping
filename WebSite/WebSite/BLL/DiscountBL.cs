@@ -32,11 +32,7 @@ namespace NFCShoppingWebSite.BLL
             return mRepository.GetDiscounts();
         }
 
-        public IEnumerable<Discount> GetDiscountsByDate(DateTime date)
-        {
-            return GetDiscounts().Where(discount => discount.createdAt == date);
-        }
-
+      
         public void InsertDiscount(Discount discount)
         {
             try
