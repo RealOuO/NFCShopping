@@ -38,7 +38,7 @@ public class MoreActivity extends ListActivity {
 
 		mConcernManager = new ConcernManager(this);
 
-		String[] strs = { "注册", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
+		String[] strs = { "登录", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, strs);
 		setListAdapter(adapter);
@@ -55,7 +55,7 @@ public class MoreActivity extends ListActivity {
 				// TODO Auto-generated method stub
 				switch (arg2) {
 				case 0: {
-					Intent intent = new Intent(MoreActivity.this, RegisterActivity.class);
+					Intent intent = new Intent(MoreActivity.this, LoginActivity.class);
 					startActivity(intent);
 				}
 					break;

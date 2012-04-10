@@ -46,6 +46,8 @@ public class CommentListActivity extends Activity {
 	protected static final int REFRESHREVIEWSFAILE = 1;
 	protected static final int REFRESHRATING = 2;
 
+	private float mRating=0.0f;
+
 	private ConcernManager mConcernManager = null;
 
 	private ArrayList<HashMap<String, Object>> mTempitems = null;
@@ -168,9 +170,17 @@ public class CommentListActivity extends Activity {
 			mCheckBox.setChecked(true);
 		}
 
-		DownloadRiviews(mItem.getProductId());
 	}
 
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		DownloadRiviews(mItem.getProductId());
+		DownloadRating(mItem.getProductId());
+		super.onResume();
+	}
+	
 	@Override
 	public void onNewIntent(Intent intent) {
 		setIntent(intent);
@@ -186,6 +196,25 @@ public class CommentListActivity extends Activity {
 
 	}
 
+	private void DownloadRating(final int productID) {
+
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mRating = WebServiceUtil.getInstance().getAverageRating(
+						productID);
+				Message message = new Message();
+				message.arg1 = REFRESHRATING;
+				message.obj = mRating;
+				handler.sendMessage(message);
+			}
+		});
+		thread.start();
+		thread = null;
+	}
+	
 	private void DownloadRiviews(final int productID) {
 		Thread thread = new Thread(new Runnable() {
 
@@ -228,7 +257,14 @@ public class CommentListActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				mProcess.setVisibility(View.GONE);
 				break;
-
+			case REFRESHRATING:
+				mItem.setRating(mRating);
+				mRatingBar.setRating(mRating);
+				mConcernManager.addConcernItem(mItem);
+				Log.d(TAG, "checked changed");
+				Toast.makeText(getApplicationContext(), "已经更新评分",
+						Toast.LENGTH_SHORT).show();
+				break;
 			}
 
 		}

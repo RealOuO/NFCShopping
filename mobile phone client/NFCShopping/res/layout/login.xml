@@ -19,10 +19,7 @@
             android:id="@+id/etUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <requestFocus />
-        </EditText>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,11 +62,11 @@
                 android:text="@string/login" />
 
             <Button
-                android:id="@+id/btCancel"
+                android:id="@+id/btRegist"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/recancle" />
+                android:text="@string/regist" />
         </LinearLayout>
     </RelativeLayout>
 
