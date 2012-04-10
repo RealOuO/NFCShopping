@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import java.util.Vector;
 
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
+import scut.bgooo.entities.Product;
 import scut.bgooo.ui.CommentActivity;
 import scut.bgooo.ui.DiscountItemListActivity;
 import scut.bgooo.ui.DiscountListActivity;
@@ -24,6 +27,9 @@ import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -33,6 +39,7 @@ public class TaskHandler implements Runnable {
 	private boolean isrun = true;
 	private static List<Task> mTaskList = new ArrayList<Task>();// 任务列表
 	public static HashMap<String, INFCActivity> allActivity = new HashMap<String, INFCActivity>();
+	public static HashMap<Integer, Bitmap> allIcon = new HashMap<Integer, Bitmap>();
 	public Weibo mWeibo = null;
 
 	@Override
@@ -106,9 +113,9 @@ public class TaskHandler implements Runnable {
 			try {
 				Weibo weibo = new Weibo();
 				Map<String, String> m = task.getTaskParam();
-				weibo.setToken(
-						WeiboUserListActivity.defaultUserInfo.GetAToken(),
-						WeiboUserListActivity.defaultUserInfo.GetASecret());
+				weibo.setToken(WeiboUserListActivity.defaultUserInfo
+						.GetAToken(), WeiboUserListActivity.defaultUserInfo
+						.GetASecret());
 				String commit = m.get("COMMIT");
 				weibo.updateStatus(commit);
 
@@ -136,10 +143,36 @@ public class TaskHandler implements Runnable {
 			int id = Integer.valueOf(task.getTaskParam().get("ID").toString());
 			Vector<DiscountItem> discountitem = WebServiceUtil.getInstance()
 					.getDiscountItems(id);
+			for (int i = 0; i < discountitem.size(); i++) {
+				Product product = ((Product) discountitem.get(i).getProperty(8));
+				HashMap<Integer, Object> map = new HashMap<Integer, Object>();
+				map.put(0, product);
+				Task new_task = new Task(Task.GET_PRODUCTIMAGE, map);
+				TaskHandler.addTask(new_task);			
+			}
 			Message msg = new Message();
 			msg.what = Task.GET_DISCOUNTITEM;
 			msg.obj = discountitem;
 			mHandle.sendMessage(msg);
+		}
+			break;
+		case Task.GET_PRODUCTIMAGE: {
+			try {
+				Product product = (Product) task.getTaskParam().get(0);
+				int id = Integer.valueOf(product.getProperty(1).toString());
+				String URL = WebServiceUtil.ImageURL + product.getProperty(8).toString();
+				URL url;
+				url = new URL(URL);
+				Bitmap bitmap = getProductImage(url);
+				allIcon.put(id, bitmap);
+				Message msg = new Message();
+				msg.what = Task.GET_PRODUCTIMAGE;
+				mHandle.sendMessage(msg);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 			break;
 		default: {
@@ -183,6 +216,12 @@ public class TaskHandler implements Runnable {
 				iwa.refresh("OK", msg.obj);
 			}
 				break;
+			case Task.GET_PRODUCTIMAGE: {
+				INFCActivity iwa = allActivity
+						.get(DiscountItemListActivity.class.getSimpleName());
+				iwa.refresh("IMAGE", msg.obj);
+			}
+				break;
 			default: {
 
 			}
@@ -206,4 +245,27 @@ public class TaskHandler implements Runnable {
 		inStream.close();
 		return outStream.toByteArray();
 	}
+
+	public Bitmap getProductImage(URL Url) {
+		Bitmap bitmap = null;
+		try {
+			URL url = Url;
+			HttpURLConnection conn;
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setReadTimeout(1000);
+			InputStream inputstream = conn.getInputStream();
+			byte[] data = readInputStream(inputstream);
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return bitmap;
+	}
+
 }

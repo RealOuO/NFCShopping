@@ -38,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String END_TIMESTAMP_COL = "endtimestamp";
 	public static final String TIMESTAMP_COL = "timestamp";
 	public static final String ISCOLLECTED_COL = "collected";
+	public static final String CONCERN_PRODUCTIMAGE = "icon";
 
 	public DBHelper(Context context, String name, CursorFactory factory,
 			int version) {
@@ -65,7 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ " REAL, " + RATING_COL + " REAL, " + BRAND_COL + " varchar, "
 				+ LOCATION_COL + " varchar, " + BARCODE_COL + " varchar, "
 				+ DESCRIPTION_COL + " varchar, " + TIMESTAMP_COL + " INTEGER, "
-				+ ISCOLLECTED_COL + " INTEGER);");
+				+ ISCOLLECTED_COL + " INTEGER," + CONCERN_PRODUCTIMAGE + " blob);");
 
 		Log.e("Database", "onCreate");
 	}
