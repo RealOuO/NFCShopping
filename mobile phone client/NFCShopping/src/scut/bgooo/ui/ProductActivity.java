@@ -1,5 +1,6 @@
 package scut.bgooo.ui;
 
+import java.io.IOException;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
@@ -11,6 +12,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -100,6 +103,24 @@ public class ProductActivity extends Activity {
 		// Parse the intent
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+			// Get an instance of the TAG from the NfcAdapter
+			Tag productTag=intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+			
+			MifareClassic mfc= MifareClassic.get(productTag);
+			
+			try{
+				//Conncet to card
+				mfc.connect();
+				boolean auth=false;
+				auth=mfc.authenticateSectorWithKeyA(0, MifareClassic.KEY_DEFAULT);
+				
+				if(auth){
+					byte[] data=mfc.readBlock(1);
+					
+				}
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
 			DownloadInfo();
 			Log.d(TAG, "discover a tag");
 		}

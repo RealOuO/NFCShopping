@@ -29,7 +29,7 @@
                         </span>! [
                         <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="注销"
                             LogoutPageUrl="~/" />
-                        ]
+                        ][ <a href="~/Account/ChangePassword.aspx" id="A1" runat="server">修改密码</a>]
                     </LoggedInTemplate>
                 </asp:LoginView>
             </div>

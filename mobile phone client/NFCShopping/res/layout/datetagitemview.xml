@@ -5,7 +5,7 @@
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
   android:paddingLeft="5dip"
-  android:background="#1E90FF"  
+  android:background="#696969"  
   >
   <TextView
   	android:id="@+id/tvDatetag"
