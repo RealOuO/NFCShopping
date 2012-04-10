@@ -56,10 +56,16 @@ public class ConcernItem implements java.io.Serializable {
 	/**
 	 * 这个是从数据库获取item的构造函数，要传入id
 	 * */
+	
+	/**
+	 *商品图片
+	 */	
+	private byte [] icon;
+	
 	public ConcernItem(int id, int productId, String name, int type,
 			String seccategory, float price, float rating, String brand,
 			String location, String barcode, String description,
-			long timestamp, short iscollected) {
+			long timestamp, short iscollected, byte[] data) {
 		Id = id;
 		ProductId = productId;
 		Name = name;
@@ -73,6 +79,7 @@ public class ConcernItem implements java.io.Serializable {
 		setDescription(description);
 		Timestamp = timestamp;
 		IsCollected = iscollected;
+		icon = data;
 	}
 
 	public ConcernItem(long timestamp) {
@@ -104,6 +111,9 @@ public class ConcernItem implements java.io.Serializable {
 		case 6:
 			temp = getRating();
 			break;
+		case 7: {
+			temp = getIcon();
+		}break;
 		default:
 			break;
 		}
@@ -161,6 +171,10 @@ public class ConcernItem implements java.io.Serializable {
 	public int getType() {
 		return Type;
 	}
+	
+	public byte[] getIcon() {
+		return icon;
+	}
 
 	public void setBarcode(String barcode) {
 		Barcode = barcode;
@@ -192,5 +206,9 @@ public class ConcernItem implements java.io.Serializable {
 
 	public void setSecCategory(String secCategory) {
 		SecCategory = secCategory;
+	}
+	
+	public void setIcon(byte[] data) {
+		icon = data;
 	}
 }

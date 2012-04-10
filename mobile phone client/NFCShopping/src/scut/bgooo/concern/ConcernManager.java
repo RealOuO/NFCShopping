@@ -34,7 +34,7 @@ public final class ConcernManager {
 			DBHelper.PRICE_COL, DBHelper.RATING_COL, DBHelper.TIMESTAMP_COL,
 			DBHelper.ISCOLLECTED_COL, DBHelper.BRAND_COL,
 			DBHelper.LOCATION_COL, DBHelper.BARCODE_COL,
-			DBHelper.SECCATEGORY_COL, DBHelper.DESCRIPTION_COL };
+			DBHelper.SECCATEGORY_COL, DBHelper.DESCRIPTION_COL , DBHelper.CONCERN_PRODUCTIMAGE};
 
 	private static final String[] COUNT_COLUMN = { "COUNT(1)" };
 
@@ -110,6 +110,7 @@ public final class ConcernManager {
 				String barcode = cursor.getString(10);
 				String category = cursor.getString(11);
 				String description = cursor.getString(12);
+				byte[] data = cursor.getBlob(13);
 				// 添加时间标签的代码段
 				// 用来根据刷卡的日期进行日期归类
 				scanDate = new Date(timestamp);
@@ -122,7 +123,7 @@ public final class ConcernManager {
 				// 这里还需要补充ConcernItem对象的具体属性才能确定
 				items.add(new ConcernItem(id, pid, name, type, category, price,
 						rating, brand, location, barcode, description,
-						timestamp, iscollected));
+						timestamp, iscollected, data));
 			}
 			return items;
 		} catch (ParseException e) {
@@ -164,6 +165,7 @@ public final class ConcernManager {
 				String barcode = cursor.getString(10);
 				String category = cursor.getString(11);
 				String description = cursor.getString(12);
+				byte[] data = cursor.getBlob(13);
 				// 添加时间标签的代码段
 				// 用来根据刷卡的日期进行日期归类
 				scanDate = new Date(timestamp);
@@ -173,9 +175,9 @@ public final class ConcernManager {
 					Date tag = formater.parse(date);
 					items.add(new ConcernItem(tag.getTime()));
 				}
-				items.add(new ConcernItem(id, pid, name, type, category, price,
+								items.add(new ConcernItem(id, pid, name, type, category, price,
 						rating, brand, location, barcode, description,
-						timestamp, iscollected));
+						timestamp, iscollected, data));
 			}
 			return items;
 		} catch (ParseException e) {
@@ -211,10 +213,11 @@ public final class ConcernManager {
 			String barcode = cursor.getString(10);
 			String category = cursor.getString(11);
 			String description = cursor.getString(12);
+			byte[] data = cursor.getBlob(13);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定
 			return new ConcernItem(id, pid, name, type, category, price,
 					rating, brand, location, barcode, description, timestamp,
-					iscollected);
+					iscollected, data);
 		} finally {
 			close(cursor, db);
 		}
@@ -253,10 +256,11 @@ public final class ConcernManager {
 			String barcode = cursor.getString(10);
 			String category = cursor.getString(11);
 			String description = cursor.getString(12);
+			byte[] data = cursor.getBlob(13);
 			// 这里还需要补充ConcernItem对象的具体属性才能确定
 			return new ConcernItem(id, pid, name, type, category, price,
 					rating, brand, location, barcode, description, timestamp,
-					iscollected);
+					iscollected, data);
 		} finally {
 			close(cursor, db);
 		}
@@ -364,7 +368,7 @@ public final class ConcernManager {
 		values.put(DBHelper.ISCOLLECTED_COL, item.getIsCollected());
 		values.put(DBHelper.SECCATEGORY_COL, item.getSecCategory());
 		values.put(DBHelper.DESCRIPTION_COL, item.getDescription());
-
+		values.put(DBHelper.CONCERN_PRODUCTIMAGE, item.getIcon());
 		try {
 			db = helper.getWritableDatabase();
 			cursor = db.query(DBHelper.CONCERN_TABLE_NAME,

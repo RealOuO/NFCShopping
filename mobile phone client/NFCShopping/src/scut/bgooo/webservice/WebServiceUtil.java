@@ -28,6 +28,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 
 	private static final String NAMESPACE = "http://tempuri.org/";
 	private static String URL = "http://192.168.1.103:8080/NFCShopping/ShopWebService.asmx";
+	public static String ImageURL = "http://192.168.1.103:8080/NFCShopping/Images/Products/";
 
 
 	private static final String REGIST = "Regist";

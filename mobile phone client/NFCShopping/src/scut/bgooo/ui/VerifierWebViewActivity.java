@@ -85,6 +85,4 @@ public class VerifierWebViewActivity extends Activity {
 		}
 	}
 
-	
-
 }

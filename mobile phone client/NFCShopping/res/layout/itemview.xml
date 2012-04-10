@@ -11,8 +11,8 @@
         android:id="@id/goods_image"
         android:layout_width="50.0dip"
         android:layout_height="50.0dip"
-        android:layout_marginLeft="5.0dip"
-        android:layout_marginTop="5.0dip"
+        android:background="@drawable/search_bg"
+        android:padding="5dip"
         android:saveEnabled="true" />
 
     <LinearLayout
