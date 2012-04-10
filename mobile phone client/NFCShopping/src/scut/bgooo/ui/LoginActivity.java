@@ -1,11 +1,13 @@
 package scut.bgooo.ui;
 
-
 import scut.bgooo.db.UserProfileUtil;
+import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.User;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +18,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * <p>
+ * 用户登录页面
+ * 
+ * <p>
+ * 登录后的账户信息会被保留
+ * 
+ * @author Leeforall
+ * @since 2012年4月9日
+ * 
+ * */
 public class LoginActivity extends Activity {
-	
+
 	protected static final int LOGINSUCCESS = 0;
 	protected static final int LOGINFAILE = 1;
 	private EditText mUserName;
@@ -25,52 +38,86 @@ public class LoginActivity extends Activity {
 	private Button mLogin;
 	private Button mRigist;
 	private User mUser = null;
-	
-	public ProgressDialog mProgressDialog;
-	
+
+	/**
+	 * 读取用户的登录信息变量
+	 * */
+	private Profile mProfile;
+	private ProgressDialog mProgressDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		mUserName=(EditText)findViewById(R.id.etUsername);
-		mPassWord=(EditText)findViewById(R.id.etPassword);
-		mRigist=(Button)findViewById(R.id.btRegist);
-		mLogin=(Button)findViewById(R.id.btLogin);
-		
+		mUserName = (EditText) findViewById(R.id.etUsername);
+		mPassWord = (EditText) findViewById(R.id.etPassword);
+		mRigist = (Button) findViewById(R.id.btRegist);
+		mLogin = (Button) findViewById(R.id.btLogin);
+
+		mProfile = UserProfileUtil.readProfile(getApplicationContext());
+		if (mProfile != null) {// 如果已经有保存了登录信息，则不必登录
+			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.haslogin);
+			builder.setTitle(mProfile.getUsername());
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+			builder.setCancelable(true);
+			builder.setPositiveButton(R.string.btOK,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int i2) {
+							dialog.dismiss();
+							Toast.makeText(getApplicationContext(), "请进行登录",
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+			builder.setNegativeButton(R.string.btBack,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							finish();
+						}
+
+					});
+			builder.show();
+		}
+
 		mRigist.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+				Intent intent = new Intent(LoginActivity.this,
+						RegisterActivity.class);
 				startActivity(intent);
 			}
 		});
-		
+
 		mLogin.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setMessage(LoginActivity.this.getResources().getString(
-						R.string.app_name));
-				mProgressDialog.setTitle(LoginActivity.this.getResources().getString(
-						R.string.app_name));
+				mProgressDialog.setMessage("登录中……");
+				mProgressDialog.setTitle(LoginActivity.this.getResources()
+						.getString(R.string.app_name));
 				mProgressDialog.show();
 				Login();
 			}
 		});
 	}
-	
-	private void Login(){
+
+	private void Login() {
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				mUser = WebServiceUtil.getInstance().login(mUserName.getText().toString(),
+				mUser = WebServiceUtil.getInstance().login(
+						mUserName.getText().toString(),
 						mPassWord.getText().toString());
 
 				Message message = new Message();
@@ -86,9 +133,9 @@ public class LoginActivity extends Activity {
 
 		thread.start();
 		thread = null;
-		
+
 	}
-	
+
 	final Handler handler = new Handler() {
 
 		@Override
@@ -97,11 +144,12 @@ public class LoginActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.arg1) {
 			case LOGINSUCCESS:
+				mProgressDialog.dismiss();
 				Toast.makeText(getApplicationContext(), "登陆成功",
 						Toast.LENGTH_SHORT).show();
 				MainActivity.mNowUser = (User) msg.obj;
-				UserProfileUtil.saveProfile(LoginActivity.this, (User) msg.obj, mPassWord.getText().toString());
-				mProgressDialog.dismiss();
+				UserProfileUtil.saveProfile(LoginActivity.this, (User) msg.obj,
+						mPassWord.getText().toString());
 				finish();
 				break;
 			case LOGINFAILE:

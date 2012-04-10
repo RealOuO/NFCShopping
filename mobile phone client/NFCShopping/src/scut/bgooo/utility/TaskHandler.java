@@ -221,6 +221,7 @@ public class TaskHandler implements Runnable {
 						.get(DiscountItemListActivity.class.getSimpleName());
 				iwa.refresh("IMAGE", msg.obj);
 			}
+				break;
 			default: {
 
 			}

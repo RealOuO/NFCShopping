@@ -17,6 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 用户反馈，意见建议页面
+ * 
+ * @author Lee
+ * @since 2012年4月9日
+ * */
 public class FeedBackActivity extends Activity {
 
 	protected static final int SUCCESS = 0;
@@ -55,6 +61,7 @@ public class FeedBackActivity extends Activity {
 	}
 
 	private void UpdateSuggestion() {
+		
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
@@ -73,7 +80,7 @@ public class FeedBackActivity extends Activity {
 						msg.arg1 = FAILE;
 					}
 					handler.sendMessage(msg);
-				}else{
+				} else {
 					Message msg = new Message();
 					msg.arg1 = NOUSER;
 					handler.sendMessage(msg);
