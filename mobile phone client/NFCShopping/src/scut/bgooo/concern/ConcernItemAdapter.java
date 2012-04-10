@@ -7,6 +7,8 @@ import java.util.List;
 import scut.bgooo.ui.R;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +86,9 @@ public class ConcernItemAdapter extends BaseAdapter {
 			vh.mGoodsPrice = (TextView) concernitem.findViewById(R.id.price);
 
 			ConcernItem item = mItems.get(position);
-			vh.mImageView.setBackgroundColor(R.drawable.logo);
+			byte [] data = item.getIcon();
+			Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+			vh.mImageView.setImageBitmap(bitmap);
 			vh.mGoodScore.setRating(item.getRating());
 			vh.mGoodsNmae.setText(item.getName());
 			vh.mGoodsPrice.setText(String.valueOf(item.getPrice()));
