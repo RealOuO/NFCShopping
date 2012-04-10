@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import scut.bgooo.concern.ConcernItem;
+import scut.bgooo.entities.User;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibo.WeiboUserItem;
 import scut.bgooo.weibo.WeiboUserManager;
@@ -26,7 +27,8 @@ public class MainActivity extends TabActivity {
 	public View msgTitle;// 信息头部按钮
 	private TabHost mTabHost;// 载体tabhost	
 	private TaskHandler mTaskHandler = new TaskHandler();
-	public static ArrayList<ConcernItem> itemArray=new ArrayList<ConcernItem>();
+	public static ArrayList<ConcernItem> mItemArray=new ArrayList<ConcernItem>();
+	public static User mNowUser=null;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -57,7 +59,7 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, CollectionListActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_DISCOUNT").setIndicator("优惠")
-				.setContent(new Intent(this, DiscountItemListActivity.class)));
+				.setContent(new Intent(this, DiscountListActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("TAB_MORE").setIndicator("更多")
 				.setContent(new Intent(this, MoreActivity.class)));

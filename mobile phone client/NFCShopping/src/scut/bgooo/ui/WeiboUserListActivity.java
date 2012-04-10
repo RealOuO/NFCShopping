@@ -265,7 +265,6 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		dataHelper.Close();
 		if (mList.size() != 0) {
 			if (defaultUser != -1) {
 				defaultUserInfo = mList.get(defaultUser);
@@ -281,6 +280,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		} else {
 			defaultUserInfo = null;
 		}
+		dataHelper.Close();
 		Log.d("NFC", "¹Ø±ÕÊý¾Ý¿â");
 		super.onDestroy();
 	}

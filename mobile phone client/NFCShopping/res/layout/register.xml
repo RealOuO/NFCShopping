@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -63,7 +63,7 @@
                 </TextView>
 
                 <EditText
-                    android:id="@id/repassword"
+                    android:id="@+id/repassword1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/repassword2"
@@ -86,7 +86,7 @@
                 </TextView>
 
                 <EditText
-                    android:id="@id/repassword"
+                    android:id="@+id/repassword2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/repeatpassword2"

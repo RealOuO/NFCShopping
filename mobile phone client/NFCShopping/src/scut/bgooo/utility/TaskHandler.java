@@ -14,8 +14,8 @@ import java.util.Vector;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.ui.CommentActivity;
-import scut.bgooo.ui.DiscountListActivity;
 import scut.bgooo.ui.DiscountItemListActivity;
+import scut.bgooo.ui.DiscountListActivity;
 import scut.bgooo.ui.WeiboUserListActivity;
 import scut.bgooo.webservice.IWebServiceUtil;
 import scut.bgooo.webservice.WebServiceUtil;
@@ -106,38 +106,42 @@ public class TaskHandler implements Runnable {
 			try {
 				Weibo weibo = new Weibo();
 				Map<String, String> m = task.getTaskParam();
-				weibo.setToken(WeiboUserListActivity.defaultUserInfo
-						.GetAToken(), WeiboUserListActivity.defaultUserInfo
-						.GetASecret());
+				weibo.setToken(
+						WeiboUserListActivity.defaultUserInfo.GetAToken(),
+						WeiboUserListActivity.defaultUserInfo.GetASecret());
 				String commit = m.get("COMMIT");
 				weibo.updateStatus(commit);
-				
+
 				Message msg = new Message();
 				msg.what = Task.SEND_COMMENT_WEIBO;
 				msg.obj = "OK";
 				mHandle.sendMessage(msg);
-				
+
 			} catch (WeiboException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 			break;
-		case Task.GET_DISCOUNT:{
-			Vector<Discount> discount = WebServiceUtil.getInstance().getDiscounts();
+		case Task.GET_DISCOUNT: {
+			Vector<Discount> discount = WebServiceUtil.getInstance()
+					.getDiscounts();
 			Message msg = new Message();
 			msg.what = Task.GET_DISCOUNT;
 			msg.obj = discount;
 			mHandle.sendMessage(msg);
-		}break;
-		case Task.GET_DISCOUNTITEM:{
+		}
+			break;
+		case Task.GET_DISCOUNTITEM: {
 			int id = Integer.valueOf(task.getTaskParam().get("ID").toString());
-			Vector<DiscountItem> discountitem = WebServiceUtil.getInstance().getDiscountItems(id);
+			Vector<DiscountItem> discountitem = WebServiceUtil.getInstance()
+					.getDiscountItems(id);
 			Message msg = new Message();
 			msg.what = Task.GET_DISCOUNTITEM;
 			msg.obj = discountitem;
 			mHandle.sendMessage(msg);
-		}break;
+		}
+			break;
 		default: {
 
 		}
@@ -156,26 +160,31 @@ public class TaskHandler implements Runnable {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case Task.GET_USER_INFORMATION: {
-				INFCActivity iwa = allActivity
-						.get(WeiboUserListActivity.class.getSimpleName());
+				INFCActivity iwa = allActivity.get(WeiboUserListActivity.class
+						.getSimpleName());
 				iwa.refresh(msg.obj);
 			}
 				break;
 			case Task.SEND_COMMENT_WEIBO: {
-				INFCActivity iwa = allActivity.get(CommentActivity.class.getSimpleName());
+				INFCActivity iwa = allActivity.get(CommentActivity.class
+						.getSimpleName());
 				iwa.refresh(msg.obj);
 			}
 				break;
-			case Task.GET_DISCOUNT:{
-				INFCActivity iwa = allActivity.get(DiscountItemListActivity.class.getSimpleName());
+			case Task.GET_DISCOUNT: {
+				INFCActivity iwa = allActivity.get(DiscountListActivity.class
+						.getSimpleName());
 				iwa.refresh("OK", msg.obj);
-			}break;
-			case Task.GET_DISCOUNTITEM:{
-				INFCActivity iwa = allActivity.get(DiscountListActivity.class.getSimpleName());
+			}
+				break;
+			case Task.GET_DISCOUNTITEM: {
+				INFCActivity iwa = allActivity
+						.get(DiscountItemListActivity.class.getSimpleName());
 				iwa.refresh("OK", msg.obj);
-			}break;
-			default:{
-				
+			}
+				break;
+			default: {
+
 			}
 			}
 		}

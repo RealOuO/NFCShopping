@@ -1,53 +1,145 @@
 package scut.bgooo.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
+import scut.bgooo.discount.DiscountItem;
 import scut.bgooo.entities.Discount;
-import scut.bgooo.entities.DiscountItem;
-import scut.bgooo.entities.Product;
 import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * 这个activity是为了展示不同期的优惠列表的
+ * 
+ * @author 肥哥
+ * 
+ */
 public class DiscountListActivity extends Activity implements INFCActivity {
 
-	private ArrayList<HashMap<String, Object>> mTempitems = null;
-
-	private ListView mListView;
-
-	private View mProgress;
+	private MyAdapter mAdapter;
+	private Vector<Discount> mDiscount = null;
+	private View mProgress = null;
+	private ListView mListView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.discountlist);
-		mProgress = findViewById(R.id.progress2);
-		Bundle bundle = getIntent().getBundleExtra("ID");
-		int id = Integer.valueOf(bundle.getString("ID"));
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("ID", id);
-		Task task = new Task(Task.GET_DISCOUNTITEM, map);
+		setContentView(R.layout.discountshit);
+		mProgress = findViewById(R.id.progress1);
+		mListView = (ListView) findViewById(R.id.discountshit_listview);
+		Task task = new Task(Task.GET_DISCOUNT, null);
 		TaskHandler.allActivity.put(DiscountListActivity.class.getSimpleName(),
 				this);
 		TaskHandler.addTask(task);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 
-		mListView = (ListView) findViewById(R.id.privilege_listview);
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(DiscountListActivity.this,
+						DiscountItemListActivity.class);
+				Discount discount = mDiscount.get(arg2);
+				String id = discount.getProperty(1).toString();
+				Bundle bundle = new Bundle();
+				bundle.putString("ID", id);
+				intent.putExtra("ID", bundle);
+				startActivity(intent);
+			}
+		});
+
+	}
+
+	private class MyAdapter extends BaseAdapter {
+
+		private Context mContext; // 运行上下文
+		private Vector<Discount> mListItems; // 商品信息集合
+		private LayoutInflater mListContainer; // 视图容器
+
+		public MyAdapter(Context context, Vector<Discount> listItems) {
+			mContext = context;
+			mListItems = listItems;
+			mListContainer = LayoutInflater.from(mContext);
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return mListItems.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int arg0, View arg1, ViewGroup arg2) {
+			// TODO Auto-generated method stub
+			final int selectID = arg0; // 表示已经设置到第几个了
+			ViewHolder viewHolder = null;
+			if (arg1 == null) {
+				viewHolder = new ViewHolder();
+				// 获取list_item布局文件的视图
+				arg1 = mListContainer.inflate(R.layout.discountshititem, null);
+				// 获取控件对象
+				viewHolder.mImageView = (ImageView) arg1
+						.findViewById(R.id.discount_image);
+				viewHolder.mDiscountDiscription = (TextView) arg1
+						.findViewById(R.id.discount_discription);
+				viewHolder.mDiscountTime = (TextView) arg1
+						.findViewById(R.id.discount_time);
+				// 设置控件集到arg1
+				arg1.setTag(viewHolder);
+			} else {
+				viewHolder = (ViewHolder) arg1.getTag();
+			}
+
+			Discount discount = mListItems.get(selectID);
+			viewHolder.mDiscountTime
+					.setText(discount.getProperty(3).toString());
+			viewHolder.mDiscountDiscription.setText(discount.getProperty(2)
+					.toString());
+
+			return arg1;
+		}
+
+		/**
+		 * 每一个listitem里的东西
+		 * 
+		 * @author 肥哥
+		 * 
+		 */
+		private class ViewHolder {
+			public ImageView mImageView;// 优惠期图片使用
+			public TextView mDiscountDiscription;// 优惠期数量
+			public TextView mDiscountTime;// 优惠期时间
+		}
 
 	}
 
@@ -62,111 +154,13 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		String result = (String) param[0];
 		if (result.equals("OK")) {
-			Vector<DiscountItem> discountitem = (Vector<DiscountItem>) param[1];
-			PrivilegeAdapter ma = new PrivilegeAdapter(this, discountitem);
-			mListView.setAdapter(ma);
 			mProgress.setVisibility(View.GONE);
-		}
-	}
-
-}
-
-class PrivilegeAdapter extends BaseAdapter {
-
-	Vector<DiscountItem> items;
-	Context context;
-
-	public PrivilegeAdapter(Context context, Vector<DiscountItem> items) {
-		this.context = context;
-		this.items = items;
-	}
-
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return items.size() + 1;
-	}
-
-	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		if (position == this.getCount() - 1) {
-			return null;
-		} else {
-			return items.get(position - 1);
-		}
-	}
-
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		if (position == this.getCount() - 1) {
-			View moreitem = LayoutInflater.from(context).inflate(
-					R.layout.moreitemsview, null);
-			TextView tv = (TextView) moreitem.findViewById(R.id.tvItemContent);
-			tv.setText("更多");
-			return moreitem;
-		} else {
-			View privilegeitem = null;
-
-			if (convertView != null
-					&& convertView.findViewById(R.id.tvUsername) != null) {
-				Log.d("getview", "doGetView-------get TextView-----------"
-						+ position);
-				privilegeitem = convertView;
-			} else {
-				Log.d("getview", "doGetView-------new TextView-----------"
-						+ position);
-				// 把xml布局文件变成View对象
-				privilegeitem = LayoutInflater.from(context).inflate(
-						R.layout.discountitem, null);
+			if (mDiscount != null) {
+				mDiscount = (Vector<Discount>) param[1];
+				mAdapter = new MyAdapter(this, mDiscount);
+				mListView.setAdapter(mAdapter);
 			}
-
-			vh.tvPrivilegeCost = (TextView) privilegeitem
-					.findViewById(R.id.tvPrivilegeCost);
-			vh.tvProductName = (TextView) privilegeitem
-					.findViewById(R.id.tvProductname);
-			vh.tvDiscount = (TextView) privilegeitem
-					.findViewById(R.id.tvDiscount);
-			vh.tvDuration = (TextView) privilegeitem
-					.findViewById(R.id.tvDuration);
-
-			double cost = Double.valueOf(((Product) items.get(position)
-					.getProperty(8)).getProperty(5).toString()) * 
-					Double.valueOf(items.get(position).getProperty(4)
-					.toString());
-			vh.tvPrivilegeCost.setText(Double.toString(cost));
-			
-
-			vh.tvProductName.setText(((Product) items.get(position)
-					.getProperty(8)).getProperty(4).toString());
-
-			
-			vh.tvDiscount
-					.setText(items.get(position).getProperty(4).toString());
-			
-			String duration = items.get(position).getProperty(6).toString()
-					+ "-" + items.get(position).getProperty(7).toString();
-			vh.tvDuration
-					.setText(duration);
-
-			return privilegeitem;
-
 		}
-	}
 
-	private static class ViewHolder {
-		TextView tvProductName;
-		TextView tvPrivilegeCost;
-		TextView tvDiscount;
-		TextView tvDuration;
 	}
-
-	private ViewHolder vh = new ViewHolder();
 }
