@@ -45,8 +45,8 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("ID", id);
 		Task task = new Task(Task.GET_DISCOUNTITEM, map);
-		TaskHandler.allActivity.put(DiscountItemListActivity.class
-				.getSimpleName(), this);
+		TaskHandler.allActivity.put(
+				DiscountItemListActivity.class.getSimpleName(), this);
 		TaskHandler.addTask(task);
 
 		mListView = (ListView) findViewById(R.id.privilege_listview);
@@ -60,18 +60,30 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 	}
 
 	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		Task task = new Task(Task.STOP_HANDLER, null);
+		TaskHandler.addTask(task);
+		super.onDestroy();
+	}
+
+	@Override
 	public void refresh(Object... param) {
 		// TODO Auto-generated method stub
 		String result = (String) param[0];
-		if (result.equals("OK")) {	
-			Vector<DiscountItem> discountitem = (Vector<DiscountItem>) param[1];		
+		if (result.equals("OK")) {
+			Vector<DiscountItem> discountitem = (Vector<DiscountItem>) param[1];
 			if (discountitem != null) {
-				PrivilegeAdapter ma = new PrivilegeAdapter(this, discountitem);						
+				PrivilegeAdapter ma = new PrivilegeAdapter(this, discountitem);
 				mListView.setAdapter(ma);
 			}
 			mProgress.setVisibility(View.GONE);
 		} else if (result.equals("IMAGE")) {
-			((PrivilegeAdapter) mListView.getAdapter()).notifyDataSetChanged();
+			PrivilegeAdapter pa=(PrivilegeAdapter) mListView.getAdapter();
+			if (pa != null) {
+				((PrivilegeAdapter) mListView.getAdapter())
+						.notifyDataSetChanged();
+			}
 		}
 	}
 }
@@ -139,36 +151,28 @@ class PrivilegeAdapter extends BaseAdapter {
 					.findViewById(R.id.tvProductname);
 			vh.tvDiscount = (TextView) privilegeitem
 					.findViewById(R.id.tvDiscount);
-			vh.tvDuration = (TextView) privilegeitem
-					.findViewById(R.id.tvDuration);
+
 			vh.ProductImage = (ImageView) privilegeitem
 					.findViewById(R.id.ivProductImage);
 
-			double cost = Double.valueOf(((Product) items.get(position)
-					.getProperty(8)).getProperty(5).toString())
+			Product product = ((Product) items.get(position).getProperty(6));
+			double cost = Double.valueOf(product.getProperty(5).toString())
 					* Double.valueOf(items.get(position).getProperty(4)
 							.toString()) / 100;
 
 			DecimalFormat df = new java.text.DecimalFormat("#0.00");
 			vh.tvPrivilegeCost.setText(df.format(cost) + "元");
 
-			vh.tvProductName.setText(((Product) items.get(position)
-					.getProperty(8)).getProperty(4).toString());
+			vh.tvProductName.setText(product.getProperty(4).toString());
 
 			vh.tvDiscount
 					.setText(items.get(position).getProperty(4).toString());
 
-			String duration = "起始："
-					+ items.get(position).getProperty(6).toString() + "\n"
-					+ "结束：" + items.get(position).getProperty(7).toString();
-			vh.tvDuration.setText(duration);
-
-			Product product = ((Product) items.get(position).getProperty(8));
 			int productID = Integer.valueOf(product.getProperty(1).toString());
 			if (TaskHandler.allIcon.get(productID) != null) {
 				Bitmap bitmap = TaskHandler.allIcon.get(productID);
 				vh.ProductImage.setImageBitmap(bitmap);
-			}			
+			}
 			return privilegeitem;
 
 		}
@@ -178,7 +182,6 @@ class PrivilegeAdapter extends BaseAdapter {
 		TextView tvProductName;// 商品名
 		TextView tvPrivilegeCost;//
 		TextView tvDiscount;// 优惠力度
-		TextView tvDuration;// 周期
 		ImageView ProductImage;
 	}
 

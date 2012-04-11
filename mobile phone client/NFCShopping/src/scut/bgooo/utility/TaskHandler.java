@@ -144,7 +144,7 @@ public class TaskHandler implements Runnable {
 			Vector<DiscountItem> discountitem = WebServiceUtil.getInstance()
 					.getDiscountItems(id);
 			for (int i = 0; i < discountitem.size(); i++) {
-				Product product = ((Product) discountitem.get(i).getProperty(8));
+				Product product = ((Product) discountitem.get(i).getProperty(6));
 				HashMap<Integer, Object> map = new HashMap<Integer, Object>();
 				map.put(0, product);
 				Task new_task = new Task(Task.GET_PRODUCTIMAGE, map);
@@ -161,8 +161,7 @@ public class TaskHandler implements Runnable {
 				Product product = (Product) task.getTaskParam().get(0);
 				int id = Integer.valueOf(product.getProperty(1).toString());
 				String URL = WebServiceUtil.ImageURL + product.getProperty(8).toString();
-				URL url;
-				url = new URL(URL);
+				URL url = new URL(URL);			
 				Bitmap bitmap = getProductImage(url);
 				allIcon.put(id, bitmap);
 				Message msg = new Message();

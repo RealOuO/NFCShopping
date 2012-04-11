@@ -64,8 +64,10 @@ public class CommentActivity extends Activity implements INFCActivity {
 		mShareCommitButton = (Button) findViewById(R.id.btShareAndCommit);
 		mCommitButton = (Button) findViewById(R.id.btCommit);
 		mRatingbar = (RatingBar) findViewById(R.id.ratingbar);
-		// mWeibo = (Weibo)bundle.get("WEIBO");
-
+		
+		mProductName=(TextView)findViewById(R.id.tvProductname);
+		mProductName.setText(mItem.getName());
+		
 		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
 		System.setProperty("weibo4j.oauth.consumerSecret",
 				Weibo.CONSUMER_SECRET);

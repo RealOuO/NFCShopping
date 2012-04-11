@@ -28,9 +28,11 @@
                     <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
                         Text='<%# Eval("description") %>'></asp:Label>
                     <div>
+                    <asp:Label ID="CreatingDateLabel" runat="server" Text='<%# Eval("startDate") %>'></asp:Label>
                     </div>
-                    <asp:Label ID="CreatingDateLabel" runat="server" Text='<%# Eval("createdAt") %>'></asp:Label>
+                    
                     <div>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("endDate") %>'></asp:Label>
                     </div>
                 </div>
             </div>

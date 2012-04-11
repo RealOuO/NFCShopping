@@ -49,7 +49,7 @@ public class CommentListActivity extends Activity {
 	protected static final int REFRESHREVIEWSFAILE = 1;
 	protected static final int REFRESHRATING = 2;
 
-	private float mRating=0.0f;
+	private float mRating = 0.0f;
 
 	private ConcernManager mConcernManager = null;
 
@@ -80,7 +80,7 @@ public class CommentListActivity extends Activity {
 
 		mProcess = this.findViewById(R.id.progress);
 
-		mPicture=(ImageView)findViewById(R.id.ivProduct);
+		mPicture = (ImageView) findViewById(R.id.ivProduct);
 		mFinishButton = (Button) findViewById(R.id.btFinish);
 		mFinishButton.setOnClickListener(new OnClickListener() {
 
@@ -164,7 +164,7 @@ public class CommentListActivity extends Activity {
 			}
 		});
 
-		byte [] data = mItem.getIcon();
+		byte[] data = mItem.getIcon();
 		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 		mPicture.setImageBitmap(bitmap);
 		mPriceTextView.setText(String.valueOf(mItem.getPrice()));
@@ -180,7 +180,6 @@ public class CommentListActivity extends Activity {
 
 	}
 
-
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -188,7 +187,7 @@ public class CommentListActivity extends Activity {
 		DownloadRating(mItem.getProductId());
 		super.onResume();
 	}
-	
+
 	@Override
 	public void onNewIntent(Intent intent) {
 		setIntent(intent);
@@ -222,7 +221,7 @@ public class CommentListActivity extends Activity {
 		thread.start();
 		thread = null;
 	}
-	
+
 	private void DownloadRiviews(final int productID) {
 		Thread thread = new Thread(new Runnable() {
 
@@ -233,7 +232,7 @@ public class CommentListActivity extends Activity {
 						productID);
 
 				Message message = new Message();
-				if (reviews==null) {
+				if (reviews == null) {
 					message.arg1 = REFRESHREVIEWSFAILE;
 				} else {
 					message.arg1 = REFRESHREVIEWSSUCCESS;
@@ -344,8 +343,9 @@ class CommentAdapter extends BaseAdapter {
 			vh.tvUserName = (TextView) commentitem
 					.findViewById(R.id.tvUsername);
 
-			vh.tvCreateAt
-					.setText(items.get(position).getProperty(6).toString());
+			String date[] = items.get(position).getProperty(6).toString()
+					.split("T");
+			vh.tvCreateAt.setText("日期：" + date[0] + "\n时间：" + date[1]);
 			vh.tvUserName.setText(((User) items.get(position).getProperty(8))
 					.getProperty(2).toString());
 			vh.tvComment.setText(items.get(position).getProperty(4).toString());

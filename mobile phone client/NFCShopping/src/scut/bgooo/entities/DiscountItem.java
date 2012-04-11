@@ -15,13 +15,16 @@ import org.ksoap2.serialization.SoapObject;
  */
 public class DiscountItem implements KvmSerializable ,Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int Id;
 	private int ProductId;
 	private int DiscountId;
 	private float Percent;
 	private String Description;
-	private String StartDate;
-	private String EndDate;
 	private String EntityKey;
 
 	public Product Product;
@@ -50,12 +53,6 @@ public class DiscountItem implements KvmSerializable ,Serializable{
 			res = this.Description;
 			break;
 		case 6:
-			res = this.StartDate;
-			break;
-		case 7:
-			res = this.EndDate;
-			break;
-		case 8:
 			res = this.Product;
 			break;
 		default:
@@ -67,7 +64,7 @@ public class DiscountItem implements KvmSerializable ,Serializable{
 	@Override
 	public int getPropertyCount() {
 		// TODO Auto-generated method stub
-		return 9;
+		return 7;
 	}
 
 	@Override
@@ -99,14 +96,6 @@ public class DiscountItem implements KvmSerializable ,Serializable{
 			arg2.name = "description";
 			break;
 		case 6:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "startDate";
-			break;
-		case 7:
-			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "endDate";
-			break;
-		case 8:
 			arg2.type = PropertyInfo.OBJECT_CLASS;
 			arg2.name = "Product";
 			break;
@@ -141,12 +130,6 @@ public class DiscountItem implements KvmSerializable ,Serializable{
 			this.Description = arg1.toString();
 			break;
 		case 6:
-			this.StartDate = arg1.toString();
-			break;
-		case 7:
-			this.EndDate = arg1.toString();
-			break;
-		case 8:
 			this.Product = (Product) arg1;
 			break;
 		default:
