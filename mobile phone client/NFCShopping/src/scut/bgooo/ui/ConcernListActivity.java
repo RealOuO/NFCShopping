@@ -106,11 +106,13 @@ public class ConcernListActivity extends ListActivity {
 		dialogText.setVisibility(View.INVISIBLE);
 
 		windorManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-		handler.post(runnable);
 
+		handler.post(runnable);
 		// 注册上下文菜单
 		this.registerForContextMenu(getListView());
 	}
+	
+	
 
 	/**
 	 * 移除窗口的方法
@@ -139,6 +141,7 @@ public class ConcernListActivity extends ListActivity {
 							| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
 					PixelFormat.TRANSLUCENT);
 			windorManager.addView(dialogText, lp);
+
 		}
 	};
 
@@ -225,11 +228,29 @@ public class ConcernListActivity extends ListActivity {
 			break;
 		case 2:
 			MainActivity.mItemArray.add(mItems.get(position));
-			Toast.makeText(getApplicationContext(), "已经加入对比", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "已经加入对比",
+					Toast.LENGTH_SHORT).show();
 			break;
 		}
 		return true;
 
+	}
+
+	
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		windorManager.removeView(dialogText);
+		super.onDestroy();
+	}
+
+
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 
 }

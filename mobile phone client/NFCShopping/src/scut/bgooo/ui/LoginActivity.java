@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
 	/**
 	 * 读取用户的登录信息变量
 	 * */
-	
+
 	private Profile mProfile;
 	private ProgressDialog mProgressDialog;
 
@@ -68,6 +68,7 @@ public class LoginActivity extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, int i2) {
 							dialog.dismiss();
+							UserProfileUtil.saveProfile(getApplicationContext(), null);
 							Toast.makeText(getApplicationContext(), "请进行登录",
 									Toast.LENGTH_SHORT).show();
 						}
@@ -149,8 +150,11 @@ public class LoginActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "登陆成功",
 						Toast.LENGTH_SHORT).show();
 				MainActivity.mNowUser = (User) msg.obj;
-				UserProfileUtil.saveProfile(LoginActivity.this, (User) msg.obj,
-						mPassWord.getText().toString());
+				Profile profile = new Profile(Integer.valueOf(((User) msg.obj)
+						.getProperty(1).toString()), ((User) msg.obj)
+						.getProperty(2).toString(), mPassWord.getText()
+						.toString(), null);
+				UserProfileUtil.saveProfile(LoginActivity.this, profile);
 				finish();
 				break;
 			case LOGINFAILE:

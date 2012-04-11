@@ -386,7 +386,7 @@ public final class ConcernManager {
 						new String[] { String.valueOf(item.getProductId()) });
 			}
 		} finally {
-			close(null, db);
+			close(cursor, db);
 		}
 	}
 

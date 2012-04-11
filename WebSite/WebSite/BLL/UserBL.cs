@@ -106,7 +106,7 @@ namespace NFCShoppingWebSite.BLL
         /*用户签到函数*/
         public bool AutoAddVisitedTime(User origuser)
         {
-            if (origuser.lastVisitedDate.Date.Equals(DateTime.Now.Date))
+            if (!origuser.lastVisitedDate.Date.Equals(DateTime.Now.Date))
             {
                 try
                 {
@@ -116,7 +116,10 @@ namespace NFCShoppingWebSite.BLL
                     user.userName = origuser.userName;
                     user.visitedTimes = origuser.visitedTimes + 1;
                     user.gender = origuser.gender;
-                    user.lastVisitedDate = origuser.lastVisitedDate;
+                    //user.lastVisitedDate = origuser.lastVisitedDate;
+                    //注意这里要改时间啊。。。。
+                    user.lastVisitedDate = DateTime.Now;
+
                     mRepository.UpdateUser(user, origuser, true);
                     return true;
                 }

@@ -30,6 +30,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,9 +66,12 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webuser);
+
 		
+
 		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
-		System.setProperty("weibo4j.oauth.consumerSecret", Weibo.CONSUMER_SECRET);
+		System.setProperty("weibo4j.oauth.consumerSecret",
+				Weibo.CONSUMER_SECRET);
 
 		mClearList = (Button) findViewById(R.id.clear);
 		mDelUser = (Button) findViewById(R.id.del);
@@ -97,8 +101,9 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 				NetworkInfo netMobile = conn
 						.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 				NetworkInfo wifi = conn
-				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-				if (false == netMobile.isConnectedOrConnecting()&&false==wifi.isConnectedOrConnecting()) {
+						.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+				if (false == netMobile.isConnectedOrConnecting()
+						&& false == wifi.isConnectedOrConnecting()) {
 					Toast.makeText(getApplicationContext(), "请检查网络配置",
 							Toast.LENGTH_SHORT).show();
 				} else {
@@ -287,7 +292,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 
 	@Override
 	protected void onRestart() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 		super.onRestart();
 
 	}
@@ -382,8 +387,8 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 								}
 								notifyDataSetChanged();
 								Toast toast = Toast.makeText(
-										getApplicationContext(), "您选择"
-												+ user.GetUserName() + "为默认用户",
+										getApplicationContext(),
+										"您选择" + user.GetUserName() + "为默认用户",
 										Toast.LENGTH_SHORT);
 								toast.show();
 							}

@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="10" />
+   <uses-sdk android:minSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
@@ -14,7 +14,7 @@
         android:icon="@drawable/pig"
         android:label="@string/app_name" >
         <activity
-            android:name=".MainActivity"
+            android:name=".NFCShoppingTab"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +52,7 @@
 					Activity 都应该包括 "android.intent.category.DEFAULT" category，不然将导致
 					Intent 匹配失败。 从上面的论述还可以获得以下信息： 1、一个 Intent 可以有多个
 					category，但至少会有一个，也是默认的一个 category。 2、只有 Intent 的所有 category
-					都匹配上，Activity 才会接收这个 Intent。
+					都匹配上，Activity 才会接收这个 Intent。
                 -->
             </intent-filter>
         </activity>
@@ -62,8 +62,7 @@
         </activity>
         <activity
             android:name=".CommentActivity"
-            android:label="@string/app_name"
-             />
+            android:label="@string/app_name" />
         <activity
             android:name=".DiscountItemListActivity"
             android:label="@string/app_name" />

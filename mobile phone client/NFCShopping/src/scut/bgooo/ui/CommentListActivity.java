@@ -143,7 +143,6 @@ public class CommentListActivity extends Activity {
 		mCheckBox = (CheckBox) findViewById(R.id.cbStar);
 
 		mConcernManager = new ConcernManager(this);
-		resolveIntent(getIntent());
 
 		mCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -183,27 +182,11 @@ public class CommentListActivity extends Activity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		DownloadRiviews(mItem.getProductId());
-		DownloadRating(mItem.getProductId());
+		DownloadRiviews();
 		super.onResume();
 	}
 
-	@Override
-	public void onNewIntent(Intent intent) {
-		setIntent(intent);
-		resolveIntent(intent);
-	}
-
-	void resolveIntent(Intent intent) {
-		// Parse the intent
-		String action = intent.getAction();
-
-		// mItem = (ConcernItem) intent.getSerializableExtra("ConcernItem");
-		//
-
-	}
-
-	private void DownloadRating(final int productID) {
+	private void DownloadRating() {
 
 		Thread thread = new Thread(new Runnable() {
 
@@ -211,7 +194,7 @@ public class CommentListActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mRating = WebServiceUtil.getInstance().getAverageRating(
-						productID);
+						mItem.getProductId());
 				Message message = new Message();
 				message.arg1 = REFRESHRATING;
 				message.obj = mRating;
@@ -222,14 +205,14 @@ public class CommentListActivity extends Activity {
 		thread = null;
 	}
 
-	private void DownloadRiviews(final int productID) {
+	private void DownloadRiviews() {
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				reviews = WebServiceUtil.getInstance().getReviewsByProductId(
-						productID);
+						mItem.getProductId());
 
 				Message message = new Message();
 				if (reviews == null) {
@@ -237,6 +220,7 @@ public class CommentListActivity extends Activity {
 				} else {
 					message.arg1 = REFRESHREVIEWSSUCCESS;
 					message.obj = reviews;
+					DownloadRating();
 				}
 				handler.sendMessage(message);
 			}

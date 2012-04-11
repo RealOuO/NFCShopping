@@ -41,6 +41,11 @@
     <string name="nodata">暂无数据</string>
     <string name="addtocompare">加入对比</string>
     <string name="checkcomment">查看评论</string>
-    <string name="haslogin">已经登录，\n是否重新登录？</string>
+    <string name="haslogin">已经登录，是否清除\n原账户信息并重新登录？</string>
+    <string name="main_concern">关注</string>
+    <string name="main_comparation">对比</string>
+    <string name="main_collection">收藏</string>
+    <string name="main_discount">优惠</string>
+    <string name="main_more">更多</string>
 
 </resources>

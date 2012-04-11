@@ -6,11 +6,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Product;
+import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.utility.Task;
 import scut.bgooo.webservice.WebServiceUtil;
@@ -31,6 +35,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProductActivity extends Activity {
 
@@ -40,6 +45,11 @@ public class ProductActivity extends Activity {
 	protected static final int FAILE = 1;
 	protected static final int REFRESHRATING = 2;
 	protected static final int GET_PRODUCTIMAGE = 3;
+	protected static final int NOUSER = 4;
+	protected static final int SIGNINSUCCESS = 5;
+	protected static final int SIGNINFAILE = 6;
+	protected static final int HASSIGNED = 7;
+
 	private float mRating;
 
 	private ConcernManager mConcernManager = null;
@@ -64,6 +74,7 @@ public class ProductActivity extends Activity {
 
 	private Button btCheckComment;
 	private Button btAddToCompare;
+	private String mTodayStr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +109,11 @@ public class ProductActivity extends Activity {
 
 		mProcess = this.findViewById(R.id.progress);
 
+		long now = System.currentTimeMillis();
+		Date dNow = new Date(now);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		mTodayStr = format.format(dNow);
+
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
 	}
@@ -114,28 +130,68 @@ public class ProductActivity extends Activity {
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
 			// Get an instance of the TAG from the NfcAdapter
-//			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-//
-//			MifareClassic mfc = MifareClassic.get(productTag);
-//
-//			try {
-//				// Conncet to card
-//				mfc.connect();
-//				boolean auth = false;
-//				auth = mfc.authenticateSectorWithKeyA(0,
-//						MifareClassic.KEY_DEFAULT);
-//
-//				if (auth) {
-//					byte[] data = mfc.readBlock(1);
-//
-//				}
-//			} catch (IOException ex) {
-//				ex.printStackTrace();
-//			}
+			// Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+			//
+			// MifareClassic mfc = MifareClassic.get(productTag);
+			//
+			// try {
+			// // Conncet to card
+			// mfc.connect();
+			// boolean auth = false;
+			// auth = mfc.authenticateSectorWithKeyA(0,
+			// MifareClassic.KEY_DEFAULT);
+			//
+			// if (auth) {
+			// byte[] data = mfc.readBlock(1);
+			//
+			// }
+			// } catch (IOException ex) {
+			// ex.printStackTrace();
+			// }
 			DownloadInfo();
 			Log.d(TAG, "discover a tag");
 		}
 
+	}
+
+	private void Signin() {
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Log.d(TAG, "签到线程");
+				Profile nowUser = UserProfileUtil
+						.readProfile(getApplicationContext());
+
+				Message msg = new Message();
+				if (nowUser != null) {
+					if (!mTodayStr.equals(nowUser.getLastVisitDate())) {
+						Log.d(TAG, mTodayStr);
+						//更新用户在本地的签到时间，以此来作为是否调用签到webservice的依据
+						nowUser.setLastVisitDate(mTodayStr);
+						if (WebServiceUtil.getInstance().AddVisitedTimes(
+								nowUser.getId())) {
+							msg.arg1 = SIGNINSUCCESS;
+							UserProfileUtil.saveProfile(getApplicationContext(), nowUser);
+						} else {
+							//服务端也有签到时间的判断，如果客户端可以进入签到，
+							//但是服务端记录的时间并不能签到的时候，也不能完成签到
+							msg.arg1 = SIGNINFAILE;
+						}
+					} else {
+						//本地判断用户已经签到了
+						msg.arg1 = HASSIGNED;
+					}
+					handler.sendMessage(msg);
+				} else {
+					//没有绑定用户
+					msg.arg1 = NOUSER;
+					handler.sendMessage(msg);
+				}
+			}
+		});
+
+		thread.start();
+		thread = null;
 	}
 
 	private void DownloadInfo() {
@@ -146,14 +202,15 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"1234");
+						"1324");
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;
 				} else {
 					message.arg1 = SUCCESS;
 					message.obj = mProduct;
-					DownloadRating();//下载评分
+					Signin();
+					DownloadRating();// 下载评分
 				}
 				handler.sendMessage(message);
 			}
@@ -170,12 +227,11 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mRating = WebServiceUtil.getInstance().getAverageRating(
-						Integer.valueOf(mProduct.getProperty(1)
-								.toString()));
+						Integer.valueOf(mProduct.getProperty(1).toString()));
 				Message message = new Message();
 				message.arg1 = REFRESHRATING;
 				message.obj = mRating;
-				DownloadPicture();//下载图片
+				DownloadPicture();// 下载图片
 				handler.sendMessage(message);
 			}
 		});
@@ -190,8 +246,6 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					// int id =
-					// Integer.valueOf(mProduct.getProperty(1).toString());
 					String URL = WebServiceUtil.ImageURL
 							+ mProduct.getProperty(8).toString();
 					URL url;
@@ -218,6 +272,20 @@ public class ProductActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			switch (msg.arg1) {
+			case SIGNINSUCCESS:
+				Toast.makeText(getApplicationContext(), "签到成功", 2000).show();
+				break;
+			case SIGNINFAILE:
+				Toast.makeText(getApplicationContext(), "签到失败，\n服务器已经有您的签到记录", 2000).show();
+				break;
+			case NOUSER:
+				Toast.makeText(getApplicationContext(), "请先登录\n才能签到", 2000)
+						.show();
+				break;
+			case HASSIGNED:
+				Toast.makeText(getApplicationContext(), "恭喜您\n今天签到任务已经完成！", 2000)
+						.show();
+				break;
 			case SUCCESS:
 				Log.d(TAG, mProduct.toString());
 				mBarcode.setText(mProduct.getProperty(3).toString());
@@ -228,7 +296,6 @@ public class ProductActivity extends Activity {
 				mDescription.setText(mProduct.getProperty(9).toString());
 				mCategory.setText(((SecCategory) mProduct.getProperty(10))
 						.getProperty(3).toString());
-
 				mProcess.setVisibility(View.GONE);
 				break;
 			case FAILE:
@@ -238,7 +305,6 @@ public class ProductActivity extends Activity {
 				break;
 			case REFRESHRATING:
 				btCheckComment.setClickable(true);
-				
 				break;
 			case GET_PRODUCTIMAGE: {
 				if (msg.obj != null) {

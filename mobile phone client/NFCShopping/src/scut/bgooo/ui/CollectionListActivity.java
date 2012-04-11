@@ -35,7 +35,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class CollectionListActivity extends ListActivity {
 
-	private static final String TAG = CollectionListActivity.class.getSimpleName();
+	private static final String TAG = CollectionListActivity.class
+			.getSimpleName();
+
 	/**
 	 * <p>
 	 * 移除窗口的内部私有类，实现Runnable接口
@@ -92,12 +94,12 @@ public class CollectionListActivity extends ListActivity {
 		dialogText.setVisibility(View.INVISIBLE);
 
 		windorManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-		handler.post(runnable);
 
+		handler.post(runnable);
 		// 注册上下文菜单
 		this.registerForContextMenu(getListView());
 	}
-	
+
 	/**
 	 * 移除窗口的方法
 	 * 
@@ -127,7 +129,7 @@ public class CollectionListActivity extends ListActivity {
 			windorManager.addView(dialogText, lp);
 		}
 	};
-	
+
 	/**
 	 * listview 滚动事件监听器
 	 * */
@@ -136,11 +138,11 @@ public class CollectionListActivity extends ListActivity {
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-			
-			if(mItems.size()==0){ 
-				return ;//如果没有数据，则直接跳出滚动事件的处理
+
+			if (mItems.size() == 0) {
+				return;// 如果没有数据，则直接跳出滚动事件的处理
 			}
-			
+
 			int lastItem = firstVisibleItem + visibleItemCount - 1;
 			int middleItem = (lastItem + firstVisibleItem) / 2;
 			if (isReady) {
@@ -178,7 +180,7 @@ public class CollectionListActivity extends ListActivity {
 					CommentListActivity.class);
 			intent.putExtra("mItem", mItems.get(position));
 			startActivity(intent);
-			
+
 		}
 	};
 
@@ -206,5 +208,18 @@ public class CollectionListActivity extends ListActivity {
 		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
 		((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
 		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		windorManager.removeView(dialogText);
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 }

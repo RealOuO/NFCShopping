@@ -544,10 +544,12 @@
           <ConnectorPoint PointX="6.75" PointY="2.65625" />
           <ConnectorPoint PointX="10.5" PointY="2.65625" />
         </AssociationConnector>
-        <AssociationConnector Association="ShopDBModel.FK_Reviews_Users" ManuallyRouted="false">
+        <AssociationConnector Association="ShopDBModel.FK_Reviews_Users" ManuallyRouted="true">
           <ConnectorPoint PointX="9.40625" PointY="7.625" />
-          <ConnectorPoint PointX="9.40625" PointY="2.671875" />
-          <ConnectorPoint PointX="10.5" PointY="2.671875" />
+          <ConnectorPoint PointX="9.40625" PointY="3.546875" />
+          <ConnectorPoint PointX="10.1390625" PointY="3.546875" />
+          <ConnectorPoint PointX="10.1390625" PointY="3.2125415632761531" />
+          <ConnectorPoint PointX="10.5" PointY="3.2125415632761531" />
         </AssociationConnector>
         <AssociationConnector Association="ShopDBModel.FK_Suggestions_Users" ManuallyRouted="false">
           <ConnectorPoint PointX="9.75" PointY="8.9850162760416659" />
