@@ -22,6 +22,18 @@
     <div>
     </div>
     <div>
+                <div>
+                    <asp:Label ID="label6" runat="server" Text="开始时间"></asp:Label>
+                    <div>
+                        <asp:TextBox ID="StartDateTextBox" runat="server"></asp:TextBox>
+                        <div>
+                            <asp:Label ID="Label7" runat="server" Text="结束时间"></asp:Label>
+                            <div>
+                                <asp:TextBox ID="EndDateTextBox" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <asp:GridView ID="DiscountItemsGridView" runat="server" 
                     AutoGenerateColumns="false" CellPadding="4" DataKeyNames="id" 
                     ForeColor="#333333" GridLines="None" Width="367px" 
@@ -52,7 +64,8 @@
                             HeaderText="折扣" />
                         <asp:TemplateField ControlStyle-Width="100px" HeaderText="操作">
                             <ItemTemplate>
-                                <asp:Button ID="Delete" runat="server" CommandName="DeleteItem" CommandArgument='<%# Eval("id") %>' OnCommand="OnDeleteItem" Text="删除"/>
+                                <asp:Button ID="Edit" runat="server" CommandName="EditItem" CommandArgument='<%# Eval("id") %>' OnCommand="OnOperateItem" Text="编辑"/>
+                            <asp:Button ID="Delete" runat="server" CommandName="DeleteItem" CommandArgument='<%# Eval("id") %>' OnCommand="OnOperateItem" Text="删除"/>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -62,12 +75,12 @@
         Width="73px" OnClick="SubmitButton_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="InsertItemButton" runat="server" Height="29px" Text="增加优惠商品" 
-        Width="103px" OnClick="DeleteButton_Click" />
+        Width="103px" CommandName="InsertItem" oncommand="OnOperateItem" />
     &nbsp;<asp:ObjectDataSource ID="DiscountsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
         DeleteMethod="DeleteDiscount" InsertMethod="InsertDiscount" SelectMethod="GetDiscountByID"
         TypeName="NFCShoppingWebSite.BLL.DiscountBL" UpdateMethod="UpdateDiscount">
         <SelectParameters>
-            <asp:QueryStringParameter DefaultValue="1" Name="discountID" QueryStringField="discountID"
+            <asp:QueryStringParameter DefaultValue="-1" Name="discountID" QueryStringField="discountID"
                 Type="Int32" />
         </SelectParameters>
         <UpdateParameters>

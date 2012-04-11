@@ -357,7 +357,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DiscountInformation_Discounts">
-          <End Role="Discounts" Type="ShopDBModel.Discount" Multiplicity="1" />
+          <End Role="Discounts" Type="ShopDBModel.Discount" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="DiscountItems" Type="ShopDBModel.DiscountItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Discounts">
