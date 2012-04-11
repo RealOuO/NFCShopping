@@ -43,6 +43,11 @@ namespace NFCShoppingWebSite.BLL
             return GetProducts().ToList().Find(p=>p.barCode.Equals(barcode));
         }
 
+        public IEnumerable<Product> GetProductsByName(String name)
+        {
+            return GetProducts().Where(product => product.productName == name);
+        }
+
         public Product GetProduct(Int32 id)
         {
             try

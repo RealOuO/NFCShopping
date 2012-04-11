@@ -27,5 +27,14 @@ namespace NFCShoppingWebSite.WebPages
         {
             Response.Redirect("~/WebPages/DiscountEdit.aspx?isNew=false&discountID=" + GetDiscount().discountID);
         }
+
+        protected void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DiscountBL discountBL = new DiscountBL();
+
+            discountBL.DeleteDiscount(GetDiscount());
+
+            Response.Redirect("~/WebPages/Discounts.aspx");
+        }
     }
 }

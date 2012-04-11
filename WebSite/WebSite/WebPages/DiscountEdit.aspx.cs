@@ -18,7 +18,7 @@ namespace NFCShoppingWebSite.WebPages
     {
         private DiscountBL mDiscounts = new DiscountBL();
 
-        private bool mIsNew;
+        private Boolean mIsNew;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,31 +26,58 @@ namespace NFCShoppingWebSite.WebPages
             var keyAndValuePairs = QueryStringDecoder.Decode(queryStr, new string[] { "&" });
             string result;
 
+            // Add a variable to the ViewState indicating whether the controls need to be initialized or not.
+            if (ViewState["NeedInit"] == null)
+            {
+                ViewState.Add("NeedInit", true);
+            }
+            else
+            {
+                ViewState["NeedInit"] = false;
+            }
+
             if (keyAndValuePairs.TryGetValue("isNew", out result))
             {
                 // Store the status indicating whether it's inserting or updating.
                 ViewState.Add("IsNew", Convert.ToBoolean(result));
                 mIsNew = Convert.ToBoolean(result);
 
-                if (mIsNew)
+                if ((bool)ViewState["NeedInit"])
                 {
-                    this.TitleLabel.Text = "新增优惠活动";
-                }
-                else
-                {
-                    Discount discount = GetDiscount();
+                    // Try to get the current discount information from the SessionState.
+                    Discount discount = (Discount)Session["CurrentState"];
 
-                    this.TitleLabel.Text = "编辑优惠活动";
-                    this.DiscountDescriptionTextBox.Text = discount.description;
-                    this.DiscountIDLabel.Text = discount.discountID.ToString();
-
-                    /*if(Session["DiscountItemCollection"] == null)
+                    if (discount == null)
                     {
-                      */  
+                        // Failed, get it from the database.
+                        discount = GetDiscount();
+                    }
+                    else
+                    {
+                        // Succeeded, remove it from the SessionStete in case we will get old data next time.
+                        Session.Remove("CurrentState");
+                    }
+
+                    if (mIsNew)
+                    {
+                        this.TitleLabel.Text = "新增优惠活动";
+                    }
+                    else
+                    {
+                        this.TitleLabel.Text = "编辑优惠活动";
+                    }
+
+                    if (discount != null)
+                    {
+                        this.DiscountDescriptionTextBox.Text = discount.description;
+                        this.DiscountIDLabel.Text = discount.discountID.ToString();
+                        this.StartDateTextBox.Text = discount.startDate.ToShortDateString();
+                        this.EndDateTextBox.Text = discount.endDate.ToShortDateString();
+                    }
                 }
             }
 
-            // Create a buffer for the discount items.
+            // Create 2 buffers for the discount items.
             if (ViewState["DataSource"] == null)
             {
                 DataTable source = new DataTable();           // Track all the data.
@@ -71,9 +98,18 @@ namespace NFCShoppingWebSite.WebPages
                 filteredSource.Columns.Add("discountPercent");
                 filteredSource.Columns.Add("id");   
 
-                // Fill it with the discount items of the current discount and 
-                // bind the data from the data buffer only under the editing mode.
-                if (!mIsNew)
+                // Try to fill it with the temporary buffers from the SessionState if they exist.
+                if(Session["IsEditMode"] != null)
+                {
+                    source = (DataTable)Session["DataSource"];
+                    filteredSource = (DataTable)Session["FilteredDataSource"];
+
+                    // Remove the buffers in the SessionState.
+                    Session.Remove("IsEditMode");
+                    Session.Remove("DataSource");
+                    Session.Remove("FilteredDataSource");
+                }
+                else if (!mIsNew) // Else fill them with the discount items of the current discount only under the editing mode.
                 {
                     // For each discount item, construct two rows based on it. One for the source while the other one for the filtered source.
                     foreach (var discountItem in GetDiscount().DiscountItems)
@@ -104,26 +140,14 @@ namespace NFCShoppingWebSite.WebPages
                 ViewState.Add("FilteredDataSource", filteredSource);
             }
 
+            // Data binding.
             DataTable filteredData = (DataTable)ViewState["FilteredDataSource"];
-
-            // Skip all the deleting rows.
 
             this.DiscountItemsGridView.DataSource = filteredData;
             this.DiscountItemsGridView.DataBind();
         }
 
-        protected void DeleteButton_Click(object sender, EventArgs e)
-        {
-            Discount discount = GetDiscount();
-            DiscountBL discountBL = new DiscountBL();
-
-            discountBL.DeleteDiscount(discount);
-            Response.Redirect("~/WebPages/Discounts.aspx");
-
-            discountBL.Dispose();
-        }
-
-        protected void OnDeleteItem(Object sender, CommandEventArgs e)
+        protected void OnOperateItem(Object sender, CommandEventArgs e)
         {
             DataTable source = (DataTable)ViewState["DataSource"];
             DataTable filteredSource = (DataTable)ViewState["FilteredDataSource"];
@@ -150,6 +174,71 @@ namespace NFCShoppingWebSite.WebPages
                     }
                 }
             }
+            else if (e.CommandName == "EditItem")
+            {
+                // Mark the deleting row's status as "M" and jump to the item editing page.
+                foreach (DataRow row in source.Rows)
+                {
+                    if ((string)row["id"] == (string)e.CommandArgument)
+                    {
+                        // Change its status to "M" only when this item is not a new inserted item.
+                        if ((string)row["status"] != "I")
+                        {
+                            row["status"] = "M";
+                        }
+
+                        // Store the data in the ViewState into the SessionState temporarily.
+                        Session.Add("DataSource", source);
+                        Session.Add("FilteredDataSource", filteredSource);
+
+                        // Add a variable in the SessionState to indicate the current mode.
+                        Session.Add("IsEditMode", !mIsNew);
+
+                        // Store the current editing state into the SessionState temporarily.
+                        Discount discount = new Discount();
+
+                        discount.discountID = Convert.ToInt32(DiscountIDLabel.Text);
+                        discount.description = DiscountDescriptionTextBox.Text;
+                        discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
+                        discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
+
+                        Session.Add("CurrentState", discount);
+
+                        // Jump to the discount item editing page.
+                        Response.Redirect("~/WebPages/DiscountItemEdit.aspx?isNew=false&discountItemID=" + (string)row["id"]);
+                    }
+                }
+            }
+            else if (e.CommandName == "InsertItem")
+            {
+                // Store the data in the ViewState into the SessionState temporarily.
+                Session.Add("DataSource", source);
+                Session.Add("FilteredDataSource", filteredSource);
+
+                // Add a variable in the SessionState to indicate the current mode.
+                Session.Add("IsEditMode", !mIsNew);
+
+                // Store the current editing state into the SessionState temporarily.
+                Discount discount = new Discount();
+
+                if (!mIsNew)
+                {
+                    discount.discountID = Convert.ToInt32(DiscountIDLabel.Text);
+                }
+                else
+                {
+                    discount.discountID = -1;
+                }
+
+                discount.description = DiscountDescriptionTextBox.Text;
+                discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
+                discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
+
+                Session.Add("CurrentState", discount);
+
+                // Jump to the discount item editing page.
+                Response.Redirect("~/WebPages/DiscountItemEdit.aspx?isNew=true");
+            }
 
             // Data binding.
             DiscountItemsGridView.DataSource = filteredSource;
@@ -158,6 +247,9 @@ namespace NFCShoppingWebSite.WebPages
 
         protected Discount GetDiscount()
         {
+            if (mIsNew)
+                return null;
+
             var enumerator = DiscountsDataSource.Select().GetEnumerator();
             enumerator.MoveNext();
 
@@ -169,9 +261,11 @@ namespace NFCShoppingWebSite.WebPages
             // Assign an unique id for each button.
             foreach (GridViewRow row in DiscountItemsGridView.Rows)
             {
-                Button deleteButton = (Button)row.Cells[3].Controls[1];
+                Button deleteButton = (Button)row.Cells[3].Controls[3];
+                Button editButton = (Button)row.Cells[3].Controls[1];
 
                 deleteButton.ID = "Delete" + row.RowIndex.ToString();
+                editButton.ID = "Edit" + row.RowIndex.ToString();
             }
         }
 
@@ -184,25 +278,56 @@ namespace NFCShoppingWebSite.WebPages
             DataTable source = (DataTable)ViewState["DataSource"];
 
             // First, the discount.
-            discount.discountID = origDiscount.discountID;
             discount.description = DiscountDescriptionTextBox.Text;
-            
-            mDiscounts.UpdateDiscount(discount, 
+            discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
+            discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
 
+            if (mIsNew)
+            {
+                mDiscounts.InsertDiscount(discount);
+            }
+            else
+            {
+                discount.discountID = origDiscount.discountID;
+                mDiscounts.UpdateDiscount(discount, origDiscount);
+            }
+
+            // Then, the corresponding discount items.
             foreach (DataRow row in source.Rows)
             {
-                DiscountItem item = discountItemBL.GetDiscountItem(Convert.ToInt32(row["id"]));
+                DiscountItem item = new DiscountItem();
+                DiscountItem origItem = discountItemBL.GetDiscountItem(Convert.ToInt32(row["id"]));
 
-                if (row["status"] == "D")
+                if ((string)row["status"] == "D")
                 {
                     // Delete this row.
-                    discount.DiscountItems.Remove(item);
+                    discountItemBL.DeleteDiscountItem(origItem);
                 }
-                else if(row["status"] == "M")
+                else if ((string)row["status"] == "M")
                 {
                     // Update this row.
-                    discount.DiscountItems.Single<DiscountItem>(
+                    item.id = origItem.id;
+                    item.productID = Convert.ToInt32(row["productID"]);
+                    item.description = row["description"].ToString();
+                    item.discountID = discount.discountID;
+                    item.discountPercent = (float)Convert.ToDouble(row["discountPercent"]);
+
+                    discountItemBL.UpdateDiscountItem(item, origItem);
+                }
+                else if ((string)row["status"] == "I")
+                {
+                    // Insert this row.
+                    item.productID = Convert.ToInt32(row["productID"]);
+                    item.description = row["description"].ToString();
+                    item.discountID = discount.discountID;
+                    item.discountPercent = (float)Convert.ToDouble(row["discountPercent"]);
+
+                    discountItemBL.InsertDiscountItem(item);
+                }
             }
+
+            // Jump back to the discount list page.
+            Response.Redirect("~/WebPages/Discounts.aspx");
         }
     }
 }

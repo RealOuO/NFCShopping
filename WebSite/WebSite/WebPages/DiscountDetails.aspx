@@ -71,7 +71,7 @@
             </div>
         </ItemTemplate>
     </asp:ListView>
-    <asp:Button ID="EditButton" runat="server" Text="编辑" Height="39px" 
-        Width="105px" onclick="EditButton_Click" /><asp:Button ID="DeleteButton" runat="server"
-                Text="删除" Height="39px" Width="105px" />
+    <asp:Button ID="EditButton" runat="server" Text="编辑" Height="39px" Width="105px"
+        OnClick="EditButton_Click" />
+    <asp:Button ID="DeleteButton" runat="server" Text="删除" Height="39px" Width="105px" OnClick="DeleteButton_Click" />
 </asp:Content>
