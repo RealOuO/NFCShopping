@@ -16,6 +16,7 @@ namespace NFCShoppingWebSite.WebPages
         private ProductBL mProducts = new ProductBL();
 
         private const string DEFAULT_IMAGE = "SampleProductImage.gif";
+        private bool mIsNew;
 
         /**
          *  The directory path to store temporary images.
@@ -108,6 +109,7 @@ namespace NFCShoppingWebSite.WebPages
             {
                 // Store the status indicating whether it's inserting or updating.
                 ViewState.Add("IsNew", Convert.ToBoolean(result));
+                mIsNew = Convert.ToBoolean(result);
 
                 if (Convert.ToBoolean(result))
                 {
@@ -141,6 +143,9 @@ namespace NFCShoppingWebSite.WebPages
          */
         protected Product GetProduct()
         {
+            if (mIsNew)
+                return null;
+
             var enumerator = ProductsDataSource.Select().GetEnumerator();
             enumerator.MoveNext();
 

@@ -41,7 +41,7 @@ namespace NFCShoppingWebSite.DAL
         {
             try
             {
-                IDiscountItemRepository discountItemRepository = new DiscountItemRepository();
+                /*IDiscountItemRepository discountItemRepository = new DiscountItemRepository();
                 var discountItems = discountItemRepository.GetDiscountItems().Where(discountItem => discountItem.discountID == discount.discountID);
 
                 foreach (DiscountItem discountItem in discountItems)
@@ -49,7 +49,7 @@ namespace NFCShoppingWebSite.DAL
                     discountItemRepository.DeleteDiscountItem(discountItem, false);
                 }
 
-                discountItemRepository.Dispose();
+                discountItemRepository.Dispose();*/
                 
                 mContext.Discounts.Attach(discount);
                 mContext.Discounts.DeleteObject(discount);
