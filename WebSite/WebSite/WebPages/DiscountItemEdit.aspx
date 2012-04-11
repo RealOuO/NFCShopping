@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Styles/Site.Master" AutoEventWireup="true"
     CodeBehind="DiscountItemEdit.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.DiscountItemEdit" %>
 
+<%@ Register assembly="DatePicker" namespace="DatePicker" tagprefix="picker" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -44,8 +46,8 @@
     <asp:Label ID="Label6" runat="server" Text="截止日期"></asp:Label>
     <br />
     <br />
-    <asp:TextBox ID="EndDateTextBox" runat="server"></asp:TextBox>
     <br />
+    <asp:TextBox ID="EndDateTextBox" runat="server"></asp:TextBox>
     <br />
     <br />
     <asp:Button ID="Button1" runat="server" Text="确定" OnClick="EditButton_Click"/>

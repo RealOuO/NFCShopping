@@ -65,7 +65,6 @@
     <Content Include="App_Data\ShopDB_log.ldf">
       <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
-    <Content Include="Images\Products\SampleProductImage.gif" />
     <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
@@ -83,7 +82,6 @@
     <Content Include="WebPages\Categories.aspx" />
     <Content Include="WebPages\DiscountAdd.aspx" />
     <Content Include="WebPages\DiscountDetails.aspx" />
-    <Content Include="WebPages\DiscountItemAdd.aspx" />
     <Content Include="WebPages\DiscountItemEdit.aspx" />
     <Content Include="WebPages\Discounts.aspx" />
     <Content Include="WebPages\DiscountEdit.aspx" />
@@ -212,13 +210,6 @@
     <Compile Include="WebPages\DiscountDetails.aspx.designer.cs">
       <DependentUpon>DiscountDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebPages\DiscountItemAdd.aspx.cs">
-      <DependentUpon>DiscountItemAdd.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebPages\DiscountItemAdd.aspx.designer.cs">
-      <DependentUpon>DiscountItemAdd.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WebPages\DiscountItemEdit.aspx.cs">
       <DependentUpon>DiscountItemEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -302,6 +293,10 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShopEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Products\" />
+    <Folder Include="Images\Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

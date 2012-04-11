@@ -4,9 +4,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div>
+<div>
         <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" 
             ForeColor="Black" Text="Label"></asp:Label>
+            <asp:Label ID="DiscountIDLabel" runat="server" Text='<%# Eval("discountID") %>' Visible="False"></asp:Label>
     </div>
     <div>
     </div>
@@ -21,27 +22,44 @@
     <div>
     </div>
     <div>
-        <div>
-            <asp:GridView ID="DiscountItemsGridView" runat="server" CellPadding="4" 
-                ForeColor="#333333" GridLines="None" Width="367px">
-                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-                <EditRowStyle BackColor="#999999" />
-                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-            </asp:GridView>
-        </div>
-    </div>
-    <div>
+                <asp:GridView ID="DiscountItemsGridView" runat="server" 
+                    AutoGenerateColumns="false" CellPadding="4" DataKeyNames="id" 
+                    ForeColor="#333333" GridLines="None" Width="367px" 
+                    onload="DiscountItemsGridView_Load">
+                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                    <EditRowStyle BackColor="#999999" />
+                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                    <Columns>
+                        <asp:TemplateField ControlStyle-Width="100px" HeaderText="优惠商品" 
+                            ItemStyle-Height="25px">
+                            <ItemTemplate>
+                                <a href='<%# VirtualPathUtility.ToAbsolute("~/WebPages/ProductDetails.aspx?productID=" + Eval("productID")) %>'>
+                                <asp:Label ID="Product" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
+                                </a>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="description" HeaderStyle-Width="300px" 
+                            HeaderText="描述" />
+                        <asp:BoundField DataField="discountPercent" HeaderStyle-Width="50px" 
+                            HeaderText="折扣" />
+                        <asp:TemplateField ControlStyle-Width="100px" HeaderText="操作">
+                            <ItemTemplate>
+                                <asp:Button ID="Delete" runat="server" CommandName="DeleteItem" CommandArgument='<%# Eval("id") %>' OnCommand="OnDeleteItem" Text="删除"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
     </div>
     <asp:Button ID="SubmitButton" runat="server" Height="29px" Text="确定" 
-        Width="73px" OnClick="EditButton_Click" />
+        Width="73px" OnClick="SubmitButton_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="InsertItemButton" runat="server" Height="29px" Text="增加优惠商品" 
         Width="103px" OnClick="DeleteButton_Click" />
@@ -57,19 +75,4 @@
             <asp:Parameter Name="origDiscount" Type="Object" />
         </UpdateParameters>
     </asp:ObjectDataSource>
-    <asp:ObjectDataSource ID="DiscountItemsDataSource" runat="server" 
-        DataObjectTypeName="NFCShoppingWebSite.Access_Data.DiscountItem" 
-        DeleteMethod="DeleteDiscountItem" InsertMethod="InsertDiscountItem" 
-        SelectMethod="GetDiscountItemsByDiscountID" 
-        TypeName="NFCShoppingWebSite.BLL.DiscountItemBL" 
-        UpdateMethod="UpdateDiscountItem">
-        <SelectParameters>
-            <asp:QueryStringParameter DefaultValue="0" Name="discountID" 
-                QueryStringField="discountID" Type="Int32" />
-        </SelectParameters>
-        <UpdateParameters>
-            <asp:Parameter Name="discountItem" Type="Object" />
-            <asp:Parameter Name="origDiscountItem" Type="Object" />
-        </UpdateParameters>
-    </asp:ObjectDataSource>
-</asp:Content>
+    </asp:Content>
