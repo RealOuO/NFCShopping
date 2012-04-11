@@ -45,7 +45,7 @@
                                 <%# Eval("productName") %><br />
                             </a>
                             <%# Eval("price", "{0:c}") %>元<br />
-                            <a href='DiscountItemAdd.aspx?productID=<%# Eval("productID") %>'>
+                            <a href='DiscountItemEdit.aspx?productID=<%# Eval("productID") %>'>
                             设置优惠
                             </a>
                         </td>

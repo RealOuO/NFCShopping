@@ -36,7 +36,10 @@ namespace NFCShoppingWebSite.BLL
         {
             try
             {
-                return GetDiscountItems().Single(discountItem => discountItem.id == id);
+                var items = GetDiscountItems();
+                DiscountItem item = items.Single(discountItem => discountItem.id == id);
+
+                return item;
             }
             catch (Exception ex)
             {

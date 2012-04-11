@@ -62,19 +62,14 @@
                     </asp:TemplateField>
                     <asp:BoundField HeaderText="描述" DataField="description" HeaderStyle-Width="300px" />
                     <asp:BoundField HeaderText="折扣" DataField="discountPercent" HeaderStyle-Width="50px" />
-                    <asp:TemplateField HeaderText="操作" HeaderStyle-Width="100px">
-                        <ItemTemplate>
-                            <a href='<%# VirtualPathUtility.ToAbsolute("~/WebPages/DiscountItemEdit.aspx?isNew=false&discountItemID=" + Eval("id")) %>'>
-                                编辑 </a>
-                        </ItemTemplate>
-                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
             <div>
             <br />
             </div>
-            <asp:Button ID="EditButton" runat="server" Text="编辑" Height="39px" Width="105px" /><asp:Button ID="DeleteButton" runat="server"
-                Text="删除" Height="39px" Width="105px" />
         </ItemTemplate>
     </asp:ListView>
+    <asp:Button ID="EditButton" runat="server" Text="编辑" Height="39px" 
+        Width="105px" onclick="EditButton_Click" /><asp:Button ID="DeleteButton" runat="server"
+                Text="删除" Height="39px" Width="105px" />
 </asp:Content>

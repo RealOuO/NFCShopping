@@ -22,6 +22,15 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.Label TitleLabel;
         
         /// <summary>
+        /// DiscountIDLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DiscountIDLabel;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -83,14 +92,5 @@ namespace NFCShoppingWebSite.WebPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource DiscountsDataSource;
-        
-        /// <summary>
-        /// DiscountItemsDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource DiscountItemsDataSource;
     }
 }
