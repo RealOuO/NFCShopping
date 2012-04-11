@@ -9,9 +9,9 @@
         android:id="@id/goods_image"
         android:layout_width="50.0dip"
         android:layout_height="50.0dip"
-        android:layout_marginLeft="5.0dip"
-        android:layout_marginTop="5.0dip"
-        android:background="@drawable/weiqun"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:src="@android:drawable/ic_menu_gallery"
         android:saveEnabled="true" />
 
     <LinearLayout
@@ -75,9 +75,9 @@
                 android:id="@id/goods_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="left"
-                android:layout_marginRight="10.0dip"
-                android:text="平均得分"
+                android:text="平均评分"
                 android:textSize="15.0sp" />
             <!-- 得分条 -->
 
@@ -86,6 +86,7 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/goods_score"
                 android:numStars="5"
                 android:rating="3" />

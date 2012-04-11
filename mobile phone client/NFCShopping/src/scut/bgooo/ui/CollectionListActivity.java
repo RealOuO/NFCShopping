@@ -178,6 +178,7 @@ public class CollectionListActivity extends ListActivity {
 					CommentListActivity.class);
 			intent.putExtra("mItem", mItems.get(position));
 			startActivity(intent);
+			
 		}
 	};
 

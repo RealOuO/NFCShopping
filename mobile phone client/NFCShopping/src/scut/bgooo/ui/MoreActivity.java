@@ -3,8 +3,9 @@ package scut.bgooo.ui;
 import java.util.List;
 import java.util.Map;
 
-
 import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.db.UserProfileUtil;
+import scut.bgooo.entities.Profile;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -26,10 +27,10 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MoreActivity extends ListActivity {
 
-
 	private static final String TAG = MoreActivity.class.getSimpleName();
 
 	private ConcernManager mConcernManager = null;
+	private Profile profile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +39,8 @@ public class MoreActivity extends ListActivity {
 
 		mConcernManager = new ConcernManager(this);
 
-		String[] strs = { "登录", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, strs);
-		setListAdapter(adapter);
-
 		// 提示对话框
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
 
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
@@ -55,14 +50,18 @@ public class MoreActivity extends ListActivity {
 				// TODO Auto-generated method stub
 				switch (arg2) {
 				case 0: {
-					Intent intent = new Intent(MoreActivity.this, LoginActivity.class);
+					Intent intent = new Intent(MoreActivity.this,
+							LoginActivity.class);
 					startActivity(intent);
+
 				}
 					break;
 				case 1: {
-					Intent intent = new Intent(MoreActivity.this, WeiboUserListActivity.class);					
+					Intent intent = new Intent(MoreActivity.this,
+							WeiboUserListActivity.class);
 					startActivity(intent);
-				}break;					
+				}
+					break;
 				case 2:
 					builder.setMessage(R.string.msg_sure);
 					builder.setCancelable(true);
@@ -79,8 +78,9 @@ public class MoreActivity extends ListActivity {
 					builder.setNegativeButton(R.string.btCancel, null);
 					builder.show();
 					break;
-				case 3:{
-					Intent intent = new Intent(MoreActivity.this,CommentActivity.class);
+				case 3: {
+					Intent intent = new Intent(MoreActivity.this,
+							CommentActivity.class);
 					startActivity(intent);
 				}
 
@@ -88,7 +88,8 @@ public class MoreActivity extends ListActivity {
 				case 4:
 					break;
 				case 5: {
-					Intent intent = new Intent(MoreActivity.this, FeedBackActivity.class);
+					Intent intent = new Intent(MoreActivity.this,
+							FeedBackActivity.class);
 					startActivity(intent);
 				}
 
@@ -97,4 +98,16 @@ public class MoreActivity extends ListActivity {
 		});
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		ArrayAdapter<String> adapter;
+		String[] login = { "登录", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
+
+		profile = UserProfileUtil.readProfile(getApplicationContext());
+		adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, login);
+		setListAdapter(adapter);
+		super.onResume();
+	}
 }

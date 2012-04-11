@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@id/discount_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
             android:padding="5dip"
             android:src="@drawable/pig" >
         </ImageView>
@@ -54,7 +54,8 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="创建时间:" >
+                    android:layout_gravity="center_vertical"
+                    android:text="优惠时间:" >
                 </TextView>
 
                 <TextView

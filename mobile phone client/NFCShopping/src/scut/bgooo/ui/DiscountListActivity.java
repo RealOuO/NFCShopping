@@ -121,11 +121,13 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 			}
 
 			Discount discount = mListItems.get(selectID);
-			viewHolder.mDiscountTime
-					.setText(discount.getProperty(3).toString());
 			viewHolder.mDiscountDiscription.setText(discount.getProperty(2)
 					.toString());
-
+			String startDate=discount.getProperty(3).toString().split("T")[0];
+			String endDate=discount.getProperty(4).toString().split("T")[0];
+			String duration = "ÆðÊ¼£º" +startDate  + "\n"
+					+ "½áÊø£º" + endDate;
+			viewHolder.mDiscountTime.setText(duration);
 			return arg1;
 		}
 
@@ -162,7 +164,6 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 
 			mProgress.setVisibility(View.GONE);
 		}
-		
 
 	}
 }

@@ -19,6 +19,8 @@ import weibo4android.Weibo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +34,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
@@ -46,7 +49,7 @@ public class CommentListActivity extends Activity {
 	protected static final int REFRESHREVIEWSFAILE = 1;
 	protected static final int REFRESHRATING = 2;
 
-	private float mRating=0.0f;
+	private float mRating = 0.0f;
 
 	private ConcernManager mConcernManager = null;
 
@@ -59,6 +62,7 @@ public class CommentListActivity extends Activity {
 	private TextView mPriceTextView;
 	private RatingBar mRatingBar;
 	private CheckBox mCheckBox;
+	private ImageView mPicture;
 
 	private View mProcess;
 
@@ -76,6 +80,7 @@ public class CommentListActivity extends Activity {
 
 		mProcess = this.findViewById(R.id.progress);
 
+		mPicture = (ImageView) findViewById(R.id.ivProduct);
 		mFinishButton = (Button) findViewById(R.id.btFinish);
 		mFinishButton.setOnClickListener(new OnClickListener() {
 
@@ -159,6 +164,9 @@ public class CommentListActivity extends Activity {
 			}
 		});
 
+		byte[] data = mItem.getIcon();
+		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		mPicture.setImageBitmap(bitmap);
 		mPriceTextView.setText(String.valueOf(mItem.getPrice()));
 		mNameTextView.setText(mItem.getName());
 		mRatingBar.setRating(mItem.getRating());
@@ -172,7 +180,6 @@ public class CommentListActivity extends Activity {
 
 	}
 
-
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -180,7 +187,7 @@ public class CommentListActivity extends Activity {
 		DownloadRating(mItem.getProductId());
 		super.onResume();
 	}
-	
+
 	@Override
 	public void onNewIntent(Intent intent) {
 		setIntent(intent);
@@ -214,7 +221,7 @@ public class CommentListActivity extends Activity {
 		thread.start();
 		thread = null;
 	}
-	
+
 	private void DownloadRiviews(final int productID) {
 		Thread thread = new Thread(new Runnable() {
 
@@ -225,7 +232,7 @@ public class CommentListActivity extends Activity {
 						productID);
 
 				Message message = new Message();
-				if (reviews==null) {
+				if (reviews == null) {
 					message.arg1 = REFRESHREVIEWSFAILE;
 				} else {
 					message.arg1 = REFRESHREVIEWSSUCCESS;
@@ -336,8 +343,9 @@ class CommentAdapter extends BaseAdapter {
 			vh.tvUserName = (TextView) commentitem
 					.findViewById(R.id.tvUsername);
 
-			vh.tvCreateAt
-					.setText(items.get(position).getProperty(6).toString());
+			String date[] = items.get(position).getProperty(6).toString()
+					.split("T");
+			vh.tvCreateAt.setText("日期：" + date[0] + "\n时间：" + date[1]);
 			vh.tvUserName.setText(((User) items.get(position).getProperty(8))
 					.getProperty(2).toString());
 			vh.tvComment.setText(items.get(position).getProperty(4).toString());

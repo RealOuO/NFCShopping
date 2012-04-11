@@ -42,6 +42,7 @@ public class LoginActivity extends Activity {
 	/**
 	 * 读取用户的登录信息变量
 	 * */
+	
 	private Profile mProfile;
 	private ProgressDialog mProgressDialog;
 

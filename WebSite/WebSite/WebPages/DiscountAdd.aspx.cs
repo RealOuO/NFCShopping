@@ -25,7 +25,6 @@ namespace NFCShoppingWebSite.WebPages
             Discount discount = new Discount();
 
             discount.description = this.DiscountDescriptionTextBox.Text;
-            discount.createdAt = Convert.ToDateTime(this.CreatedTextBox.Text);
             mDiscounts.InsertDiscount(discount);
             mDiscounts.Dispose();
             Response.Redirect("~/WebPages/Discounts.aspx");

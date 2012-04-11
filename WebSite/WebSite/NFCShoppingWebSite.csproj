@@ -59,6 +59,7 @@
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
+    <Content Include="Account\PasswordRecovery.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="App_Data\ShopDB.mdf" />
     <Content Include="App_Data\ShopDB_log.ldf">
@@ -133,6 +134,13 @@
     </Compile>
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\PasswordRecovery.aspx.cs">
+      <DependentUpon>PasswordRecovery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\PasswordRecovery.aspx.designer.cs">
+      <DependentUpon>PasswordRecovery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -276,6 +284,9 @@
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Styles\Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Temp\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Access_Data\ShopEntities.edmx">

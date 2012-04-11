@@ -23,7 +23,8 @@ public class Discount implements KvmSerializable,Serializable {
 	private int Id; // 优惠ID，就是对应的优惠列表的id
 	private String EntityKey;
 	private String Description;//优惠描述
-	private String CreatedAt;//创建时间
+	private String StartDate;
+	private String EndDate;
 
 	@Override
 	public Object getProperty(int arg0) {
@@ -40,7 +41,10 @@ public class Discount implements KvmSerializable,Serializable {
 			res = this.Description;
 			break;
 		case 3:
-			res = this.CreatedAt;
+			res = this.StartDate;
+			break;
+		case 4:
+			res = this.EndDate;
 			break;
 		default:
 			break;
@@ -51,7 +55,7 @@ public class Discount implements KvmSerializable,Serializable {
 	@Override
 	public int getPropertyCount() {
 		// TODO Auto-generated method stub
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -72,7 +76,11 @@ public class Discount implements KvmSerializable,Serializable {
 			break;
 		case 3:
 			arg2.type = PropertyInfo.STRING_CLASS;
-			arg2.name = "createdAt";
+			arg2.name = "startDate";
+			break;
+		case 4:
+			arg2.type = PropertyInfo.STRING_CLASS;
+			arg2.name = "endDate";
 			break;
 		default:
 			break;
@@ -95,7 +103,10 @@ public class Discount implements KvmSerializable,Serializable {
 			this.Description=arg1.toString();
 			break;
 		case 3:
-			this.CreatedAt=arg1.toString();
+			this.StartDate=arg1.toString();
+			break;
+		case 4:
+			this.EndDate=arg1.toString();
 			break;
 		default:
 			break;

@@ -11,9 +11,11 @@ public class UserProfileUtil {
 	public static void saveProfile(Context con, User user, String password) {
 		SharedPreferences sp = con.getSharedPreferences("profile",
 				Context.MODE_PRIVATE);
-		sp.edit().putString("username", user.getProperty(2).toString())
-				.putString("password", password)
-				.putInt("id", (Integer) user.getProperty(1)).commit();
+		if (user != null) {
+			sp.edit().putString("username", user.getProperty(2).toString())
+					.putString("password", password)
+					.putInt("id", (Integer) user.getProperty(1)).commit();
+		}
 	}
 
 	// 读取用户验证的Access Token

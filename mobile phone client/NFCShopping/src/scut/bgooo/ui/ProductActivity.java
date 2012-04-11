@@ -1,16 +1,27 @@
 package scut.bgooo.ui;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.SecCategory;
+import scut.bgooo.utility.Task;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,11 +39,13 @@ public class ProductActivity extends Activity {
 	protected static final int SUCCESS = 0;
 	protected static final int FAILE = 1;
 	protected static final int REFRESHRATING = 2;
+	protected static final int GET_PRODUCTIMAGE = 3;
 	private float mRating;
 
 	private ConcernManager mConcernManager = null;
 
 	private String mBarcodeStr = "";
+	private byte[] mdata = null;
 
 	private ConcernItem mItem;
 	private Product mProduct;
@@ -65,7 +78,7 @@ public class ProductActivity extends Activity {
 		mDescription = (TextView) findViewById(R.id.tvDescription);
 		mBarcode = (TextView) findViewById(R.id.tvBarcode);
 		mCategory = (TextView) findViewById(R.id.tvType);
-
+		mPicture = (ImageView) findViewById(R.id.ivPicture);
 		btCheckComment = (Button) findViewById(R.id.btCheckComment);
 		btAddToCompare = (Button) findViewById(R.id.btAddToCompare);
 
@@ -100,6 +113,25 @@ public class ProductActivity extends Activity {
 		// Parse the intent
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+			// Get an instance of the TAG from the NfcAdapter
+//			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+//
+//			MifareClassic mfc = MifareClassic.get(productTag);
+//
+//			try {
+//				// Conncet to card
+//				mfc.connect();
+//				boolean auth = false;
+//				auth = mfc.authenticateSectorWithKeyA(0,
+//						MifareClassic.KEY_DEFAULT);
+//
+//				if (auth) {
+//					byte[] data = mfc.readBlock(1);
+//
+//				}
+//			} catch (IOException ex) {
+//				ex.printStackTrace();
+//			}
 			DownloadInfo();
 			Log.d(TAG, "discover a tag");
 		}
@@ -107,6 +139,7 @@ public class ProductActivity extends Activity {
 	}
 
 	private void DownloadInfo() {
+
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
@@ -120,8 +153,7 @@ public class ProductActivity extends Activity {
 				} else {
 					message.arg1 = SUCCESS;
 					message.obj = mProduct;
-					DownloadRating(Integer.valueOf(mProduct.getProperty(1)
-							.toString()));
+					DownloadRating();//下载评分
 				}
 				handler.sendMessage(message);
 			}
@@ -130,7 +162,7 @@ public class ProductActivity extends Activity {
 		thread = null;
 	}
 
-	private void DownloadRating(final int productID) {
+	private void DownloadRating() {
 
 		Thread thread = new Thread(new Runnable() {
 
@@ -138,11 +170,41 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mRating = WebServiceUtil.getInstance().getAverageRating(
-						productID);
+						Integer.valueOf(mProduct.getProperty(1)
+								.toString()));
 				Message message = new Message();
 				message.arg1 = REFRESHRATING;
 				message.obj = mRating;
+				DownloadPicture();//下载图片
 				handler.sendMessage(message);
+			}
+		});
+		thread.start();
+		thread = null;
+	}
+
+	private void DownloadPicture() {
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					// int id =
+					// Integer.valueOf(mProduct.getProperty(1).toString());
+					String URL = WebServiceUtil.ImageURL
+							+ mProduct.getProperty(8).toString();
+					URL url;
+					url = new URL(URL);
+					Bitmap bitmap = getProductImage(url);
+					Message msg = new Message();
+					msg.arg1 = GET_PRODUCTIMAGE;
+					msg.obj = bitmap;
+					handler.sendMessage(msg);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		thread.start();
@@ -175,21 +237,69 @@ public class ProductActivity extends Activity {
 				mProcess.setVisibility(View.GONE);
 				break;
 			case REFRESHRATING:
-				mItem = new ConcernItem(0, Integer.valueOf(mProduct
-						.getProperty(1).toString()), mProduct.getProperty(4)
-						.toString(), Integer.valueOf(mProduct.getProperty(2)
-						.toString()), ((SecCategory) mProduct.getProperty(10))
-						.getProperty(3).toString(), Float.valueOf(mProduct
-						.getProperty(5).toString()), mRating, mProduct
-						.getProperty(6).toString(), mProduct.getProperty(7)
-						.toString(), mProduct.getProperty(3).toString(),
-						mProduct.getProperty(9).toString(),
-						System.currentTimeMillis(), (short) 0);
-				mConcernManager.addConcernItem(mItem);
 				btCheckComment.setClickable(true);
+				
+				break;
+			case GET_PRODUCTIMAGE: {
+				if (msg.obj != null) {
+					mItem = new ConcernItem(
+							0,
+							Integer.valueOf(mProduct.getProperty(1).toString()),
+							mProduct.getProperty(4).toString(),
+							Integer.valueOf(mProduct.getProperty(2).toString()),
+							((SecCategory) mProduct.getProperty(10))
+									.getProperty(3).toString(),
+							Float.valueOf(mProduct.getProperty(5).toString()),
+							mRating, mProduct.getProperty(6).toString(),
+							mProduct.getProperty(7).toString(), mProduct
+									.getProperty(3).toString(), mProduct
+									.getProperty(9).toString(), System
+									.currentTimeMillis(), (short) 0, mdata);
+					mConcernManager.addConcernItem(mItem);
+					mPicture.setImageBitmap((Bitmap) msg.obj);
+				}
+			}
 				break;
 			}
 		}
 
 	};
+
+	public Bitmap getProductImage(URL Url) {
+		Bitmap bitmap = null;
+		try {
+			URL url = Url;
+			HttpURLConnection conn;
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setReadTimeout(1000);
+			InputStream inputstream = conn.getInputStream();
+			mdata = readInputStream(inputstream);
+			bitmap = BitmapFactory.decodeByteArray(mdata, 0, mdata.length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return bitmap;
+	}
+
+	public byte[] readInputStream(InputStream inStream) throws Exception {
+		// 构造一个ByteArrayOutputStream
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		// 设置一个缓冲区
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		// 判断输入流长度是否等于-1，即非空
+		while ((len = inStream.read(buffer)) != -1) {
+			// 把缓冲区的内容写入到输出流中，从0开始读取，长度为len
+			outStream.write(buffer, 0, len);
+		}
+		// 关闭输入流
+		inStream.close();
+		return outStream.toByteArray();
+	}
 }
