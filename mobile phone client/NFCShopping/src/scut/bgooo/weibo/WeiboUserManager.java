@@ -21,7 +21,6 @@ public class WeiboUserManager {
 	public WeiboUserManager(Context context) {
 		dbHelper = new DBHelper(context, DBHelper.DB_NAME, null,
 				DBHelper.DB_VERSION);
-		db = dbHelper.getWritableDatabase();
 	}
 
 	public void Close() {
@@ -32,6 +31,7 @@ public class WeiboUserManager {
 	// 获取users表中的UserID、Access Token、Access Secret的记录
 	public List<WeiboUserItem> GetUserList(Boolean isSimple) {
 		List<WeiboUserItem> userList = new ArrayList<WeiboUserItem>();
+		db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.query(DBHelper.WIBO_TB_NAME, null, null, null, null,
 				null, WeiboUserItem.ID + " DESC");
 		cursor.moveToFirst();
@@ -62,6 +62,7 @@ public class WeiboUserManager {
 	// 判断users表中的是否包含某个UserID的记录
 	public Boolean HaveUserInfo(String UserId) {
 		Boolean b = false;
+		db = dbHelper.getWritableDatabase();
 		Cursor cursor = db.query(DBHelper.WIBO_TB_NAME, null,
 				WeiboUserItem.USERID + "=" + UserId, null, null, null, null);
 		b = cursor.moveToFirst();
@@ -73,6 +74,7 @@ public class WeiboUserManager {
 	// 更新users表的记录，根据UserId更新用户昵称和用户图标
 	public int UpdateUserInfo(String userName, Bitmap userIcon, String UserId,
 			String Loaction) {
+		db = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(WeiboUserItem.USERNAME, userName);
 		// BLOB类型
@@ -91,6 +93,7 @@ public class WeiboUserManager {
 
 	// 更新users表的记录，是对一个新的用户进行更新
 	public int UpdateUserInfo(WeiboUserItem user) {
+		db = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(WeiboUserItem.USERID, user.GetUserId());
 		values.put(WeiboUserItem.TOKEN, user.GetAToken());
@@ -105,6 +108,7 @@ public class WeiboUserManager {
 
 	// 添加users表的记录
 	public long SaveUserInfo(WeiboUserItem user) {
+		db = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		Long uid = null;
 		if (!HaveUserInfo(user.GetUserId())) {
@@ -124,6 +128,7 @@ public class WeiboUserManager {
 
 	// 删除users表的记录
 	public int DelUserInfo(String UserId) {
+		db = dbHelper.getWritableDatabase();
 		int id = db.delete(DBHelper.WIBO_TB_NAME, WeiboUserItem.USERID + "="
 				+ UserId, null);
 		Log.e("DelUserInfo", id + "");
@@ -140,6 +145,7 @@ public class WeiboUserManager {
 	}
 
 	public void UpdateDefault(WeiboUserItem user) {
+		db = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(WeiboUserItem.ISDEFAULT, false);
 		db.update(DBHelper.WIBO_TB_NAME, values,
