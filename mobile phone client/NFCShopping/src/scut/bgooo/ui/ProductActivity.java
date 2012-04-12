@@ -12,6 +12,7 @@ import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.db.TransistionUtil;
 import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Profile;
@@ -75,6 +76,7 @@ public class ProductActivity extends Activity {
 	private Button btCheckComment;
 	private Button btAddToCompare;
 	private String mTodayStr;
+	private String barcode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,26 +132,28 @@ public class ProductActivity extends Activity {
 		String action = intent.getAction();
 		if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
 			// Get an instance of the TAG from the NfcAdapter
-			// Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-			//
-			// MifareClassic mfc = MifareClassic.get(productTag);
-			//
-			// try {
-			// // Conncet to card
-			// mfc.connect();
-			// boolean auth = false;
-			// auth = mfc.authenticateSectorWithKeyA(0,
-			// MifareClassic.KEY_DEFAULT);
-			//
-			// if (auth) {
-			// byte[] data = mfc.readBlock(1);
-			//
-			// }
-			// } catch (IOException ex) {
-			// ex.printStackTrace();
-			// }
-			DownloadInfo();
-			Log.d(TAG, "discover a tag");
+			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+			MifareClassic mfc = MifareClassic.get(productTag);
+
+			try {
+				// Conncet to card
+				mfc.connect();
+				boolean auth = false;
+				auth = mfc.authenticateSectorWithKeyA(0,
+						MifareClassic.KEY_DEFAULT);
+
+				if (auth) {
+					byte[] data = mfc.readBlock(1);
+					char[] cData = TransistionUtil.getChars(data);
+					barcode = String.valueOf(cData);
+					DownloadInfo();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				Toast.makeText(getApplicationContext(), "读卡失败\n请重新刷取卡片",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 
 	}
@@ -166,24 +170,25 @@ public class ProductActivity extends Activity {
 				if (nowUser != null) {
 					if (!mTodayStr.equals(nowUser.getLastVisitDate())) {
 						Log.d(TAG, mTodayStr);
-						//更新用户在本地的签到时间，以此来作为是否调用签到webservice的依据
+						// 更新用户在本地的签到时间，以此来作为是否调用签到webservice的依据
 						nowUser.setLastVisitDate(mTodayStr);
 						if (WebServiceUtil.getInstance().AddVisitedTimes(
 								nowUser.getId())) {
 							msg.arg1 = SIGNINSUCCESS;
-							UserProfileUtil.saveProfile(getApplicationContext(), nowUser);
+							UserProfileUtil.saveProfile(
+									getApplicationContext(), nowUser);
 						} else {
-							//服务端也有签到时间的判断，如果客户端可以进入签到，
-							//但是服务端记录的时间并不能签到的时候，也不能完成签到
+							// 服务端也有签到时间的判断，如果客户端可以进入签到，
+							// 但是服务端记录的时间并不能签到的时候，也不能完成签到
 							msg.arg1 = SIGNINFAILE;
 						}
 					} else {
-						//本地判断用户已经签到了
+						// 本地判断用户已经签到了
 						msg.arg1 = HASSIGNED;
 					}
 					handler.sendMessage(msg);
 				} else {
-					//没有绑定用户
+					// 没有绑定用户
 					msg.arg1 = NOUSER;
 					handler.sendMessage(msg);
 				}
@@ -276,15 +281,16 @@ public class ProductActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "签到成功", 2000).show();
 				break;
 			case SIGNINFAILE:
-				Toast.makeText(getApplicationContext(), "签到失败，\n服务器已经有您的签到记录", 2000).show();
+				Toast.makeText(getApplicationContext(), "签到失败，\n服务器已经有您的签到记录",
+						2000).show();
 				break;
 			case NOUSER:
 				Toast.makeText(getApplicationContext(), "请先登录\n才能签到", 2000)
 						.show();
 				break;
 			case HASSIGNED:
-				Toast.makeText(getApplicationContext(), "恭喜您\n今天签到任务已经完成！", 2000)
-						.show();
+				Toast.makeText(getApplicationContext(), "恭喜您\n今天签到任务已经完成！",
+						2000).show();
 				break;
 			case SUCCESS:
 				Log.d(TAG, mProduct.toString());

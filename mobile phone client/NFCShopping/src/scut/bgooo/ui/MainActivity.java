@@ -65,6 +65,13 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, MoreActivity.class)));
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		mTaskHandler.stop();  // Í£Ö¹Ïß³Ì
+		super.onDestroy();
+	}
+
 	private void initWeiboDefaultUser() {
 		WeiboUserManager datahelp = new WeiboUserManager(this);
 		List<WeiboUserItem> userList = datahelp.GetUserList(true);

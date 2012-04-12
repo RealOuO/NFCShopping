@@ -84,7 +84,6 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
 			toast.show();
-			Log.d("NFC", "AA");
 		} else {
 			MyAdapter myAdapter = new MyAdapter(this, mList);
 			mUserList.setAdapter(myAdapter);
@@ -109,7 +108,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 				} else {
 					try {
 						Weibo weibo = new Weibo();
-						mRequestToken = weibo.getOAuthRequestToken();
+						mRequestToken = weibo.getOAuthRequestToken("nfcshopping://WeiboUserListActivity/");
 						String url = mRequestToken.getAuthorizationURL();
 						Bundle bundle = new Bundle();
 						bundle.putString("URL", url);
@@ -182,10 +181,10 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		super.onNewIntent(intent);
 		Log.d("NFC", "onNewIntent");
-		Bundle bundle = intent.getExtras();
-		String pin = bundle.getString("PIN");
+		Uri uri = intent.getData();
+		Log.d("Temp", uri.toString());
 		try {
-			mAccessToken = mRequestToken.getAccessToken(pin);
+			mAccessToken = mRequestToken.getAccessToken(uri.getQueryParameter("oauth_verifier"));
 		} catch (WeiboException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -42,6 +42,16 @@ public class TaskHandler implements Runnable {
 	public static HashMap<Integer, Bitmap> allIcon = new HashMap<Integer, Bitmap>();
 	public Weibo mWeibo = null;
 
+	
+	/**
+	 * Í£Ö¹Ïß³Ì²Ù×÷
+	 * 
+	 * */
+	public void stop(){
+		isrun=false;
+	}
+	
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
