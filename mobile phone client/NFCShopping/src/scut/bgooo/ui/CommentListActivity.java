@@ -2,22 +2,22 @@ package scut.bgooo.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.Random;
 import java.util.Vector;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Review;
-import scut.bgooo.entities.SecCategory;
 import scut.bgooo.entities.User;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
-import weibo4android.Weibo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,7 +41,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class CommentListActivity extends Activity {
+public class CommentListActivity extends Activity implements INFCActivity{
 
 	private static final String TAG = CommentListActivity.class.getSimpleName();
 
@@ -110,27 +110,42 @@ public class CommentListActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// Weibo mWeibo = new Weibo();
-				// if (WeiboUserListActivity.defaultUserInfo == null) {
-				// Toast toast = Toast.makeText(getApplicationContext(),
-				// "请确定微博用户", Toast.LENGTH_LONG);
-				// toast.show();
-				// return;
-				// } else {
-				// Log.i("token",
-				// WeiboUserListActivity.defaultUserInfo.GetAToken());
-				// Log.i("token",
-				// WeiboUserListActivity.defaultUserInfo.GetASecret());
-				// String commitStr = "#" + mItem.getName() + "#------#YY超市#"
-				// + "价格:" + mItem.getPrice() + "评分"
-				// + mItem.getRating();
-				//
-				// HashMap<String, String> m = new HashMap<String, String>();
-				// m.put("COMMIT", commitStr);
-				// Task task = new Task(Task.SEND_COMMENT_WEIBO, m);
-				// TaskHandler.addTask(task);
-				// finish();
-				// }
+				final AlertDialog.Builder builder = new AlertDialog.Builder(
+						CommentListActivity.this);
+				builder.setMessage("是否附加商品图片？");
+				builder.setTitle("请选择");
+				builder.setIcon(android.R.drawable.ic_dialog_info);
+				builder.setCancelable(true);
+				builder.setPositiveButton(R.string.btOK,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int i2) {
+								// TODO Auto-generated method stub
+								dialog.dismiss();
+								// 添加任务。。。
+								HashMap<String, Object> m = new HashMap<String, Object>();
+								m.put("Product", mItem);
+								Task task = new Task(Task.SEND_SHARE_WEIBO_WITH_IMAGE, m);
+								TaskHandler.addTask(task);
+							}
+						});
+				builder.setNegativeButton(R.string.btCancel,
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								dialog.dismiss();
+								// 添加任务。。。
+								HashMap<String, Object> m = new HashMap<String, Object>();
+								m.put("Product", mItem);
+								Task task = new Task(Task.SEND_SHARE_WEIBO_WITHOUT_IMAGE, m);
+								TaskHandler.addTask(task);
+							}
+
+						});
+				builder.show();
 
 			}
 		});
@@ -176,9 +191,14 @@ public class CommentListActivity extends Activity {
 		} else {
 			mCheckBox.setChecked(true);
 		}
+		
+		TaskHandler.allActivity.put(CommentListActivity.class.getSimpleName(),
+				(INFCActivity) CommentListActivity.this);
+		
 
 	}
 
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -260,6 +280,27 @@ public class CommentListActivity extends Activity {
 
 		}
 	};
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		if(String.valueOf(param[1]).equals("WITHOUTIMAGE")){
+			Toast toast = Toast.makeText(getApplicationContext(), "发送分享成功",
+					Toast.LENGTH_SHORT);
+			toast.show();
+		}else if(String.valueOf(param[1]).equals("WITHIMAGE")){
+			Toast toast = Toast.makeText(getApplicationContext(), "发送图片分享成功",
+					Toast.LENGTH_SHORT);
+			toast.show();
+		}
+	}
 }
 
 class CommentAdapter extends BaseAdapter {

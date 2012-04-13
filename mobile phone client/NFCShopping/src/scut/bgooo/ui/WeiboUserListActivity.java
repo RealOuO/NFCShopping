@@ -1,10 +1,7 @@
 package scut.bgooo.ui;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +13,6 @@ import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.weibo.WeiboUserItem;
 import scut.bgooo.weibo.WeiboUserManager;
-import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
 import weibo4android.http.AccessToken;
@@ -30,7 +26,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +50,6 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 	private ListView mUserList;
 	private WeiboUserManager dataHelper;
 	private List<WeiboUserItem> mList;
-	// public Weibo mWeibo;
 	private RequestToken mRequestToken;
 	private AccessToken mAccessToken;
 	private int defaultUser = -1;// 默认用户
@@ -66,8 +60,6 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webuser);
-
-		
 
 		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
 		System.setProperty("weibo4j.oauth.consumerSecret",
@@ -108,7 +100,8 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 				} else {
 					try {
 						Weibo weibo = new Weibo();
-						mRequestToken = weibo.getOAuthRequestToken("nfcshopping://WeiboUserListActivity/");
+						mRequestToken = weibo
+								.getOAuthRequestToken("nfcshopping://WeiboUserListActivity/");
 						String url = mRequestToken.getAuthorizationURL();
 						Bundle bundle = new Bundle();
 						bundle.putString("URL", url);
@@ -151,7 +144,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 				if (defaultUser >= 0) {
 					WeiboUserItem user = mList.get(defaultUser);
 					dataHelper.DelUserInfo(user.GetUserId());
-					mList = dataHelper.GetUserList(true);
+					mList = dataHelper.GetUserList(false);
 					if (0 == mList.size()) {
 						Toast toast = Toast.makeText(getApplicationContext(),
 								"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
@@ -184,7 +177,8 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		Uri uri = intent.getData();
 		Log.d("Temp", uri.toString());
 		try {
-			mAccessToken = mRequestToken.getAccessToken(uri.getQueryParameter("oauth_verifier"));
+			mAccessToken = mRequestToken.getAccessToken(uri
+					.getQueryParameter("oauth_verifier"));
 		} catch (WeiboException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -209,44 +203,6 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		hm.put("weiuser", userInfo);
 		Task task = new Task(Task.GET_USER_INFORMATION, hm);
 		TaskHandler.addTask(task);
-		// try {
-		// User weiboUser = mWeibo.verifyCredentials();
-		// userInfo.SetLocation(weiboUser.getLocation());
-		// userInfo.SetUserName(weiboUser.getScreenName());
-		// URL url = weiboUser.getProfileImageURL();// 用记头像的URL地址
-		// HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		// conn.setRequestMethod("GET");
-		// conn.setConnectTimeout(5000);
-		// InputStream inPutStream = conn.getInputStream();
-		// // 获取到图片的二进制数据
-		// byte[] data = readInputStream(inPutStream);
-		// userInfo.SetIcon(data);
-		// userInfo.SetDefault(true);// 把最新验证的用户设为默认
-		// if (mList.size() != 0) {
-		// dataHelper.UpdateDefault(mList.get(defaultUser));
-		// }
-		// // dataHelper.SaveUserInfo(userInfo);//把更新的userinfo对象存入数据库
-		// if (dataHelper.SaveUserInfo(userInfo) == -1) {
-		// Toast toast = Toast.makeText(getApplicationContext(), "写入数据失败",
-		// Toast.LENGTH_SHORT);
-		// toast.show();
-		// }
-		// // 再更新适配器
-		// mList = dataHelper.GetUserList(false);
-		// MyAdapter myAdapter = new MyAdapter(this, mList);
-		// mUserList.setAdapter(myAdapter);
-		//
-		// } catch (WeiboException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// Log.d("NFC", "成功绑定");
 
 	}
 
@@ -354,6 +310,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 				byte[] data = user.GetIcon();
 				Bitmap userIcon = BitmapFactory.decodeByteArray(data, 0,
 						data.length);
+				
 				viewHolder.mUserIcon.setImageBitmap(userIcon);
 				viewHolder.mUserName.setText(user.GetUserName());
 				viewHolder.mUserLocaton.setText(user.GetLocationg());

@@ -127,7 +127,6 @@ public class RegisterActivity extends Activity {
 			case REGISTSUCCESS:
 				Toast.makeText(getApplicationContext(), "×¢²á³É¹¦",
 						Toast.LENGTH_SHORT).show();
-				MainActivity.mNowUser = (User) msg.obj;
 				finish();
 				break;
 			case REGISTFAILE:

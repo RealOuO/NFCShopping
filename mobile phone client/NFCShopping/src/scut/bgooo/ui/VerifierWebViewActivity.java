@@ -1,26 +1,23 @@
 package scut.bgooo.ui;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import scut.bgooo.ui.R;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class VerifierWebViewActivity extends Activity {
 
 	private WebView mWebView;
-	private String mOauthPin = "";
 
+	private ProgressDialog mProgressDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -42,6 +39,7 @@ public class VerifierWebViewActivity extends Activity {
 		mWebView.getSettings().setSupportZoom(true);
 		mWebView.getSettings().setBuiltInZoomControls(true);
 		mWebView.loadUrl(URL);
+
 	}
 
 }

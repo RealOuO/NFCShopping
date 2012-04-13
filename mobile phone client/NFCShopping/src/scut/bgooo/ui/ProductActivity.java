@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
@@ -17,8 +18,12 @@ import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.SecCategory;
+import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
+import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
+import scut.bgooo.weibo.WeiboUserItem;
+import scut.bgooo.weibo.WeiboUserManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -38,7 +43,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProductActivity extends Activity {
+public class ProductActivity extends Activity implements INFCActivity {
 
 	private static final String TAG = ProductActivity.class.getSimpleName();
 
@@ -73,16 +78,17 @@ public class ProductActivity extends Activity {
 
 	private ImageView mPicture;
 
-	private Button btCheckComment;
-	private Button btAddToCompare;
+	private Button mCheckComment;
+	private Button mAddToCompare;
 	private String mTodayStr;
-	private String barcode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productdetail);
+		init();
+		
 
 		mName = (TextView) findViewById(R.id.tvProductname);
 		mPrice = (TextView) findViewById(R.id.tvPrice);
@@ -92,11 +98,11 @@ public class ProductActivity extends Activity {
 		mBarcode = (TextView) findViewById(R.id.tvBarcode);
 		mCategory = (TextView) findViewById(R.id.tvType);
 		mPicture = (ImageView) findViewById(R.id.ivPicture);
-		btCheckComment = (Button) findViewById(R.id.btCheckComment);
-		btAddToCompare = (Button) findViewById(R.id.btAddToCompare);
+		mCheckComment = (Button) findViewById(R.id.btCheckComment);
+		mAddToCompare = (Button) findViewById(R.id.btAddToCompare);
 
-		btCheckComment.setClickable(false);
-		btCheckComment.setOnClickListener(new OnClickListener() {
+		mCheckComment.setClickable(false);
+		mCheckComment.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -115,6 +121,8 @@ public class ProductActivity extends Activity {
 		Date dNow = new Date(now);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		mTodayStr = format.format(dNow);
+		
+		
 
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
@@ -134,26 +142,27 @@ public class ProductActivity extends Activity {
 			// Get an instance of the TAG from the NfcAdapter
 			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-			MifareClassic mfc = MifareClassic.get(productTag);
-
-			try {
-				// Conncet to card
-				mfc.connect();
-				boolean auth = false;
-				auth = mfc.authenticateSectorWithKeyA(0,
-						MifareClassic.KEY_DEFAULT);
-
-				if (auth) {
-					byte[] data = mfc.readBlock(1);
-					char[] cData = TransistionUtil.getChars(data);
-					barcode = String.valueOf(cData);
-					DownloadInfo();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				Toast.makeText(getApplicationContext(), "∂¡ø® ß∞‹\n«Î÷ÿ–¬À¢»°ø®∆¨",
-						Toast.LENGTH_SHORT).show();
-			}
+			// MifareClassic mfc = MifareClassic.get(productTag);
+			//
+			// try {
+			// // Conncet to card
+			// mfc.connect();
+			// boolean auth = false;
+			// auth = mfc.authenticateSectorWithKeyA(0,
+			// MifareClassic.KEY_DEFAULT);
+			//
+			// if (auth) {
+			// byte[] data = mfc.readBlock(1);
+			// char[] cData = TransistionUtil.getChars(data);
+			// mBarcodeStr = String.valueOf(cData);
+			// DownloadInfo();
+			// }
+			// } catch (IOException ex) {
+			// ex.printStackTrace();
+			// Toast.makeText(getApplicationContext(), "∂¡ø® ß∞‹\n«Î÷ÿ–¬À¢»°ø®∆¨",
+			// Toast.LENGTH_SHORT).show();
+			// }
+			DownloadInfo();
 		}
 
 	}
@@ -207,7 +216,7 @@ public class ProductActivity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"1324");
+						"1234");
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;
@@ -306,11 +315,11 @@ public class ProductActivity extends Activity {
 				break;
 			case FAILE:
 				Log.d(TAG, "Faile");
-				btCheckComment.setClickable(false);
+				mCheckComment.setClickable(false);
 				mProcess.setVisibility(View.GONE);
 				break;
 			case REFRESHRATING:
-				btCheckComment.setClickable(true);
+				mCheckComment.setClickable(true);
 				break;
 			case GET_PRODUCTIMAGE: {
 				if (msg.obj != null) {
@@ -373,5 +382,33 @@ public class ProductActivity extends Activity {
 		// πÿ±’ ‰»Î¡˜
 		inStream.close();
 		return outStream.toByteArray();
+	}
+
+	private void initWeiboDefaultUser() {
+		WeiboUserManager datahelp = new WeiboUserManager(this);
+		List<WeiboUserItem> userList = datahelp.GetUserList(true);
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).IsDefault()) {
+				WeiboUserListActivity.defaultUserInfo = userList.get(i);
+			}
+		}
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		if (!TaskHandler.getInstance().isRunning()) {
+			Log.d("Thread", "start");
+			initWeiboDefaultUser();// ’“µΩƒ¨»œµƒŒ¢≤©”√ªß
+			Thread t = new Thread(TaskHandler.getInstance());
+			t.start();
+		}
+	}
+
+	@Override
+	public void refresh(Object... param) {
+		// TODO Auto-generated method stub
+		
+		
 	}
 }

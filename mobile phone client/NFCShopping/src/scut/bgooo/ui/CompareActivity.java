@@ -47,7 +47,7 @@ public class CompareActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		ArrayList<TableRow> table = new ArrayList<TableRow>();
-		TableCell[] titles = new TableCell[MainActivity.mItemArray.size()+1];// 每行根据对比数目创建单元
+		TableCell[] titles = new TableCell[NFCShoppingTab.mItemArray.size()+1];// 每行根据对比数目创建单元
 
 		int width = this.getWindowManager().getDefaultDisplay().getWidth()
 				/2;
@@ -61,10 +61,10 @@ public class CompareActivity extends Activity {
 		}
 		table.add(new TableRow(titles));
 		
-		if (MainActivity.mItemArray.size() > 0) {
+		if (NFCShoppingTab.mItemArray.size() > 0) {
 
 			for (int i = 0; i < ConcernItem.getCount(); i++) {
-				TableCell[] cells = new TableCell[MainActivity.mItemArray.size()+1];// 每行5个单元
+				TableCell[] cells = new TableCell[NFCShoppingTab.mItemArray.size()+1];// 每行5个单元
 				switch(i){
 				case 0:
 					cells[0] = new TableCell("商品名", titles[0].width,
@@ -100,7 +100,7 @@ public class CompareActivity extends Activity {
 					break;			
 				}
 				for (int j = 1; j < cells.length; j++) {
-					cells[j] = new TableCell(MainActivity.mItemArray.get(j-1)//注意要减去1
+					cells[j] = new TableCell(NFCShoppingTab.mItemArray.get(j-1)//注意要减去1
 							.getAttribute(i).toString(), titles[j].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 				}
@@ -124,5 +124,7 @@ public class CompareActivity extends Activity {
 					"选中第" + String.valueOf(arg2) + "行", 500).show();
 		}
 	}
+	
+	
 
 }

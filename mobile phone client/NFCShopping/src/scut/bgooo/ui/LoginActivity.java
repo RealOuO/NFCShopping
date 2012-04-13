@@ -149,7 +149,6 @@ public class LoginActivity extends Activity {
 				mProgressDialog.dismiss();
 				Toast.makeText(getApplicationContext(), "µÇÂ½³É¹¦",
 						Toast.LENGTH_SHORT).show();
-				MainActivity.mNowUser = (User) msg.obj;
 				Profile profile = new Profile(Integer.valueOf(((User) msg.obj)
 						.getProperty(1).toString()), ((User) msg.obj)
 						.getProperty(2).toString(), mPassWord.getText()

@@ -62,8 +62,6 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		Task task = new Task(Task.STOP_HANDLER, null);
-		TaskHandler.addTask(task);
 		super.onDestroy();
 	}
 

@@ -13,12 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
 import scut.bgooo.entities.Product;
 import scut.bgooo.ui.CommentActivity;
+import scut.bgooo.ui.CommentListActivity;
 import scut.bgooo.ui.DiscountItemListActivity;
 import scut.bgooo.ui.DiscountListActivity;
+import scut.bgooo.ui.ProductActivity;
 import scut.bgooo.ui.WeiboUserListActivity;
 import scut.bgooo.webservice.IWebServiceUtil;
 import scut.bgooo.webservice.WebServiceUtil;
@@ -26,6 +29,7 @@ import scut.bgooo.weibo.WeiboUserItem;
 import weibo4android.User;
 import weibo4android.Weibo;
 import weibo4android.WeiboException;
+import weibo4android.http.ImageItem;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,27 +40,44 @@ import android.util.Log;
 
 public class TaskHandler implements Runnable {
 
-	private boolean isrun = true;
+	public boolean isrun = false;
 	private static List<Task> mTaskList = new ArrayList<Task>();// 任务列表
 	public static HashMap<String, INFCActivity> allActivity = new HashMap<String, INFCActivity>();
 	public static HashMap<Integer, Bitmap> allIcon = new HashMap<Integer, Bitmap>();
+
+	private static TaskHandler mTaskHandler = new TaskHandler();
 	public Weibo mWeibo = null;
 
-	
+	public static TaskHandler getInstance() {
+		return mTaskHandler;
+	}
+
+	/**
+	 * 判断线程是否在跑，以此来决定是否创建新线程
+	 * 
+	 * */
+	public boolean isRunning() {
+		return isrun;
+	}
+
 	/**
 	 * 停止线程操作
 	 * 
 	 * */
-	public void stop(){
-		isrun=false;
+	public void stop() {
+		mTaskList.clear();
+		mTaskHandler.isrun = false;
 	}
-	
-	
+
 	@Override
 	public void run() {
+		isrun = true;
 		// TODO Auto-generated method stub
-		Log.d("NFC", "run");
 		while (isrun) {
+			Log.d("NFC", "run");
+			System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
+			System.setProperty("weibo4j.oauth.consumerSecret",
+					Weibo.CONSUMER_SECRET);
 			if (!mTaskList.isEmpty()) {
 				Task task = mTaskList.get(0);
 				doTask(task);
@@ -123,9 +144,9 @@ public class TaskHandler implements Runnable {
 			try {
 				Weibo weibo = new Weibo();
 				Map<String, String> m = task.getTaskParam();
-				weibo.setToken(WeiboUserListActivity.defaultUserInfo
-						.GetAToken(), WeiboUserListActivity.defaultUserInfo
-						.GetASecret());
+				weibo.setToken(
+						WeiboUserListActivity.defaultUserInfo.GetAToken(),
+						WeiboUserListActivity.defaultUserInfo.GetASecret());
 				String commit = m.get("COMMIT");
 				weibo.updateStatus(commit);
 
@@ -137,6 +158,49 @@ public class TaskHandler implements Runnable {
 			} catch (WeiboException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+			break;
+		case Task.SEND_SHARE_WEIBO_WITH_IMAGE: {
+			try {
+				Log.d("WITH", "Image");
+				Weibo weibo = new Weibo();
+				Map<String, Object> m = task.getTaskParam();
+				weibo.setToken(
+						WeiboUserListActivity.defaultUserInfo.GetAToken(),
+						WeiboUserListActivity.defaultUserInfo.GetASecret());
+				ConcernItem item = (ConcernItem) m.get("Product");
+				Message msg = new Message();
+				msg.what = Task.SEND_SHARE_WEIBO_WITH_IMAGE;
+				String shareStr = "我在#YY超市#看到了这个——" + item.getName()
+						+ "很不错哦，赶紧过来看吧!!!!!!";
+				ImageItem pImage = new ImageItem(item.getIcon());
+				weibo.uploadStatus(shareStr, pImage);
+				msg.obj = "WITHIMAGE";
+				mHandle.sendMessage(msg);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+			break;
+		case Task.SEND_SHARE_WEIBO_WITHOUT_IMAGE: {
+			try {
+				Log.d("WITHOUT", "Image");
+				Weibo weibo = new Weibo();
+				Map<String, Object> m = task.getTaskParam();
+				weibo.setToken(
+						WeiboUserListActivity.defaultUserInfo.GetAToken(),
+						WeiboUserListActivity.defaultUserInfo.GetASecret());
+				ConcernItem item = (ConcernItem) m.get("Product");
+				Message msg = new Message();
+				msg.what = Task.SEND_SHARE_WEIBO_WITH_IMAGE;
+				String shareStr = "我在#YY超市#看到了这个——" + item.getName()
+						+ "很不错哦，赶紧过来看吧";
+				weibo.updateStatus(shareStr);
+				msg.obj = "WITHOUTIMAGE";
+				mHandle.sendMessage(msg);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 			break;
@@ -158,7 +222,7 @@ public class TaskHandler implements Runnable {
 				HashMap<Integer, Object> map = new HashMap<Integer, Object>();
 				map.put(0, product);
 				Task new_task = new Task(Task.GET_PRODUCTIMAGE, map);
-				TaskHandler.addTask(new_task);			
+				TaskHandler.addTask(new_task);
 			}
 			Message msg = new Message();
 			msg.what = Task.GET_DISCOUNTITEM;
@@ -170,8 +234,9 @@ public class TaskHandler implements Runnable {
 			try {
 				Product product = (Product) task.getTaskParam().get(0);
 				int id = Integer.valueOf(product.getProperty(1).toString());
-				String URL = WebServiceUtil.ImageURL + product.getProperty(8).toString();
-				URL url = new URL(URL);			
+				String URL = WebServiceUtil.ImageURL
+						+ product.getProperty(8).toString();
+				URL url = new URL(URL);
 				Bitmap bitmap = getProductImage(url);
 				allIcon.put(id, bitmap);
 				Message msg = new Message();
@@ -208,9 +273,21 @@ public class TaskHandler implements Runnable {
 			}
 				break;
 			case Task.SEND_COMMENT_WEIBO: {
-				INFCActivity iwa = allActivity.get(CommentActivity.class
+				INFCActivity iwa = allActivity.get(CommentListActivity.class
 						.getSimpleName());
 				iwa.refresh(msg.obj);
+			}
+				break;
+			case Task.SEND_SHARE_WEIBO_WITH_IMAGE: {
+				INFCActivity iwa = allActivity.get(CommentListActivity.class
+						.getSimpleName());
+				iwa.refresh("OK", msg.obj);
+			}
+				break;
+			case Task.SEND_SHARE_WEIBO_WITHOUT_IMAGE: {
+				INFCActivity iwa = allActivity.get(ProductActivity.class
+						.getSimpleName());
+				iwa.refresh("OK", msg.obj);
 			}
 				break;
 			case Task.GET_DISCOUNT: {

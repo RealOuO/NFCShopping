@@ -1,31 +1,19 @@
 package scut.bgooo.ui;
 
-import java.io.File;
-
 import java.util.HashMap;
-import java.util.Map;
-
 import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 
-import java.util.Vector;
-
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.db.UserProfileUtil;
-import scut.bgooo.entities.Discount;
-import scut.bgooo.entities.DiscountItem;
-import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.Review;
-import scut.bgooo.entities.Suggestion;
 import scut.bgooo.webservice.WebServiceUtil;
 
 import weibo4android.Weibo;
-import weibo4android.WeiboException;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,20 +52,16 @@ public class CommentActivity extends Activity implements INFCActivity {
 		mShareCommitButton = (Button) findViewById(R.id.btShareAndCommit);
 		mCommitButton = (Button) findViewById(R.id.btCommit);
 		mRatingbar = (RatingBar) findViewById(R.id.ratingbar);
-		
-		mProductName=(TextView)findViewById(R.id.tvProductname);
+
+		mProductName = (TextView) findViewById(R.id.tvProductname);
 		mProductName.setText(mItem.getName());
-		
-		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
-		System.setProperty("weibo4j.oauth.consumerSecret",
-				Weibo.CONSUMER_SECRET);
+
 
 		mShareCommitButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Weibo mWeibo = new Weibo();
 				if (WeiboUserListActivity.defaultUserInfo == null) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"请确定微博用户", Toast.LENGTH_LONG);
@@ -121,7 +105,6 @@ public class CommentActivity extends Activity implements INFCActivity {
 				CommentActivity.this);
 	}
 
-
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -141,7 +124,9 @@ public class CommentActivity extends Activity implements INFCActivity {
 					review.setProperty(2, user.getId());// 暂时还没处理完用户逻辑
 					review.setProperty(3, mItem.getProductId());
 					review.setProperty(4, mComment.getText().toString());
-					review.setProperty(5, Float.valueOf(mRatingbar.getRating() * 10).intValue()); // 注意要将浮点数转换为String才能传到后台
+					review.setProperty(5,
+							Float.valueOf(mRatingbar.getRating() * 10)
+									.intValue()); // 注意要将浮点数转换为String才能传到后台
 					Message msg = new Message();
 					if (WebServiceUtil.getInstance().AddReview(review)) {
 						msg.arg1 = SUCCESS;

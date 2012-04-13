@@ -166,4 +166,6 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 		}
 
 	}
+	
+	
 }

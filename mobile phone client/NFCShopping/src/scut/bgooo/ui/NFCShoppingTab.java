@@ -26,7 +26,6 @@ public class NFCShoppingTab extends TabActivity implements
 	private Intent mDiscountIntent;
 	private Intent mCollectionIntent;
 
-	private TaskHandler mTaskHandler = new TaskHandler();
 	public static ArrayList<ConcernItem> mItemArray = new ArrayList<ConcernItem>();
 
 	@Override
@@ -55,9 +54,12 @@ public class NFCShoppingTab extends TabActivity implements
 
 		initRadios();
 		setupIntent();
-		initWeiboDefaultUser();
-		Thread t = new Thread(mTaskHandler);
-		t.start();
+		if (!TaskHandler.getInstance().isRunning()) {
+			Log.d("Thread", "start");
+			initWeiboDefaultUser();// 找到默认的微博用户
+			Thread t = new Thread(TaskHandler.getInstance());
+			t.start();
+		}
 	}
 
 	private void initWeiboDefaultUser() {
@@ -73,6 +75,14 @@ public class NFCShoppingTab extends TabActivity implements
 	private void initRadios() {
 		RadioGroup mainGroup = (RadioGroup) this.findViewById(R.id.main_radio);
 		mainGroup.setOnCheckedChangeListener(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		Log.d("Thread", "stop");
+		TaskHandler.getInstance().stop(); // 停止线程
+		super.onDestroy();
 	}
 
 	@Override

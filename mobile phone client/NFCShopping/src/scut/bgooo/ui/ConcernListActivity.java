@@ -8,6 +8,7 @@ import java.util.Map;
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
 import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.ListActivity;
@@ -227,7 +228,7 @@ public class ConcernListActivity extends ListActivity {
 			((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
 			break;
 		case 2:
-			MainActivity.mItemArray.add(mItems.get(position));
+			NFCShoppingTab.mItemArray.add(mItems.get(position));
 			Toast.makeText(getApplicationContext(), "已经加入对比",
 					Toast.LENGTH_SHORT).show();
 			break;
@@ -242,9 +243,11 @@ public class ConcernListActivity extends ListActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		windorManager.removeView(dialogText);
+
+		TaskHandler.getInstance().stop(); // 停止线程
 		super.onDestroy();
 	}
-
+	
 
 
 	@Override
