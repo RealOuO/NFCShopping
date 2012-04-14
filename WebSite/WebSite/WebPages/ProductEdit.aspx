@@ -4,8 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" 
-    Font-Size="X-Large" ForeColor="Black"
+    <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
         Text="Label"></asp:Label>
     <div style="height: 22px">
     </div>
@@ -15,30 +14,35 @@
         </div>
     </div>
     <div>
-        <asp:Image ID="ProductImage" runat="server" Height="300px" ImageAlign="Middle" 
-            Width="450px" />
+        <asp:Image ID="ProductImage" runat="server" Height="300px" ImageAlign="Middle" Width="450px" />
         <div>
         </div>
     </div>
     <asp:Label ID="Label1" runat="server" Text="商品名称"></asp:Label>
     <div>
     </div>
-    <asp:TextBox ID="ProductNameTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="ProductNameTextBox" runat="server">
+    </asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" id="reqProductName" controltovalidate="ProductNameTextBox"
+        errormessage="请输入商品名称" />
     <div>
     </div>
     <asp:Label ID="Label2" runat="server" Text="商品描述"></asp:Label>
     <div>
     </div>
     <asp:TextBox ID="ProductDescriptionTextBox" runat="server" Height="140px" TextMode="MultiLine"
-        Width="442px"></asp:TextBox>
+        Width="442px">
+    </asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" id="reqProductDescription" controltovalidate="ProductDescriptionTextBox"
+        errormessage="请输入商品描述" />
     <div>
     </div>
     <asp:Label ID="Label3" runat="server" Text="商品分类"></asp:Label>
     <div>
     </div>
     <asp:DropDownList ID="CategoriesDropDownList" runat="server" AutoPostBack="True"
-        DataSourceID="CategoriesDataSource" DataTextField="categoryName" 
-        DataValueField="categoryID" onprerender="CategoriesDropDownList_PreRender">
+        DataSourceID="CategoriesDataSource" DataTextField="categoryName" DataValueField="categoryID"
+        onprerender="CategoriesDropDownList_PreRender">
     </asp:DropDownList>
     <div>
     </div>
@@ -46,41 +50,52 @@
     <div>
     </div>
     <asp:DropDownList ID="SecCategoriesDropDownList" runat="server" DataSourceID="SecCategoriesDataSource"
-        DataTextField="secCategoryName" DataValueField="secCategoryID" 
-        onprerender="SecCategoriesDropDownList_PreRender">
+        DataTextField="secCategoryName" DataValueField="secCategoryID" onprerender="SecCategoriesDropDownList_PreRender">
     </asp:DropDownList>
     <div>
     </div>
     <asp:Label ID="Label5" runat="server" Text="条形码"></asp:Label>
     <div>
     </div>
-    <asp:TextBox ID="BarcodeTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="BarcodeTextBox" runat="server">
+    </asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" id="reqBarcode" controltovalidate="BarcodeTextBox"
+        errormessage="请输入商品条形码" />
     <div>
     </div>
     <asp:Label ID="Label6" runat="server" Text="价格"></asp:Label>
     <div>
     </div>
-    <asp:TextBox ID="PriceTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="PriceTextBox" runat="server">
+    </asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" id="reqPrice" controltovalidate="PriceTextBox"
+        errormessage="请输入商品价格信息" />
     <div>
+        <asp:RangeValidator ID="RangePriceValidator" runat="server" ErrorMessage="请输入一个合理的价格"
+            ControlToValidate="PriceTextBox" MaximumValue="10000.0" MinimumValue="0.0" Type="Double">
+        </asp:RangeValidator>
+        <br />
     </div>
     <asp:Label ID="Label7" runat="server" Text="品牌"></asp:Label>
     <div>
     </div>
-    <asp:TextBox ID="BrandTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="BrandTextBox" runat="server">
+    </asp:TextBox>
     <div>
     </div>
     <asp:Label ID="Label8" runat="server" Text="产地"></asp:Label>
     <div>
     </div>
-    <asp:TextBox ID="LocationTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="LocationTextBox" runat="server">
+    </asp:TextBox>
     <div>
     </div>
     <asp:Label ID="Label9" runat="server" Text="商品图片"></asp:Label>
     <div>
     </div>
     <asp:FileUpload ID="ProductPictureUpload" runat="server" />
-    <asp:Button ID="UploadPictureButton" runat="server" 
-        onclick="UploadPictureButton_Click" Text="上传图片" />
+    <asp:Button ID="UploadPictureButton" runat="server" onclick="UploadPictureButton_Click"
+        Text="上传图片" />
     <div>
     </div>
     <asp:Button ID="SubmitButton" runat="server" Height="25px" OnClick="SubmitButton_Click"
@@ -88,33 +103,33 @@
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">
-        <SelectParameters>
+        <selectparameters>
             <asp:QueryStringParameter DefaultValue="0" Name="id" 
                 QueryStringField="productID" Type="Int32" />
-        </SelectParameters>
-        <UpdateParameters>
+        </selectparameters>
+        <updateparameters>
             <asp:Parameter Name="product" Type="Object" />
             <asp:Parameter Name="origProduct" Type="Object" />
-        </UpdateParameters>
+        </updateparameters>
     </asp:ObjectDataSource>
     <asp:ObjectDataSource ID="CategoriesDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Category"
         DeleteMethod="DeleteCategory" InsertMethod="InsertCategory" SelectMethod="GetCategories"
         TypeName="NFCShoppingWebSite.BLL.CategoryBL" UpdateMethod="UpdateCategory">
-        <UpdateParameters>
+        <updateparameters>
             <asp:Parameter Name="category" Type="Object" />
             <asp:Parameter Name="origCategory" Type="Object" />
-        </UpdateParameters>
+        </updateparameters>
     </asp:ObjectDataSource>
     <asp:ObjectDataSource ID="SecCategoriesDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.SecCategory"
         DeleteMethod="DeleteSecCategory" InsertMethod="InsertSecCategory" SelectMethod="GetSecCategoriesByCategory"
         TypeName="NFCShoppingWebSite.BLL.SecCategoryBL" UpdateMethod="UpdateSecCategory">
-        <SelectParameters>
+        <selectparameters>
             <asp:ControlParameter ControlID="CategoriesDropDownList" DefaultValue="0" Name="categoryID"
                 PropertyName="SelectedValue" Type="Int32" />
-        </SelectParameters>
-        <UpdateParameters>
+        </selectparameters>
+        <updateparameters>
             <asp:Parameter Name="secCategory" Type="Object" />
             <asp:Parameter Name="origSecCategory" Type="Object" />
-        </UpdateParameters>
+        </updateparameters>
     </asp:ObjectDataSource>
 </asp:Content>
