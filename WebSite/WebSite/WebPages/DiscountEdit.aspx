@@ -2,6 +2,20 @@
     CodeBehind="DiscountEdit.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.DiscountEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+<script type="text/javascript">
+    $(function () {
+        $(".children:eq(2)").show();
+        $("span:eq(2)").html("-");
+        $("a:eq(9)").css({ "color": "red" });
+        $(".head:eq(2)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(2)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(2)").html("-");
+        });
+    });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div>
@@ -15,17 +29,15 @@
     <div>
     </div>
     <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px"
-        Width="109px"></asp:TextBox>
+        Width="109px" required="true"></asp:TextBox>
     <div>
     </div>
-    <asp:Label ID="Label5" runat="server" Text="优惠内容"></asp:Label>
-    <div>
-    </div>
+  
     <div>
                 <div>
-                    <asp:Label ID="label6" runat="server" Text="开始时间"></asp:Label>
+                    <asp:Label ID="label6" runat="server" Text="开始时间" ></asp:Label>
                     <div>
-                        <asp:TextBox ID="StartDateTextBox" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="StartDateTextBox" runat="server" ></asp:TextBox>
                         <div>
                             <asp:Label ID="Label7" runat="server" Text="结束时间"></asp:Label>
                             <div>
@@ -71,6 +83,7 @@
                     </Columns>
                 </asp:GridView>
     </div>
+    <br />
     <asp:Button ID="SubmitButton" runat="server" Height="29px" Text="确定" 
         Width="73px" OnClick="SubmitButton_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

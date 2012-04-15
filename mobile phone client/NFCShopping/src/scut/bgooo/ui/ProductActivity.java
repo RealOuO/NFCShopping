@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -142,27 +143,26 @@ public class ProductActivity extends Activity implements INFCActivity {
 			// Get an instance of the TAG from the NfcAdapter
 			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-			// MifareClassic mfc = MifareClassic.get(productTag);
-			//
-			// try {
-			// // Conncet to card
-			// mfc.connect();
-			// boolean auth = false;
-			// auth = mfc.authenticateSectorWithKeyA(0,
-			// MifareClassic.KEY_DEFAULT);
-			//
-			// if (auth) {
-			// byte[] data = mfc.readBlock(1);
-			// char[] cData = TransistionUtil.getChars(data);
-			// mBarcodeStr = String.valueOf(cData);
-			// DownloadInfo();
-			// }
-			// } catch (IOException ex) {
-			// ex.printStackTrace();
-			// Toast.makeText(getApplicationContext(), "¶Á¿¨Ê§°Ü\nÇëÖØÐÂË¢È¡¿¨Æ¬",
-			// Toast.LENGTH_SHORT).show();
-			// }
-			DownloadInfo();
+			MifareClassic mfc = MifareClassic.get(productTag);
+
+			try {
+				// Conncet to card
+				mfc.connect();
+				boolean auth = false;
+				auth = mfc.authenticateSectorWithKeyA(0,
+						MifareClassic.KEY_DEFAULT);
+
+				if (auth) {
+					byte[] data = mfc.readBlock(1);
+					char[] cData = TransistionUtil.getChars(data);
+					mBarcodeStr = String.valueOf(cData).trim();  // ×¢ÒâÒªÈ¥µô¿Õ¸ñ¡£¡£
+					DownloadInfo();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				Toast.makeText(getApplicationContext(), "¶Á¿¨Ê§°Ü\nÇëÖØÐÂË¢È¡¿¨Æ¬",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 
 	}
@@ -216,7 +216,7 @@ public class ProductActivity extends Activity implements INFCActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"1234");
+						mBarcodeStr);
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;
@@ -305,7 +305,8 @@ public class ProductActivity extends Activity implements INFCActivity {
 				Log.d(TAG, mProduct.toString());
 				mBarcode.setText(mProduct.getProperty(3).toString());
 				mName.setText(mProduct.getProperty(4).toString());
-				mPrice.setText(mProduct.getProperty(5).toString());
+				DecimalFormat df = new java.text.DecimalFormat("#0.00");
+				mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5).toString())) + "Ôª");
 				mBrand.setText(mProduct.getProperty(6).toString());
 				mLocation.setText(mProduct.getProperty(7).toString());
 				mDescription.setText(mProduct.getProperty(9).toString());

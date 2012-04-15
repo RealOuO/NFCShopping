@@ -280,9 +280,8 @@ namespace NFCShoppingWebSite.WebPages
             Session.Add("FilteredDataSource", filteredSource);
             Session.Add("IsEditMode", isEditMode);
             Session.Add("CurrentState", discount);
-
-            Response.Redirect("~/WebPages/DiscountEdit.aspx?isNew=" + (!isEditMode).ToString() + "&discountID=" +
-               DiscountsDropDownList.SelectedValue);
+            Response.Write("<script type='text/javascript'>alert('成功');window.location ='~/WebPages/DiscountEdit.aspx?isNew=' + (!isEditMode).ToString() + '&discountID=' + DiscountsDropDownList.SelectedValue;</script>");
+          
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)

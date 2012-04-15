@@ -2,6 +2,20 @@
     CodeBehind="DiscountDetails.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.DiscountDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+<script type="text/javascript">
+    $(function () {
+        $(".children:eq(2)").show();
+        $("span:eq(2)").html("-");
+        $("a:eq(8)").css({ "color": "red" });
+        $(".head:eq(2)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(2)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(2)").html("-");
+        });
+    });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ObjectDataSource ID="DiscountsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
@@ -55,7 +69,7 @@
                 <SortedDescendingCellStyle BackColor="#FFFDF8" />
                 <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
                 <Columns>
-                    <asp:TemplateField HeaderText="优惠商品" ControlStyle-Width="100px" ItemStyle-Height="25px">
+                    <asp:TemplateField HeaderText="优惠商品" ControlStyle-Width="100px" ItemStyle-Height="30px">
                         <ItemTemplate>
                             <a href='<%# VirtualPathUtility.ToAbsolute("~/WebPages/ProductDetails.aspx?productID=" + Eval("Product.productID")) %>'>
                                 <asp:Label ID="ProductNameLabel" runat="server" Text='<%# Eval("Product.productName") %>'></asp:Label>

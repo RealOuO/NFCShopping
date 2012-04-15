@@ -27,8 +27,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static String TAG = WebServiceUtil.class.getName();
 	private static final String NAMESPACE = "http://tempuri.org/";
 	
-	private static String URL = "http://192.168.1.100:8080/NFCShopping/ShopWebService.asmx";
-	public static String ImageURL = "http://192.168.1.100:8080/NFCShopping/Images/Products/";
+	private static String URL = "http://192.168.1.103:8080/NFCShopping/ShopWebService.asmx";
+	public static String ImageURL = "http://192.168.1.103:8080/NFCShopping/Images/Products/";
 
 
 	private static final String REGIST = "Regist";
@@ -178,6 +178,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Vector<Discount> getDiscounts() {
 		// TODO Auto-generated method stub
@@ -210,6 +211,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Vector<DiscountItem> getDiscountItems(int id) {
 		// TODO Auto-generated method stub

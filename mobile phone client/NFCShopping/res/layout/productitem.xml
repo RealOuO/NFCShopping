@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10.0dip"
-                android:text="平均价格"
+                android:text="参考价格"
                 android:textSize="15.0sp" />
 
             <TextView

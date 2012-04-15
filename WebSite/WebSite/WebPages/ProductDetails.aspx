@@ -14,75 +14,99 @@
             width: 363px;
         }
     </style>
+    <link href="../css/ProductDetails.css" rel="stylesheet" type="text/css" />
+            <script type="text/javascript">
+                $(function () {
+                    $(".children:eq(0)").show();
+                    $("span:eq(0)").html("-");
+                    $("a:eq(3)").css({ "color": "red" });
+                    $(".head:eq(0)").toggle(function () {
+                        $(this).next().hide();
+                        $("span:eq(0)").html("+");
+                    }, function () {
+                        $(this).next().show();
+                        $("span:eq(0)").html("-");
+                    });
+                });
+    </script>
+    <script  type="text/javascript">
+        function delete_confirm(e) {
+            if (event.srcElement.type == "submit" && document.all(event.srcElement.name).value == "删除")
+                event.returnValue = confirm("确认是否删除？");
+        }
+        document.onclick = delete_confirm; 
+</script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
         Text="Label"></asp:Label>
     <div style="height: 22px">
     </div>
-    <div>
-        <asp:Label ID="Label9" runat="server" Text="商品图片"></asp:Label>
+             <table>
+          <tr>
+          <td>
+         <asp:Label ID="Label3" runat="server" Text="商品分类:"></asp:Label>
+         </td>
+         <td>
+  <asp:Label ID="CategoryLabel" runat="server" Text="Label"></asp:Label>
+    </td>
+    <td>
+     <asp:Label ID="Label4" runat="server" Text="商品子分类:"></asp:Label>
+          </td>
+         <td>
+ <asp:Label ID="SecCategoryLabel" runat="server" Text="Label"></asp:Label>
+    </td>
+    <td>
+    <asp:Label ID="Label1" runat="server" Text="商品名称:" ></asp:Label>
+         </td>
+         <td>
+    <asp:Label ID="ProductNameLable" runat="server" ></asp:Label>
+
+   
+    </td>
+    <td>
+     <asp:Label ID="Label6" runat="server" Text="价格:"></asp:Label>
+        </td>
+         <td>
+    <asp:Label ID="Price" runat="server" required="true"></asp:Label>
+    </td>
+    </tr>
+    <tr>
+    <td>
+      <asp:Label ID="Label5" runat="server" Text="条形码:"></asp:Label>
+       </td>
+         <td>
+    <asp:Label ID="Barcode" runat="server" 
+                 ontextchanged="BarcodeTextBox_TextChanged"></asp:Label>
+    </td>
+     <td>
+    <asp:Label ID="Label7" runat="server" Text="品牌:"></asp:Label>
+       </td>
+         <td>
+    <asp:Label ID="Brand" runat="server"></asp:Label>
+  </td>
+  <td>
+    <asp:Label ID="Label8" runat="server" Text="产地:"></asp:Label>
+      </td>
+         <td>
+    <asp:Label ID="Location" runat="server"></asp:Label>
+    </td>
+    </tr>
+    </table>
+    <div style="height: 12px">
     </div>
-    <div>
-    </div>
-    <div>
-        <asp:Image ID="ProductImage" runat="server" />
-        <div>
+   <div style="width:1000; height:230;">
+       <div class="describe">
+    <br />
+    <asp:Label ID="Label2" runat="server" Text="商品描述:"></asp:Label>
+          <br />       <br />
+    <asp:Label ID="ProductDescription" runat="server" Height="140px" TextMode="MultiLine"
+        Width="402px"></asp:Label>
         </div>
-    </div>
-    <asp:Label ID="Label1" runat="server" Text="商品名称"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="ProductNameTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Label ID="Label2" runat="server" Text="商品描述"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="ProductDescriptionTextBox" runat="server" Height="140px" TextMode="MultiLine"
-        Width="442px" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Label ID="Label3" runat="server" Text="商品分类"></asp:Label>
-    <div>
-    </div>
-    <div>
-        <asp:Label ID="CategoryLabel" runat="server" Text="Label"></asp:Label>
-        <div>
+    <div class="picture">
+        <asp:Label ID="Label10" runat="server" Text="商品图片:"></asp:Label>
+       <asp:Image ID="ProductImage" runat="server" Height="230px" ImageAlign="Middle"  Width="330px" />
         </div>
-    </div>
-    <asp:Label ID="Label4" runat="server" Text="商品子分类"></asp:Label>
-    <div>
-    </div>
-    <div>
-        <asp:Label ID="SecCategoryLabel" runat="server" Text="Label"></asp:Label>
-        <div>
-        </div>
-    </div>
-    <asp:Label ID="Label5" runat="server" Text="条形码"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="BarcodeTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Label ID="Label6" runat="server" Text="价格"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="PriceTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Label ID="Label7" runat="server" Text="品牌"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="BrandTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    <div>
-    </div>
-    <asp:Label ID="Label8" runat="server" Text="产地"></asp:Label>
-    <div>
-    </div>
-    <div>
-        <asp:TextBox ID="LocationTextBox" runat="server" BorderStyle="None" ReadOnly="True"></asp:TextBox>
-    </div>
     <table style="width: 100%;">
         <tr>
             <td class="style1">
@@ -143,144 +167,18 @@
     <asp:UpdatePanel ID="UpdatePane" runat="server">
         <ContentTemplate>
             <asp:ListView ID="ReviewListView" runat="server" AllowPaging="true" DataKeyNames="reviewID"
-                DataSourceID="ReviewsDataSourse">
-                <AlternatingItemTemplate>
-                    <li style="background-color: #FAFAD2; color: #284775;">reviewID:
-                        <asp:Label ID="reviewIDLabel" runat="server" Text='<%# Eval("reviewID") %>' />
-                        <br />
-                        userID:
-                        <asp:Label ID="userIDLabel" runat="server" Text='<%# Eval("userID") %>' />
-                        <br />
-                        productID:
-                        <asp:Label ID="productIDLabel" runat="server" Text='<%# Eval("productID") %>' />
-                        <br />
-                        comment:
-                        <asp:Label ID="commentLabel" runat="server" Text='<%# Eval("comment") %>' />
-                        <br />
-                        rating:
-                        <asp:Label ID="ratingLabel" runat="server" Text='<%# Eval("rating") %>' />
-                        <br />
-                        createAt:
-                        <asp:Label ID="createAtLabel" runat="server" Text='<%# Eval("createAt") %>' />
-                        <br />
-                        Product:
-                        <asp:Label ID="ProductLabel" runat="server" Text='<%# Eval("Product") %>' />
-                        <br />
-                        ProductReference:
-                        <asp:Label ID="ProductReferenceLabel" runat="server" Text='<%# Eval("ProductReference") %>' />
-                        <br />
-                        User:
-                        <asp:Label ID="UserLabel" runat="server" Text='<%# Eval("User") %>' />
-                        <br />
-                        UserReference:
-                        <asp:Label ID="UserReferenceLabel" runat="server" Text='<%# Eval("UserReference") %>' />
-                        <br />
-                        EntityState:
-                        <asp:Label ID="EntityStateLabel" runat="server" Text='<%# Eval("EntityState") %>' />
-                        <br />
-                        EntityKey:
-                        <asp:Label ID="EntityKeyLabel" runat="server" Text='<%# Eval("EntityKey") %>' />
-                        <br />
-                        <asp:Button ID="DeleteButton" runat="server" CommandName="Delete" Text="删除" />
-                    </li>
-                </AlternatingItemTemplate>
-                <EditItemTemplate>
-                    <li style="background-color: #FFCC66; color: #000080;">reviewID:
-                        <asp:TextBox ID="reviewIDTextBox" runat="server" Text='<%# Bind("reviewID") %>' />
-                        <br />
-                        userID:
-                        <asp:TextBox ID="userIDTextBox" runat="server" Text='<%# Bind("userID") %>' />
-                        <br />
-                        productID:
-                        <asp:TextBox ID="productIDTextBox" runat="server" Text='<%# Bind("productID") %>' />
-                        <br />
-                        comment:
-                        <asp:TextBox ID="commentTextBox" runat="server" Text='<%# Bind("comment") %>' />
-                        <br />
-                        rating:
-                        <asp:TextBox ID="ratingTextBox" runat="server" Text='<%# Bind("rating") %>' />
-                        <br />
-                        createAt:
-                        <asp:TextBox ID="createAtTextBox" runat="server" Text='<%# Bind("createAt") %>' />
-                        <br />
-                        Product:
-                        <asp:TextBox ID="ProductTextBox" runat="server" Text='<%# Bind("Product") %>' />
-                        <br />
-                        ProductReference:
-                        <asp:TextBox ID="ProductReferenceTextBox" runat="server" Text='<%# Bind("ProductReference") %>' />
-                        <br />
-                        User:
-                        <asp:TextBox ID="UserTextBox" runat="server" Text='<%# Bind("User") %>' />
-                        <br />
-                        UserReference:
-                        <asp:TextBox ID="UserReferenceTextBox" runat="server" Text='<%# Bind("UserReference") %>' />
-                        <br />
-                        EntityState:
-                        <asp:TextBox ID="EntityStateTextBox" runat="server" Text='<%# Bind("EntityState") %>' />
-                        <br />
-                        EntityKey:
-                        <asp:TextBox ID="EntityKeyTextBox" runat="server" Text='<%# Bind("EntityKey") %>' />
-                        <br />
-                        <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="更新" />
-                        <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="取消" />
-                    </li>
-                </EditItemTemplate>
+                DataSourceID="ReviewsDataSourse">                
                 <EmptyDataTemplate>
                     未返回数据。
                 </EmptyDataTemplate>
-                <InsertItemTemplate>
-                    <li style="">reviewID:
-                        <asp:TextBox ID="reviewIDTextBox" runat="server" Text='<%# Bind("reviewID") %>' />
-                        <br />
-                        userID:
-                        <asp:TextBox ID="userIDTextBox" runat="server" Text='<%# Bind("userID") %>' />
-                        <br />
-                        productID:
-                        <asp:TextBox ID="productIDTextBox" runat="server" Text='<%# Bind("productID") %>' />
-                        <br />
-                        comment:
-                        <asp:TextBox ID="commentTextBox" runat="server" Text='<%# Bind("comment") %>' />
-                        <br />
-                        rating:
-                        <asp:TextBox ID="ratingTextBox" runat="server" Text='<%# Bind("rating") %>' />
-                        <br />
-                        createAt:
-                        <asp:TextBox ID="createAtTextBox" runat="server" Text='<%# Bind("createAt") %>' />
-                        <br />
-                        Product:
-                        <asp:TextBox ID="ProductTextBox" runat="server" Text='<%# Bind("Product") %>' />
-                        <br />
-                        ProductReference:
-                        <asp:TextBox ID="ProductReferenceTextBox" runat="server" Text='<%# Bind("ProductReference") %>' />
-                        <br />
-                        User:
-                        <asp:TextBox ID="UserTextBox" runat="server" Text='<%# Bind("User") %>' />
-                        <br />
-                        UserReference:
-                        <asp:TextBox ID="UserReferenceTextBox" runat="server" Text='<%# Bind("UserReference") %>' />
-                        <br />
-                        EntityState:
-                        <asp:TextBox ID="EntityStateTextBox" runat="server" Text='<%# Bind("EntityState") %>' />
-                        <br />
-                        EntityKey:
-                        <asp:TextBox ID="EntityKeyTextBox" runat="server" Text='<%# Bind("EntityKey") %>' />
-                        <br />
-                        <asp:Button ID="InsertButton" runat="server" CommandName="Insert" Text="插入" />
-                        <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="清除" />
-                    </li>
-                </InsertItemTemplate>
+               
                 <ItemSeparatorTemplate>
                     <br />
                 </ItemSeparatorTemplate>
                 <ItemTemplate>
-                    <li style="background-color: #FFFBD6; color: #333333;">reviewID:
-                        <asp:Label ID="reviewIDLabel" runat="server" Text='<%# Eval("reviewID") %>' />
-                        <br />
-                        userID:
-                        <asp:Label ID="userIDLabel" runat="server" Text='<%# Eval("userID") %>' />
-                        <br />
-                        productID:
-                        <asp:Label ID="productIDLabel" runat="server" Text='<%# Eval("productID") %>' />
+                    <li style="background-color: #FFFBD6; color: #333333;">           
+                        User:
+                        <asp:Label ID="UserLabel" runat="server" Text='<%# Eval("User.userName") %>' />
                         <br />
                         comment:
                         <asp:Label ID="commentLabel" runat="server" Text='<%# Eval("comment") %>' />
@@ -290,24 +188,6 @@
                         <br />
                         createAt:
                         <asp:Label ID="createAtLabel" runat="server" Text='<%# Eval("createAt") %>' />
-                        <br />
-                        Product:
-                        <asp:Label ID="ProductLabel" runat="server" Text='<%# Eval("Product") %>' />
-                        <br />
-                        ProductReference:
-                        <asp:Label ID="ProductReferenceLabel" runat="server" Text='<%# Eval("ProductReference") %>' />
-                        <br />
-                        User:
-                        <asp:Label ID="UserLabel" runat="server" Text='<%# Eval("User") %>' />
-                        <br />
-                        UserReference:
-                        <asp:Label ID="UserReferenceLabel" runat="server" Text='<%# Eval("UserReference") %>' />
-                        <br />
-                        EntityState:
-                        <asp:Label ID="EntityStateLabel" runat="server" Text='<%# Eval("EntityState") %>' />
-                        <br />
-                        EntityKey:
-                        <asp:Label ID="EntityKeyLabel" runat="server" Text='<%# Eval("EntityKey") %>' />
                         <br />
                         <asp:Button ID="DeleteButton" runat="server" CommandName="Delete" Text="删除" />
                     </li>

@@ -65,6 +65,7 @@
     <Content Include="App_Data\ShopDB_log.ldf">
       <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
+    <Content Include="Scripts\Site.js" />
     <Content Include="ShopWebService.asmx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
@@ -270,6 +271,7 @@
     <Content Include="Styles\Site.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="css\" />
     <Folder Include="Images\Products\" />
     <Folder Include="Images\Temp\" />
   </ItemGroup>

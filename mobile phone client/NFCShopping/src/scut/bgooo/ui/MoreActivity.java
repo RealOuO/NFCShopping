@@ -79,9 +79,7 @@ public class MoreActivity extends ListActivity {
 					builder.show();
 					break;
 				case 3: {
-					Intent intent = new Intent(MoreActivity.this,
-							CommentActivity.class);
-					startActivity(intent);
+					
 				}
 
 					break;

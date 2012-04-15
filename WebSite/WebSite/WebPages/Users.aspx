@@ -2,8 +2,24 @@
     CodeBehind="Users.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.Users" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+    $(function () {
+        $(".children:eq(1)").show();
+        $("span:eq(1)").html("-");
+        $("a:eq(6)").css({ "color": "red" });
+        $(".head:eq(1)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(1)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(1)").html("-");
+        });
+    });
+
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h1 style=" color:Black;"><b>查看用户</b></h1>
     <asp:ObjectDataSource ID="UsersDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.User"
         DeleteMethod="DeleteUser" SelectMethod="GetUsers" TypeName="NFCShoppingWebSite.BLL.UserBL">
     </asp:ObjectDataSource>

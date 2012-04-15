@@ -20,14 +20,14 @@ namespace NFCShoppingWebSite.WebPages
             Category category = categoryBL.GetCategory(product.SecCategory.categoryID);
 
             TitleLabel.Text = product.productName;
-            ProductNameTextBox.Text = product.productName;
-            ProductDescriptionTextBox.Text = product.description;
+            ProductNameLable.Text = product.productName;
+            ProductDescription.Text = product.description;
             SecCategoryLabel.Text = product.SecCategory.secCategoryName;
             CategoryLabel.Text = category.categoryName;
-            PriceTextBox.Text = product.price.ToString("{0:c}");
-            LocationTextBox.Text = product.location;
-            BrandTextBox.Text = product.brand;
-            BarcodeTextBox.Text = product.barCode;
+            Price.Text = product.price.ToString("{0:c}");
+            Location.Text = product.location;
+            Brand.Text = product.brand;
+            Barcode.Text = product.barCode;
             ProductImage.ImageUrl = VirtualPathUtility.ToAbsolute("~/Images/Products/" + product.imageURL);
 
             categoryBL.Dispose();
@@ -63,6 +63,7 @@ namespace NFCShoppingWebSite.WebPages
             Product product = GetProduct();
 
             // Jump to the editing page.
+
             Response.Redirect("ProductEdit.aspx?isNew=false&productID=" + product.productID.ToString());
         }
 
@@ -76,6 +77,11 @@ namespace NFCShoppingWebSite.WebPages
             enumerator.MoveNext();
 
             return (Product)enumerator.Current;
+        }
+
+        protected void BarcodeTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

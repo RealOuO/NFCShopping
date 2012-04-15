@@ -68,6 +68,12 @@ public class CommentActivity extends Activity implements INFCActivity {
 					toast.show();
 					return;
 				} else {
+					mProgressDialog = new ProgressDialog(CommentActivity.this);
+					mProgressDialog.setMessage(CommentActivity.this.getResources()
+							.getString(R.string.app_name));
+					mProgressDialog.setTitle(CommentActivity.this.getResources()
+							.getString(R.string.app_name));
+					mProgressDialog.show();
 					Log.i("token",
 							WeiboUserListActivity.defaultUserInfo.GetAToken());
 					Log.i("token",
@@ -80,7 +86,7 @@ public class CommentActivity extends Activity implements INFCActivity {
 					m.put("COMMIT", commitStr);
 					Task task = new Task(Task.SEND_COMMENT_WEIBO, m);
 					TaskHandler.addTask(task);
-					finish();
+					UpdateReview();
 				}
 
 			}

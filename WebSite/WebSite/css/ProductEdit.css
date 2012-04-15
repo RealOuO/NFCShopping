@@ -1,0 +1,27 @@
+﻿body {
+}
+
+.picture
+{
+     float:left;
+  
+     
+}
+.describe
+{
+    float:left;
+    margin-top:-10px;
+       width:480px;
+}
+table
+{
+     width:1000px;
+}
+#product
+{
+   float:left; 
+}
+#MainContent_SubmitButton
+{
+     margin-left:0px;
+}

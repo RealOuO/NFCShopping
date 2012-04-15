@@ -1,5 +1,6 @@
 package scut.bgooo.ui;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -181,7 +182,8 @@ public class CommentListActivity extends Activity implements INFCActivity{
 		byte[] data = mItem.getIcon();
 		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 		mPicture.setImageBitmap(bitmap);
-		mPriceTextView.setText(String.valueOf(mItem.getPrice()));
+		DecimalFormat df = new java.text.DecimalFormat("#0.00");
+		mPriceTextView.setText(df.format(mItem.getPrice()) + "Ԫ");
 		mNameTextView.setText(mItem.getName());
 		mRatingBar.setRating(mItem.getRating());
 

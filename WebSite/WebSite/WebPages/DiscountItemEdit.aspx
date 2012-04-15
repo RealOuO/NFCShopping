@@ -2,6 +2,20 @@
     CodeBehind="DiscountItemEdit.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.DiscountItemEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+<script type="text/javascript">
+    $(function () {
+        $(".children:eq(2)").show();
+        $("span:eq(2)").html("-");
+        $("a:eq(10)").css({ "color": "red" });
+        $(".head:eq(2)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(2)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(2)").html("-");
+        });
+    });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ObjectDataSource ID="DiscountItemsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.DiscountItem"
@@ -26,7 +40,7 @@
     <br />
     <asp:Label ID="Label2" runat="server" Text="商品名称"></asp:Label>
     <div>
-        <asp:TextBox ID="ProductNameTextBox" runat="server"></asp:TextBox>
+        <asp:TextBox ID="ProductNameTextBox" runat="server" required="true"></asp:TextBox>
         <asp:DropDownList ID="ProductsDropDownList" runat="server" DataTextField="productID" DataValueField="productID">
         </asp:DropDownList>
         <asp:Button ID="SearchButton" runat="server" Text="搜索" 
@@ -45,13 +59,13 @@
     <br />
     <asp:Label ID="Label3" runat="server" Text="折扣"></asp:Label>
     <br />
-    <br />
+  
     <asp:TextBox ID="DiscountPercentTextBox" runat="server" Text='<%# Eval("discountPercent") %>'></asp:TextBox>
     <br />
-    <br />
+   <br />
     <asp:Label ID="Label4" runat="server" Text="描述信息"></asp:Label>
     <br />
-    <br />
+   
     <asp:TextBox ID="DiscountItemDescriptionTextBox" Text='<%# Eval("description") %>' runat="server" Height="140px" TextMode="MultiLine"
         Width="442px"></asp:TextBox>
     <br />

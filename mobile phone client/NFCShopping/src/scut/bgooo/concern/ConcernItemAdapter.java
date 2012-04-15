@@ -1,5 +1,6 @@
 package scut.bgooo.concern;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +92,8 @@ public class ConcernItemAdapter extends BaseAdapter {
 			vh.mImageView.setImageBitmap(bitmap);
 			vh.mGoodScore.setRating(item.getRating());
 			vh.mGoodsNmae.setText(item.getName());
-			vh.mGoodsPrice.setText(String.valueOf(item.getPrice()));
+			DecimalFormat df = new java.text.DecimalFormat("#0.00");
+			vh.mGoodsPrice.setText(df.format(item.getPrice()) + "Ԫ");
 
 		}
 		return concernitem;

@@ -92,11 +92,12 @@ namespace NFCShoppingWebSite.WebPages
                 product.productID = origProduct.productID;
                 mProducts.UpdateProduct(product, origProduct);
             }
-
+            Response.Write("<script type='text/javascript'>alert('成功');window.location ='Categories.aspx';</script>");
             mProducts.Dispose();
 
             // Jump to the product list which the edited product is in.
-            Response.Redirect("~/WebPages/Products.aspx?secCategoryID=" + product.secCategoryID.ToString());
+          
+      
         }
 
         protected void Page_PreRender(object sender, EventArgs e)

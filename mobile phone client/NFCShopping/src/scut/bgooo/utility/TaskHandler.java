@@ -273,7 +273,7 @@ public class TaskHandler implements Runnable {
 			}
 				break;
 			case Task.SEND_COMMENT_WEIBO: {
-				INFCActivity iwa = allActivity.get(CommentListActivity.class
+				INFCActivity iwa = allActivity.get(CommentActivity.class
 						.getSimpleName());
 				iwa.refresh(msg.obj);
 			}

@@ -1,5 +1,6 @@
 package scut.bgooo.ui;
 
+
 import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.User;
@@ -12,6 +13,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -137,6 +140,8 @@ public class LoginActivity extends Activity {
 		thread = null;
 
 	}
+	
+	
 
 	final Handler handler = new Handler() {
 
