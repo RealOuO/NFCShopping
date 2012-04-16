@@ -24,7 +24,7 @@ namespace NFCShoppingWebSite.WebPages
             ProductDescription.Text = product.description;
             SecCategoryLabel.Text = product.SecCategory.secCategoryName;
             CategoryLabel.Text = category.categoryName;
-            Price.Text = product.price.ToString("{0:c}");
+            Price.Text = decimal.Parse(product.price.ToString()).ToString("C");
             Location.Text = product.location;
             Brand.Text = product.brand;
             Barcode.Text = product.barCode;

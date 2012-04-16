@@ -14,15 +14,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MoreActivity extends ListActivity {
@@ -30,7 +24,6 @@ public class MoreActivity extends ListActivity {
 	private static final String TAG = MoreActivity.class.getSimpleName();
 
 	private ConcernManager mConcernManager = null;
-	private Profile profile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +95,6 @@ public class MoreActivity extends ListActivity {
 		ArrayAdapter<String> adapter;
 		String[] login = { "登录", "绑定微博账号", "清空关注列表", "应用设置", "帮助", "反馈" };
 
-		profile = UserProfileUtil.readProfile(getApplicationContext());
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, login);
 		setListAdapter(adapter);

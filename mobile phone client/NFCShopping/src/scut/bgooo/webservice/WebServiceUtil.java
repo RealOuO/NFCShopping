@@ -199,7 +199,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catc1[ [[h block
 			e.printStackTrace();
 		}
 		return result;

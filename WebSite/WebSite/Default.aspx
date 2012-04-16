@@ -11,16 +11,16 @@
             TypeName="NFCShoppingWebSite.BLL.UserBL"></asp:ObjectDataSource>
         <asp:GridView ID="Top10UsersGridView" runat="server" AutoGenerateColumns="False"
             CellPadding="4" DataSourceID="Top10UsersDataSource" ForeColor="#333333" GridLines="None"
-            Width="808px">
+            Width="703px">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
             <Columns>
-                <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" />
+                <asp:BoundField DataField="userID" HeaderText="用户ID" SortExpression="userID" />
                 <asp:HyperLinkField DataNavigateUrlFields="userID" DataNavigateUrlFormatString="WebPages/UserDetails.aspx?userID={0}"
-                    DataTextField="userName" HeaderText="userName" />
-                <asp:BoundField DataField="userPassword" HeaderText="userPassword" SortExpression="userPassword" />
-                <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
-                <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" SortExpression="visitedTimes" />
-                <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" SortExpression="lastVisitedDate" />
+                    DataTextField="userName" HeaderText="用户名" />
+                <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" 
+                    SortExpression="visitedTimes" />
+                <asp:BoundField DataField="lastVisitedDate" HeaderText="最后到访时间" 
+                    SortExpression="lastVisitedDate" />
             </Columns>
             <EditRowStyle BackColor="#999999" />
             <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -42,7 +42,7 @@
             TypeName="NFCShoppingWebSite.BLL.ReviewBL"></asp:ObjectDataSource>
         <asp:GridView ID="Top10ProductsGridView" runat="server" AutoGenerateColumns="False"
             DataSourceID="Top10ProductsDataSource" DataKeyNames="Key" CellPadding="4" ForeColor="#333333"
-            GridLines="None" Width="695px">
+            GridLines="None" Width="700px">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:BoundField DataField="Key" HeaderText="商品id" />

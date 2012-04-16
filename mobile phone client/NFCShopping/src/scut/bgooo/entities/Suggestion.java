@@ -1,6 +1,7 @@
 package scut.bgooo.entities;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 
 import org.ksoap2.serialization.KvmSerializable;
@@ -88,7 +89,12 @@ public class Suggestion implements KvmSerializable ,Serializable{
 			this.UserId = Integer.valueOf(arg1.toString());
 			break;
 		case 2:
-			this.Text = arg1.toString();
+			try {
+				this.Text = new String(arg1.toString().getBytes("UTF-8"),"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case 3:
 			this.CreatedAt = arg1.toString();

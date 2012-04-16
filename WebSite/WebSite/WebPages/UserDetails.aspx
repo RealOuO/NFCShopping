@@ -17,11 +17,14 @@
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
             <Fields>
-                <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" />
-                <asp:BoundField DataField="userName" HeaderText="userName" SortExpression="userName" />
-                <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
-                <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" SortExpression="visitedTimes" />
-                <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" SortExpression="lastVisitedDate" />
+                <asp:BoundField DataField="userID" HeaderText="用户ID" SortExpression="userID" />
+                <asp:BoundField DataField="userName" HeaderText="用户名" 
+                    SortExpression="userName" />
+                <asp:BoundField DataField="gender" HeaderText="性别" SortExpression="gender" />
+                <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" 
+                    SortExpression="visitedTimes" />
+                <asp:BoundField DataField="lastVisitedDate" HeaderText="最后来访时间" 
+                    SortExpression="lastVisitedDate" />
                 <asp:CommandField ShowDeleteButton="True" />
             </Fields>
             <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
@@ -45,16 +48,16 @@
             <br />
         </ItemSeparatorTemplate>
         <ItemTemplate>
-            <li style="background-color: #FFFBD6; color: #333333;">Product:
+            <li style="background-color: #FFFBD6; color: #333333;">评论过的商品:
                 <asp:Label ID="UserLabel" runat="server" Text='<%# Eval("Product.productName") %>' />
                 <br />
-                comment:
+                商品评论内容:<br />
                 <asp:Label ID="commentLabel" runat="server" Text='<%# Eval("comment") %>' />
                 <br />
-                rating:
+                商品评分:
                 <asp:Label ID="ratingLabel" runat="server" Text='<%# Eval("rating") %>' />
                 <br />
-                createAt:
+                发布时间:
                 <asp:Label ID="createAtLabel" runat="server" Text='<%# Eval("createAt") %>' />
                 <br />
                 <asp:Button ID="DeleteButton" runat="server" CommandName="Delete" Text="删除" />
