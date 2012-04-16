@@ -62,7 +62,7 @@
     <Content Include="Account\PasswordRecovery.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="App_Data\ShopDB.mdf" />
-    <Content Include="App_Data\ShopDB_log.ldf">
+    <Content Include="App_Data\ShopDB_log.LDF">
       <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
     <Content Include="ShopWebService.asmx" />
