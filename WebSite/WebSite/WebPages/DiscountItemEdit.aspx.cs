@@ -280,7 +280,7 @@ namespace NFCShoppingWebSite.WebPages
             Session.Add("FilteredDataSource", filteredSource);
             Session.Add("IsEditMode", isEditMode);
             Session.Add("CurrentState", discount);
-            Response.Write("<script type='text/javascript'>alert('成功');window.location ='~/WebPages/DiscountEdit.aspx?isNew=' + (!isEditMode).ToString() + '&discountID=' + DiscountsDropDownList.SelectedValue;</script>");
+            Response.Write("<script type='text/javascript'>alert('成功');window.location ='DiscountEdit.aspx?isNew="+ (!isEditMode).ToString() +"&discountID="+ DiscountsDropDownList.SelectedValue+"';</script>");
           
         }
 

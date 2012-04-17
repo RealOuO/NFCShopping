@@ -13,18 +13,14 @@
     <div>
         <asp:DetailsView ID="UserDetailsView" runat="server" AutoGenerateRows="False" BackColor="White"
             BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" DataSourceID="UserDataSource"
-            GridLines="Horizontal" Height="50px" Width="922px" DataKeyNames="userID">
+            GridLines="Horizontal" Height="50px" Width="922px" DataKeyNames="userID" OnDataBound="UserDetailsView_DataBound">
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
             <Fields>
-                <asp:BoundField DataField="userID" HeaderText="用户ID" SortExpression="userID" />
-                <asp:BoundField DataField="userName" HeaderText="用户名" 
-                    SortExpression="userName" />
+                <asp:BoundField DataField="userName" HeaderText="用户名" SortExpression="userName" />
                 <asp:BoundField DataField="gender" HeaderText="性别" SortExpression="gender" />
-                <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" 
-                    SortExpression="visitedTimes" />
-                <asp:BoundField DataField="lastVisitedDate" HeaderText="最后来访时间" 
-                    SortExpression="lastVisitedDate" />
+                <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" SortExpression="visitedTimes" />
+                <asp:BoundField DataField="lastVisitedDate" HeaderText="最后来访时间" SortExpression="lastVisitedDate" />
                 <asp:CommandField ShowDeleteButton="True" />
             </Fields>
             <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
@@ -43,7 +39,6 @@
         <EmptyDataTemplate>
             未返回数据。
         </EmptyDataTemplate>
-       
         <ItemSeparatorTemplate>
             <br />
         </ItemSeparatorTemplate>
@@ -67,8 +62,14 @@
             <ul id="itemPlaceholderContainer" runat="server" style="">
                 <li runat="server" id="itemPlaceholder" />
             </ul>
-            <div style="">
-            </div>
+             <div style="text-align: center; background-color: #FFCC66; font-family: Verdana, Arial, Helvetica, sans-serif;
+                            color: #333333;">
+                            <asp:DataPager ID="DataPager" runat="server" PageSize="4">
+                                <Fields>
+                                    <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True" />
+                                </Fields>
+                            </asp:DataPager>
+                        </div>
         </LayoutTemplate>
     </asp:ListView>
 </asp:Content>

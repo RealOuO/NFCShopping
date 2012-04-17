@@ -3,6 +3,8 @@ package scut.bgooo.ui;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -10,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class TableAdapter extends BaseAdapter {
 
@@ -68,7 +72,9 @@ public class TableAdapter extends BaseAdapter {
 				} else if (tableCell.type == TableCell.IMAGE) {//如果格单元是图像内容
 					ImageView imgCell = new ImageView(context);
 					imgCell.setBackgroundColor(Color.BLACK);//背景黑色
-					imgCell.setImageResource((Integer) tableCell.value);
+					byte [] data =(byte []) tableCell.value;
+					Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+					imgCell.setImageBitmap(bitmap);
 					addView(imgCell, layoutParams);
 				}
 			}

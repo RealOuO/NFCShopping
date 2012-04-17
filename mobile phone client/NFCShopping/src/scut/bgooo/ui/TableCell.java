@@ -4,6 +4,7 @@ public class TableCell {
 
 	static public final int STRING = 0;
 	static public final int IMAGE = 1;
+	static public final int RATING=2;
 	public Object value;
 	public int width;
 	public int height;

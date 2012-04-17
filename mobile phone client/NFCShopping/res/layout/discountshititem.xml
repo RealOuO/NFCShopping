@@ -13,8 +13,7 @@
             android:id="@id/discount_image"
             android:layout_width="75dip"
             android:layout_height="75dip"
-            android:padding="5dip"
-            android:src="@drawable/pig" >
+            android:src="@drawable/discount" >
         </ImageView>
 
         <LinearLayout

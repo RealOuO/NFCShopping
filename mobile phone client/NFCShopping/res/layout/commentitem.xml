@@ -56,12 +56,14 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/popup"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/tvComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="评论评论评论评论评论评论评论评论评论评论"
             android:textSize="15.0sp" />
     </LinearLayout>

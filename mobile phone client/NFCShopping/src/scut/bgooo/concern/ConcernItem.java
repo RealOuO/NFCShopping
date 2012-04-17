@@ -7,7 +7,7 @@ public class ConcernItem implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static int getCount() {
-		return 7;
+		return 8;
 	}
 	private String Barcode;
 	private String Brand;
@@ -91,29 +91,29 @@ public class ConcernItem implements java.io.Serializable {
 		Object temp = null;
 		switch (index) {
 		case 0:
-			temp = getName();
+			temp = getIcon();
 			break;
 		case 1:
-			temp = getBrand();
+			temp = getName();
 			break;
 		case 2:
-			temp = getPrice();
+			temp = getBrand();
 			break;
 		case 3:
-			temp = getSecCategory();
+			temp = getPrice();
 			break;
 		case 4:
-			temp = getLocation();
-			break;
-		case 5:
-			temp = getDescription();
-			break;
-		case 6:
 			temp = getRating();
 			break;
-		case 7: {
-			temp = getIcon();
-		}break;
+		case 5:
+			temp = getSecCategory();
+			break;
+		case 6:
+			temp = getLocation();
+			break;
+		case 7:
+			temp = getDescription();
+			break;
 		default:
 			break;
 		}
