@@ -172,16 +172,16 @@
                         <br />
                     </ItemSeparatorTemplate>
                     <ItemTemplate>
-                        <li style="background-color: #FFFBD6; color: #333333;">User:
+                        <li style="background-color: #FFFBD6; color: #333333;">用户名:
                             <asp:Label ID="UserLabel" runat="server" Text='<%# Eval("User.userName") %>' />
                             <br />
-                            comment:
+                            评论内容:
                             <asp:Label ID="commentLabel" runat="server" Text='<%# Eval("comment") %>' />
                             <br />
-                            rating:
+                            评分:
                             <asp:Label ID="ratingLabel" runat="server" Text='<%# Eval("rating") %>' />
                             <br />
-                            createAt:
+                            发表日期:
                             <asp:Label ID="createAtLabel" runat="server" Text='<%# Eval("createAt") %>' />
                             <br />
                             <asp:Button ID="DeleteButton" runat="server" CommandName="Delete" Text="删除" />
