@@ -3,13 +3,12 @@ package scut.bgooo.ui;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
 import scut.bgooo.concern.ConcernManager;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -21,19 +20,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RatingBar;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CollectionListActivity extends ListActivity {
+public class CollectionListActivity extends Activity {
 
 	private static final String TAG = CollectionListActivity.class
 			.getSimpleName();
@@ -76,19 +72,28 @@ public class CollectionListActivity extends ListActivity {
 	// listview显示的数据
 	private List<ConcernItem> mItems = null;
 
+	private ListView mCollectionList;
+	private View mNodata;
+	private TextView mNodataText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
+		setContentView(R.layout.collects);
+
+		mCollectionList = (ListView) findViewById(R.id.collectList);
+		mNodata = findViewById(R.id.nodatapopup);
+		mNodataText=(TextView)mNodata.findViewById(R.id.prompt);
+		mNodataText.setText("没有收藏记录哦亲！！");
 		this.mConcernManager = new ConcernManager(this); // 创建数据访问对象
 		mItems = mConcernManager.buildCollectedConcernItems();
 		mConcernAdapter = new ConcernItemAdapter(this, mItems);
-		setListAdapter(mConcernAdapter);
+		mCollectionList.setAdapter(mConcernAdapter);
 
-		getListView().setOnScrollListener(onScrollerListener);
-		getListView().setOnItemClickListener(onItemClickListener);
-
+		mCollectionList.setOnScrollListener(onScrollerListener);
+		mCollectionList.setOnItemClickListener(onItemClickListener);
 		LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dialogText = (TextView) inflate.inflate(R.layout.list_position, null);
 		dialogText.setVisibility(View.INVISIBLE);
@@ -97,7 +102,7 @@ public class CollectionListActivity extends ListActivity {
 
 		handler.post(runnable);
 		// 注册上下文菜单
-		this.registerForContextMenu(getListView());
+		this.registerForContextMenu(mCollectionList);
 	}
 
 	/**
@@ -191,7 +196,13 @@ public class CollectionListActivity extends ListActivity {
 		Log.d(TAG, "onResume");
 		mItems = mConcernManager.buildCollectedConcernItems();
 		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
-		((ConcernItemAdapter) this.getListAdapter()).dataSetChanged(mItems);
+		((ConcernItemAdapter) mCollectionList.getAdapter())
+				.dataSetChanged(mItems);
+		if (mItems.size() != 0) {
+			mNodata.setVisibility(View.GONE);
+		}else{
+			mNodata.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -206,7 +217,7 @@ public class CollectionListActivity extends ListActivity {
 		int position = item.getItemId();
 		mConcernManager.deleteConcernItemById(mItems.get(position).getId());
 		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
-		((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+		onResume();
 		return true;
 	}
 

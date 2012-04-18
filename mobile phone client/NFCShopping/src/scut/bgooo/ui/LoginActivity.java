@@ -1,6 +1,5 @@
 package scut.bgooo.ui;
 
-
 import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.User;
@@ -13,12 +12,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -49,6 +47,9 @@ public class LoginActivity extends Activity {
 	private Profile mProfile;
 	private ProgressDialog mProgressDialog;
 
+	private View mNodata;
+	private TextView mNodataText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -58,6 +59,10 @@ public class LoginActivity extends Activity {
 		mPassWord = (EditText) findViewById(R.id.etPassword);
 		mRigist = (Button) findViewById(R.id.btRegist);
 		mLogin = (Button) findViewById(R.id.btLogin);
+
+		mNodata = findViewById(R.id.nodatapopup);
+		mNodataText = (TextView) mNodata.findViewById(R.id.prompt);
+		mNodataText.setText("只有登录才能享受\n更好的服务哦亲！");
 
 		mProfile = UserProfileUtil.readProfile(getApplicationContext());
 		if (mProfile != null) {// 如果已经有保存了登录信息，则不必登录
@@ -71,7 +76,8 @@ public class LoginActivity extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, int i2) {
 							dialog.dismiss();
-							UserProfileUtil.saveProfile(getApplicationContext(), null);
+							UserProfileUtil.saveProfile(
+									getApplicationContext(), null);
 							Toast.makeText(getApplicationContext(), "请进行登录",
 									Toast.LENGTH_SHORT).show();
 						}
@@ -105,12 +111,18 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mProgressDialog = new ProgressDialog(LoginActivity.this);
-				mProgressDialog.setMessage("登录中……");
-				mProgressDialog.setTitle(LoginActivity.this.getResources()
-						.getString(R.string.app_name));
-				mProgressDialog.show();
-				Login();
+				if (mUserName.getText().toString().trim().equals("")
+						|| mPassWord.getText().toString().trim().equals("")) {
+					Toast.makeText(getApplicationContext(), "输入有误",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					mProgressDialog = new ProgressDialog(LoginActivity.this);
+					mProgressDialog.setMessage("登录中……");
+					mProgressDialog.setTitle(LoginActivity.this.getResources()
+							.getString(R.string.app_name));
+					mProgressDialog.show();
+					Login();
+				}
 			}
 		});
 	}
@@ -140,8 +152,6 @@ public class LoginActivity extends Activity {
 		thread = null;
 
 	}
-	
-	
 
 	final Handler handler = new Handler() {
 

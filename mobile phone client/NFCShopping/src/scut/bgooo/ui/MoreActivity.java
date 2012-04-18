@@ -1,8 +1,5 @@
 package scut.bgooo.ui;
 
-import java.util.List;
-import java.util.Map;
-
 import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.db.UserProfileUtil;
 import scut.bgooo.entities.Profile;

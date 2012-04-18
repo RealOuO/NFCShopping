@@ -22,6 +22,7 @@
                 <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" SortExpression="visitedTimes" />
                 <asp:BoundField DataField="lastVisitedDate" HeaderText="最后来访时间" SortExpression="lastVisitedDate" />
                 <asp:CommandField ShowDeleteButton="True" />
+                <asp:BoundField DataField="userID" HeaderText="userID" Visible="False" />
             </Fields>
             <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
             <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />

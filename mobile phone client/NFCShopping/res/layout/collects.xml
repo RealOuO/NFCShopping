@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:layout_height="match_parent" 
     android:background="@drawable/back">
-
-    <include
-        android:id="@+id/progress1"
-        layout="@layout/progress" />
 
     <include
         android:id="@+id/nodatapopup"
         layout="@layout/nodata" />
-
+    
+     
     <ListView
-        android:id="@+id/discountshit_listview"
+        android:id="@+id/collectList"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="1.0dip"
-        android:fadingEdge="none" />
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

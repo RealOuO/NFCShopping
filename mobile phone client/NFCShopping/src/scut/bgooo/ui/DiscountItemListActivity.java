@@ -15,6 +15,7 @@ import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,6 +36,8 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 
 	private ListView mListView;
 	private View mProgress;
+	
+	private Vector<DiscountItem> discountitem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,17 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 		TaskHandler.addTask(task);
 
 		mListView = (ListView) findViewById(R.id.privilege_listview);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(DiscountItemListActivity.this,ProductActivity.class);
+				intent.putExtra("product", (Product)discountitem.get(arg2).getProperty(6));
+				startActivity(intent);
+			}
+		});
 
 	}
 
@@ -70,7 +86,7 @@ public class DiscountItemListActivity extends Activity implements INFCActivity {
 		// TODO Auto-generated method stub
 		String result = (String) param[0];
 		if (result.equals("OK")) {
-			Vector<DiscountItem> discountitem = (Vector<DiscountItem>) param[1];
+			discountitem = (Vector<DiscountItem>) param[1];
 			if (discountitem != null) {
 				PrivilegeAdapter ma = new PrivilegeAdapter(this, discountitem);
 				mListView.setAdapter(ma);

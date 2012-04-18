@@ -13,6 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/userName"
             android:textSize="15.0sp" />
 
@@ -20,6 +21,7 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="10dip"
             android:text="Lee"
             android:textSize="15.0sp" />
@@ -37,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="时间时间时间"
+                android:text="时间"
                 android:textSize="12.0sp" />
         </RelativeLayout>
     </LinearLayout>
@@ -63,8 +65,8 @@
             android:id="@+id/tvComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:text="评论内容"
             android:textColor="@color/black"
-            android:text="评论评论评论评论评论评论评论评论评论评论"
             android:textSize="15.0sp" />
     </LinearLayout>
 

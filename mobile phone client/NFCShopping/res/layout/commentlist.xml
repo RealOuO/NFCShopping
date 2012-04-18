@@ -35,6 +35,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="@string/productName"
                     android:textColor="#ff333333"
                     android:textSize="15.0sp" />
@@ -158,9 +160,8 @@
             android:id="@+id/comment_listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/llProduct"
             android:layout_above="@+id/lybuttonBar"
-            android:divider="@drawable/divider_horizontal_timeline"
+            android:layout_below="@+id/llProduct"
             android:dividerHeight="1.0dip"
             android:fadingEdge="none" />
     </RelativeLayout>

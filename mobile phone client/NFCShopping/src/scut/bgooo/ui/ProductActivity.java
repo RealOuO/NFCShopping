@@ -89,7 +89,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productdetail);
 		init();
-		
 
 		mName = (TextView) findViewById(R.id.tvProductname);
 		mPrice = (TextView) findViewById(R.id.tvPrice);
@@ -101,6 +100,16 @@ public class ProductActivity extends Activity implements INFCActivity {
 		mPicture = (ImageView) findViewById(R.id.ivPicture);
 		mCheckComment = (Button) findViewById(R.id.btCheckComment);
 		mAddToCompare = (Button) findViewById(R.id.btAddToCompare);
+		mAddToCompare.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				NFCShoppingTab.mItemArray.add(mItem);
+				Toast.makeText(getApplicationContext(), "已经加入对比",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 
 		mCheckComment.setClickable(false);
 		mCheckComment.setOnClickListener(new OnClickListener() {
@@ -122,8 +131,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 		Date dNow = new Date(now);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		mTodayStr = format.format(dNow);
-		
-		
 
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
@@ -155,7 +162,7 @@ public class ProductActivity extends Activity implements INFCActivity {
 				if (auth) {
 					byte[] data = mfc.readBlock(1);
 					char[] cData = TransistionUtil.getChars(data);
-					mBarcodeStr = String.valueOf(cData).trim();  // 注意要去掉空格。。
+					mBarcodeStr = String.valueOf(cData).trim(); // 注意要去掉空格。。
 					DownloadInfo();
 				}
 			} catch (IOException ex) {
@@ -163,6 +170,21 @@ public class ProductActivity extends Activity implements INFCActivity {
 				Toast.makeText(getApplicationContext(), "读卡失败\n请重新刷取卡片",
 						Toast.LENGTH_SHORT).show();
 			}
+		} else {
+			mProduct = (Product) this.getIntent().getSerializableExtra(
+					"product");
+			DownloadPicture();
+			mBarcode.setText(mProduct.getProperty(3).toString());
+			mName.setText(mProduct.getProperty(4).toString());
+			DecimalFormat df = new java.text.DecimalFormat("#0.00");
+			mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5)
+					.toString())) + "元");
+			mBrand.setText(mProduct.getProperty(6).toString());
+			mLocation.setText(mProduct.getProperty(7).toString());
+			mDescription.setText(mProduct.getProperty(9).toString());
+			mCategory.setText(((SecCategory) mProduct.getProperty(10))
+					.getProperty(3).toString());
+			mProcess.setVisibility(View.GONE);
 		}
 
 	}
@@ -260,14 +282,26 @@ public class ProductActivity extends Activity implements INFCActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					String URL = WebServiceUtil.ImageURL
-							+ mProduct.getProperty(8).toString();
-					URL url;
-					url = new URL(URL);
-					Bitmap bitmap = getProductImage(url);
 					Message msg = new Message();
+					if (TaskHandler.allIcon.get(Integer.valueOf(mProduct
+							.getProperty(1).toString())) == null) {
+						String URL = WebServiceUtil.ImageURL
+								+ mProduct.getProperty(8).toString();
+						URL url;
+						url = new URL(URL);
+						Bitmap bitmap = getProductImage(url);
+						msg.obj = bitmap;
+					} else {
+						Bitmap bitmap = TaskHandler.allIcon.get(Integer
+								.valueOf(mProduct.getProperty(1).toString()));
+
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+						mdata=baos.toByteArray();
+
+						msg.obj = bitmap;
+					}
 					msg.arg1 = GET_PRODUCTIMAGE;
-					msg.obj = bitmap;
 					handler.sendMessage(msg);
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
@@ -306,7 +340,8 @@ public class ProductActivity extends Activity implements INFCActivity {
 				mBarcode.setText(mProduct.getProperty(3).toString());
 				mName.setText(mProduct.getProperty(4).toString());
 				DecimalFormat df = new java.text.DecimalFormat("#0.00");
-				mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5).toString())) + "元");
+				mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5)
+						.toString())) + "元");
 				mBrand.setText(mProduct.getProperty(6).toString());
 				mLocation.setText(mProduct.getProperty(7).toString());
 				mDescription.setText(mProduct.getProperty(9).toString());
@@ -409,7 +444,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 	@Override
 	public void refresh(Object... param) {
 		// TODO Auto-generated method stub
-		
-		
+
 	}
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import scut.bgooo.discount.DiscountItem;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;
@@ -38,12 +37,18 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 	private View mProgress = null;
 	private ListView mListView = null;
 
+	private View mNodata;
+	private TextView mNodataText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.discountshit);
 		mProgress = findViewById(R.id.progress1);
+		mNodata = findViewById(R.id.nodatapopup);
+		mNodataText=(TextView)mNodata.findViewById(R.id.prompt);
+		mNodataText.setText("没有优惠记录哦亲！！");
 		mListView = (ListView) findViewById(R.id.discountshit_listview);
 		Task task = new Task(Task.GET_DISCOUNT, null);
 		TaskHandler.allActivity.put(DiscountListActivity.class.getSimpleName(),
@@ -123,10 +128,9 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 			Discount discount = mListItems.get(selectID);
 			viewHolder.mDiscountDiscription.setText(discount.getProperty(2)
 					.toString());
-			String startDate=discount.getProperty(3).toString().split("T")[0];
-			String endDate=discount.getProperty(4).toString().split("T")[0];
-			String duration = "起始：" +startDate  + "\n"
-					+ "结束：" + endDate;
+			String startDate = discount.getProperty(3).toString().split("T")[0];
+			String endDate = discount.getProperty(4).toString().split("T")[0];
+			String duration = "起始：" + startDate + "\n" + "结束：" + endDate;
 			viewHolder.mDiscountTime.setText(duration);
 			return arg1;
 		}
@@ -158,14 +162,16 @@ public class DiscountListActivity extends Activity implements INFCActivity {
 		if (result.equals("OK")) {
 			mDiscount = (Vector<Discount>) param[1];
 			if (mDiscount != null) {
-				mAdapter = new MyAdapter(this, mDiscount);
-				mListView.setAdapter(mAdapter);
+				if (mDiscount.size() != 0) {
+					mAdapter = new MyAdapter(this, mDiscount);
+					mListView.setAdapter(mAdapter);
+					mNodata.setVisibility(View.GONE);
+				}
 			}
 
 			mProgress.setVisibility(View.GONE);
 		}
 
 	}
-	
-	
+
 }

@@ -167,7 +167,6 @@ public class Product implements KvmSerializable, Serializable {
 		case 5:
 			this.Price = arg1.toString();
 			break;
-
 		case 6:
 			this.Brand = arg1.toString();
 			break;

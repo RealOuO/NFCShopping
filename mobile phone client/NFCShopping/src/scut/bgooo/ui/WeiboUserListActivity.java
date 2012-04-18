@@ -54,7 +54,8 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 	private AccessToken mAccessToken;
 	private int defaultUser = -1;// 默认用户
 	public static WeiboUserItem defaultUserInfo = null;
-
+	private View mNodata;
+	private TextView mNodataText;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -64,7 +65,11 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		System.setProperty("weibo4j.oauth.consumerKey", Weibo.CONSUMER_KEY);
 		System.setProperty("weibo4j.oauth.consumerSecret",
 				Weibo.CONSUMER_SECRET);
-
+		
+		mNodata = findViewById(R.id.nodatapopup);
+		mNodataText=(TextView)mNodata.findViewById(R.id.prompt);
+		mNodataText.setText("没有绑定微博哦亲！！");
+		
 		mClearList = (Button) findViewById(R.id.clear);
 		mDelUser = (Button) findViewById(R.id.del);
 		mAddUser = (Button) findViewById(R.id.add);
@@ -80,6 +85,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 			MyAdapter myAdapter = new MyAdapter(this, mList);
 			mUserList.setAdapter(myAdapter);
 			mUserList.setClickable(true);
+			mNodata.setVisibility(View.GONE);
 		}
 
 		mAddUser.setOnClickListener(new OnClickListener() {
@@ -133,6 +139,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 						"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
 				toast.show();
 				defaultUser = -1;
+				mNodata.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -149,6 +156,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 						Toast toast = Toast.makeText(getApplicationContext(),
 								"您尚未绑定用户,请添加用户绑定", Toast.LENGTH_SHORT);
 						toast.show();
+						mNodata.setVisibility(View.VISIBLE);
 					} else if (mList.size() >= 1) {
 						Toast toast = Toast.makeText(getApplicationContext(),
 								"请选择默认用户", Toast.LENGTH_SHORT);
@@ -382,6 +390,7 @@ public class WeiboUserListActivity extends Activity implements INFCActivity {
 		mList = dataHelper.GetUserList(false);
 		MyAdapter myAdapter = new MyAdapter(this, mList);
 		mUserList.setAdapter(myAdapter);
+		mNodata.setVisibility(View.GONE);
 		Log.d("NFC", "更新注册后UI");
 	}
 

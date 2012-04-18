@@ -7,8 +7,11 @@ import java.util.List;
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernItemAdapter;
 import scut.bgooo.concern.ConcernManager;
+import scut.bgooo.entities.Product;
+import scut.bgooo.entities.SecCategory;
 import scut.bgooo.utility.TaskHandler;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +29,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -39,7 +43,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * 
  * @License: Apache License 2.0 http://www.apache.org/licenses/LICENSE-2.0
  * */
-public class ConcernListActivity extends ListActivity {
+public class ConcernListActivity extends Activity {
 
 	private static final String TAG = ConcernListActivity.class.getSimpleName();
 
@@ -81,6 +85,10 @@ public class ConcernListActivity extends ListActivity {
 	// listview显示的数据
 	private List<ConcernItem> mItems = null;
 
+	private ListView mConcernList;
+	private View mNodata;
+	private TextView mNodataText;
+
 	// private TextView mEmptyTextView = null;
 
 	@Override
@@ -88,26 +96,28 @@ public class ConcernListActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
+		setContentView(R.layout.concerns);
+		mConcernList = (ListView) findViewById(R.id.concernList);
+		mNodata = findViewById(R.id.nodatapopup);
+		mNodataText = (TextView) mNodata.findViewById(R.id.prompt);
+		mNodataText.setText("没有关注记录哦亲！！");
 		this.mConcernManager = new ConcernManager(this); // 创建数据访问对象
 		mItems = mConcernManager.buildConcernItems();
 		mConcernAdapter = new ConcernItemAdapter(this, mItems);
-		setListAdapter(mConcernAdapter);
+		mConcernList.setAdapter(mConcernAdapter);
 
-		getListView().setOnScrollListener(onScrollerListener);
-		getListView().setOnItemClickListener(onItemClickListener);
+		mConcernList.setOnScrollListener(onScrollerListener);
+		mConcernList.setOnItemClickListener(onItemClickListener);
 
 		LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dialogText = (TextView) inflate.inflate(R.layout.list_position, null);
 		dialogText.setVisibility(View.INVISIBLE);
-
 		windorManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
 		handler.post(runnable);
 		// 注册上下文菜单
-		this.registerForContextMenu(getListView());
+		this.registerForContextMenu(mConcernList);
 	}
-	
-	
 
 	/**
 	 * 移除窗口的方法
@@ -188,8 +198,19 @@ public class ConcernListActivity extends ListActivity {
 				long arg3) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(ConcernListActivity.this,
-					CommentListActivity.class);
-			intent.putExtra("mItem", mItems.get(position));
+					ProductActivity.class);
+			Product product=new Product();
+			product.setProperty(1, mItems.get(position).getProductId());
+			product.setProperty(3, mItems.get(position).getBarcode());
+			product.setProperty(4, mItems.get(position).getName());
+			product.setProperty(5, mItems.get(position).getPrice());
+			product.setProperty(6, mItems.get(position).getBrand());
+			product.setProperty(7, mItems.get(position).getLocation());
+			SecCategory secCategory=new SecCategory();
+			secCategory.setProperty(3, mItems.get(position).getSecCategory());
+			product.setProperty(10, secCategory);
+			product.setProperty(9, mItems.get(position).getDescription());
+			intent.putExtra("product", product);
 			startActivity(intent);
 		}
 	};
@@ -201,7 +222,12 @@ public class ConcernListActivity extends ListActivity {
 		Log.d(TAG, "onResume");
 		mItems = mConcernManager.buildConcernItems();
 		// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
-		((ConcernItemAdapter) this.getListAdapter()).dataSetChanged(mItems);
+		((ConcernItemAdapter) mConcernList.getAdapter()).dataSetChanged(mItems);
+		if (mItems.size() != 0) {
+			mNodata.setVisibility(View.GONE);
+		} else {
+			mNodata.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -218,8 +244,7 @@ public class ConcernListActivity extends ListActivity {
 		switch (item.getOrder()) {
 		case 1:
 			mConcernManager.deleteConcernItemById(mItems.get(position).getId());
-			// 因为没有必要重新加载adapter适配器，所以只对数据进行删除并notifyDataSetChanged()操作
-			((ConcernItemAdapter) this.getListAdapter()).removeItem(position);
+			onResume();
 			break;
 		case 2:
 			NFCShoppingTab.mItemArray.add(mItems.get(position));
@@ -231,8 +256,6 @@ public class ConcernListActivity extends ListActivity {
 
 	}
 
-	
-	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -241,8 +264,6 @@ public class ConcernListActivity extends ListActivity {
 		TaskHandler.getInstance().stop(); // 停止线程
 		super.onDestroy();
 	}
-	
-
 
 	@Override
 	protected void onPause() {
