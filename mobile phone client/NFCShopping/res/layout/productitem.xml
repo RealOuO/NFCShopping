@@ -37,7 +37,6 @@
                 android:id="@id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="商品名称"
                 android:textSize="15.0sp" />
         </LinearLayout>
 
@@ -58,7 +57,6 @@
                 android:id="@id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="平均价格"
                 android:textSize="15.0sp" />
         </LinearLayout>
 

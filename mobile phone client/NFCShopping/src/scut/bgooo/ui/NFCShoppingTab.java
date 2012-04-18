@@ -120,7 +120,7 @@ public class NFCShoppingTab extends TabActivity implements
 				this.mCompareIntent));
 
 		localTabHost.addTab(buildTabSpec("collection_tab",
-				R.string.main_collection, R.drawable.icon_3_n,
+				R.string.main_collection, R.drawable.collect,
 				this.mCollectionIntent));
 
 		localTabHost.addTab(buildTabSpec("discount_tab",

@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:icon="@drawable/pig"
+        android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
             android:name=".NFCShoppingTab"
@@ -24,19 +24,19 @@
         </activity>
         <activity
             android:name=".ConcernListActivity"
-            android:label="@string/app_name" />
+            android:label="关注" />
         <activity
             android:name=".CollectionListActivity"
-            android:label="@string/app_name" />
+            android:label="收藏" />
         <activity
             android:name=".CompareActivity"
-            android:label="@string/app_name" />
+            android:label="对比" />
         <activity
             android:name=".MoreActivity"
-            android:label="@string/app_name" />
+            android:label="更多" />
         <activity
             android:name=".ProductActivity"
-            android:label="@string/app_name" >
+            android:label="商品详细信息" >
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
 
@@ -62,13 +62,13 @@
         </activity>
         <activity
             android:name=".CommentActivity"
-            android:label="@string/app_name" />
+            android:label="评论" />
         <activity
             android:name=".DiscountItemListActivity"
-            android:label="@string/app_name" />
+            android:label="优惠" />
         <activity
             android:name=".VerifierWebViewActivity"
-            android:label="@string/app_name" />
+            android:label="授权" />
         <activity
             android:name=".WeiboUserListActivity"
             android:label="@string/app_name"
@@ -84,16 +84,16 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/app_name" />
+            android:label="注册" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name" />
+            android:label="登录" />
         <activity
             android:name=".DiscountListActivity"
-            android:label="@string/app_name" />
+            android:label="优惠" />
         <activity
             android:name=".FeedBackActivity"
-            android:label="@string/app_name" />
+            android:label="反馈" />
         <!-- android:windowSoftInputMode="stateVisible|adjustResize" 自适应输入法 -->
     </application>
 

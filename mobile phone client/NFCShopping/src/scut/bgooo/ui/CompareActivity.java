@@ -68,11 +68,11 @@ public class CompareActivity extends Activity {
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 3:
-					cells[0] = new TableCell("价格", titles[0].width,
+					cells[0] = new TableCell("价格(元)", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 4:
-					cells[0] = new TableCell("评分", titles[0].width,
+					cells[0] = new TableCell("评分(5分制)", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 5:

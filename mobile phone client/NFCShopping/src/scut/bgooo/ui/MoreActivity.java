@@ -26,7 +26,6 @@ public class MoreActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 		mConcernManager = new ConcernManager(this);
 
 		// 提示对话框

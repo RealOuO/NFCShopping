@@ -44,14 +44,14 @@
                 android:id="@+id/radio_button1"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
-                android:drawableTop="@drawable/icon_2_n"
+                android:drawableTop="@drawable/icon_3_n"
                 android:text="@string/main_comparation" />
 
             <RadioButton
                 android:id="@+id/radio_button2"
                 style="@style/main_tab_bottom"
                 android:layout_marginTop="2.0dip"
-                android:drawableTop="@drawable/icon_3_n"
+                android:drawableTop="@drawable/collected"
                 android:text="@string/main_collection" />
 
             <RadioButton
