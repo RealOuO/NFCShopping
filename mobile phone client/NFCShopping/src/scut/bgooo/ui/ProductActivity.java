@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
@@ -20,7 +19,6 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.utility.INFCActivity;
-import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
 import scut.bgooo.weibo.WeiboUserItem;

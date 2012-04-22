@@ -30,5 +30,11 @@ namespace NFCShoppingWebSite.WebPages
             }
         }
 
+       
+        protected  void deleted_user(object sender, 
+    DetailsViewDeletedEventArgs e)
+        {
+            Response.Redirect("~/WebPages/Users.aspx");
+        }
     }
 }

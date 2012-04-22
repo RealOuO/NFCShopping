@@ -4,16 +4,7 @@
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
     Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <style type="text/css">
-        .style1
-        {
-            width: 430px;
-        }
-        .style2
-        {
-            width: 363px;
-        }
-    </style>
+
     <link href="../css/ProductDetails.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(function () {
@@ -42,75 +33,69 @@
         Text="Label"></asp:Label>
     <div style="height: 22px">
     </div>
-    <table>
+    <div class="information">
+    <div class="product">
+    <table class="subproduct">
         <tr>
             <td>
                 <asp:Label ID="Label3" runat="server" Text="商品分类:"></asp:Label>
-            </td>
-            <td>
-                <asp:Label ID="CategoryLabel" runat="server" Text="Label"></asp:Label>
-            </td>
+    
+                <asp:Label ID="CategoryLabel" CssClass="content" runat="server" Text="Label"></asp:Label>
+              </td>
             <td>
                 <asp:Label ID="Label4" runat="server" Text="商品子分类:"></asp:Label>
+         
+                <asp:Label ID="SecCategoryLabel" CssClass="content" runat="server" Text="Label"></asp:Label>
             </td>
-            <td>
-                <asp:Label ID="SecCategoryLabel" runat="server" Text="Label"></asp:Label>
-            </td>
+               </tr>
+             <tr>
             <td>
                 <asp:Label ID="Label1" runat="server" Text="商品名称:"></asp:Label>
-            </td>
-            <td>
-                <asp:Label ID="ProductNameLable" runat="server"></asp:Label>
+         
+                <asp:Label ID="ProductNameLable" CssClass="content" runat="server"></asp:Label>
             </td>
             <td>
                 <asp:Label ID="Label6" runat="server" Text="价格:"></asp:Label>
-            </td>
-            <td>
-                <asp:Label ID="Price" runat="server" required="true"></asp:Label>
+        
+                <asp:Label ID="Price" runat="server" CssClass="content" required="true"></asp:Label>
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label5" runat="server" Text="条形码:"></asp:Label>
-            </td>
-            <td>
-                <asp:Label ID="Barcode" runat="server" ontextchanged="BarcodeTextBox_TextChanged"></asp:Label>
+                <asp:Label ID="Label5" runat="server" Text="条形码: "></asp:Label>
+        
+           <asp:Label  CssClass="content" ID="Barcode" runat="server" ontextchanged="BarcodeTextBox_TextChanged"></asp:Label>
             </td>
             <td>
                 <asp:Label ID="Label7" runat="server" Text="品牌:"></asp:Label>
+     
+                <asp:Label CssClass="content" ID="Brand" runat="server"></asp:Label>
             </td>
-            <td>
-                <asp:Label ID="Brand" runat="server"></asp:Label>
-            </td>
+               </tr>
+             <tr>
             <td>
                 <asp:Label ID="Label8" runat="server" Text="产地:"></asp:Label>
-            </td>
-            <td>
-                <asp:Label ID="Location" runat="server"></asp:Label>
+       
+                <asp:Label CssClass="content" ID="Location" runat="server"></asp:Label>
             </td>
         </tr>
     </table>
-    <div style="height: 12px">
-    </div>
-    <div style="width: 1000; height: 230;">
-        <div class="describe">
+          <div class="describe">
             <br />
+               <br />
             <asp:Label ID="Label2" runat="server" Text="商品描述:"></asp:Label>
             <br />
-            <br />
-            <asp:Label ID="ProductDescription" runat="server" Height="140px" TextMode="MultiLine"
-                Width="402px"></asp:Label>
-        </div>
-        <div class="picture">
-            <asp:Label ID="Label10" runat="server" Text="商品图片:"></asp:Label>
-            <asp:Image ID="ProductImage" runat="server" Height="230px" ImageAlign="Middle" Width="330px" />
-        </div>
-        <table style="width: 100%;">
+          
+            <asp:Label ID="ProductDescription"  runat="server" Width="400px" TextMode="MultiLine"
+              ></asp:Label>
+   </div>
+  
+     <table class="edit">
             <tr>
-                <td class="style1">
+                <td>
                     &nbsp;
-                </td>
-                <td class="style2">
+    
+                <td>
                     <asp:Button ID="EditButton" runat="server" Height="21px" Text="编辑" Width="93px" OnClick="EditButton_Click" />
                 </td>
                 <td>
@@ -118,29 +103,17 @@
                         OnClick="DeleteButton_Click" />
                 </td>
             </tr>
-            <tr>
-                <td class="style1">
-                    &nbsp;
-                </td>
-                <td class="style2">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td class="style1">
-                    &nbsp;
-                </td>
-                <td class="style2">
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
+        
         </table>
+   </div>
+        <div class="picture">
+            <asp:Label ID="Label10" runat="server" Text="商品图片:"></asp:Label>
+            <asp:Image ID="ProductImage" runat="server" Height="230px" ImageAlign="Middle" Width="330px" />
+        </div>
+  
+   
+</div>   
+      
         <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"
             DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
             TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">
@@ -166,7 +139,7 @@
                 <asp:ListView ID="ReviewListView" runat="server" AllowPaging="true" DataKeyNames="reviewID"
                     DataSourceID="ReviewsDataSourse">
                     <EmptyDataTemplate>
-                        未返回数据。
+                     
                     </EmptyDataTemplate>
                     <ItemSeparatorTemplate>
                         <br />
@@ -181,7 +154,7 @@
                             评分:
                             <asp:Label ID="ratingLabel" runat="server" Text='<%# Eval("rating") %>' />
                             <br />
-                            发表日期:
+                            发布日期:
                             <asp:Label ID="createAtLabel" runat="server" Text='<%# Eval("createAt") %>' />
                             <br />
                             <asp:Button ID="DeleteButton" runat="server" CommandName="Delete" Text="删除" />

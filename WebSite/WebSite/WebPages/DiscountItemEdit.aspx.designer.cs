@@ -31,6 +31,15 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.ObjectDataSource DiscountsDataSource;
         
         /// <summary>
+        /// ProductDataSource 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ProductDataSource;
+        
+        /// <summary>
         /// TitleLabel 控件。
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace NFCShoppingWebSite.WebPages {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TitleLabel;
+        
+        /// <summary>
+        /// ProductDetailsView 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DetailsView ProductDetailsView;
         
         /// <summary>
         /// Label2 控件。
@@ -58,15 +76,6 @@ namespace NFCShoppingWebSite.WebPages {
         protected global::System.Web.UI.WebControls.TextBox ProductNameTextBox;
         
         /// <summary>
-        /// ProductsDropDownList 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ProductsDropDownList;
-        
-        /// <summary>
         /// SearchButton 控件。
         /// </summary>
         /// <remarks>
@@ -74,6 +83,24 @@ namespace NFCShoppingWebSite.WebPages {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SearchButton;
+        
+        /// <summary>
+        /// Label6 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
+        
+        /// <summary>
+        /// ProductsDropDownList 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ProductsDropDownList;
         
         /// <summary>
         /// Label5 控件。

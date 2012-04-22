@@ -4,7 +4,7 @@
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    <h2>
+    <h2 style="font-size:X-Large;font-weight:bold; color:Black;">
         签到用户TOP10</h2>
     <p>
         <asp:ObjectDataSource ID="Top10UsersDataSource" runat="server" SelectMethod="GetTop10Users"
@@ -34,7 +34,7 @@
             <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
         </asp:GridView>
     </p>
-    <h2>
+    <h2  style="font-size:X-Large;font-weight:bold; color:Black;">
         最受欢迎商品TOP10
     </h2>
     <p>

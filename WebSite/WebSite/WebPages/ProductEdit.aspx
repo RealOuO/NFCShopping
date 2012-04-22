@@ -27,81 +27,91 @@
     <link href="../css/ProductEdit.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
     <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" 
-    Font-Size="X-Large" ForeColor="Black"
+    Font-Size="X-Large"  ForeColor="black"
         Text="Label"></asp:Label>
         <br />
-        
-          <table>
-          <tr>
-          <td>
-         <asp:Label ID="Label3" runat="server" Text="商品分类:"></asp:Label>
-         </td>
-         <td>
-    <asp:DropDownList ID="CategoriesDropDownList" runat="server" AutoPostBack="True"
+        <br />
+        <div class="information">
+        <div class="product">
+    <table class="subproduct">
+        <tr>
+            <td>
+                <asp:Label ID="Label3" runat="server" Text="商品分类:"></asp:Label>
+           <asp:DropDownList ID="CategoriesDropDownList" CssClass="content" runat="server" AutoPostBack="True"
         DataSourceID="CategoriesDataSource" DataTextField="categoryName" 
         DataValueField="categoryID" onprerender="CategoriesDropDownList_PreRender">
-    </asp:DropDownList>
-    </td>
-    <td>
-     <asp:Label ID="Label4" runat="server" Text="商品子分类:"></asp:Label>
-          </td>
-         <td>
-    <asp:DropDownList ID="SecCategoriesDropDownList" runat="server" DataSourceID="SecCategoriesDataSource"
+          </asp:DropDownList>
+              </td>
+            <td>
+                <asp:Label ID="Label4" runat="server" Text="商品子分类:"></asp:Label>
+         
+                <asp:DropDownList ID="SecCategoriesDropDownList" CssClass="content" runat="server" DataSourceID="SecCategoriesDataSource"
         DataTextField="secCategoryName" DataValueField="secCategoryID" 
         onprerender="SecCategoriesDropDownList_PreRender">
-    </asp:DropDownList>
-    </td>
-    <td>
-    <asp:Label ID="Label1" runat="server" Text="商品名称:" ></asp:Label>
-         </td>
-         <td>
-    <asp:TextBox ID="ProductNameTextBox" runat="server" autofocus="true"></asp:TextBox>
-    </td>
-    <td>
-     <asp:Label ID="Label6" runat="server" Text="价格:"></asp:Label>
-        </td>
-         <td>
-    <asp:TextBox ID="PriceTextBox" runat="server" required="true"></asp:TextBox>
-    </td>
-    </tr>
-    <tr>
-    <td>
-      <asp:Label ID="Label5" runat="server" Text="条形码:"></asp:Label>
-       </td>
-         <td>
-    <asp:TextBox ID="BarcodeTextBox" runat="server"></asp:TextBox>
-    </td>
-     <td>
-    <asp:Label ID="Label7" runat="server" Text="品牌:"></asp:Label>
-       </td>
-         <td>
-    <asp:TextBox ID="BrandTextBox" runat="server"></asp:TextBox>
-  </td>
-  <td>
-    <asp:Label ID="Label8" runat="server" Text="产地:"></asp:Label>
-      </td>
-         <td>
-    <asp:TextBox ID="LocationTextBox" runat="server"></asp:TextBox>
-    </td>
-    </tr>
+        </asp:DropDownList>
+            </td>
+               </tr>
+             <tr>
+            <td>
+                <asp:Label ID="Label1" runat="server" Text="商品名称:"></asp:Label>
+         
+      <asp:TextBox ID="ProductNameTextBox" CssClass="content" runat="server" required="true"></asp:TextBox>*
+            </td>
+            <td>
+                <asp:Label ID="Label6" runat="server" Text="价格:"></asp:Label>
+        
+    <asp:TextBox ID="PriceTextBox" CssClass="content" runat="server" required="true"></asp:TextBox>*
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label5" runat="server" Text="条形码:"></asp:Label>
+        
+               &nbsp;&nbsp;    <asp:TextBox ID="BarcodeTextBox"  CssClass="content" runat="server"></asp:TextBox>
+            </td>
+            <td>
+                <asp:Label ID="Label7" runat="server" Text="品牌:"></asp:Label>
+     
+                <asp:TextBox ID="BrandTextBox" CssClass="content"  runat="server"></asp:TextBox>
+            </td>
+               </tr>
+             <tr>
+            <td>
+                <asp:Label ID="Label8" runat="server" Text="产地:"></asp:Label>
+   <asp:TextBox ID="LocationTextBox" CssClass="content1" runat="server"></asp:TextBox>
+            </td>
+        </tr>
     </table>
-    <div style="height: 12px">
-    </div>
-   <div style="width:1000; height:230;">
-       <div class="describe">
-    <br />
-    <asp:Label ID="Label2" runat="server" Text="商品描述:"></asp:Label>
-          <br />       <br />
-    <asp:TextBox ID="ProductDescriptionTextBox" runat="server" Height="140px" TextMode="MultiLine"
-        Width="402px"></asp:TextBox>
-        </div>
-    <div class="picture">
-        <asp:Label ID="Label10" runat="server" Text="商品图片:"></asp:Label>
-      
-
-
+          <div class="describe">
+            <br />
+             
+            <asp:Label ID="Label2" runat="server" Text="商品描述:"></asp:Label>
+            <br />
+          
+            <asp:TextBox ID="ProductDescriptionTextBox"  runat="server"  Height="200px" TextMode="MultiLine"
+        Width="460px"></asp:TextBox>
+   </div>
+     <table class="edit">
+            <tr>
+             
+                <td>
+                      <asp:Button ID="SubmitButton" runat="server" Height="25px" OnClick="SubmitButton_Click"
+        Text="确定提交" Width="98px" />
+                </td>
+                <td>
+            
+                </td>
+            </tr>
+        
+        </table>
+   </div>
+        <div class="picture1">
+            <asp:Label ID="Label10" runat="server" Text="商品图片:"></asp:Label>
+          <br />
     <asp:FileUpload ID="ProductPictureUpload" runat="server" />
+    &nbsp;
     <asp:Button ID="UploadPictureButton" runat="server" 
         onclick="UploadPictureButton_Click" Text="上传图片" />
         <br />
@@ -109,28 +119,7 @@
         <asp:Image ID="ProductImage" runat="server" Height="230px" ImageAlign="Middle" 
             Width="330px" />
         </div>
-
-    
-     </div>     
-
-    <div>
-    </div>
-   
-    <div>
-    </div>
-   
-    <div>
-    </div>
-  
-  
-
-    <div>
-    </div>
- <br />
-  <br />
-    <br />
-    <asp:Button ID="SubmitButton" runat="server" Height="25px" OnClick="SubmitButton_Click"
-        Text="确定提交" Width="98px" />
+  </div>
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"
         DeleteMethod="DeleteProduct" InsertMethod="InsertProduct" SelectMethod="GetProduct"
         TypeName="NFCShoppingWebSite.BLL.ProductBL" UpdateMethod="UpdateProduct">

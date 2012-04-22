@@ -19,8 +19,9 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h1 style="color: Black;">
+    <h1 style="font-size:X-Large;font-weight:bold; color:Black;">
         <b>查看用户</b></h1>
+        <br />
     <asp:ObjectDataSource ID="UsersDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.User"
         DeleteMethod="DeleteUser" SelectMethod="GetUsers" TypeName="NFCShoppingWebSite.BLL.UserBL">
     </asp:ObjectDataSource>
@@ -28,17 +29,19 @@
         DisplayMode="BulletList" Style="color: Red; width: 40em;" />
     <asp:GridView ID="GridView" runat="server" AllowPaging="True" AutoGenerateColumns="False"
         DataSourceID="UsersDataSource" DataKeyNames="userID" CellPadding="4" ForeColor="#333333"
-        GridLines="None" Width="909px" OnRowDataBound="GridView_RowDataBound">
+        GridLines="None" Width="740px" OnRowDataBound="GridView_RowDataBound">
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
         <Columns>
             <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" Visible="False" />
             <asp:HyperLinkField DataNavigateUrlFields="userID" DataNavigateUrlFormatString="UserDetails.aspx?userID={0}"
-                DataTextField="userName" HeaderText="userName">
+                DataTextField="userName" HeaderText="用户名">
                 <ItemStyle HorizontalAlign="center" />
             </asp:HyperLinkField>
-            <asp:BoundField DataField="gender" HeaderText="gender" SortExpression="gender" />
-            <asp:BoundField DataField="visitedTimes" HeaderText="visitedTimes" SortExpression="visitedTimes" />
-            <asp:BoundField DataField="lastVisitedDate" HeaderText="lastVisitedDate" SortExpression="lastVisitedDate" />
+            <asp:BoundField DataField="gender" HeaderText="性别" SortExpression="gender" />
+            <asp:BoundField DataField="visitedTimes" HeaderText="有效访问次数" 
+                SortExpression="visitedTimes" />
+            <asp:BoundField DataField="lastVisitedDate" HeaderText="最后到访时间" 
+                SortExpression="lastVisitedDate" />
             <asp:CommandField ShowDeleteButton="True" />
         </Columns>
         <EditRowStyle BackColor="#999999" />

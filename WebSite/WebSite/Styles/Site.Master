@@ -40,7 +40,7 @@
                     </asp:LoginView>
                 </div>
             </div>
-            <div class="content">
+            <div class="content11">
                 <div id="leftColumn">
                     <div id="subleftColumn">
                         <ul>
@@ -58,7 +58,7 @@
                                         <a href="<%=ResolveUrl("~/WebPages/Categories.aspx")%>">商品分类</a>
                                     </div>
                                     <div class="test">
-                                        <a href="<%=ResolveUrl("~/WebPages/ProductEdit.aspx?isNew=true")%>">增加商品</a>
+                                        <a href="<%=ResolveUrl("~/WebPages/ProductEdit.aspx?isNew=true")%>">编辑商品</a>
                                     </div>
                                 </div>
                             </li>

@@ -71,8 +71,8 @@ namespace NFCShoppingWebSite.WebPages
                     {
                         this.DiscountDescriptionTextBox.Text = discount.description;
                         this.DiscountIDLabel.Text = discount.discountID.ToString();
-                        this.StartDateTextBox.Text = discount.startDate.ToShortDateString();
-                        this.EndDateTextBox.Text = discount.endDate.ToShortDateString();
+                        this.DateDown.Text = discount.startDate.ToShortDateString();
+                        this.DateUp.Text = discount.endDate.ToShortDateString();
                     }
                 }
             }
@@ -199,8 +199,8 @@ namespace NFCShoppingWebSite.WebPages
 
                         discount.discountID = Convert.ToInt32(DiscountIDLabel.Text);
                         discount.description = DiscountDescriptionTextBox.Text;
-                        discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
-                        discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
+                        discount.startDate = Convert.ToDateTime(DateDown.Text);
+                        discount.endDate = Convert.ToDateTime(DateUp.Text);
 
                         Session.Add("CurrentState", discount);
 
@@ -231,8 +231,8 @@ namespace NFCShoppingWebSite.WebPages
                 }
 
                 discount.description = DiscountDescriptionTextBox.Text;
-                discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
-                discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
+                discount.startDate = Convert.ToDateTime(DateDown.Text);
+                discount.endDate = Convert.ToDateTime(DateUp.Text);
 
                 Session.Add("CurrentState", discount);
 
@@ -279,8 +279,8 @@ namespace NFCShoppingWebSite.WebPages
 
             // First, the discount.
             discount.description = DiscountDescriptionTextBox.Text;
-            discount.startDate = Convert.ToDateTime(StartDateTextBox.Text);
-            discount.endDate = Convert.ToDateTime(EndDateTextBox.Text);
+            discount.startDate = Convert.ToDateTime(DateDown.Text);
+            discount.endDate = Convert.ToDateTime(DateUp.Text);
 
             if (mIsNew)
             {

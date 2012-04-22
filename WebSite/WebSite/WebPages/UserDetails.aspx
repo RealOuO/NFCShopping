@@ -5,24 +5,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ObjectDataSource ID="UserDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.User"
-        DeleteMethod="DeleteUser" SelectMethod="GetUserByID" TypeName="NFCShoppingWebSite.BLL.UserBL">
+        DeleteMethod="DeleteUser" SelectMethod="GetUserByID" TypeName="NFCShoppingWebSite.BLL.UserBL" >
         <SelectParameters>
             <asp:QueryStringParameter Name="id" QueryStringField="userID" Type="Int32" />
         </SelectParameters>
     </asp:ObjectDataSource>
     <div>
-        <asp:DetailsView ID="UserDetailsView" runat="server" AutoGenerateRows="False" BackColor="White"
+        <asp:DetailsView ID="UserDetailsView" runat="server" AutoGenerateRows="False" 
+            BackColor="White" OnItemDeleted="deleted_user"
             BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" DataSourceID="UserDataSource"
-            GridLines="Horizontal" Height="50px" Width="922px" DataKeyNames="userID" OnDataBound="UserDetailsView_DataBound">
+            GridLines="Horizontal" Height="50px" Width="714px" DataKeyNames="userID" 
+            OnDataBound="UserDetailsView_DataBound">
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
             <Fields>
+                <asp:BoundField DataField="userID" HeaderText="用户ID" Visible="False" />
                 <asp:BoundField DataField="userName" HeaderText="用户名" SortExpression="userName" />
                 <asp:BoundField DataField="gender" HeaderText="性别" SortExpression="gender" />
                 <asp:BoundField DataField="visitedTimes" HeaderText="访问次数" SortExpression="visitedTimes" />
                 <asp:BoundField DataField="lastVisitedDate" HeaderText="最后来访时间" SortExpression="lastVisitedDate" />
-                <asp:CommandField ShowDeleteButton="True" />
-                <asp:BoundField DataField="userID" HeaderText="userID" Visible="False" />
+                <asp:CommandField ShowDeleteButton="True"  />
             </Fields>
             <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
             <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
