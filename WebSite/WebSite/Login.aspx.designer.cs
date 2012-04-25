@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace NFCShoppingWebSite.Account {
+namespace NFCShoppingWebSite {
     
     
     public partial class Login {

@@ -13,11 +13,8 @@
             <asp:CreateUserWizardStep ID="RegisterUserWizardStep" runat="server">
                 <ContentTemplate>
                     <h2>
-                        创建新帐户
+                        添加新管理员
                     </h2>
-                    <p>
-                        使用以下表单创建新帐户。
-                    </p>
                     <p>
                         密码的长度至少必须为
                         <%= Membership.MinRequiredPasswordLength %>
