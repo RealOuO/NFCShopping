@@ -29,10 +29,11 @@
                         <LoggedInTemplate>
                             欢迎使用 <span class="bold">
                                 <asp:LoginName ID="HeadLoginName" runat="server" />
-                            </span>! [
+                            </span>![ <a href="~/Account/ChangePassword.aspx" id="A1" runat="server">修改密码</a>] [
                             <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="注销"
                                 LogoutPageUrl="~/" />
-                            ][ <a href="~/Account/ChangePassword.aspx" id="A1" runat="server">修改密码</a>]
+                            ]
+                            
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </div>
@@ -68,7 +69,7 @@
                                         <a href="<%=ResolveUrl("~/WebPages/Users.aspx")%>">查看用户</a>
                                     </div>
                                     <div class="test">
-                                        <a href="<%=ResolveUrl("~/Account/Register.aspx")%>">注册新管理员</a>
+                                        <a href="<%=ResolveUrl("~/Account/Register.aspx")%>">添加管理员</a>
                                     </div>
                                 </div>
                             </li>

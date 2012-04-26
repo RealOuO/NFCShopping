@@ -29,7 +29,7 @@
             <asp:CreateUserWizardStep ID="RegisterUserWizardStep" runat="server">
                 <ContentTemplate>
                     <h2>
-                        添加新管理员
+                        添加管理员
                     </h2>
                     <p>
                         密码的长度至少必须为
