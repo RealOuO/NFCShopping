@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(function () {
-            $("a:eq(11)").css({ "color": "red" });
+            $("a:eq(13)").css({ "color": "red" });
         });
     </script>
     <link href="../css/Suggestion.css" rel="stylesheet" type="text/css" />

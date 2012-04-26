@@ -2,6 +2,22 @@
     CodeBehind="Register.aspx.cs" Inherits="NFCShoppingWebSite.Account.Register" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<script type="text/javascript">
+    $(function () {
+        $(".children:eq(1)").show();
+        $("span:eq(3)").html("-");
+        $("a:eq(8)").css({ "color": "red" });
+        $(".head:eq(1)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(3)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(3)").html("-");
+        });
+    });
+
+    </script>
+
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <asp:CreateUserWizard ID="RegisterUser" runat="server" EnableViewState="false" OnCreatedUser="RegisterUser_CreatedUser">

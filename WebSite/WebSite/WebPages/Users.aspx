@@ -5,14 +5,14 @@
     <script type="text/javascript">
         $(function () {
             $(".children:eq(1)").show();
-            $("span:eq(1)").html("-");
-            $("a:eq(6)").css({ "color": "red" });
+            $("span:eq(3)").html("-");
+            $("a:eq(7)").css({ "color": "red" });
             $(".head:eq(1)").toggle(function () {
                 $(this).next().hide();
-                $("span:eq(1)").html("+");
+                $("span:eq(3)").html("+");
             }, function () {
                 $(this).next().show();
-                $("span:eq(1)").html("-");
+                $("span:eq(3)").html("-");
             });
         });
 

@@ -130,8 +130,7 @@ namespace NFCShoppingWebSite
         public List<Review> FindReviewsByProductID(Int32 pid)
         {
             ReviewBL bl = new ReviewBL();
-            return bl.GetReviewsByProductID(pid).ToList();
-            
+            return bl.GetReviewsByProductID(pid).OrderByDescending(r=>r.createAt).ToList();      
         }
 
         [SoapRpcMethod, WebMethod]

@@ -68,7 +68,7 @@ public class MoreActivity extends ListActivity {
 					builder.show();
 					break;
 				case 3: {
-					
+
 				}
 
 					break;

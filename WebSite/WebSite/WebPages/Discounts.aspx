@@ -2,19 +2,20 @@
     CodeBehind="Discounts.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.Discounts" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <script type="text/javascript">
-        $(function () {
-            $(".children:eq(2)").show();
-            $("span:eq(2)").html("-");
-            $("a:eq(8)").css({ "color": "red" });
-            $(".head:eq(2)").toggle(function () {
-                $(this).next().hide();
-                $("span:eq(2)").html("+");
-            }, function () {
-                $(this).next().show();
-                $("span:eq(2)").html("-");
-            });
-        });
+   <script type="text/javascript">
+       $(function () {
+           $(".children:eq(2)").show();
+           $("span:eq(4)").html("-");
+           $("a:eq(10)").css({ "color": "red" });
+           $(".head:eq(2)").toggle(function () {
+               $(this).next().hide();
+               $("span:eq(4)").html("+");
+           }, function () {
+               $(this).next().show();
+               $("span:eq(4)").html("-");
+           });
+       });
+
     </script>
     <link href="../css/Discounts.css" rel="stylesheet" type="text/css" />
 </asp:Content>

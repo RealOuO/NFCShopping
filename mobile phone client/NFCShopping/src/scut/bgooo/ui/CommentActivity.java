@@ -1,6 +1,5 @@
 package scut.bgooo.ui;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import scut.bgooo.utility.INFCActivity;
 import scut.bgooo.utility.Task;

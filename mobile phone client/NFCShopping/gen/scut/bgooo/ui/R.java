@@ -351,7 +351,7 @@ public final class R {
     }
     public static final class id {
         public static final int HorizontalScrollView01=0x7f06002a;
-        public static final int add=0x7f060069;
+        public static final int add=0x7f06006b;
         public static final int btAddToCompare=0x7f060057;
         public static final int btCheckComment=0x7f060058;
         public static final int btComment=0x7f060026;
@@ -362,12 +362,12 @@ public final class R {
         public static final int btShare=0x7f060027;
         public static final int btShareAndCommit=0x7f060017;
         public static final int cbStar=0x7f060023;
-        public static final int checkBox1=0x7f06006e;
-        public static final int clear=0x7f060067;
+        public static final int checkBox1=0x7f060070;
+        public static final int clear=0x7f060069;
         public static final int collectList=0x7f06000f;
         public static final int comment_listview=0x7f060029;
         public static final int concernList=0x7f06002e;
-        public static final int del=0x7f060068;
+        public static final int del=0x7f06006a;
         public static final int discount_discription=0x7f06000c;
         public static final int discount_image=0x7f06000b;
         public static final int discount_time=0x7f06000d;
@@ -449,18 +449,20 @@ public final class R {
         public static final int tvDiscount=0x7f060032;
         public static final int tvEmpty=0x7f06002c;
         public static final int tvItemContent=0x7f06004d;
+        public static final int tvLastVisitDate=0x7f060067;
         public static final int tvLocation=0x7f060055;
         public static final int tvPrice=0x7f060051;
         public static final int tvPrivilegeCost=0x7f060031;
         public static final int tvProductname=0x7f060011;
         public static final int tvType=0x7f060053;
         public static final int tvUsername=0x7f060019;
+        public static final int tvVisitedTimes=0x7f060066;
         public static final int tvproductCost=0x7f060021;
-        public static final int user=0x7f060066;
-        public static final int usericon=0x7f06006b;
-        public static final int userlocation=0x7f06006d;
-        public static final int username=0x7f06006c;
-        public static final int webView1=0x7f06006a;
+        public static final int user=0x7f060068;
+        public static final int usericon=0x7f06006d;
+        public static final int userlocation=0x7f06006f;
+        public static final int username=0x7f06006e;
+        public static final int webView1=0x7f06006c;
     }
     public static final class layout {
         public static final int collects=0x7f030000;
@@ -488,9 +490,10 @@ public final class R {
         public static final int productitem=0x7f030016;
         public static final int progress=0x7f030017;
         public static final int register=0x7f030018;
-        public static final int webuser=0x7f030019;
-        public static final int webview=0x7f03001a;
-        public static final int weibouseritem=0x7f03001b;
+        public static final int userdetails=0x7f030019;
+        public static final int webuser=0x7f03001a;
+        public static final int webview=0x7f03001b;
+        public static final int weibouseritem=0x7f03001c;
     }
     public static final class string {
         public static final int add_to_compare=0x7f070013;

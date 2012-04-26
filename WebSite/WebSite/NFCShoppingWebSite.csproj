@@ -70,11 +70,12 @@
     </Content>
     <Content Include="css\Categories.css" />
     <Content Include="css\Discounts.css" />
-    <Content Include="css\login.css" />
+    <Content Include="css\Login.css" />
     <Content Include="css\Product.css" />
     <Content Include="css\ProductDetails.css" />
     <Content Include="css\ProductEdit.css" />
     <Content Include="css\Suggestion.css" />
+    <Content Include="Images\bander.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Scripts\Site.js" />
     <Content Include="ShopWebService.asmx" />

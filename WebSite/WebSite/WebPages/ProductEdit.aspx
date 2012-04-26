@@ -2,19 +2,19 @@
     CodeBehind="ProductEdit.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.ProductEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-           <script type="text/javascript">
-               $(function () {
-                   $(".children:eq(0)").show();
-                   $("span:eq(0)").html("-");
-                   $("a:eq(4)").css({ "color": "red" });
-                   $(".head:eq(0)").toggle(function () {
-                       $(this).next().hide();
-                       $("span:eq(0)").html("+");
-                   }, function () {
-                       $(this).next().show();
-                       $("span:eq(0)").html("-");
-                   });
-               });
+          <script type="text/javascript">
+              $(function () {
+                  $(".children:eq(0)").show();
+                  $("span:eq(2)").html("-");
+                  $("a:eq(5)").css({ "color": "red" });
+                  $(".head:eq(0)").toggle(function () {
+                      $(this).next().hide();
+                      $("span:eq(2)").html("+");
+                  }, function () {
+                      $(this).next().show();
+                      $("span:eq(2)").html("-");
+                  });
+              });
     </script>
 
     <script  type="text/javascript">
