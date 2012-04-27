@@ -114,7 +114,6 @@
                     NFC Shopping 超市管理平台
                 </h1>
                 <p>
-                
                 </p>
                 <asp:Login ID="LoginUser" runat="server" EnableViewState="false" RenderOuterTable="false">
                     <LayoutTemplate>

@@ -11,6 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
 import scut.bgooo.db.TransistionUtil;
@@ -388,6 +392,7 @@ public class ProductActivity extends Activity implements INFCActivity {
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setReadTimeout(1000);
+			((HttpsURLConnection) conn).setHostnameVerifier(new AllowAllHostnameVerifier());
 			InputStream inputstream = conn.getInputStream();
 			mdata = readInputStream(inputstream);
 			bitmap = BitmapFactory.decodeByteArray(mdata, 0, mdata.length);

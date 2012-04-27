@@ -8,7 +8,7 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
+//import org.ksoap2.transport.HttpTransportSE;  //如果要用http访问，则取消该注释
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.util.Log;
@@ -21,15 +21,19 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
+import scut.bgooo.ksoap.modify.HttpTransportSE;//如果要用https访问，则取消该注释
 
 public class WebServiceUtil implements IWebServiceUtil {
 
 	private static String TAG = WebServiceUtil.class.getName();
 	private static final String NAMESPACE = "http://tempuri.org/";
 	
-	private static String URL = "http://192.168.1.148:8080/NFCShopping/ShopWebService.asmx";
-	public static String ImageURL = "http://192.168.1.148:8080/NFCShopping/Images/Products/";
+	private static String URL = "https://192.168.1.148/NFCShopping/ShopWebService.asmx";
+	public static String ImageURL = "https://192.168.1.148/NFCShopping/Images/Products/";
 
+//	private static String URL = "http://192.168.1.148:8080/NFCShopping/ShopWebService.asmx";
+//	public static String ImageURL = "http://192.168.1.148:8080/NFCShopping/Images/Products/";
+	
 	private static final String REGIST = "Regist";
 	private static final String ADDSUGGESTION = "AddSuggestion";
 	private static final String ADDREVIEW = "AddReview";
@@ -62,6 +66,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		rpc.addProperty("userName", userName);
 		rpc.addProperty("password", password);
 		HttpTransportSE ht = new HttpTransportSE(URL);
+		
 		ht.debug = true;
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
