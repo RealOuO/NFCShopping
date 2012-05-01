@@ -11,7 +11,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ObjectDataSource ID="SuggestionDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Suggestion"
-        DeleteMethod="DeleteSuggestion" SelectMethod="GetSuggestions" TypeName="NFCShoppingWebSite.BLL.SuggestionBL">
+        DeleteMethod="DeleteSuggestion" SelectMethod="GetSuggestions" 
+        TypeName="NFCShoppingWebSite.BLL.SuggestionBL" InsertMethod="InsertSuggestion">
     </asp:ObjectDataSource>
     <asp:ScriptManager ID="ScriptManager" runat="server">
     </asp:ScriptManager>

@@ -13,6 +13,7 @@
           <EntitySet Name="Reviews" EntityType="ShopDBModel.Store.Reviews" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SecCategories" EntityType="ShopDBModel.Store.SecCategories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Suggestions" EntityType="ShopDBModel.Store.Suggestions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="ShopDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="ShopDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_DiscountInformation_Discounts" Association="ShopDBModel.Store.FK_DiscountInformation_Discounts">
             <End Role="Discounts" EntitySet="Discounts" />
@@ -48,7 +49,7 @@
             <PropertyRef Name="categoryID" />
           </Key>
           <Property Name="categoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="categoryName" Type="text" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="DiscountItems">
           <Key>
@@ -90,7 +91,7 @@
           <Property Name="reviewID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="productID" Type="int" Nullable="false" />
-          <Property Name="comment" Type="text" Nullable="false" />
+          <Property Name="comment" Type="nvarchar(max)" Nullable="false" />
           <Property Name="rating" Type="int" Nullable="false" />
           <Property Name="createAt" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -100,7 +101,7 @@
           </Key>
           <Property Name="secCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="categoryID" Type="int" Nullable="false" />
-          <Property Name="secCategoryName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="secCategoryName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Suggestions">
           <Key>
@@ -108,8 +109,18 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="int" />
-          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="date" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -221,6 +232,7 @@
           <EntitySet Name="Reviews" EntityType="ShopDBModel.Review" />
           <EntitySet Name="SecCategories" EntityType="ShopDBModel.SecCategory" />
           <EntitySet Name="Suggestions" EntityType="ShopDBModel.Suggestion" />
+          <EntitySet Name="sysdiagrams" EntityType="ShopDBModel.sysdiagram" />
           <EntitySet Name="Users" EntityType="ShopDBModel.User" />
           <AssociationSet Name="FK_SecCategories_Categories" Association="ShopDBModel.FK_SecCategories_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -256,7 +268,7 @@
             <PropertyRef Name="categoryID" />
           </Key>
           <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="categoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="categoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="SecCategories" Relationship="ShopDBModel.FK_SecCategories_Categories" FromRole="Categories" ToRole="SecCategories" />
         </EntityType>
         <EntityType Name="DiscountItem">
@@ -305,7 +317,7 @@
           <Property Name="reviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="productID" Type="Int32" Nullable="false" />
-          <Property Name="comment" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="comment" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="createAt" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ShopDBModel.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
@@ -317,7 +329,7 @@
           </Key>
           <Property Name="secCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryID" Type="Int32" Nullable="false" />
-          <Property Name="secCategoryName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="secCategoryName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Category" Relationship="ShopDBModel.FK_SecCategories_Categories" FromRole="SecCategories" ToRole="Categories" />
           <NavigationProperty Name="Products" Relationship="ShopDBModel.FK_Products_SecCategories" FromRole="SecCategories" ToRole="Products" />
         </EntityType>
@@ -327,9 +339,19 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="User" Relationship="ShopDBModel.FK_Suggestions_Users" FromRole="Suggestions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -357,9 +379,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DiscountInformation_Discounts">
-          <End Role="Discounts" Type="ShopDBModel.Discount" Multiplicity="1" >
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Discounts" Type="ShopDBModel.Discount" Multiplicity="1" />
           <End Role="DiscountItems" Type="ShopDBModel.DiscountItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Discounts">
@@ -485,6 +505,13 @@
             <ScalarProperty Name="description" ColumnName="description" />
             <ScalarProperty Name="date" ColumnName="date" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="ShopDBModel.sysdiagram"><MappingFragment StoreEntitySet="sysdiagrams">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+            <ScalarProperty Name="version" ColumnName="version" />
+            <ScalarProperty Name="definition" ColumnName="definition" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="ShopDBModel.User"><MappingFragment StoreEntitySet="Users">
             <ScalarProperty Name="userID" ColumnName="userID" />
             <ScalarProperty Name="userName" ColumnName="userName" />
@@ -521,6 +548,7 @@
         <EntityTypeShape EntityType="ShopDBModel.Review" Width="1.5" PointX="10.5" PointY="2.625" Height="2.5430916341145835" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopDBModel.SecCategory" Width="1.5" PointX="3" PointY="3" Height="1.9700325520833326" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopDBModel.Suggestion" Width="1.5" PointX="10.5" PointY="8" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" Height="1.9700325520833317" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopDBModel.User" Width="1.5" PointX="8.25" PointY="7.625" Height="2.5430916341145817" IsExpanded="true" />
         <AssociationConnector Association="ShopDBModel.FK_SecCategories_Categories" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="3.9189965820312502" />
@@ -544,12 +572,10 @@
           <ConnectorPoint PointX="6.75" PointY="2.65625" />
           <ConnectorPoint PointX="10.5" PointY="2.65625" />
         </AssociationConnector>
-        <AssociationConnector Association="ShopDBModel.FK_Reviews_Users" ManuallyRouted="true">
+        <AssociationConnector Association="ShopDBModel.FK_Reviews_Users" ManuallyRouted="false">
           <ConnectorPoint PointX="9.40625" PointY="7.625" />
-          <ConnectorPoint PointX="9.40625" PointY="3.546875" />
-          <ConnectorPoint PointX="10.1390625" PointY="3.546875" />
-          <ConnectorPoint PointX="10.1390625" PointY="3.2125415632761531" />
-          <ConnectorPoint PointX="10.5" PointY="3.2125415632761531" />
+          <ConnectorPoint PointX="9.40625" PointY="2.671875" />
+          <ConnectorPoint PointX="10.5" PointY="2.671875" />
         </AssociationConnector>
         <AssociationConnector Association="ShopDBModel.FK_Suggestions_Users" ManuallyRouted="false">
           <ConnectorPoint PointX="9.75" PointY="8.9850162760416659" />

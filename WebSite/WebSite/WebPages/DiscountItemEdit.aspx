@@ -42,12 +42,10 @@
     </asp:ObjectDataSource>
     <asp:Label ID="TitleLabel" runat="server" Text="Label" Font-Bold="True" Font-Size="X-Large"
         ForeColor="Black"></asp:Label>
-    <asp:DetailsView ID="ProductDetailsView" runat="server" AutoGenerateRows="False"
+    <asp:DetailsView ID="ProductDetailsView" runat="server" AutoGenerateRows="false"
         BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
-        CellPadding="3" DataSourceID="ProductDataSource" GridLines="Horizontal" Height="52px"
+        DataSourceID="ProductDataSource" GridLines="Horizontal" Height="52px"
         Width="482px">
-        <AlternatingRowStyle BackColor="#F7F7F7" />
-        <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
         <Fields>
             <asp:BoundField DataField="productID" HeaderText="商品ID号" SortExpression="productID" />
             <asp:BoundField DataField="barCode" HeaderText="商品条形码" SortExpression="barCode" />
@@ -58,9 +56,9 @@
             <asp:BoundField DataField="description" HeaderText="商品描述" SortExpression="description" />
         </Fields>
         <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
-        <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
+        <HeaderStyle BackColor="#4A3C8C" ForeColor="#F7F7F7"  HorizontalAlign="Center"/>
         <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
-        <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
+        <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C"  />
     </asp:DetailsView>
     <br />
     <asp:Label ID="Label2" runat="server" Text="请输入关键字"></asp:Label>

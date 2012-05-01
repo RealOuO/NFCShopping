@@ -127,7 +127,8 @@
             </UpdateParameters>
         </asp:ObjectDataSource>
         <asp:ObjectDataSource ID="ReviewsDataSourse" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Review"
-            DeleteMethod="DeleteReview" SelectMethod="GetReviewsByProductID" TypeName="NFCShoppingWebSite.BLL.ReviewBL">
+            DeleteMethod="DeleteReview" SelectMethod="GetReviewsByProductID" 
+        TypeName="NFCShoppingWebSite.BLL.ReviewBL" InsertMethod="InsertReview">
             <SelectParameters>
                 <asp:QueryStringParameter Name="pid" QueryStringField="productID" Type="Int32" />
             </SelectParameters>
