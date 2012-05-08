@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.ui;
 
 import java.util.ArrayList;
@@ -29,30 +44,18 @@ public class CompareActivity extends Activity {
 		 */
 		mCompareList = (ListView) findViewById(R.id.lvCompare);
 
-		// // 每行的数据
-		// TableCell[] cells = new TableCell[5];// 每行5个单元
-		// for (int i = 0; i < cells.length - 1; i++) {
-		// cells[i] = new TableCell("No." + String.valueOf(i),
-		// titles[i].width, LayoutParams.FILL_PARENT, TableCell.STRING);
-		// }
-		// cells[cells.length - 1] = new TableCell(R.drawable.icon,
-		// titles[cells.length - 1].width, LayoutParams.WRAP_CONTENT,
-		// TableCell.IMAGE);
-		// // 把表格的行添加到表格
-		// for (int i = 0; i < 12; i++)
-		// table.add(new TableRow(cells));
+		
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		ArrayList<TableRow> table = new ArrayList<TableRow>();
-		TableCell[] titles = new TableCell[NFCShoppingTab.mItemArray.size()+1];// 每行根据对比数目创建单元
+		TableCell[] titles = new TableCell[NFCShoppingTab.mItemArray.size() + 1];// 每行根据对比数目创建单元
 
-		int width = this.getWindowManager().getDefaultDisplay().getWidth()
-				/2;
-		//第一列
-		titles[0] = new TableCell("属性" , width + 8 * 0,
+		int width = this.getWindowManager().getDefaultDisplay().getWidth() / 2;
+		// 第一列
+		titles[0] = new TableCell("属性", width + 8 * 0,
 				LayoutParams.FILL_PARENT, TableCell.STRING);
 		// 定义标题
 		for (int i = 1; i < titles.length; i++) {
@@ -60,49 +63,63 @@ public class CompareActivity extends Activity {
 					LayoutParams.FILL_PARENT, TableCell.STRING);
 		}
 		table.add(new TableRow(titles));
-		
+
 		if (NFCShoppingTab.mItemArray.size() > 0) {
 
 			for (int i = 0; i < ConcernItem.getCount(); i++) {
-				TableCell[] cells = new TableCell[NFCShoppingTab.mItemArray.size()+1];// 每行5个单元
-				switch(i){
+				TableCell[] cells = new TableCell[NFCShoppingTab.mItemArray
+						.size() + 1];// 每行5个单元
+				switch (i) {
 				case 0:
-					cells[0] = new TableCell("商品名", titles[0].width,
+					cells[0] = new TableCell("商品图片", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 1:
-					cells[0] = new TableCell("品牌", titles[0].width,
+					cells[0] = new TableCell("商品名", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 2:
-					cells[0] = new TableCell("价格", titles[0].width,
+					cells[0] = new TableCell("品牌", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 3:
-					cells[0] = new TableCell("类别", titles[0].width,
+					cells[0] = new TableCell("价格(元)", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 4:
-					cells[0] = new TableCell("产地", titles[0].width,
+					cells[0] = new TableCell("评分(5分制)", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 5:
-					cells[0] = new TableCell("详细描述", titles[0].width,
+					cells[0] = new TableCell("类别", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				case 6:
-					cells[0] = new TableCell("评分", titles[0].width,
+					cells[0] = new TableCell("产地", titles[0].width,
+							LayoutParams.FILL_PARENT, TableCell.STRING);
+					break;
+				case 7:
+					cells[0] = new TableCell("详细描述", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
 					break;
 				default:
 					cells[0] = new TableCell("其他", titles[0].width,
 							LayoutParams.FILL_PARENT, TableCell.STRING);
-					break;			
+					break;
 				}
 				for (int j = 1; j < cells.length; j++) {
-					cells[j] = new TableCell(NFCShoppingTab.mItemArray.get(j-1)//注意要减去1
-							.getAttribute(i).toString(), titles[j].width,
-							LayoutParams.FILL_PARENT, TableCell.STRING);
+					if (i == 0) {
+						cells[j] = new TableCell(NFCShoppingTab.mItemArray
+								.get(j - 1)// 注意要减去1
+								.getAttribute(i), titles[j].width,
+								LayoutParams.FILL_PARENT, TableCell.IMAGE);
+					} else {
+						cells[j] = new TableCell(NFCShoppingTab.mItemArray
+								.get(j - 1)// 注意要减去1
+								.getAttribute(i).toString(), titles[j].width,
+								LayoutParams.FILL_PARENT, TableCell.STRING);
+					}
+
 				}
 				table.add(new TableRow(cells));
 			}
@@ -124,7 +141,5 @@ public class CompareActivity extends Activity {
 					"选中第" + String.valueOf(arg2) + "行", 500).show();
 		}
 	}
-	
-	
 
 }

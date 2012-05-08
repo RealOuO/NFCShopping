@@ -26,6 +26,7 @@ namespace NFCShoppingWebSite.WebPages
             if (ViewState["NeedInit"] == null)
             {
                 ViewState.Add("NeedInit", true);
+                ProductDetailsView.Visible = false;
             }
             else
             {
@@ -84,8 +85,8 @@ namespace NFCShoppingWebSite.WebPages
                             this.ProductsDropDownList.DataSource = mProducts.GetProductsByName(product.productName);
                             this.ProductsDropDownList.DataBind();
                             this.ProductsDropDownList.SelectedValue = product.productID.ToString();
-
                             this.ProductNameTextBox.Text = product.productName;
+                            ProductDetailsView.Visible = true;
                         }
                     }
                     else
@@ -109,7 +110,7 @@ namespace NFCShoppingWebSite.WebPages
                                     this.ProductsDropDownList.DataSource = mProducts.GetProductsByName(item["productName"].ToString());
                                     this.ProductsDropDownList.DataBind();
                                     this.ProductsDropDownList.SelectedValue = item["productID"].ToString();
-
+                                    ProductDetailsView.Visible = true;
                                     break;
                                 }
                             }
@@ -132,7 +133,17 @@ namespace NFCShoppingWebSite.WebPages
         
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            this.ProductsDropDownList.DataSource = mProducts.GetProductsByName(this.ProductNameTextBox.Text);
+            IEnumerable<Product> products = mProducts.GetProductsContainName(this.ProductNameTextBox.Text);
+            if (products.ToList().Count == 0)
+            {
+                ProductDetailsView.Visible = false;
+            }
+            else
+            {
+                ProductDetailsView.Visible = true;
+            }
+
+            this.ProductsDropDownList.DataSource = products;
             this.ProductsDropDownList.DataBind();
         }
 
@@ -280,9 +291,8 @@ namespace NFCShoppingWebSite.WebPages
             Session.Add("FilteredDataSource", filteredSource);
             Session.Add("IsEditMode", isEditMode);
             Session.Add("CurrentState", discount);
-
-            Response.Redirect("~/WebPages/DiscountEdit.aspx?isNew=" + (!isEditMode).ToString() + "&discountID=" +
-               DiscountsDropDownList.SelectedValue);
+            Response.Write("<script type='text/javascript'>alert('成功');window.location ='DiscountEdit.aspx?isNew="+ (!isEditMode).ToString() +"&discountID="+ DiscountsDropDownList.SelectedValue+"';</script>");
+          
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)

@@ -2,6 +2,21 @@
     CodeBehind="Products.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.Products" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link href="../css/Product.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(function () {
+                $(".children:eq(0)").show();
+                $("span:eq(2)").html("-");
+                $("a:eq(4)").css({ "color": "red" });
+                $(".head:eq(0)").toggle(function () {
+                    $(this).next().hide();
+                    $("span:eq(2)").html("+");
+                }, function () {
+                    $(this).next().show();
+                    $("span:eq(2)").html("-");
+                });
+            });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="Black"
@@ -29,8 +44,9 @@
             </tr>
         </GroupTemplate>
         <ItemTemplate>
-            <td runat="server">
-                <table border="0" width="300">
+          
+          
+                <table  class="yy"  border="0" width="300">
                     <tr>
                         <td style="width: 25px;">
                             &nbsp
@@ -40,7 +56,7 @@
                                 <image src='../Images/Products/<%# Eval("imageURL") %>' width="100" height="75" border="0">
                             </a>&nbsp;&nbsp
                         </td>
-                        <td style="width: 250px; vertical-align: middle;">
+                        <td style="width: 100px; vertical-align: middle;">
                             <a href='ProductDetails.aspx?productID=<%# Eval("productID") %>'>
                                 <%# Eval("productName") %><br />
                             </a>
@@ -51,7 +67,7 @@
                         </td>
                     </tr>
                 </table>
-            </td>
+
         </ItemTemplate>
     </asp:ListView>
     <asp:ObjectDataSource ID="ProductsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Product"

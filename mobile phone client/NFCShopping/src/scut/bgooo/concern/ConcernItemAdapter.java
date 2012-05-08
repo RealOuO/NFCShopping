@@ -1,10 +1,27 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.concern;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import scut.bgooo.ui.R;
+import scut.bgooo.utility.TaskHandler;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,6 +38,8 @@ public class ConcernItemAdapter extends BaseAdapter {
 
 	private Context mContext; // 运行上下文
 	private List<ConcernItem> mItems; // 商品信息集合
+	private Bitmap bitmap;
+	private byte[] data;
 
 	public ConcernItemAdapter(Context context, List<ConcernItem> items) {
 		this.mContext = context;
@@ -63,12 +82,11 @@ public class ConcernItemAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		View concernitem = null;
 		if (mItems.get(position).getId() == 0) {
-			concernitem = LayoutInflater.from(mContext).inflate(
+			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.datetagitemview, null);
 
-			TextView tv = (TextView) concernitem.findViewById(R.id.tvDatetag);
+			TextView tv = (TextView) convertView.findViewById(R.id.tvDatetag);
 
 			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 			Date scanDate = new Date(mItems.get(position).getTimestamp());
@@ -76,25 +94,32 @@ public class ConcernItemAdapter extends BaseAdapter {
 			String date = formater.format(scanDate);
 			tv.setText(date);
 		} else {
-			concernitem = LayoutInflater.from(mContext).inflate(
+			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.productitem, null);
 
-			vh.mImageView = (ImageView) concernitem
+			vh.mImageView = (ImageView) convertView
 					.findViewById(R.id.goods_image);
-			vh.mGoodScore = (RatingBar) concernitem.findViewById(R.id.score);
-			vh.mGoodsNmae = (TextView) concernitem.findViewById(R.id.name);
-			vh.mGoodsPrice = (TextView) concernitem.findViewById(R.id.price);
+			vh.mGoodScore = (RatingBar) convertView.findViewById(R.id.score);
+			vh.mGoodsNmae = (TextView) convertView.findViewById(R.id.name);
+			vh.mGoodsPrice = (TextView) convertView.findViewById(R.id.price);
 
 			ConcernItem item = mItems.get(position);
-			byte [] data = item.getIcon();
-			Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+			if (TaskHandler.allIcon.get(item.getProductId()) == null) {
+				data = item.getIcon();
+				bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+				TaskHandler.allIcon.put(item.getProductId(), bitmap);
+			} else {
+				bitmap = TaskHandler.allIcon.get(item.getProductId());
+			}
 			vh.mImageView.setImageBitmap(bitmap);
+
 			vh.mGoodScore.setRating(item.getRating());
 			vh.mGoodsNmae.setText(item.getName());
-			vh.mGoodsPrice.setText(String.valueOf(item.getPrice()));
+			DecimalFormat df = new java.text.DecimalFormat("#0.00");
+			vh.mGoodsPrice.setText(df.format(item.getPrice()) + "元");
 
 		}
-		return concernitem;
+		return convertView;
 	}
 
 	/**

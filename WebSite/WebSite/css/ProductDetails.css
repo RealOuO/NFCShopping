@@ -1,0 +1,54 @@
+﻿body 
+{
+    font-size:13px;
+    font-family: arial, sans-serif;
+    color:#4f2d5e;
+}
+.information
+{
+    position:relative;
+      min-height:410px;
+   
+}
+.picture
+{
+    position:absolute;
+    top:0px;
+    left:420px;
+    
+     
+}
+
+.describe
+{
+    float:left;
+    margin-top:-10px;
+       width:400px;
+     
+}
+.product
+{
+    width:450px;
+
+}
+
+.subproduct
+{
+    width:400px; 
+}
+.content
+{
+    margin-left:6px;
+ 
+}
+
+.content1
+{
+    margin-left:30px;  
+}
+.edit
+{
+    width:400px;
+    top:25px;
+    position:relative;
+}

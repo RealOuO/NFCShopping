@@ -79,7 +79,8 @@ namespace NFCShoppingWebSite.BLL
         /*返回评分排列前十的商品*/
         public IEnumerable GetTOP10Products()
         {
-            var rate = (from r in mRepository.GetReviews()  group r by r.productID into g from p in mProductRepository.GetProducts() where g.Key==p.productID select new { g.Key, AverageRating = g.Average(r => r.rating) } ).ToList().OrderByDescending(a=>a.AverageRating).Take(10) ;
+            IEnumerable rate = (from item in (from r in mRepository.GetReviews() join p in mProductRepository.GetProducts() on r.productID equals p.productID select new {r.rating,p.productName,p.productID}) group item by item.productID
+            into g select new { g.Key, AverageRating = g.Average(r => r.rating)/10, Name = g.First(p=>p.productID==g.Key).productName}).ToList().OrderByDescending(a => a.AverageRating).Take(10);
             return rate;
 
         }

@@ -1,0 +1,15 @@
+﻿body {
+}
+
+.DiscountsList
+{
+
+    padding-left:50px;
+        width:800px;
+    
+}
+.subDiscountsList
+{
+        list-style-type:decimal;
+
+}

@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/repassword2"
                     android:paddingLeft="10dip"
+                    android:inputType="textPassword"
                     android:paddingRight="5dip" >
                 </EditText>
             </LinearLayout>
@@ -91,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/repeatpassword2"
                     android:paddingLeft="10dip"
+                    android:inputType="textPassword" 
                     android:paddingRight="5dip" >
                 </EditText>
             </LinearLayout>

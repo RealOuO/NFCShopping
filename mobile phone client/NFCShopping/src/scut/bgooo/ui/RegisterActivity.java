@@ -1,9 +1,25 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.ui;
 
 import scut.bgooo.entities.User;
 import scut.bgooo.ui.R;
 import scut.bgooo.webservice.WebServiceUtil;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +49,7 @@ public class RegisterActivity extends Activity {
 	private String mRepeatPassword;
 	private int mGender;
 	private User mUser = null;
+	private ProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +101,11 @@ public class RegisterActivity extends Activity {
 				mRepeatPassword = mUserRepeatPassword.getText().toString();
 				mUsername = mUserName.getText().toString();
 				if (mPassword.equals(mRepeatPassword)) {
+					mProgressDialog = new ProgressDialog(RegisterActivity.this);
+					mProgressDialog.setMessage("×¢²áÖÐ¡­¡­");
+					mProgressDialog.setTitle(RegisterActivity.this.getResources()
+							.getString(R.string.app_name));
+					mProgressDialog.show();
 					Regist();
 				}
 			} else if (v.equals(mCancle)) {
@@ -125,11 +147,13 @@ public class RegisterActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.arg1) {
 			case REGISTSUCCESS:
+				mProgressDialog.dismiss();
 				Toast.makeText(getApplicationContext(), "×¢²á³É¹¦",
 						Toast.LENGTH_SHORT).show();
 				finish();
 				break;
 			case REGISTFAILE:
+				mProgressDialog.dismiss();
 				Toast.makeText(getApplicationContext(), "×¢²áÊ§°Ü",
 						Toast.LENGTH_SHORT).show();
 				break;

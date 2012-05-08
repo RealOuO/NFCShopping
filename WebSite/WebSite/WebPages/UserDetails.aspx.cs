@@ -13,5 +13,28 @@ namespace NFCShoppingWebSite.WebPages
         {
 
         }
+
+        protected void UserDetailsView_DataBound(object sender, EventArgs e)
+        {
+            if (UserDetailsView.Rows[1].Cells[1].Text.Equals("1"))
+            {
+                UserDetailsView.Rows[1].Cells[1].Text = "先生";
+            }
+            else if (UserDetailsView.Rows[2].Cells[1].Text.Equals("2"))
+            {
+                UserDetailsView.Rows[1].Cells[1].Text = "女士";
+            }
+            else
+            {
+                UserDetailsView.Rows[1].Cells[1].Text = "保密";
+            }
+        }
+
+       
+        protected  void deleted_user(object sender, 
+    DetailsViewDeletedEventArgs e)
+        {
+            Response.Redirect("~/WebPages/Users.aspx");
+        }
     }
 }

@@ -2,79 +2,119 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
     <title></title>
+    <script type="text/javascript" src="../Scripts/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../Scripts/Site.js"></script>
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form runat="server">
-    <div class="page">
-        <div class="header">
-            <div class="title">
-                <h1>
-                    NFCShopping超市平台
-                </h1>
+    <div id="all">
+        <form id="Form1" runat="server">
+        <div class="page">
+            <div class="header">
+                <div class="title">
+                    <address>
+                        <h1>
+                            <abbr>
+                                NFCShopping</abbr>超市管理平台 &nbsp;
+                        </h1>
+                    </address>
+                </div>
+                <div class="loginDisplay">
+                    <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                        <LoggedInTemplate>
+                            欢迎使用 <span class="bold">
+                                <asp:LoginName ID="HeadLoginName" runat="server" />
+                            </span>![ <a href="~/Account/ChangePassword.aspx" id="A1" runat="server">修改密码</a>] [
+                            <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="注销"
+                                LogoutPageUrl="~/" />
+                            ]
+                            
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
             </div>
-            <div class="loginDisplay">
-                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
-                    <AnonymousTemplate>
-                        [ <a href="~/Account/Login.aspx" id="HeadLoginStatus" runat="server">登录</a> ]
-                    </AnonymousTemplate>
-                    <LoggedInTemplate>
-                        欢迎使用 <span class="bold">
-                            <asp:LoginName ID="HeadLoginName" runat="server" />
-                        </span>! [
-                        <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="注销"
-                            LogoutPageUrl="~/" />
-                        ][ <a href="~/Account/ChangePassword.aspx" id="A1" runat="server">修改密码</a>]
-                    </LoggedInTemplate>
-                </asp:LoginView>
+            <div class="content11">
+                <div id="leftColumn">
+                    <div id="subleftColumn">
+                        <ul>
+                            <li>
+                                <div class="head1">
+                                    <a href="<%=ResolveUrl("~/Default.aspx")%>">主页</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head">
+                                    <span>+</span> <a href="">商品</a>
+                                </div>
+                                <div class="children">
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/Categories.aspx")%>">商品分类</a>
+                                    </div>
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/ProductEdit.aspx?isNew=true")%>">编辑商品</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head">
+                                    <span>+</span> <a href="">用户</a>
+                                </div>
+                                <div class="children">
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/Users.aspx")%>">查看用户</a>
+                                    </div>
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/Account/Register.aspx")%>">添加管理员</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head">
+                                    <span>+</span> <a href="">优惠</a>
+                                </div>
+                                <div class="children">
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/Discounts.aspx")%>">查看优惠活动</a>
+                                    </div>
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/DiscountEdit.aspx?isNew=true")%>">新增优惠活动</a>
+                                    </div>
+                                    <div class="test">
+                                        <a href="<%=ResolveUrl("~/WebPages/DiscountItemEdit.aspx?isNew=true")%>">添加优惠商品</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head1">
+                                    <a href="<%=ResolveUrl("~/WebPages/Suggestions.aspx")%>">意见反馈</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head1">
+                                    <a href="<%=ResolveUrl("~/About.aspx")%>">关于我们</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="submain">
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
             </div>
-            <div class="clear hideSkiplink">
-                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="False"
-                    IncludeStyleBlock="False" Orientation="Horizontal">
-                    <Items>
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="主页" />
-                        <asp:MenuItem Text="商品" Value="商品">
-                            <asp:MenuItem NavigateUrl="~/WebPages/Categories.aspx" Text="商品分类" Value="商品分类">
-                            </asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/WebPages/ProductEdit.aspx?isNew=true" Text="增加商品" Value="增加商品">
-                            </asp:MenuItem>
-                        </asp:MenuItem>
-                        <asp:MenuItem Text="用户" Value="用户">
-                            <asp:MenuItem NavigateUrl="~/WebPages/Users.aspx" Text="查看用户" Value="查看用户"></asp:MenuItem>
-                        </asp:MenuItem>
-                        <asp:MenuItem Text="优惠活动" Value="用户">
-                            <asp:MenuItem NavigateUrl="~/WebPages/Discounts.aspx" Text="查看优惠活动" 
-                                Value="查看优惠"></asp:MenuItem>
-                            <asp:MenuItem NavigateUrl="~/WebPages/DiscountEdit.aspx?isNew=true" 
-                                Text="新增优惠活动" Value="新增优惠"></asp:MenuItem>
-                            <asp:MenuItem Text="添加优惠商品" Value="新增优惠" 
-                                NavigateUrl="~/WebPages/DiscountItemEdit.aspx?isNew=true"></asp:MenuItem>
-                        </asp:MenuItem>
-                        <asp:MenuItem NavigateUrl="~/WebPages/Suggestions.aspx" Text="意见反馈" />
-                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
-                    </Items>
-                </asp:Menu>
+            <div class="footer">
+                版权所有：NFCShopping超市管理平台&copy
             </div>
         </div>
-        <div class="content">
-            <div id="rightColumn">
-            </div>
-            <div id="leftColumn">
-            </div>
-            <div class="main">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-            </div>
-            <div class="clear">
-            </div>
-        </div>
+        </form>
     </div>
-    <div class="footer">
-    </div>
-    </form>
 </body>
 </html>

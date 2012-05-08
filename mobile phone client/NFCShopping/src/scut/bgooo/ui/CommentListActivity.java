@@ -1,5 +1,21 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.ui;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -16,6 +32,7 @@ import scut.bgooo.webservice.WebServiceUtil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +47,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,7 +60,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class CommentListActivity extends Activity implements INFCActivity{
+public class CommentListActivity extends Activity implements INFCActivity {
 
 	private static final String TAG = CommentListActivity.class.getSimpleName();
 
@@ -125,7 +144,8 @@ public class CommentListActivity extends Activity implements INFCActivity{
 								// 添加任务。。。
 								HashMap<String, Object> m = new HashMap<String, Object>();
 								m.put("Product", mItem);
-								Task task = new Task(Task.SEND_SHARE_WEIBO_WITH_IMAGE, m);
+								Task task = new Task(
+										Task.SEND_SHARE_WEIBO_WITH_IMAGE, m);
 								TaskHandler.addTask(task);
 							}
 						});
@@ -140,7 +160,8 @@ public class CommentListActivity extends Activity implements INFCActivity{
 								// 添加任务。。。
 								HashMap<String, Object> m = new HashMap<String, Object>();
 								m.put("Product", mItem);
-								Task task = new Task(Task.SEND_SHARE_WEIBO_WITHOUT_IMAGE, m);
+								Task task = new Task(
+										Task.SEND_SHARE_WEIBO_WITHOUT_IMAGE, m);
 								TaskHandler.addTask(task);
 							}
 
@@ -181,7 +202,8 @@ public class CommentListActivity extends Activity implements INFCActivity{
 		byte[] data = mItem.getIcon();
 		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 		mPicture.setImageBitmap(bitmap);
-		mPriceTextView.setText(String.valueOf(mItem.getPrice()));
+		DecimalFormat df = new java.text.DecimalFormat("#0.00");
+		mPriceTextView.setText(df.format(mItem.getPrice()) + "元");
 		mNameTextView.setText(mItem.getName());
 		mRatingBar.setRating(mItem.getRating());
 
@@ -191,14 +213,12 @@ public class CommentListActivity extends Activity implements INFCActivity{
 		} else {
 			mCheckBox.setChecked(true);
 		}
-		
+
 		TaskHandler.allActivity.put(CommentListActivity.class.getSimpleName(),
 				(INFCActivity) CommentListActivity.this);
-		
 
 	}
 
-	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -250,6 +270,41 @@ public class CommentListActivity extends Activity implements INFCActivity{
 		thread = null;
 	}
 
+	private OnItemClickListener listener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// TODO Auto-generated method stub
+			LayoutInflater factory = LayoutInflater
+					.from(CommentListActivity.this);
+			final View view = factory.inflate(R.layout.userdetails, null);
+			TextView tvVisitedTimes = (TextView) view
+					.findViewById(R.id.tvVisitedTimes);
+			TextView tvLastVisitDate = (TextView) view
+					.findViewById(R.id.tvLastVisitDate);
+			tvVisitedTimes.setText(((User) reviews.get(arg2).getProperty(8))
+					.getProperty(2).toString());
+			tvLastVisitDate.setText(((User) reviews.get(arg2).getProperty(8))
+					.getProperty(2).toString());
+			final AlertDialog.Builder builder = new AlertDialog.Builder(
+					CommentListActivity.this);
+			builder.setTitle(((User) reviews.get(arg2).getProperty(8))
+					.getProperty(2).toString() + "的用户信息");
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+
+			String date[] = ((User) reviews.get(arg2).getProperty(8))
+					.getProperty(5).toString().split("T");
+			tvLastVisitDate.setText(date[0]);
+			tvVisitedTimes.setText(((User) reviews.get(arg2).getProperty(8))
+					.getProperty(4).toString());
+			builder.setCancelable(true);
+			builder.setView(view);
+			builder.show();
+		}
+
+	};
+
 	final Handler handler = new Handler() {
 
 		@Override
@@ -261,6 +316,7 @@ public class CommentListActivity extends Activity implements INFCActivity{
 				CommentAdapter ma = new CommentAdapter(
 						CommentListActivity.this, reviews);
 				mListView.setAdapter(ma);// 添加适配器
+				mListView.setOnItemClickListener(listener);
 				mProcess.setVisibility(View.GONE);
 				break;
 			case REFRESHREVIEWSFAILE:
@@ -284,18 +340,17 @@ public class CommentListActivity extends Activity implements INFCActivity{
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	@Override
 	public void refresh(Object... param) {
 		// TODO Auto-generated method stub
-		if(String.valueOf(param[1]).equals("WITHOUTIMAGE")){
+		if (String.valueOf(param[1]).equals("WITHOUTIMAGE")) {
 			Toast toast = Toast.makeText(getApplicationContext(), "发送分享成功",
 					Toast.LENGTH_SHORT);
 			toast.show();
-		}else if(String.valueOf(param[1]).equals("WITHIMAGE")){
+		} else if (String.valueOf(param[1]).equals("WITHIMAGE")) {
 			Toast toast = Toast.makeText(getApplicationContext(), "发送图片分享成功",
 					Toast.LENGTH_SHORT);
 			toast.show();

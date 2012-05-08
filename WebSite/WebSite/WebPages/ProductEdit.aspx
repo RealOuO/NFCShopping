@@ -2,6 +2,29 @@
     CodeBehind="ProductEdit.aspx.cs" Inherits="NFCShoppingWebSite.WebPages.ProductEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+          <script type="text/javascript">
+              $(function () {
+                  $(".children:eq(0)").show();
+                  $("span:eq(2)").html("-");
+                  $("a:eq(5)").css({ "color": "red" });
+                  $(".head:eq(0)").toggle(function () {
+                      $(this).next().hide();
+                      $("span:eq(2)").html("+");
+                  }, function () {
+                      $(this).next().show();
+                      $("span:eq(2)").html("-");
+                  });
+              });
+    </script>
+
+    <script  type="text/javascript">
+        function delete_confirm(e) {
+            if (event.srcElement.type == "submit" && document.all(event.srcElement.name).value == "删除")
+                event.returnValue = confirm("确认是否删除？");
+        }
+        document.onclick = delete_confirm; 
+</script> 
+    <link href="../css/ProductEdit.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"

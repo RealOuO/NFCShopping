@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/back" >
 
     <LinearLayout
         android:id="@+id/llProduct"
@@ -35,6 +36,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="@string/productName"
                     android:textColor="#ff333333"
                     android:textSize="15.0sp" />
@@ -138,6 +141,7 @@
             <Button
                 android:id="@+id/btComment"
                 android:layout_width="0dip"
+                android:drawableRight="@drawable/comment"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btcomment" />
@@ -145,6 +149,7 @@
             <Button
                 android:id="@+id/btShare"
                 android:layout_width="0dip"
+                android:drawableRight="@drawable/share"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/btshare" />
@@ -158,9 +163,8 @@
             android:id="@+id/comment_listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/llProduct"
             android:layout_above="@+id/lybuttonBar"
-            android:divider="@drawable/divider_horizontal_timeline"
+            android:layout_below="@+id/llProduct"
             android:dividerHeight="1.0dip"
             android:fadingEdge="none" />
     </RelativeLayout>

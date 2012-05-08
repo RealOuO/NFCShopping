@@ -2,10 +2,16 @@
     CodeBehind="About.aspx.cs" Inherits="NFCShoppingWebSite.About" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<script type="text/javascript">
+    $(function () {
+        $("a:eq(14)").css({ "color": "red" });
+    });
+    </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    <h2>
-        关于
+    <h2 style="font-size:X-Large;font-weight:bold; color:Black;">
+        关于我们
+
     </h2>
     <p>
         将内容放置在此处。

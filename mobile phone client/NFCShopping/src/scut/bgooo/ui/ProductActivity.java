@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.ui;
 
 import java.io.ByteArrayOutputStream;
@@ -6,10 +21,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.concern.ConcernManager;
@@ -19,7 +38,6 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.Profile;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.utility.INFCActivity;
-import scut.bgooo.utility.Task;
 import scut.bgooo.utility.TaskHandler;
 import scut.bgooo.webservice.WebServiceUtil;
 import scut.bgooo.weibo.WeiboUserItem;
@@ -88,7 +106,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productdetail);
 		init();
-		
 
 		mName = (TextView) findViewById(R.id.tvProductname);
 		mPrice = (TextView) findViewById(R.id.tvPrice);
@@ -100,6 +117,16 @@ public class ProductActivity extends Activity implements INFCActivity {
 		mPicture = (ImageView) findViewById(R.id.ivPicture);
 		mCheckComment = (Button) findViewById(R.id.btCheckComment);
 		mAddToCompare = (Button) findViewById(R.id.btAddToCompare);
+		mAddToCompare.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				NFCShoppingTab.mItemArray.add(mItem);
+				Toast.makeText(getApplicationContext(), "已经加入对比",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 
 		mCheckComment.setClickable(false);
 		mCheckComment.setOnClickListener(new OnClickListener() {
@@ -121,8 +148,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 		Date dNow = new Date(now);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		mTodayStr = format.format(dNow);
-		
-		
 
 		mConcernManager = new ConcernManager(this);
 		resolveIntent(getIntent());
@@ -142,27 +167,41 @@ public class ProductActivity extends Activity implements INFCActivity {
 			// Get an instance of the TAG from the NfcAdapter
 			Tag productTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-			// MifareClassic mfc = MifareClassic.get(productTag);
-			//
-			// try {
-			// // Conncet to card
-			// mfc.connect();
-			// boolean auth = false;
-			// auth = mfc.authenticateSectorWithKeyA(0,
-			// MifareClassic.KEY_DEFAULT);
-			//
-			// if (auth) {
-			// byte[] data = mfc.readBlock(1);
-			// char[] cData = TransistionUtil.getChars(data);
-			// mBarcodeStr = String.valueOf(cData);
-			// DownloadInfo();
-			// }
-			// } catch (IOException ex) {
-			// ex.printStackTrace();
-			// Toast.makeText(getApplicationContext(), "读卡失败\n请重新刷取卡片",
-			// Toast.LENGTH_SHORT).show();
-			// }
-			DownloadInfo();
+			MifareClassic mfc = MifareClassic.get(productTag);
+
+			try {
+				// Conncet to card
+				mfc.connect();
+				boolean auth = false;
+				auth = mfc.authenticateSectorWithKeyA(0,
+						MifareClassic.KEY_DEFAULT);
+
+				if (auth) {
+					byte[] data = mfc.readBlock(1);
+					char[] cData = TransistionUtil.getChars(data);
+					mBarcodeStr = String.valueOf(cData).trim(); // 注意要去掉空格。。
+					DownloadInfo();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				Toast.makeText(getApplicationContext(), "读卡失败\n请重新刷取卡片",
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			mProduct = (Product) this.getIntent().getSerializableExtra(
+					"product");
+			DownloadPicture();
+			mBarcode.setText(mProduct.getProperty(3).toString());
+			mName.setText(mProduct.getProperty(4).toString());
+			DecimalFormat df = new java.text.DecimalFormat("#0.00");
+			mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5)
+					.toString())) + "元");
+			mBrand.setText(mProduct.getProperty(6).toString());
+			mLocation.setText(mProduct.getProperty(7).toString());
+			mDescription.setText(mProduct.getProperty(9).toString());
+			mCategory.setText(((SecCategory) mProduct.getProperty(10))
+					.getProperty(3).toString());
+			mProcess.setVisibility(View.GONE);
 		}
 
 	}
@@ -216,7 +255,7 @@ public class ProductActivity extends Activity implements INFCActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				mProduct = WebServiceUtil.getInstance().getProductByBarcode(
-						"1234");
+						mBarcodeStr);
 				Message message = new Message();
 				if (mProduct == null) {
 					message.arg1 = FAILE;
@@ -260,14 +299,26 @@ public class ProductActivity extends Activity implements INFCActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					String URL = WebServiceUtil.ImageURL
-							+ mProduct.getProperty(8).toString();
-					URL url;
-					url = new URL(URL);
-					Bitmap bitmap = getProductImage(url);
 					Message msg = new Message();
+					if (TaskHandler.allIcon.get(Integer.valueOf(mProduct
+							.getProperty(1).toString())) == null) {
+						String URL = WebServiceUtil.ImageURL
+								+ mProduct.getProperty(8).toString();
+						URL url;
+						url = new URL(URL);
+						Bitmap bitmap = getProductImage(url);
+						msg.obj = bitmap;
+					} else {
+						Bitmap bitmap = TaskHandler.allIcon.get(Integer
+								.valueOf(mProduct.getProperty(1).toString()));
+
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+						mdata=baos.toByteArray();
+
+						msg.obj = bitmap;
+					}
 					msg.arg1 = GET_PRODUCTIMAGE;
-					msg.obj = bitmap;
 					handler.sendMessage(msg);
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
@@ -305,7 +356,9 @@ public class ProductActivity extends Activity implements INFCActivity {
 				Log.d(TAG, mProduct.toString());
 				mBarcode.setText(mProduct.getProperty(3).toString());
 				mName.setText(mProduct.getProperty(4).toString());
-				mPrice.setText(mProduct.getProperty(5).toString());
+				DecimalFormat df = new java.text.DecimalFormat("#0.00");
+				mPrice.setText(df.format(Double.valueOf(mProduct.getProperty(5)
+						.toString())) + "元");
 				mBrand.setText(mProduct.getProperty(6).toString());
 				mLocation.setText(mProduct.getProperty(7).toString());
 				mDescription.setText(mProduct.getProperty(9).toString());
@@ -354,6 +407,7 @@ public class ProductActivity extends Activity implements INFCActivity {
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setReadTimeout(1000);
+			((HttpsURLConnection) conn).setHostnameVerifier(new AllowAllHostnameVerifier());
 			InputStream inputstream = conn.getInputStream();
 			mdata = readInputStream(inputstream);
 			bitmap = BitmapFactory.decodeByteArray(mdata, 0, mdata.length);
@@ -408,7 +462,6 @@ public class ProductActivity extends Activity implements INFCActivity {
 	@Override
 	public void refresh(Object... param) {
 		// TODO Auto-generated method stub
-		
-		
+
 	}
 }

@@ -11,8 +11,8 @@
         android:layout_height="50.0dip"
         android:layout_gravity="center_vertical"
         android:paddingLeft="5dip"
-        android:src="@android:drawable/ic_menu_gallery"
-        android:saveEnabled="true" />
+        android:saveEnabled="true"
+        android:src="@android:drawable/ic_menu_gallery" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -37,7 +37,6 @@
                 android:id="@id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="商品名称"
                 android:textSize="15.0sp" />
         </LinearLayout>
 
@@ -51,14 +50,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10.0dip"
-                android:text="平均价格"
+                android:text="参考价格"
                 android:textSize="15.0sp" />
 
             <TextView
                 android:id="@id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="平均价格"
                 android:textSize="15.0sp" />
         </LinearLayout>
 

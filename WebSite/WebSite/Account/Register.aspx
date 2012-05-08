@@ -2,6 +2,22 @@
     CodeBehind="Register.aspx.cs" Inherits="NFCShoppingWebSite.Account.Register" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<script type="text/javascript">
+    $(function () {
+        $(".children:eq(1)").show();
+        $("span:eq(3)").html("-");
+        $("a:eq(8)").css({ "color": "red" });
+        $(".head:eq(1)").toggle(function () {
+            $(this).next().hide();
+            $("span:eq(3)").html("+");
+        }, function () {
+            $(this).next().show();
+            $("span:eq(3)").html("-");
+        });
+    });
+
+    </script>
+
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <asp:CreateUserWizard ID="RegisterUser" runat="server" EnableViewState="false" OnCreatedUser="RegisterUser_CreatedUser">
@@ -13,11 +29,8 @@
             <asp:CreateUserWizardStep ID="RegisterUserWizardStep" runat="server">
                 <ContentTemplate>
                     <h2>
-                        创建新帐户
+                        添加管理员
                     </h2>
-                    <p>
-                        使用以下表单创建新帐户。
-                    </p>
                     <p>
                         密码的长度至少必须为
                         <%= Membership.MinRequiredPasswordLength %>

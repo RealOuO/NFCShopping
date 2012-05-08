@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+
 import scut.bgooo.concern.ConcernItem;
 import scut.bgooo.entities.Discount;
 import scut.bgooo.entities.DiscountItem;
@@ -273,7 +277,7 @@ public class TaskHandler implements Runnable {
 			}
 				break;
 			case Task.SEND_COMMENT_WEIBO: {
-				INFCActivity iwa = allActivity.get(CommentListActivity.class
+				INFCActivity iwa = allActivity.get(CommentActivity.class
 						.getSimpleName());
 				iwa.refresh(msg.obj);
 			}
@@ -340,6 +344,7 @@ public class TaskHandler implements Runnable {
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setReadTimeout(1000);
+			((HttpsURLConnection) conn).setHostnameVerifier(new AllowAllHostnameVerifier());
 			InputStream inputstream = conn.getInputStream();
 			byte[] data = readInputStream(inputstream);
 			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);

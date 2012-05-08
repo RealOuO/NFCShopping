@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/back">
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -19,8 +20,8 @@
             android:id="@+id/etUsername"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入用户名"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="请输入用户名" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,6 +47,11 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
+
+        <include
+            android:id="@+id/nodatapopup"
+            layout="@layout/nodata" 
+            android:layout_above="@id/lybuttonBar"/>
 
         <LinearLayout
             android:id="@+id/lybuttonBar"

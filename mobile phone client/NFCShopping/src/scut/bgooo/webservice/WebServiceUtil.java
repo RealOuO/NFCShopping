@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2012 The Team of BGOOO
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package scut.bgooo.webservice;
 
 import java.io.IOException;
@@ -8,7 +23,7 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
+//import org.ksoap2.transport.HttpTransportSE;  //如果要用http访问，则取消该注释
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.util.Log;
@@ -21,16 +36,19 @@ import scut.bgooo.entities.Product;
 import scut.bgooo.entities.SecCategory;
 import scut.bgooo.entities.Suggestion;
 import scut.bgooo.entities.User;
+import scut.bgooo.ksoap.modify.HttpTransportSE;//如果要用https访问，则取消该注释
 
 public class WebServiceUtil implements IWebServiceUtil {
 
 	private static String TAG = WebServiceUtil.class.getName();
 	private static final String NAMESPACE = "http://tempuri.org/";
 	
-	private static String URL = "http://192.168.1.100:8080/NFCShopping/ShopWebService.asmx";
-	public static String ImageURL = "http://192.168.1.100:8080/NFCShopping/Images/Products/";
+	private static String URL = "https://192.168.1.148/NFCShopping/ShopWebService.asmx";
+	public static String ImageURL = "https://192.168.1.148/NFCShopping/Images/Products/";
 
-
+//	private static String URL = "http://192.168.1.148:8080/NFCShopping/ShopWebService.asmx";
+//	public static String ImageURL = "http://192.168.1.148:8080/NFCShopping/Images/Products/";
+	
 	private static final String REGIST = "Regist";
 	private static final String ADDSUGGESTION = "AddSuggestion";
 	private static final String ADDREVIEW = "AddReview";
@@ -63,6 +81,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		rpc.addProperty("userName", userName);
 		rpc.addProperty("password", password);
 		HttpTransportSE ht = new HttpTransportSE(URL);
+		
 		ht.debug = true;
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
@@ -178,6 +197,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Vector<Discount> getDiscounts() {
 		// TODO Auto-generated method stub
@@ -198,7 +218,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catc1[ [[h block
 			e.printStackTrace();
 		}
 		return result;
@@ -210,6 +230,7 @@ public class WebServiceUtil implements IWebServiceUtil {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Vector<DiscountItem> getDiscountItems(int id) {
 		// TODO Auto-generated method stub
