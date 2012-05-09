@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using NFCShoppingWebSite.Utils;
+using System.Diagnostics;
 
 namespace NFCShoppingWebSite
 {
@@ -27,6 +28,26 @@ namespace NFCShoppingWebSite
         void Application_Error(object sender, EventArgs e)
         {
             // 在出现未处理的错误时运行的代码
+            Exception LastError = Server.GetLastError();
+            String ErrMessage = LastError.ToString();
+
+            String LogName = "MyLog";
+            String Message = "Url " + Request.Path + " Error: " + ErrMessage;
+
+            // Create Event Log if It Doesn't Exist
+
+            if (!EventLog.SourceExists(LogName))
+            {
+                EventLog.CreateEventSource(LogName, LogName);
+            }
+            EventLog Log = new EventLog();
+            Log.Source = LogName;
+            ////These are the five options that will display a different icon.
+            Log.WriteEntry(Message, EventLogEntryType.Information, 1);
+            Log.WriteEntry(Message, EventLogEntryType.Error, 2);
+            Log.WriteEntry(Message, EventLogEntryType.Warning, 3);
+            Log.WriteEntry(Message, EventLogEntryType.SuccessAudit, 4);
+            Log.WriteEntry(Message, EventLogEntryType.FailureAudit, 5);
 
         }
 
@@ -57,6 +78,7 @@ namespace NFCShoppingWebSite
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 
