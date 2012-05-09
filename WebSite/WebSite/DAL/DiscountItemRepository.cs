@@ -52,6 +52,7 @@ namespace NFCShoppingWebSite.DAL
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 
@@ -70,6 +71,7 @@ namespace NFCShoppingWebSite.DAL
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
         }
 
@@ -90,6 +92,7 @@ namespace NFCShoppingWebSite.DAL
             catch (Exception ex)
             {
                 // TODO: Add exception handling code here.
+                throw ex;
             }
 
             
