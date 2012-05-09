@@ -36,6 +36,12 @@
     <PackageAsSingleFile>false</PackageAsSingleFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DatePicker ">
+      <HintPath>F:\桌面\DatePicker .dll</HintPath>
+    </Reference>
+    <Reference Include="DatePicker - ">
+      <HintPath>F:\桌面\DatePicker - .dll</HintPath>
+    </Reference>
     <Reference Include="DatePicker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\DatePicker.dll</HintPath>
@@ -68,11 +74,11 @@
     <Content Include="Account\PasswordRecovery.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="App_Data\ASPNETDB.MDF" />
-    <Content Include="App_Data\aspnetdb_log.LDF">
+    <Content Include="App_Data\ASPNETDB_log.ldf">
       <DependentUpon>ASPNETDB.MDF</DependentUpon>
     </Content>
     <Content Include="App_Data\ShopDB.mdf" />
-    <Content Include="App_Data\ShopDB_log.ldf">
+    <Content Include="App_Data\ShopDB_log.LDF">
       <DependentUpon>ShopDB.mdf</DependentUpon>
     </Content>
     <Content Include="css\Categories.css" />

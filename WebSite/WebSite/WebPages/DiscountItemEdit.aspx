@@ -25,11 +25,11 @@
         <SelectParameters>
             <asp:QueryStringParameter DefaultValue="-1" Name="id" QueryStringField="discountItemID"
                 Type="Int32" />
-        </SelectParameters>
-        <UpdateParameters>
+        </selectparameters>
+        <updateparameters>
             <asp:Parameter Name="discountItem" Type="Object" />
             <asp:Parameter Name="origDiscountItem" Type="Object" />
-        </UpdateParameters>
+        </updateparameters>
     </asp:ObjectDataSource>
     <asp:ObjectDataSource ID="DiscountsDataSource" runat="server" SelectMethod="GetDiscounts"
         TypeName="NFCShoppingWebSite.BLL.DiscountBL"></asp:ObjectDataSource>
@@ -63,14 +63,17 @@
     <br />
     <asp:Label ID="Label2" runat="server" Text="请输入关键字"></asp:Label>
     <div>
-        <asp:TextBox ID="ProductNameTextBox" runat="server" required="true"></asp:TextBox>
-        <asp:Button ID="SearchButton" runat="server" Text="搜索" OnClick="SearchButton_Click" />
+        <asp:TextBox ID="ProductNameTextBox" runat="server">
+        </asp:TextBox>
+        <asp:Button ID="SearchButton" runat="server" Text="搜索" onclick="SearchButton_Click" />
     </div>
     <asp:Label ID="Label6" runat="server" Text="商品名称"></asp:Label>
     <br />
     <asp:DropDownList ID="ProductsDropDownList" runat="server" DataTextField="productName"
         DataValueField="productID" Height="20px" Width="152px" AutoPostBack="True">
     </asp:DropDownList>
+        <asp:RequiredFieldValidator runat="server" id="reqProductName" controltovalidate="ProductNameTextBox"
+            errormessage="请输入商品名称" />
     <br />
     <div>
         <asp:Label ID="Label5" runat="server" Text="添加到该优惠活动"></asp:Label>
@@ -83,13 +86,25 @@
     <br />
     <asp:Label ID="Label3" runat="server" Text="折扣"></asp:Label>
     <br />
-    <asp:TextBox ID="DiscountPercentTextBox" runat="server" Text='<%# Eval("discountPercent") %>'></asp:TextBox>
+    <br />
+    <asp:TextBox ID="DiscountPercentTextBox" runat="server" Text='<%# Eval("discountPercent") %>'>
+    </asp:TextBox>
+     <asp:RequiredFieldValidator runat="server" id="reqDiscountPercent" controltovalidate="DiscountPercentTextBox"
+            errormessage="请输入折扣信息" />
+     <br />
+
+     <asp:RangeValidator runat="server" id="rngDiscontPercent" controltovalidate="DiscountPercentTextBox"
+         type="Double" minimumvalue="0.0" maximumvalue="1.0" errormessage="请输入一个合理的折扣" />
     <br />
     <br />
     <asp:Label ID="Label4" runat="server" Text="描述信息"></asp:Label>
     <br />
+    <br />
     <asp:TextBox ID="DiscountItemDescriptionTextBox" Text='<%# Eval("description") %>'
-        runat="server" Height="140px" TextMode="MultiLine" Width="442px"></asp:TextBox>
+        runat="server" Height="140px" TextMode="MultiLine" Width="442px">
+    </asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" id="reqDiscountItemDescription" controltovalidate="DiscountItemDescriptionTextBox"
+            errormessage="请输入具体描述信息" />
     <br />
     <br />
     <asp:Button ID="SubmitButton" runat="server" Text="确定" OnClick="SubmitButton_Click"

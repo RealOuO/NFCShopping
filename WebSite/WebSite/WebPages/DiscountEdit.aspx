@@ -20,18 +20,21 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<div>
+    <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
+        Text="Label"></asp:Label>
+    <asp:Label ID="DiscountIDLabel" runat="server" Text='<%# Eval("discountID") %>' Visible="False">
+    </asp:Label>
+</div>
+    
     <div>
-        <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
-            Text="Label"></asp:Label>
-        <asp:Label ID="DiscountIDLabel" runat="server" Text='<%# Eval("discountID") %>' Visible="False"></asp:Label>
     </div>
+    <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px" Width="109px">
+    </asp:TextBox>
+         <asp:RequiredFieldValidator runat="server" id="reqDiscountDescription" controltovalidate="DiscountDescriptionTextBox"
+             errormessage="请输入优惠活动名称" />
     <div>
     </div>
-    <asp:Label ID="Label2" runat="server" Text="优惠活动名称"></asp:Label>
-    <div>
-    </div>
-    <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px" Width="109px"
-        required="true"></asp:TextBox>
     <div>
     </div>
     <div>
@@ -91,13 +94,13 @@
     &nbsp;<asp:ObjectDataSource ID="DiscountsDataSource" runat="server" DataObjectTypeName="NFCShoppingWebSite.Access_Data.Discount"
         DeleteMethod="DeleteDiscount" InsertMethod="InsertDiscount" SelectMethod="GetDiscountByID"
         TypeName="NFCShoppingWebSite.BLL.DiscountBL" UpdateMethod="UpdateDiscount">
-        <SelectParameters>
+        <selectparameters>
             <asp:QueryStringParameter DefaultValue="-1" Name="discountID" QueryStringField="discountID"
                 Type="Int32" />
-        </SelectParameters>
-        <UpdateParameters>
+        </selectparameters>
+        <updateparameters>
             <asp:Parameter Name="discount" Type="Object" />
             <asp:Parameter Name="origDiscount" Type="Object" />
-        </UpdateParameters>
+        </updateparameters>
     </asp:ObjectDataSource>
 </asp:Content>
