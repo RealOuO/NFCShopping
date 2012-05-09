@@ -65,18 +65,15 @@
     <div>
         <asp:TextBox ID="ProductNameTextBox" runat="server">
         </asp:TextBox>
-        <asp:DropDownList ID="ProductsDropDownList" runat="server" DataTextField="productID"
-            DataValueField="productID">
-        </asp:DropDownList>
         <asp:Button ID="SearchButton" runat="server" Text="搜索" onclick="SearchButton_Click" />
-        <asp:RequiredFieldValidator runat="server" id="reqProductName" controltovalidate="ProductNameTextBox"
-            errormessage="请输入商品名称" />
     </div>
     <asp:Label ID="Label6" runat="server" Text="商品名称"></asp:Label>
     <br />
     <asp:DropDownList ID="ProductsDropDownList" runat="server" DataTextField="productName"
         DataValueField="productID" Height="20px" Width="152px" AutoPostBack="True">
     </asp:DropDownList>
+        <asp:RequiredFieldValidator runat="server" id="reqProductName" controltovalidate="ProductNameTextBox"
+            errormessage="请输入商品名称" />
     <br />
     <div>
         <asp:Label ID="Label5" runat="server" Text="添加到该优惠活动"></asp:Label>

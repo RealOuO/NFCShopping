@@ -26,11 +26,7 @@
     <asp:Label ID="DiscountIDLabel" runat="server" Text='<%# Eval("discountID") %>' Visible="False">
     </asp:Label>
 </div>
-    <div>
-        <asp:Label ID="TitleLabel" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="Black"
-            Text="Label"></asp:Label>
-        <asp:Label ID="DiscountIDLabel" runat="server" Text='<%# Eval("discountID") %>' Visible="False"></asp:Label>
-    </div>
+    
     <div>
     </div>
     <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px" Width="109px">
@@ -39,8 +35,6 @@
              errormessage="请输入优惠活动名称" />
     <div>
     </div>
-    <asp:TextBox ID="DiscountDescriptionTextBox" runat="server" Height="23px" Width="109px"
-        required="true"></asp:TextBox>
     <div>
     </div>
     <div>
