@@ -48,17 +48,17 @@ public class NFCShoppingTab extends TabActivity implements
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectDiskReads().detectDiskWrites().detectNetwork() // or
-																		// .detectAll()
-																		// for
-																		// all
-																		// detectable
-																		// problems
-				.penaltyLog().build());
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-				.build());
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//				.detectDiskReads().detectDiskWrites().detectNetwork() // or
+//																		// .detectAll()
+//																		// for
+//																		// all
+//																		// detectable
+//																		// problems
+//				.penaltyLog().build());
+//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//				.detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+//				.build());
 		setContentView(R.layout.maintab);
 
 		this.mCollectionIntent = new Intent(this, CollectionListActivity.class);

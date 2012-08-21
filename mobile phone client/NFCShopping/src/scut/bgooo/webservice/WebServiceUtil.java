@@ -43,8 +43,8 @@ public class WebServiceUtil implements IWebServiceUtil {
 	private static String TAG = WebServiceUtil.class.getName();
 	private static final String NAMESPACE = "http://tempuri.org/";
 	
-	private static String URL = "https://192.168.1.148/NFCShopping/ShopWebService.asmx";
-	public static String ImageURL = "https://192.168.1.148/NFCShopping/Images/Products/";
+	private static String URL = "https://192.168.43.14/NFCShopping/ShopWebService.asmx";
+	public static String ImageURL = "https://192.168.43.14/NFCShopping/Images/Products/";
 
 //	private static String URL = "http://192.168.1.148:8080/NFCShopping/ShopWebService.asmx";
 //	public static String ImageURL = "http://192.168.1.148:8080/NFCShopping/Images/Products/";
